@@ -2,100 +2,20 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.oracle</groupId>
-    <artifactId>javafx</artifactId>
-    <version>2.2.0-beta-09</version>
+    <parent>
+        <groupId>com.github.signed.javafx-deploy</groupId>
+        <artifactId>parent</artifactId>
+        <version>1</version>
+        <relativePath>parent</relativePath>
+    </parent>
+
+    <groupId>com.github.signed.javafx-deploy</groupId>
+    <artifactId>reactor</artifactId>
+    <version>1</version>
     <packaging>pom</packaging>
 
-    <name>javafx-deploy</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>third-party-repository</id>
-            <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
-        </repository>
-    </distributionManagement>
-
-    <build>
-        <resources>
-            <resource>
-                <directory> src/my-resources </directory>
-                <excludes>
-                    <exclude>**/*</exclude>
-                    <exclude>**/*</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>src/main/resources/javafx/sdk_2_2_0_beta_09/linux-i586/rt/lib/jfxrt.jar</file>
-                                    <type>jar</type>
-                                    <classifier>linux-i586</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>src/main/resources/javafx/sdk_2_2_0_beta_09/windows-i586/rt/lib/jfxrt.jar</file>
-                                    <type>jar</type>
-                                    <classifier>windows-i586</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.3.2</version>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.5</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.3</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+    <modules>
+        <module>parent</module>
+        <module>javafx-runtime</module>
+    </modules>
 </project>
