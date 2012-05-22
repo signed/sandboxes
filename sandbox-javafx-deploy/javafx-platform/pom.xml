@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.signed.javafx-deploy</groupId>
+        <artifactId>parent</artifactId>
+        <version>1</version>
+        <relativePath>../parent</relativePath>
+    </parent>
+
+    <groupId>com.oracle.javafx</groupId>
+    <artifactId>javafx-platform</artifactId>
+    <version>2.2.0-beta-09</version>
+    <packaging>pom</packaging>
+
+    <name>javafx-deploy</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/javafx-linux-i586.xml</descriptor>
+                        <descriptor>src/main/assembly/javafx-windows-i586.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
