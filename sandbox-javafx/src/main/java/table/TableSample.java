@@ -1,7 +1,6 @@
 package table;
 
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -10,7 +9,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 
 public class TableSample extends Application {
@@ -30,8 +28,7 @@ public class TableSample extends Application {
         firstNameCol.setText("First");
         PropertyValueFactory firstName = new PropertyValueFactory("firstName");
 
-        Callback<TableColumn.CellDataFeatures<Person, String>, ObservableValue<String>> callback;
-        firstNameCol.setCellValueFactory(callback);
+        firstNameCol.setCellValueFactory(firstName);
 
         TableColumn<Person, String> lastNameCol = new TableColumn<>();
         lastNameCol.setText("Last");
