@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.oracle.javafx</groupId>
@@ -7,17 +7,17 @@
     <version>2.2.0-beta-09</version>
     <packaging>pom</packaging>
 
-    <profiles>
-        <profile>
-            <id>local-3rd-party</id>
-            <distributionManagement>
-                <repository>
-                    <id>third-party-repository</id>
-                    <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-    </profiles>
+    <properties>
+        <distribution.id>third-party-repository</distribution.id>
+        <distribution.url>http://localhost:8081/nexus/content/repositories/thirdparty/</distribution.url>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>${distribution.id}</id>
+            <url>${distribution.url}</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
