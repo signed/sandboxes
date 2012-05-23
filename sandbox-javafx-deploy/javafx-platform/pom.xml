@@ -7,12 +7,17 @@
     <version>2.2.0-beta-09</version>
     <packaging>pom</packaging>
 
-    <distributionManagement>
-        <repository>
-            <id>third-party-repository</id>
-            <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
-        </repository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>local-3rd-party</id>
+            <distributionManagement>
+                <repository>
+                    <id>third-party-repository</id>
+                    <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
