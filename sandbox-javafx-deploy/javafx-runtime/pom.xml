@@ -2,13 +2,6 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.github.signed.javafx-deploy</groupId>
-        <artifactId>parent</artifactId>
-        <version>1</version>
-        <relativePath>../parent</relativePath>
-    </parent>
-
     <groupId>com.oracle.javafx</groupId>
     <artifactId>javafx-runtime-jar</artifactId>
     <version>2.2.0-beta-09</version>
