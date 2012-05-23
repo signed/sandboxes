@@ -14,7 +14,12 @@
     <version>2.2.0-beta-09</version>
     <packaging>pom</packaging>
 
-    <name>javafx-deploy</name>
+    <distributionManagement>
+        <repository>
+            <id>third-party-repository</id>
+            <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
