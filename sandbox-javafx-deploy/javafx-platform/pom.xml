@@ -10,8 +10,8 @@
     <properties>
         <distribution.id>third-party-repository</distribution.id>
         <distribution.url>http://localhost:8081/nexus/content/repositories/thirdparty/</distribution.url>
-        <javafx.version>2.2.0</javafx.version>
-        <javafx.qualifier>beta-09</javafx.qualifier>
+        <javafx.version>not set</javafx.version>
+        <javafx.qualifier>not set</javafx.qualifier>
         <platform.directory.base>../javafx-extracted/sdk_${javafx.version}/${javafx.qualifier}</platform.directory.base>
         <platform.directory.linux>${platform.directory.base}/linux-i586/rt/lib/i386</platform.directory.linux>
         <platform.directory.windows>${platform.directory.base}/windows-i586/rt/bin</platform.directory.windows>
@@ -43,6 +43,36 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>javafx.version</property>
+                                    <message>"I need -Djavafx.version set to something like 2.2.0"</message>
+                                </requireProperty>
+                                <requireFilesExist>
+                                    <message>"Check that the set -Djavafx.version and -Djavafx.qualifier point to an existing directory in javafx-extracted"</message>
+                                    <files>
+                                        <file>${platform.directory.base}</file>
+                                        <file>${platform.directory.linux}</file>
+                                        <file>${platform.directory.linux}</file>
+                                    </files>
+                                </requireFilesExist>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
