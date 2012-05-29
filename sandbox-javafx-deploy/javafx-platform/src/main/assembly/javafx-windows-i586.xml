@@ -9,7 +9,7 @@ http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 ">
     </formats>
     <fileSets>
         <fileSet>
-            <directory>../javafx-extracted/sdk_2_2_0_beta_09/windows-i586/rt/bin</directory>
+            <directory>${platform.directory.windows}</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>

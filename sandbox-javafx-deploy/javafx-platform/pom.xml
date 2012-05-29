@@ -10,6 +10,10 @@
     <properties>
         <distribution.id>third-party-repository</distribution.id>
         <distribution.url>http://localhost:8081/nexus/content/repositories/thirdparty/</distribution.url>
+        <javafx.version>2.2.0</javafx.version>
+        <javafx.qualifier>beta-09</javafx.qualifier>
+        <platform.directory.linux>../javafx-extracted/sdk_${javafx.version}_${javafx.qualifier}/linux-i586/rt/lib/i386</platform.directory.linux>
+        <platform.directory.windows>../javafx-extracted/sdk_${javafx.version}_${javafx.qualifier}/windows-i586/rt/bin</platform.directory.windows>
     </properties>
 
     <distributionManagement>
