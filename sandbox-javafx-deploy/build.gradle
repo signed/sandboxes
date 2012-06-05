@@ -1,0 +1,58 @@
+apply plugin: 'maven'
+
+repositories {
+    flatDir {
+        name "fileRepo"
+        dirs "/home/signed/tmp/repository"
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:///home/signed/tmp/repository/releases/")
+            snapshotRepository(url: "file:///home/signed/tmp/repository/snapshots/")
+            
+            pom.groupId = 'com.oracle.javafx'
+            pom.artifactId = 'javafx-platform'
+            pom.version = '0.0.1-beta-10-SNAPSHOT'
+            pom.packaging = 'zip'
+        }
+        
+    }
+}
+
+def versionBase = '2.2.0'
+def versionQualifier = 'beta-10'
+def myVersion = versionBase+'-'+versionQualifier
+
+def platformBase = 'javafx-extracted/sdk_'+versionBase+'/'+versionQualifier
+def platformDirectoryLinux   = platformBase+'/linux-i586/rt/lib/i386'
+def platformDirectoryWindows = platformBase+'/windows-i586/rt/bin'
+
+
+task dumpStuff(){
+    println platformDirectoryLinux
+    println platformDirectoryWindows
+}
+
+task platformZipLinux(type: Zip) {
+    from platformDirectoryLinux
+    into('lib')
+    baseName = 'javafx-platform'
+    version = myVersion
+    classifier = 'linux'
+}
+
+task platformZipWindows(type: Zip) {
+    from platformDirectoryWindows
+    into('lib')
+    baseName = 'javafx-platform'
+    version = myVersion
+    classifier = 'windows'
+}
+
+
+artifacts {
+    archives platformZipLinux
+}
