@@ -11,14 +11,12 @@ def versionBase = '2.2.0'
 def versionQualifier = 'beta-10'
 def myVersion = versionBase+'-'+versionQualifier
 
-def platformBase = 'javafx-extracted/sdk_'+versionBase+'/'+versionQualifier
-def platformDirectoryLinux   = platformBase+'/linux-i586/rt/lib/i386'
-def platformDirectoryWindows = platformBase+'/windows-i586/rt/bin'
 
-task dumpStuff(){
-    println platformDirectoryLinux
-    println platformDirectoryWindows
-}
+def baseDirectoryVersion = 'javafx-extracted/sdk_'+versionBase+'/'+versionQualifier
+def platformDirectoryLinux   = baseDirectoryVersion+'/linux-i586/rt/lib/i386'
+def platformDirectoryWindows = baseDirectoryVersion+'/windows-i586/rt/bin'
+def runtimeJarFileLinux = baseDirectoryVersion + '/linux-i586/rt/lib/jfxrt.jar'
+def runtimeJarFileWindows = baseDirectoryVersion + '/windows-i586/rt/lib/jfxrt.jar'
 
 task platformZipLinux(type: Zip) {
     from platformDirectoryLinux
@@ -36,8 +34,17 @@ task platformZipWindows(type: Zip) {
     classifier = 'windows'
 }
 
+
 artifacts {
     archives platformZipLinux, platformZipWindows
+
+    archives(file(runtimeJarFileLinux)){
+        classifier = 'linux'
+    }
+
+    archives( file(runtimeJarFileWindows)){
+        classifier = 'windows'
+    }
 }
 
 uploadArchives {
