@@ -39,10 +39,12 @@ artifacts {
     archives platformZipLinux, platformZipWindows
 
     archives(file(runtimeJarFileLinux)){
+        name = 'javafx-runtime-jar'
         classifier = 'linux'
     }
 
     archives( file(runtimeJarFileWindows)){
+        name = 'javafx-runtime-jar'
         classifier = 'windows'
     }
 }
@@ -53,11 +55,49 @@ uploadArchives {
             repository(url: "file:///home/signed/tmp/repository/releases/")
             snapshotRepository(url: "file:///home/signed/tmp/repository/snapshots/")
 
-            pom.groupId = 'com.oracle.javafx'
-            pom.artifactId = 'javafx-platform'
-            pom.version = myVersion
-            pom.packaging = 'zip'
-        }
+            addFilter('runtime-linux') {artifact, file ->
+                def match = artifact.name == 'javafx-runtime-jar' && file.path.contains( 'linux' )
+                println "runtime-linux   :"+ match.toString() +":"+ file
+                return match
+            }
 
+            addFilter('runtime-windows') {artifact, file ->
+                def match = artifact.name == 'javafx-runtime-jar' && file.path.contains('windows')
+                println "runtime-windows :"+ match.toString() +":"+ file
+                return match;
+            }
+
+            addFilter('platform-linux') {artifact, file ->
+                def match = artifact.name == 'javafx-platform' && file.path.contains('linux')
+                println "platform-linux  :"+ match.toString() +":"+ file
+                return match
+            }
+
+            addFilter('platform-windows') {artifact, file ->
+                def match = artifact.name == 'javafx-platform' && file.path.contains('windows')
+                println "platform-windows:"+ match.toString() +":"+ file
+                return match
+            }
+
+            pom('runtime-linux').groupId = 'com.oracle.javafx'
+            pom('runtime-linux').artifactId = 'javafx-platform'
+            pom('runtime-linux').version = myVersion
+            pom('runtime-linux').packaging = 'jar'
+
+            pom('runtime-windows').groupId = 'com.oracle.javafx'
+            pom('runtime-windows').artifactId = 'javafx-platform'
+            pom('runtime-windows').version = myVersion
+            pom('runtime-windows').packaging = 'jar'
+
+            pom('platform-linux').groupId = 'com.oracle.javafx'
+            pom('platform-linux').artifactId = 'javafx-runtime'
+            pom('platform-linux').version = myVersion
+            pom('platform-linux').packaging = 'zip'
+
+            pom('platform-windows').groupId = 'com.oracle.javafx'
+            pom('platform-windows').artifactId = 'javafx-runtime'
+            pom('platform-windows').version = myVersion
+            pom('platform-windows').packaging = 'zip'
+        }
     }
 }
