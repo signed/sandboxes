@@ -1,10 +1,27 @@
-defaultTasks 'createRepositoryDirectory' 
- 
-task clean(type: Delete) {
-  delete buildDir
-}
+apply plugin: 'maven'
+
+def repositoryDirectory = file("$buildDir/repository")
 
 task createRepositoryDirectory << {
-    file("$buildDir/repository").mkdirs()
-    println 'created: '+buildDir
+    repositoryDirectory.mkdirs()
+    println 'created: ' + repositoryDirectory.absolutePath
+}
+
+artifacts {
+    archives(file('artifacts/an-existing.jar')) {
+        //name="should-not-be-seen-by-anyone"
+        //classifier = 'secret'
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://" + repositoryDirectory.absolutePath)
+            pom.groupId = 'org.example'
+            pom.artifactId = 'artifact'
+            pom.version = '1.1.7-beta-10'
+            pom.packaging = 'jar'
+        }
+    }
 }
