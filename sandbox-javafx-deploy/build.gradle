@@ -18,6 +18,8 @@ def platformDirectoryWindows = baseDirectoryVersion+'/windows-i586/rt/bin'
 def runtimeJarFileLinux = baseDirectoryVersion + '/linux-i586/rt/lib/jfxrt.jar'
 def runtimeJarFileWindows = baseDirectoryVersion + '/windows-i586/rt/lib/jfxrt.jar'
 
+file("$buildDir/output/classes").createDirectory()
+
 task platformZipLinux(type: Zip) {
     from platformDirectoryLinux
     into('')

@@ -1,0 +1,10 @@
+defaultTasks 'createRepositoryDirectory' 
+ 
+task clean(type: Delete) {
+  delete buildDir
+}
+
+task createRepositoryDirectory << {
+    file("$buildDir/repository").mkdirs()
+    println 'created: '+buildDir
+}
