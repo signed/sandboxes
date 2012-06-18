@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,15 +46,35 @@ public class TableSample extends Application {
     }
 
     private TableView<ANumber> createTable() {
-        TableColumn<ANumber, Double> firstNameCol = new TableColumn<>();
-        firstNameCol.setText("First");
+        TableColumn<ANumber, Double> column = new TableColumn<>();
 
         Callback<TableColumn.CellDataFeatures<ANumber, Double>, ObservableValue<Double>> callback = new PropertyValueFactory<>("double");
-        firstNameCol.setCellValueFactory(callback);
+        column.setCellValueFactory(callback);
+        Callback<TableColumn<ANumber, Double>, TableCell<ANumber, Double>> cellFactory = new Callback<TableColumn<ANumber, Double>, TableCell<ANumber, Double>>() {
+            @Override
+            public TableCell<ANumber, Double> call(TableColumn<ANumber, Double> aNumberDoubleTableColumn) {
+                return new TableCell<ANumber, Double>(){
+                    @Override
+                    protected void updateItem(Double aDouble, boolean b) {
+                        super.updateItem(aDouble, b);    //To change body of overridden methods use File | Settings | File Templates.
+                        if(null == aDouble) {
+                            return;
+                        }
+                        alignmentProperty().setValue(Pos.CENTER_RIGHT);
+                        setText(aDouble.toString());
+
+
+                    }
+                };
+            }
+        };
+        column.setCellFactory(cellFactory);
+        column.setText("First");
+
 
         TableView<ANumber> tableView = new TableView<>();
         ObservableList<TableColumn<ANumber, ?>> columns = tableView.getColumns();
-        columns.add(firstNameCol);
+        columns.add(column);
         return tableView;
     }
 }
