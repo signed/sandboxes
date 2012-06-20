@@ -3,6 +3,15 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.project.dependency.resolution = {
+    pom true
+   
+    plugins {
+        runtime 'org.grails.plugins:hibernate:1.3.7'
+        compile ":joda-time:1.4"
+        compile ":mail:1.0"
+        build ":tomcat:1.3.7"
+    }
+    
     // inherit Grails' default dependencies
     inherits("global") {
         // uncomment to disable ehcache
@@ -22,10 +31,5 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
-    }
-    dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
-        // runtime 'mysql:mysql-connector-java:5.1.13'
     }
 }
