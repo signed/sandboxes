@@ -4,3 +4,5 @@ target/
 build/
 .gradle
 .idea/
+*~
+sandbox-grails/grails-2.1/server/plugins/
