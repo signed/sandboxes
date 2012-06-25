@@ -62,8 +62,6 @@ public class TableSample extends Application {
                         }
                         alignmentProperty().setValue(Pos.CENTER_RIGHT);
                         setText(aDouble.toString());
-
-
                     }
                 };
             }

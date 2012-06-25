@@ -1,4 +1,4 @@
-package table.rt21170;
+package table.RT21170;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
