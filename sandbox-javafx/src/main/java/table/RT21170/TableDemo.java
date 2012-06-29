@@ -1,4 +1,4 @@
-package table.RT21170;
+package de.idos.ev;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
