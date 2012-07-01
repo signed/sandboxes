@@ -10,11 +10,9 @@
     <packaging>war</packaging>
 
     <name>version 2.1</name>
-    <description>A custom grails project</description>
-    <url>http://www.myorganization.org</url>
 
     <properties>
-        <grails.version>2.1.0.RC2</grails.version>
+        <grails.version>2.1.0.RC3</grails.version>
     </properties>
 
     <dependencies>
@@ -134,9 +132,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <fork></fork>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -144,6 +139,14 @@
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
