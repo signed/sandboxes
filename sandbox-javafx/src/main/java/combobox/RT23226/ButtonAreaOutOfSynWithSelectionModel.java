@@ -1,4 +1,4 @@
-package combobox;
+package combobox.RT23226;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import static javafx.collections.FXCollections.observableArrayList;
 
 
-public class ButtonAreaRendersElementEvenNoItemIsSelectedAnymore extends Application {
+public class ButtonAreaOutOfSynWithSelectionModel extends Application {
 
     public static void main(String[] args) {
         launch(args);
