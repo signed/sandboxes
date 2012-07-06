@@ -22,6 +22,7 @@ public class ButtonAreaOutOfSynWithSelectionModel extends Application {
         final ComboBox<String> comboBox = new ComboBox<>();
         comboBox.setPrefWidth(500);
         comboBox.setItems(observableArrayList("one", "two"));
+        comboBox.setPromptText("juhu");
         pane.getChildren().add(comboBox);
 
         final Label selectedItemLabel = new Label("false");
@@ -30,7 +31,7 @@ public class ButtonAreaOutOfSynWithSelectionModel extends Application {
         stage.setScene(new Scene(pane));
         stage.show();
 
-        comboBox.getSelectionModel().select("two");
+        //comboBox.getSelectionModel().select("two");
         comboBox.setItems(observableArrayList("three", "four"));
 
 
