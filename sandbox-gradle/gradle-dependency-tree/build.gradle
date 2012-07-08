@@ -1,9 +1,21 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
 
+configurations
+
+configurations {
+    mine {
+        description = 'resolve the real transitive dependency version'
+
+    }
+}
+
 dependencies {
+    mine(
+        'org.spockframework:spock-core:0.6-groovy-1.8'
+    )
     testCompile(
-            'junit:junit-dep:4.10'
-            , 'org.spockframework:spock-core:0.6-groovy-1.8'
+        'junit:junit-dep:4.10'
+        , 'org.spockframework:spock-core:0.6-groovy-1.8'
     )
 }
