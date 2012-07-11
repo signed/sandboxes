@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import static javafx.collections.FXCollections.observableArrayList;
 
 
-public class ButtonAreaOutOfSynWithSelectionModel extends Application {
+public class ButtonAreaOutOfSyncWithSelectionModel extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -31,7 +31,7 @@ public class ButtonAreaOutOfSynWithSelectionModel extends Application {
         stage.setScene(new Scene(pane));
         stage.show();
 
-        //comboBox.getSelectionModel().select("two");
+        comboBox.getSelectionModel().select("two");
         comboBox.setItems(observableArrayList("three", "four"));
 
 
