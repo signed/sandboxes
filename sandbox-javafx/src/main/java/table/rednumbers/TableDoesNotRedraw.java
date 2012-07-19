@@ -25,12 +25,8 @@ public class TableDoesNotRedraw extends Application {
 
     @Override
     public void start(Stage stage) {
-        FlowPane pane = new FlowPane(Orientation.VERTICAL);
-        TableView<Number> tableView = new TableView<>();
         TableColumn column = new TableColumn("Value");
         column.setCellFactory(new RendererTableCellFactory());
-
-
         Callback callback = new Callback() {
             @Override
             public Object call(Object o) {
@@ -40,11 +36,17 @@ public class TableDoesNotRedraw extends Application {
         };
         column.setCellValueFactory(callback);
 
+
+        FlowPane pane = new FlowPane(Orientation.VERTICAL);
+        TableView<Number> tableView = new TableView<>();
         tableView.getColumns().add(column);
+
         List<Number> values = new ArrayList<>();
         values.add(27);
         values.add(-43);
+
         tableView.setItems(new ObservableListWrapper<>(values));
+
         pane.getChildren().add(tableView);
         stage.setScene(new Scene(pane));
         stage.setHeight(500);
@@ -56,11 +58,11 @@ public class TableDoesNotRedraw extends Application {
 
         @Override
         public TableCell<T, Number> call(TableColumn<T, Number> tableViewTableColumn) {
-            return new RendererTableCell<T>();
+            return new NegativeReadRenderCell<T>();
         }
     }
 
-    public static class RendererTableCell<T> extends TableCell<T, Number> {
+    public static class NegativeReadRenderCell<T> extends TableCell<T, Number> {
 
 
         @Override
