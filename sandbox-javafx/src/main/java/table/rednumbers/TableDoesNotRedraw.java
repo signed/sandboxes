@@ -38,10 +38,10 @@ public class TableDoesNotRedraw extends Application {
 
 
         FlowPane pane = new FlowPane(Orientation.VERTICAL);
-        TableView<Number> tableView = new TableView<>();
+        TableView<Integer> tableView = new TableView<>();
         tableView.getColumns().add(column);
 
-        List<Number> values = new ArrayList<>();
+        List<Integer> values = new ArrayList<>();
         values.add(27);
         values.add(-43);
 
@@ -54,25 +54,25 @@ public class TableDoesNotRedraw extends Application {
     }
 
 
-    public static class RendererTableCellFactory<T> implements Callback<TableColumn<T, Number>, TableCell<T, Number>> {
+    public static class RendererTableCellFactory<T> implements Callback<TableColumn<T, Integer>, TableCell<T, Integer>> {
 
         @Override
-        public TableCell<T, Number> call(TableColumn<T, Number> tableViewTableColumn) {
-            return new NegativeReadRenderCell<T>();
+        public TableCell<T, Integer> call(TableColumn<T, Integer> tableViewTableColumn) {
+            return new NegativeIntegerReadRenderCell<T>();
         }
     }
 
-    public static class NegativeReadRenderCell<T> extends TableCell<T, Number> {
+    public static class NegativeIntegerReadRenderCell<T> extends TableCell<T, Integer> {
 
 
         @Override
-        protected void updateItem(Number s, boolean isEmpty) {
-            super.updateItem(s, isEmpty);
-            if (null == s) {
+        protected void updateItem(Integer integer, boolean isEmpty) {
+            super.updateItem(integer, isEmpty);
+            if (null == integer) {
                 return;
             }
-            setText(String.valueOf(Math.round(s.doubleValue())));
-            if ((s.intValue() < 0)) {
+            setText(String.valueOf(Math.round(integer.doubleValue())));
+            if ((integer.intValue() < 0)) {
                 setTextFill(Color.RED);
             }
         }
