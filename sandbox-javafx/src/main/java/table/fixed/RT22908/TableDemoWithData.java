@@ -34,19 +34,19 @@ public class TableDemoWithData extends Application {
         stage.show();
     }
 
-    private TableView createSingleColumnTable(FlowPane pane) {
+    private TableView<String> createSingleColumnTable(FlowPane pane) {
         pane.getChildren().add(new Label("Column width of data rows does not align with header column width. Grab the right end of the column header and resize it to the right to see the problem"));
-        TableView view = new TableView();
+        TableView<String> view = new TableView<>();
         pane.getChildren().add(view);
-        TableColumn parentColumn = new TableColumn<>();
+        TableColumn<String, String> parentColumn = new TableColumn<>();
         view.getColumns().add(parentColumn);
         addChildren(parentColumn);
         return view;
     }
 
-    private void addChildren(TableColumn parentColumn2) {
+    private void addChildren(TableColumn<String, String> parentColumn2) {
         for (int i = 0; i < NUMBER_OF_CHILDREN; i++) {
-            TableColumn childColumn = new TableColumn<>();
+            TableColumn<String, String> childColumn = new TableColumn<>();
             childColumn.setSortable(false);
             parentColumn2.getColumns().add(childColumn);
         }
