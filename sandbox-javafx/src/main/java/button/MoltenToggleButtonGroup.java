@@ -1,9 +1,10 @@
 package button;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class MoltenToggleButtonGroup {
     private static final String MoltenButtonBar = MoltenToggleButtonGroup.class.getResource("MoltenButtonBar.css").toExternalForm();
     private ToggleGroup toggleGroup = new ToggleGroup();
     private List<ToggleButton> buttons = new ArrayList<>();
+    private HBox container = new HBox();
 
     public ToggleButton addToggleButton(String text) {
         ToggleButton toggleButton = new ToggleButton(text);
@@ -25,6 +27,11 @@ public class MoltenToggleButtonGroup {
     }
 
     public void addButtonsTo(Pane pane) {
+        addInternal(container);
+        pane.getChildren().add(container);
+    }
+
+    private void addInternal(Pane pane) {
         ToggleButton first = buttons.get(0);
         List<ToggleButton> centerButtons = new ArrayList<>();
         if(buttons.size()>2){
@@ -40,9 +47,9 @@ public class MoltenToggleButtonGroup {
         }
         applyStyleTo("pill-right", last);
 
-        for(ToggleButton button: buttons){
+        for(final ToggleButton button: buttons){
             button.setToggleGroup(toggleGroup);
-            button.setOnAction(new SuppressDeselection(button));
+            button.addEventFilter(MouseEvent.MOUSE_PRESSED, new SuppressDeselection(button));
             pane.getChildren().add(button);
         }
         pane.getStylesheets().add(MoltenButtonBar);
@@ -50,20 +57,19 @@ public class MoltenToggleButtonGroup {
 
     private void applyStyleTo(String style, ToggleButton button) {
         button.getStyleClass().add(style);
-//        button.setId(style);
     }
 
-    private static class SuppressDeselection implements EventHandler<ActionEvent> {
-        private final ToggleButton tb1;
+    private static class SuppressDeselection implements EventHandler<MouseEvent> {
+        private final ToggleButton button;
 
-        public SuppressDeselection(ToggleButton tb1) {
-            this.tb1 = tb1;
+        public SuppressDeselection(ToggleButton button) {
+            this.button = button;
         }
 
         @Override
-        public void handle(ActionEvent actionEvent) {
-            if(!tb1.isSelected()){
-                tb1.setSelected(true);
+        public void handle(MouseEvent mouseEvent) {
+            if(button.isSelected()){
+                mouseEvent.consume();
             }
         }
     }
