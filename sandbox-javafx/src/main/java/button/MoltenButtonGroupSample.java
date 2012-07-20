@@ -1,11 +1,14 @@
 package button;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MoltenButtonGroupSample extends Application {
 
@@ -22,9 +25,21 @@ public class MoltenButtonGroupSample extends Application {
         MoltenToggleButtonGroup moltenToggleButtonGroup = new MoltenToggleButtonGroup();
         moltenToggleButtonGroup.addToggleButton("Left Button");
         moltenToggleButtonGroup.addToggleButton("Center Button");
-        ToggleButton button = moltenToggleButtonGroup.addToggleButton("another");
+        moltenToggleButtonGroup.addToggleButton("another");
         moltenToggleButtonGroup.addToggleButton("one");
         moltenToggleButtonGroup.addToggleButton("Right Button");
+        moltenToggleButtonGroup.each(new Callback<ToggleButton, Void>() {
+            @Override
+            public Void call(final ToggleButton toggleButton) {
+                toggleButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        System.out.println(toggleButton.getText());
+                    }
+                });
+                return null;
+            }
+        });
 
         HBox hBox = new HBox();
         moltenToggleButtonGroup.addButtonsTo(hBox);

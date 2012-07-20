@@ -6,6 +6,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,11 @@ public class MoltenToggleButtonGroup {
         }
         ToggleButton last = buttons.get(buttons.size() - 1);
 
-        applyStyleTo("pill-left", first);
+        applyStyleTo("molten-button-bar-button-left", first);
         for (ToggleButton button : centerButtons) {
-            applyStyleTo("pill-center", button);
+            applyStyleTo("molten-button-bar-button-center", button);
         }
-        applyStyleTo("pill-right", last);
+        applyStyleTo("molten-button-bar-button-right", last);
 
         for(final ToggleButton button: buttons){
             button.setToggleGroup(toggleGroup);
@@ -53,6 +54,12 @@ public class MoltenToggleButtonGroup {
             pane.getChildren().add(button);
         }
         pane.getStylesheets().add(MoltenButtonBar);
+    }
+
+    public void each(Callback<ToggleButton, Void> callback){
+        for (ToggleButton button : buttons) {
+            callback.call(button);
+        }
     }
 
     private void applyStyleTo(String style, ToggleButton button) {

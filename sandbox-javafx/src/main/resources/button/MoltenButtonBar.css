@@ -1,4 +1,4 @@
-.pill-left {
+.molten-button-bar-button-left {
     -fx-padding: 5;
     -fx-border-image-source: url("left-button.png");
     -fx-border-image-slice: 4 4 4 4 fill;
@@ -7,18 +7,18 @@
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important; 
 }
-.pill-left:selected { -fx-border-image-source: url("left-button-toggled.png"); }
-.pill-left .label {
+.molten-button-bar-button-left:selected { -fx-border-image-source: url("left-button-toggled.png"); }
+.molten-button-bar-button-left .label {
     -fx-text-fill: #d3d3d3; 
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
 }
 
-.pill-left:selected .label {
+.molten-button-bar-button-left:selected .label {
    /* -fx-text-fill: black; */
    -fx-text-fill: white;
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
-.pill-center {
+.molten-button-bar-button-center {
     -fx-padding: 5;
     -fx-border-image-source: url("middle-button.png");
     -fx-border-image-slice: 4 4 4 4 fill;
@@ -27,16 +27,16 @@
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.pill-center:selected { -fx-border-image-source: url("middle-button-toggled.png"); }
-.pill-center .label {
+.molten-button-bar-button-center:selected { -fx-border-image-source: url("middle-button-toggled.png"); }
+.molten-button-bar-button-center .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
 }
-.pill-center:selected .label {
+.molten-button-bar-button-center:selected .label {
     -fx-text-fill: black;
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
-.pill-right {
+.molten-button-bar-button-right {
     -fx-padding: 5;
     -fx-border-image-source: url("right-button.png");
     -fx-border-image-slice: 4 4 4 4 fill;
@@ -45,12 +45,12 @@
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.pill-right:selected { -fx-border-image-source: url("right-button-toggled.png"); }
-.pill-right .label {
+.molten-button-bar-button-right:selected { -fx-border-image-source: url("right-button-toggled.png"); }
+.molten-button-bar-button-right .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
 }
-.pill-right:selected .label {
+.molten-button-bar-button-right:selected .label {
     -fx-text-fill: black;
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
