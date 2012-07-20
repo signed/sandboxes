@@ -11,8 +11,8 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoltenToggleButtonGroup {
-    private static final String MoltenButtonBar = MoltenToggleButtonGroup.class.getResource("MoltenButtonBar.css").toExternalForm();
+public class MoltenToggleButtonBar {
+    private static final String MoltenButtonBar = MoltenToggleButtonBar.class.getResource("MoltenButtonBar.css").toExternalForm();
     private ToggleGroup toggleGroup = new ToggleGroup();
     private List<ToggleButton> buttons = new ArrayList<>();
     private HBox container = new HBox();

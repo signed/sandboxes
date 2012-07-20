@@ -1,13 +1,13 @@
 .molten-button-bar-button-left {
     -fx-padding: 5;
-    -fx-border-image-source: url("left-button.png");
+    -fx-border-image-source: url("button-left.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important; 
 }
-.molten-button-bar-button-left:selected { -fx-border-image-source: url("left-button-toggled.png"); }
+.molten-button-bar-button-left:selected { -fx-border-image-source: url("button-left-toggled.png"); }
 .molten-button-bar-button-left .label {
     -fx-text-fill: #d3d3d3; 
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
@@ -20,14 +20,14 @@
 }
 .molten-button-bar-button-center {
     -fx-padding: 5;
-    -fx-border-image-source: url("middle-button.png");
+    -fx-border-image-source: url("button-middle.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.molten-button-bar-button-center:selected { -fx-border-image-source: url("middle-button-toggled.png"); }
+.molten-button-bar-button-center:selected { -fx-border-image-source: url("button-middle-toggled.png"); }
 .molten-button-bar-button-center .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
@@ -38,14 +38,14 @@
 }
 .molten-button-bar-button-right {
     -fx-padding: 5;
-    -fx-border-image-source: url("right-button.png");
+    -fx-border-image-source: url("button-right.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.molten-button-bar-button-right:selected { -fx-border-image-source: url("right-button-toggled.png"); }
+.molten-button-bar-button-right:selected { -fx-border-image-source: url("button-right-toggled.png"); }
 .molten-button-bar-button-right .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );

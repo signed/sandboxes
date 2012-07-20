@@ -22,13 +22,13 @@ public class MoltenButtonGroupSample extends Application {
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
 
-        MoltenToggleButtonGroup moltenToggleButtonGroup = new MoltenToggleButtonGroup();
-        moltenToggleButtonGroup.addToggleButton("Left Button");
-        moltenToggleButtonGroup.addToggleButton("Center Button");
-        moltenToggleButtonGroup.addToggleButton("another");
-        moltenToggleButtonGroup.addToggleButton("one");
-        moltenToggleButtonGroup.addToggleButton("Right Button");
-        moltenToggleButtonGroup.each(new Callback<ToggleButton, Void>() {
+        MoltenToggleButtonBar moltenToggleButtonBar = new MoltenToggleButtonBar();
+        moltenToggleButtonBar.addToggleButton("Left Button");
+        moltenToggleButtonBar.addToggleButton("Center Button");
+        moltenToggleButtonBar.addToggleButton("another");
+        moltenToggleButtonBar.addToggleButton("one");
+        moltenToggleButtonBar.addToggleButton("Right Button");
+        moltenToggleButtonBar.each(new Callback<ToggleButton, Void>() {
             @Override
             public Void call(final ToggleButton toggleButton) {
                 toggleButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -42,7 +42,10 @@ public class MoltenButtonGroupSample extends Application {
         });
 
         HBox hBox = new HBox();
-        moltenToggleButtonGroup.addButtonsTo(hBox);
+        moltenToggleButtonBar.addButtonsTo(hBox);
+
+        hBox.getChildren().add(new ToggleButton("default size"));
+
         root.getChildren().addAll(hBox);
         primaryStage.show();
     }
