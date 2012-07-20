@@ -44,7 +44,7 @@ public class MoltenToggleButtonBar {
 
         applyStyleTo("molten-button-bar-button-left", first);
         for (ToggleButton button : centerButtons) {
-            applyStyleTo("molten-button-bar-button-center", button);
+            applyStyleTo("molten-button-bar-button-middle", button);
         }
         applyStyleTo("molten-button-bar-button-right", last);
 
