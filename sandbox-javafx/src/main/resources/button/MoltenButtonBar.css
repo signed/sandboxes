@@ -1,5 +1,5 @@
 .molten-button-bar-button-left {
-    -fx-padding: 0;
+    -fx-padding: 0 2 0 5;
     -fx-border-image-source: url("button-left.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
@@ -23,7 +23,7 @@
 }
 
 .molten-button-bar-button-middle {
-    -fx-padding: 0;
+    -fx-padding: 0 2 0 2;
     -fx-border-image-source: url("button-middle.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
@@ -47,7 +47,7 @@
 }
 
 .molten-button-bar-button-right {
-    -fx-padding: 0;
+    -fx-padding: 0 5 0 2;
     -fx-border-image-source: url("button-right.png");
     -fx-border-image-slice: 4 4 4 4 fill;
     -fx-border-image-width: 4 4 4 4;
