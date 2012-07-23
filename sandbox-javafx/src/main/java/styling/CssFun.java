@@ -127,7 +127,6 @@ public class CssFun extends Application {
                 while (change.next()) {
                     List<? extends CssError> added = change.getAddedSubList();
                     for (CssError cssError : added) {
-
                         String existingText = errorOutput.getText();
                         errorOutput.setText(cssError.toString() + "\n" + existingText);
                     }
@@ -139,8 +138,11 @@ public class CssFun extends Application {
         styleInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-                parser.parse(s1);
-                styleable.setStyle(s1);
+                if(s1.isEmpty()){
+                    styleable.styleProperty().setValue(null);
+                }else{
+                    styleable.styleProperty().setValue(s1);
+                }
             }
         });
 
