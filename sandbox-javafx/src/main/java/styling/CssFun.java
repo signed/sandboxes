@@ -41,6 +41,7 @@ public class CssFun extends Application {
     private final TextArea styleInput = new TextArea();
     private final TextArea errorOutput = new TextArea();
     private final Path styleFile = Paths.get("style.css");
+    private final Node scalable = styleable;
     final BorderPane componentHolderPane = new BorderPane();
 
 
@@ -64,7 +65,7 @@ public class CssFun extends Application {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                double currentScale = componentHolderPane.getScaleX();
+                double currentScale = scalable.getScaleX();
                 double newScale = currentScale;
 
                 KeyCode pressedKey = keyEvent.getCode();
@@ -75,8 +76,8 @@ public class CssFun extends Application {
                 }else if(KeyCode.DIGIT0 == pressedKey ||KeyCode.NUMPAD0 == pressedKey){
                     newScale = 1.0;
                 }
-                componentHolderPane.scaleXProperty().set(newScale);
-                componentHolderPane.scaleYProperty().set(newScale);
+                scalable.scaleXProperty().set(newScale);
+                scalable.scaleYProperty().set(newScale);
             }
         });
 
@@ -87,7 +88,7 @@ public class CssFun extends Application {
             @Override
             public void handle(WindowEvent windowEvent) {
                 String[] lines = styleInput.getText().split("\n");
-                ArrayList<String> strings = new ArrayList<String>();
+                ArrayList<String> strings = new ArrayList<>();
 
                 Collections.addAll(strings, lines);
                 try {
