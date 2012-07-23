@@ -12,8 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -38,10 +41,15 @@ public class CssFun extends Application {
     private final TextArea styleInput = new TextArea();
     private final TextArea errorOutput = new TextArea();
     private final Path styleFile = Paths.get("style.css");
+    final BorderPane componentHolderPane = new BorderPane();
 
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setTitle("JavaFx css tester");
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
+
         String style = loadStyleFromLastRun();
 
         HBox workbench = createWorkbenchPane(style);
@@ -51,6 +59,27 @@ public class CssFun extends Application {
 
 
         Scene scene = new Scene(mainPane);
+
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                double currentScale = componentHolderPane.getScaleX();
+                double newScale = currentScale;
+
+                KeyCode pressedKey = keyEvent.getCode();
+                if(KeyCode.PLUS == pressedKey || KeyCode.ADD == pressedKey){
+                    newScale = currentScale +0.25;
+                }else if(KeyCode.MINUS == pressedKey || KeyCode.SUBTRACT == pressedKey){
+                    newScale = currentScale -0.25;
+                }else if(KeyCode.DIGIT0 == pressedKey ||KeyCode.NUMPAD0 == pressedKey){
+                    newScale = 1.0;
+                }
+                componentHolderPane.scaleXProperty().set(newScale);
+                componentHolderPane.scaleYProperty().set(newScale);
+            }
+        });
+
 
         stage.setScene(scene);
 
@@ -62,13 +91,15 @@ public class CssFun extends Application {
 
                 Collections.addAll(strings, lines);
                 try {
-                    Files.write(styleFile, strings, Charset.forName("UTF-8") );
+                    Files.write(styleFile, strings, Charset.forName("UTF-8"));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
         stage.show();
+        stage.setFullScreen(true);
+        stage.setFullScreen(false);
     }
 
     private String loadStyleFromLastRun() throws IOException {
@@ -92,7 +123,7 @@ public class CssFun extends Application {
             @Override
             public void onChanged(Change<? extends CssError> change) {
                 errorOutput.clear();
-                while(change.next()){
+                while (change.next()) {
                     List<? extends CssError> added = change.getAddedSubList();
                     for (CssError cssError : added) {
 
@@ -102,6 +133,7 @@ public class CssFun extends Application {
                 }
             }
         });
+
 
         styleInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -113,11 +145,11 @@ public class CssFun extends Application {
 
         styleInput.setText(style);
 
-        BorderPane componentPane = new BorderPane();
-        componentPane.setCenter(styleable);
+        componentHolderPane.setCenter(styleable);
 
         HBox mainLayout = new HBox();
-        mainLayout.getChildren().addAll(styleInput, componentPane);
+        mainLayout.getChildren().addAll(styleInput, componentHolderPane);
+        HBox.setHgrow(componentHolderPane, Priority.ALWAYS);
         return mainLayout;
     }
 }
