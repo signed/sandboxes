@@ -48,7 +48,7 @@ public class MoltenToggleButtonBar {
         }
         applyStyleTo("molten-button-bar-button-right", last);
 
-        for(final ToggleButton button: buttons){
+        for(ToggleButton button: buttons){
             button.setToggleGroup(toggleGroup);
             button.addEventFilter(MouseEvent.MOUSE_PRESSED, new SuppressDeselection(button));
             pane.getChildren().add(button);
