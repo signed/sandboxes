@@ -5,19 +5,23 @@
     -fx-border-image-width: 4 4 4 4;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
-    -fx-background-color: null !important; 
+    -fx-background-color: null !important;
 }
-.molten-button-bar-button-left:selected { -fx-border-image-source: url("button-left-toggled.png"); }
+
+.molten-button-bar-button-left:selected {
+    -fx-border-image-source: url("button-left-toggled.png");
+}
+
 .molten-button-bar-button-left .label {
-    -fx-text-fill: #d3d3d3; 
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+    -fx-text-fill: #d3d3d3;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.75), 0, 0.0, 0, -1);
 }
 
 .molten-button-bar-button-left:selected .label {
-   /* -fx-text-fill: black; */
-   -fx-text-fill: white;
-    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(one-pass-box, white, 0, 0.0, 0, 1);
 }
+
 .molten-button-bar-button-middle {
     -fx-padding: 0;
     -fx-border-image-source: url("button-middle.png");
@@ -27,15 +31,21 @@
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.molten-button-bar-button-middle:selected { -fx-border-image-source: url("button-middle-toggled.png"); }
+
+.molten-button-bar-button-middle:selected {
+    -fx-border-image-source: url("button-middle-toggled.png");
+}
+
 .molten-button-bar-button-middle .label {
     -fx-text-fill: #d3d3d3;
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.75), 0, 0.0, 0, -1);
 }
+
 .molten-button-bar-button-middle:selected .label {
     -fx-text-fill: black;
-    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(one-pass-box, white, 0, 0.0, 0, 1);
 }
+
 .molten-button-bar-button-right {
     -fx-padding: 0;
     -fx-border-image-source: url("button-right.png");
@@ -45,12 +55,17 @@
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-.molten-button-bar-button-right:selected { -fx-border-image-source: url("button-right-toggled.png"); }
+
+.molten-button-bar-button-right:selected {
+    -fx-border-image-source: url("button-right-toggled.png");
+}
+
 .molten-button-bar-button-right .label {
     -fx-text-fill: #d3d3d3;
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.75), 0, 0.0, 0, -1);
 }
+
 .molten-button-bar-button-right:selected .label {
     -fx-text-fill: black;
-    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(one-pass-box, white, 0, 0.0, 0, 1);
 }
