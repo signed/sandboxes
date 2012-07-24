@@ -11,6 +11,10 @@ public class StylePad {
     private final StyleManager styleManger = StyleManager.getInstance();
     private final TextArea styleInput = new TextArea();
 
+    public StylePad() {
+        styleInput.setMaxWidth(300);
+    }
+
     public void integrateInto(Pane pane) {
         pane.getChildren().add(styleInput);
     }
