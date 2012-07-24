@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 public class ShowCase {
     private static Label createLabel(String name){
@@ -44,7 +43,7 @@ public class ShowCase {
 
     }
 
-    public void integrateInto(Pane parent) {
+    public void integrateInto(SomethingWithChildren parent) {
         parent.getChildren().add(componentHolderPane);
     }
 }

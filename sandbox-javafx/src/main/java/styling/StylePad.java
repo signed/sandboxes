@@ -5,17 +5,16 @@ import com.sun.javafx.css.StyleManager;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
 
 public class StylePad {
     private final StyleManager styleManger = StyleManager.getInstance();
     private final TextArea styleInput = new TextArea();
 
     public StylePad() {
-        styleInput.setMaxWidth(300);
+        styleInput.setPrefWidth(300);
     }
 
-    public void integrateInto(Pane pane) {
+    public void integrateInto(SomethingWithChildren pane) {
         pane.getChildren().add(styleInput);
     }
 

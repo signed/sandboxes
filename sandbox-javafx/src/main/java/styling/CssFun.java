@@ -2,8 +2,10 @@ package styling;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
@@ -11,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+
+import static styling.Family.adapted;
 
 public class CssFun extends Application {
 
@@ -30,7 +34,7 @@ public class CssFun extends Application {
         return new Exhibit(textArea);
     }
 
-    private static Exhibit prepareToggleButtion() {
+    private static Exhibit prepareToggleButton() {
         return new Exhibit(new ToggleButton("Ich bin der Text"));
     }
 
@@ -51,13 +55,15 @@ public class CssFun extends Application {
         stylePad.onChange(new Stylist(exhibit));
         stylePad.onError(new StyleCritic(forum));
         showCase.display(exhibit);
-        HBox mainLayout = new HBox();
-        stylePad.integrateInto(mainLayout);
-        showCase.integrateInto(mainLayout);
-        ObservableList<Node> children = mainLayout.getChildren();
+
+        SplitPane splitPane = new SplitPane();
+        splitPane.setOrientation(Orientation.HORIZONTAL);
+        stylePad.integrateInto(adapted(splitPane));
+        showCase.integrateInto(adapted(splitPane));
+        ObservableList<Node> children = splitPane.getItems();
         HBox.setHgrow(children.get(children.size() - 1), Priority.SOMETIMES);
         BorderPane mainPane = new BorderPane();
-        mainPane.setCenter(mainLayout);
+        mainPane.setCenter(splitPane);
         mainPane.setBottom(forum.component());
 
 
