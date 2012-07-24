@@ -1,4 +1,4 @@
-package table.fixed.RT22908;
+package bugs.table.fixed.RT22908;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;

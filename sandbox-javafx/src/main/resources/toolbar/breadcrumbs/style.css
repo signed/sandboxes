@@ -1,0 +1,52 @@
+#main {
+  -fx-padding: 5 0;
+  -fx-spacing: 5;
+}
+
+.breadcrumbs {
+  -fx-padding: 0 50 0 0;
+}
+
+.breadcrumbs .item {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-border-color: null;
+  -fx-border-insets: 0;
+  -fx-border-image-source: url("crumb.png");
+  -fx-border-image-slice: 1 10 1 10;
+  -fx-border-image-width: 1 10 1 10;
+  -fx-border-image-repeat: stretch;
+  -fx-font-size: 18px;
+}
+
+.breadcrumbs .item:hover {
+  -fx-border-image-source: url("crumb-hover.png");
+}
+
+.breadcrumbs .alone {
+  -fx-border-image-width: 0 0 0 0;
+  -fx-border-image-repeat: stretch;
+  -fx-border-image-source: url("crumb-selected.png");
+  -fx-border-color: transparent #6e737d transparent rgba(255,255,255,0.3) , transparent rgba(255,255,255,0.3) transparent transparent;
+  -fx-border-insets: 0 0 1 0, 1;
+}
+
+.breadcrumbs .first {
+  -fx-border-image-insets: -2 -5 -2 0;
+  -fx-border-image-width: 0 10 0 0;
+  -fx-border-image-repeat: stretch;
+}
+
+.breadcrumbs .middle {
+  -fx-border-image-insets: -2 -5 -2 -7;
+}
+
+.breadcrumbs .last {
+  -fx-border-image-insets: 0 0 0 -7;
+  -fx-border-image-width: 0 0 0 10;
+  -fx-border-image-repeat: stretch;
+  -fx-border-image-source: url("crumb-selected.png");
+  -fx-border-color: transparent #6e737d transparent transparent , transparent rgba(255,255,255,0.2) transparent transparent;
+  -fx-border-insets: 0 0 1 0, 1;
+}

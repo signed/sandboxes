@@ -1,4 +1,4 @@
-package combobox.fixed.RT21935;
+package bugs.combobox.fixed.RT21935;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

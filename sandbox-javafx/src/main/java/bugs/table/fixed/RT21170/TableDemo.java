@@ -1,4 +1,4 @@
-package table.fixed.RT21170;
+package bugs.table.fixed.RT21170;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

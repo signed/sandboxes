@@ -1,4 +1,4 @@
-package toolbar.fixed.RT22566;
+package bugs.toolbar.fixed.RT22566;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

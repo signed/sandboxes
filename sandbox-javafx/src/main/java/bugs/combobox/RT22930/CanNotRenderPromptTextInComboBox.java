@@ -1,4 +1,4 @@
-package combobox.RT22930;
+package bugs.combobox.RT22930;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;

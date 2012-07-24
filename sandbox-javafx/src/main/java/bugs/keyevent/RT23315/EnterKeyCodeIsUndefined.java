@@ -1,4 +1,4 @@
-package keyevent.RT23315;
+package bugs.keyevent.RT23315;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
