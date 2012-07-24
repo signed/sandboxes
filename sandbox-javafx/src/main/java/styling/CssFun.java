@@ -35,9 +35,11 @@ public class CssFun extends Application {
     }
 
     private Archivist archivist = new Archivist();
-    private Exhibit exhibit;
+    private final Exhibit exhibit;
 
-
+    public CssFun() {
+        exhibit = prepareTextArea();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,7 +47,6 @@ public class CssFun extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
 
-        exhibit = prepareTextArea();
 
         stylePad.onChange(new Stylist(exhibit));
         stylePad.onError(new StyleCritic(forum));
