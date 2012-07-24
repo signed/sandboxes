@@ -8,3 +8,9 @@ build/
 sandbox-grails/grails-1.3/version-2.1/plugins/
 *.ipr
 *.iws
+.project
+.settings/
+gen/
+bin/
+.classpath
+project.properties
