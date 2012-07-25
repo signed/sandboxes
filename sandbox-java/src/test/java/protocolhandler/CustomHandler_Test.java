@@ -6,10 +6,10 @@ import com.google.common.io.CharStreams;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.net.URL;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,8 +36,8 @@ public class CustomHandler_Test {
         assertThat(theContenReadFrom("jvm://anotherKey"), is("another value"));
     }
 
-    @Test(expected = ConnectException.class)
-    public void forResourceThatIsNotInTheDictionary() throws Exception {
+    @Test(expected = FileNotFoundException.class)
+    public void forResourceThatIsNotInTheDictionaryBecauseTheOpenJdkImplementationIgnoresThem() throws Exception {
         theContenReadFrom("jvm://notDeposed");
     }
 
