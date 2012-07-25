@@ -2,6 +2,9 @@ package styling;
 
 import javafx.scene.Node;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Exhibit implements Manican, Scalable{
 
     private Node node;
@@ -46,5 +49,13 @@ public class Exhibit implements Manican, Scalable{
 
     public Node getComponent() {
         return node;
+    }
+
+    public List<String> appliedStyleClasses() {
+        List<String> styleClasses = new ArrayList<>();
+        styleClasses.add("molten-button-bar-button-left");
+        styleClasses.add("molten-button-bar-button-middle");
+        styleClasses.add("molten-button-bar-button-right");
+        return styleClasses;
     }
 }

@@ -1,9 +1,12 @@
 package styling;
 
+import button.MoltenToggleButtonBar;
 import com.sun.javafx.css.StyleHelper;
 import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import static styling.Family.adapted;
 
@@ -41,11 +45,39 @@ public class CssFun extends Application {
         return new Exhibit(new ToggleButton("Ich bin der Text"));
     }
 
+    private static Exhibit prepareMoltenButtonBarDemo() {
+        MoltenToggleButtonBar moltenToggleButtonBar = new MoltenToggleButtonBar();
+        moltenToggleButtonBar.addToggleButton("Left Button");
+        moltenToggleButtonBar.addToggleButton("Center Button");
+        moltenToggleButtonBar.addToggleButton("another");
+        moltenToggleButtonBar.addToggleButton("one");
+        moltenToggleButtonBar.addToggleButton("Right Button");
+        moltenToggleButtonBar.each(new Callback<ToggleButton, Void>() {
+            @Override
+            public Void call(final ToggleButton toggleButton) {
+                toggleButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        System.out.println(toggleButton.getText());
+                    }
+                });
+                return null;
+            }
+        });
+
+        HBox hBox = new HBox();
+        moltenToggleButtonBar.addButtonsTo(hBox);
+        return new Exhibit(hBox);
+    }
+
+
     private Archivist archivist = new Archivist();
     private final Exhibit exhibit;
 
     public CssFun() {
         exhibit = prepareToggleButton();
+        styleBook.addStyleClasses(exhibit.appliedStyleClasses());
+
         ToggleButton toggleButton = new ToggleButton("bla bla");
         ObservableList<String> appliedStyleClasses = toggleButton.getStyleClass();
         for (String appliedStyleClass : appliedStyleClasses) {
