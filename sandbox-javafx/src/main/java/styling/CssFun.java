@@ -1,6 +1,8 @@
 package styling;
 
 import button.MoltenToggleButtonBar;
+import com.github.signed.protocols.jvm.InMemoryUrl;
+import com.github.signed.protocols.jvm.MemoryDictionary;
 import com.sun.javafx.css.StyleHelper;
 import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
@@ -24,6 +26,8 @@ import static styling.Family.adapted;
 
 public class CssFun extends Application {
 
+    private final MemoryDictionary memoryDictionary;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,7 +46,10 @@ public class CssFun extends Application {
     }
 
     private static Exhibit prepareToggleButton() {
-        return new Exhibit(new ToggleButton("Ich bin der Text"));
+        ToggleButton node = new ToggleButton("Ich bin der Text");
+        node.getStyleClass().add("fancy-toggle-button");
+        node.getStylesheets().add("jvm://fancy-toggle-button.css");
+        return new Exhibit(node);
     }
 
     private static Exhibit prepareMoltenButtonBarDemo() {
@@ -75,6 +82,16 @@ public class CssFun extends Application {
     private final Exhibit exhibit;
 
     public CssFun() {
+        memoryDictionary = new MemoryDictionary();
+        StringBuilder builder = new StringBuilder();
+        builder.append(".fancy-toggle-button{").append("\n");
+        builder.append("-fx-border-color:blue");
+        builder.append("}").append("\n");
+
+        memoryDictionary.depose("fancy-toggle-button.css", builder);
+
+        InMemoryUrl.registerInMemoryUrlHandler(memoryDictionary);
+
         exhibit = prepareToggleButton();
         styleBook.addStyleClasses(exhibit.appliedStyleClasses());
 
