@@ -1,6 +1,6 @@
 package styling;
 
-public interface StyleSink {
+public interface Manican {
 
     public void setStyle(String style);
 

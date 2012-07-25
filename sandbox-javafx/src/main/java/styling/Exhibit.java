@@ -2,7 +2,7 @@ package styling;
 
 import javafx.scene.Node;
 
-public class Exhibit implements StyleSink, Scalable{
+public class Exhibit implements Manican, Scalable{
 
     private Node node;
 

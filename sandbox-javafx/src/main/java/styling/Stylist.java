@@ -4,9 +4,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class Stylist implements ChangeListener<String> {
-    private StyleSink victim;
+    private Manican victim;
 
-    public Stylist(StyleSink victim) {
+    public Stylist(Manican victim) {
         this.victim = victim;
     }
 

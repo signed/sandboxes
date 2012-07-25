@@ -1,5 +1,7 @@
 package styling;
 
+import com.sun.javafx.css.StyleHelper;
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
@@ -24,6 +26,7 @@ public class CssFun extends Application {
 
     private final Forum forum = new Forum();
     private final ShowCase showCase = new ShowCase(400);
+    private StyleBook styleBook = new StyleBook();
     private final StylePad stylePad = new StylePad();
 
 
@@ -42,7 +45,14 @@ public class CssFun extends Application {
     private final Exhibit exhibit;
 
     public CssFun() {
-        exhibit = prepareTextArea();
+        exhibit = prepareToggleButton();
+        ToggleButton toggleButton = new ToggleButton("bla bla");
+        ObservableList<String> appliedStyleClasses = toggleButton.getStyleClass();
+        for (String appliedStyleClass : appliedStyleClasses) {
+            System.out.println("class: "+ appliedStyleClass);
+        }
+        StyleManager styleManager = StyleManager.getInstance();
+        StyleHelper styleHelper = styleManager.getStyleHelper(toggleButton);
     }
 
     @Override
