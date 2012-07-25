@@ -1,5 +1,6 @@
 package protocolhandler;
 
+import com.github.signed.protocols.jvm.InMemoryUrl;
 import com.github.signed.protocols.jvm.MemoryDictionary;
 import com.google.common.io.CharStreams;
 import org.junit.BeforeClass;
@@ -8,12 +9,13 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.URL;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class CustomHandler {
+public class CustomHandler_Test {
     private static final MemoryDictionary dictionary = new MemoryDictionary();
 
     @BeforeClass
@@ -22,7 +24,7 @@ public class CustomHandler {
     }
 
     @Test
-    public void testName() throws Exception {
+    public void singleElement() throws Exception {
         registerUrl("thekey", "that is the content");
         assertThat(theContenReadFrom("jvm://thekey"), is("that is the content"));
     }
@@ -32,6 +34,11 @@ public class CustomHandler {
         registerUrl("thekey", "that is the content");
         registerUrl("anotherKey", "another value");
         assertThat(theContenReadFrom("jvm://anotherKey"), is("another value"));
+    }
+
+    @Test(expected = ConnectException.class)
+    public void forResourceThatIsNotInTheDictionary() throws Exception {
+        theContenReadFrom("jvm://notDeposed");
     }
 
     private String theContenReadFrom(String urlString) throws IOException {

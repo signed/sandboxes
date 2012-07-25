@@ -1,7 +1,4 @@
-package protocolhandler;
-
-import com.github.signed.protocols.jvm.MemoryDictionary;
-import com.github.signed.protocols.jvm.StyleStreamHandlerFactory;
+package com.github.signed.protocols.jvm;
 
 import java.net.URL;
 

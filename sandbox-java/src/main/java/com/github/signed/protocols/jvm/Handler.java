@@ -15,8 +15,6 @@ public class Handler extends URLStreamHandler{
 
     @Override
     protected URLConnection openConnection(URL url) throws IOException {
-        String path = url.getHost();
-        StringBuilder builder = customHandler.getByKey(path);
-        return new MemoryDictionaryConnection(url, builder);
+        return new MemoryDictionaryConnection(url, customHandler);
     }
 }
