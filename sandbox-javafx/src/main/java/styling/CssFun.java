@@ -13,27 +13,29 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static styling.Family.adapted;
 
 public class CssFun extends Application {
 
-    private final MemoryDictionary memoryDictionary = new MemoryDictionary();
-
     public static void main(String[] args) {
         launch(args);
     }
 
+    private final MemoryDictionary memoryDictionary = new MemoryDictionary();
+    private final Path pathToStyleFile = Paths.get("style.css");
+    private final Path pathToStylesheetFile = Paths.get("stylesheet.css");
     private final Forum forum = new Forum();
     private final StyleCritic critic = new StyleCritic(forum);
     private final ShowCase showCase = new ShowCase(400);
-
     private final StyleInputs styleInputs = new StyleInputs();
     private final StylePad stylePad = new StylePad();
     private final StylePad styleSheetPad = new StylePad();
-
-
-    private Archivist archivist = new Archivist();
+    private final Archivist archivist = new Archivist();
     private final Exhibit exhibit;
 
     public CssFun() {
@@ -49,9 +51,9 @@ public class CssFun extends Application {
 
         stylePad.onChange(new Stylist(new DirectlyStyleComponent(exhibit)));
         stylePad.onError(critic);
+
         styleSheetPad.onChange(new Stylist(new StyleOverStylesheet(exhibit, memoryDictionary)));
         styleSheetPad.onError(critic);
-
 
         showCase.display(exhibit);
 
@@ -61,26 +63,30 @@ public class CssFun extends Application {
 
         styleInputs.integrate(stylePad, "style");
         styleInputs.integrate(styleSheetPad, "stylesheet");
-
         styleInputs.integrateInto(adapted(splitPane));
-
         showCase.integrateInto(adapted(splitPane));
+
         ObservableList<Node> children = splitPane.getItems();
         HBox.setHgrow(children.get(children.size() - 1), Priority.SOMETIMES);
         BorderPane mainPane = new BorderPane();
         mainPane.setCenter(splitPane);
         mainPane.setBottom(forum.component());
 
-        String style = archivist.retrieveStyle();
-        stylePad.showStyle(style);
-
-
         Scene scene = new Scene(mainPane);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, new Magnifier(exhibit));
         stage.setScene(scene);
-        stage.onCloseRequestProperty().set(new TurnInTranscript(archivist, stylePad));
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new TurnInTranscript(stylePad, archivist, pathToStyleFile));
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new TurnInTranscript(styleSheetPad, archivist, pathToStylesheetFile));
         stage.show();
         stage.setFullScreen(true);
         stage.setFullScreen(false);
+
+        initializeStylePadFrom(pathToStyleFile, stylePad);
+        initializeStylePadFrom(pathToStylesheetFile, styleSheetPad);
+    }
+
+    private void initializeStylePadFrom(Path path, StylePad pad) {
+        String style = archivist.retrieveStyleFrom(path);
+        pad.showStyle(style);
     }
 }

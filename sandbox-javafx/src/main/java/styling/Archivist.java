@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,27 +11,29 @@ import java.util.List;
 import static java.nio.file.Files.exists;
 
 public class Archivist {
-    private final Path styleFile = Paths.get("style.css");
 
-    public String retrieveStyle() {
-        if (exists(styleFile)) {
-            return loadStyle();
-        } else {
-            createStyleFile();
-            return "";
+    public String retrieveStyleFrom(Path path) {
+        if (exists(path)) {
+            return loadStyle(path);
         }
+        return "no file found at "+path.toString();
     }
 
-    private void createStyleFile(){
+    public void transcribeTo(Path path,String style) {
+        String[] lines = style.split("\n");
+        ArrayList<String> strings = new ArrayList<>();
+
+
+        Collections.addAll(strings, lines);
         try {
-            Files.createFile(styleFile);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            Files.write(path, strings, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private String loadStyle() {
-        List<String> strings = readFile();
+    private String loadStyle(Path path) {
+        List<String> strings = readFile(path);
         StringBuilder all = new StringBuilder();
         for (String string : strings) {
             all.append(string).append("\n");
@@ -40,21 +41,9 @@ public class Archivist {
         return all.toString();
     }
 
-    private List<String> readFile() {
+    private List<String> readFile(Path path) {
         try {
-            return Files.readAllLines(styleFile, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void transcribe(String style) {
-        String[] lines = style.split("\n");
-        ArrayList<String> strings = new ArrayList<>();
-
-        Collections.addAll(strings, lines);
-        try {
-            Files.write(styleFile, strings, Charset.forName("UTF-8"));
+            return Files.readAllLines(path, Charset.forName("UTF-8"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
