@@ -13,9 +13,9 @@ public class StyleInputs {
 
     }
 
-    public void integrate(StylePad pad){
+    public void integrate(StylePad pad, String padName){
         ObservableList<Tab> tabs = tabPane.getTabs();
-        Tab styleTab = new Tab("style");
+        Tab styleTab = new Tab(padName);
         pad.integrateInto(adapted(styleTab));
         tabs.add(styleTab);
 

@@ -4,18 +4,18 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class Stylist implements ChangeListener<String> {
-    private Manican victim;
+    private final PartToStyle partToStyle;
 
-    public Stylist(Manican victim) {
-        this.victim = victim;
+    public Stylist(PartToStyle partToStyle) {
+        this.partToStyle = partToStyle;
+    }
+
+    public static interface PartToStyle {
+        void styleWith(String style);
     }
 
     @Override
     public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-        if(s1.isEmpty()){
-            victim.clearStyle();
-        }else{
-            victim.setStyle(s1);
-        }
+        partToStyle.styleWith(s1);
     }
 }

@@ -4,9 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Exhibit implements Manican, Scalable{
 
     private Node node;
@@ -54,18 +51,12 @@ public class Exhibit implements Manican, Scalable{
     }
 
     public void useInMemoryStyleSheetAt(String url) {
-        getParent().getStylesheets().add(url);
+        ObservableList<String> stylesheets = getParent().getStylesheets();
+        stylesheets.remove(url);
+        stylesheets.add(url);
     }
 
     private Parent getParent() {
         return (Parent) node;
-    }
-
-    public void reApplyInMemoryStyleSheet() {
-        ObservableList<String> stylesheets = getParent().getStylesheets();
-        List<String> backup = new ArrayList<>();
-        backup.addAll(stylesheets);
-        stylesheets.clear();
-        stylesheets.addAll(backup);
     }
 }
