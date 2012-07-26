@@ -14,8 +14,8 @@ public class StylePad {
         styleInput.setPrefWidth(300);
     }
 
-    public void integrateInto(SomethingWithChildren pane) {
-        pane.getChildren().add(styleInput);
+    public void integrateInto(NodeContainer pane) {
+        pane.add(styleInput);
     }
 
     public void showStyle(String style){

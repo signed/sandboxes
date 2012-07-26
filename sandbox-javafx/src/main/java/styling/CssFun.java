@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -57,7 +59,15 @@ public class CssFun extends Application {
 
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
-        stylePad.integrateInto(adapted(splitPane));
+
+        TabPane tabPane = new TabPane();
+        ObservableList<Tab> tabs = tabPane.getTabs();
+        Tab styleTab = new Tab("style");
+        tabs.add(styleTab);
+
+        splitPane.getItems().add(tabPane);
+
+        stylePad.integrateInto(adapted(styleTab));
         showCase.integrateInto(adapted(splitPane));
         ObservableList<Node> children = splitPane.getItems();
         HBox.setHgrow(children.get(children.size() - 1), Priority.SOMETIMES);

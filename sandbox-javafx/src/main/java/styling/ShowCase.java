@@ -43,7 +43,7 @@ public class ShowCase {
 
     }
 
-    public void integrateInto(SomethingWithChildren parent) {
-        parent.getChildren().add(componentHolderPane);
+    public void integrateInto(NodeContainer parent) {
+        parent.add(componentHolderPane);
     }
 }
