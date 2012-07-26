@@ -1,6 +1,8 @@
 package styling;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +53,19 @@ public class Exhibit implements Manican, Scalable{
         return node;
     }
 
-    public List<String> appliedStyleClasses() {
-        List<String> styleClasses = new ArrayList<>();
-        styleClasses.add("molten-button-bar-button-left");
-        styleClasses.add("molten-button-bar-button-middle");
-        styleClasses.add("molten-button-bar-button-right");
-        return styleClasses;
+    public void useInMemoryStyleSheetAt(String url) {
+        getParent().getStylesheets().add(url);
+    }
+
+    private Parent getParent() {
+        return (Parent) node;
+    }
+
+    public void reApplyInMemoryStyleSheet() {
+        ObservableList<String> stylesheets = getParent().getStylesheets();
+        List<String> backup = new ArrayList<>();
+        backup.addAll(stylesheets);
+        stylesheets.clear();
+        stylesheets.addAll(backup);
     }
 }
