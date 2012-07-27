@@ -41,7 +41,8 @@ public class CssFun extends Application {
 
     public CssFun() {
         InMemoryUrl.registerInMemoryUrlHandler(memoryDictionary);
-        exhibit = new ExhibitBuilder().prepareToggleButton();
+        exhibit = new ExhibitBuilder().prepareMoltenButtonBarDemo();
+        //exhibit = new ExhibitBuilder().prepareTextArea();
     }
 
     @Override

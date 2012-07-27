@@ -43,9 +43,9 @@ public class ExhibitBuilder {
             }
         });
 
-        HBox hBox = new HBox();
-        moltenToggleButtonBar.addButtonsTo(hBox);
-        return new Exhibit(hBox);
+        HBox box = new HBox();
+        moltenToggleButtonBar.addButtonsTo(box);
+        return new Exhibit(box.getChildren().get(0));
     }
 
 

@@ -1,6 +1,7 @@
 package styling;
 
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -12,13 +13,11 @@ public class ShowCase {
         return label;
     }
 
-
     private final BorderPane componentHolderPane = new BorderPane();
     private final Label top = createLabel("up");
     private final Label right = createLabel("right");
     private final Label bottom = createLabel("bottom");
     private final Label left = createLabel("left");
-    private BorderPane centerPane = new BorderPane();
 
     public ShowCase(int width) {
         componentHolderPane.setMinWidth(width);
@@ -31,16 +30,13 @@ public class ShowCase {
         BorderPane.setAlignment(bottom, Pos.BOTTOM_CENTER);
         componentHolderPane.setLeft(left);
         BorderPane.setAlignment(left, Pos.CENTER_LEFT);
-        componentHolderPane.setCenter(centerPane);
-        BorderPane.setAlignment(centerPane, Pos.CENTER);
     }
 
     public void display(Exhibit exhibit) {
-        centerPane.getChildren().clear();
         Node newComponent = exhibit.getComponent();
-        centerPane.setCenter(newComponent);
-        BorderPane.setAlignment(newComponent, Pos.CENTER);
-
+        Group group = new Group();
+        group.getChildren().add(newComponent);
+        componentHolderPane.setCenter(newComponent);
     }
 
     public void integrateInto(NodeContainer parent) {
