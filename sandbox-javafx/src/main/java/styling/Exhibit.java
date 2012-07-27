@@ -5,7 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Exhibit implements Manican, Scalable{
 
@@ -51,15 +52,21 @@ public class Exhibit implements Manican, Scalable{
 
 
     public void putStyleClassesInto(StyleClassSink sink) {
-        sink.consume(extractedStyleClassesFromNode());
+        Set<String> strings = extractedStyleClassesFromNode(node);
+        sink.consume(new ArrayList<>(strings));
     }
 
-    private List<String> extractedStyleClassesFromNode() {
-        List<String> styles = new ArrayList<>();
-        styles.add("molten-button-bar-button-left");
-        styles.add("molten-button-bar-button-middle");
-        styles.add("molten-button-bar-button-right");
-        return styles;
+    private Set<String> extractedStyleClassesFromNode(Node node) {
+        Set<String> foundStyleSheets = new HashSet<>();
+        if (node instanceof Parent) {
+            Parent parent = (Parent) node;
+            foundStyleSheets.addAll(parent.getStyleClass());
+            for(Node child:parent.getChildrenUnmodifiable()) {
+                Set<String> childClasses = extractedStyleClassesFromNode(child);
+                foundStyleSheets.addAll(childClasses);
+            }
+        }
+        return foundStyleSheets;
     }
 
     public Node getComponent() {
