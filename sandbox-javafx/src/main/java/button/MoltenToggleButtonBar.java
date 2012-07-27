@@ -1,6 +1,7 @@
 package button;
 
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +14,11 @@ import java.util.List;
 
 public class MoltenToggleButtonBar {
     private static final String MoltenButtonBar = MoltenToggleButtonBar.class.getResource("MoltenButtonBar.css").toExternalForm();
-    private ToggleGroup toggleGroup = new ToggleGroup();
-    private List<ToggleButton> buttons = new ArrayList<>();
-    private HBox container = new HBox();
+
+    private final ToggleGroup toggleGroup = new ToggleGroup();
+    private final List<ToggleButton> buttons = new ArrayList<>();
+    private final Group limitHBox = new Group();
+    private final HBox container = new HBox();
 
     public ToggleButton addToggleButton(String text) {
         ToggleButton toggleButton = new ToggleButton(text);
@@ -29,7 +32,8 @@ public class MoltenToggleButtonBar {
 
     public void addButtonsTo(Pane pane) {
         addInternal(container);
-        pane.getChildren().add(container);
+        limitHBox.getChildren().add(container);
+        pane.getChildren().add(limitHBox);
     }
 
     private void addInternal(Pane pane) {
