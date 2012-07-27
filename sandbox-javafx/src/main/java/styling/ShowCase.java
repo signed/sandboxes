@@ -36,7 +36,7 @@ public class ShowCase {
         Node newComponent = exhibit.getComponent();
         Group group = new Group();
         group.getChildren().add(newComponent);
-        componentHolderPane.setCenter(newComponent);
+        componentHolderPane.setCenter(group);
     }
 
     public void integrateInto(NodeContainer parent) {
