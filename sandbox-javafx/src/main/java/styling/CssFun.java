@@ -4,9 +4,12 @@ import com.github.signed.protocols.jvm.InMemoryUrl;
 import com.github.signed.protocols.jvm.MemoryDictionary;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +20,7 @@ import javafx.stage.WindowEvent;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static styling.Family.adapted;
 
@@ -71,6 +75,25 @@ public class CssFun extends Application {
         BorderPane mainPane = new BorderPane();
         mainPane.setCenter(splitPane);
         mainPane.setBottom(forum.component());
+        Button button = new Button("apply supported style classes");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                exhibit.putStyleClassesInto(new StyleClassSink() {
+                    @Override
+                    public void consume(List<String> styleClasses) {
+                        StringBuilder builder = new StringBuilder();
+                        for (String styleClass : styleClasses) {
+                            builder.append(".").append(styleClass).append("{").append("\n");
+                            builder.append("\n");
+                            builder.append("}").append("\n");
+                        }
+                        styleSheetPad.showStyle(builder.toString());
+                    }
+                });
+            }
+        });
+        mainPane.setTop(button);
 
         Scene scene = new Scene(mainPane);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, new Magnifier(exhibit));

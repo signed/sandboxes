@@ -4,6 +4,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Exhibit implements Manican, Scalable{
 
     private Node node;
@@ -44,6 +47,19 @@ public class Exhibit implements Manican, Scalable{
     @Override
     public void clearStyle() {
         node.setStyle("");
+    }
+
+
+    public void putStyleClassesInto(StyleClassSink sink) {
+        sink.consume(extractedStyleClassesFromNode());
+    }
+
+    private List<String> extractedStyleClassesFromNode() {
+        List<String> styles = new ArrayList<>();
+        styles.add("molten-button-bar-button-left");
+        styles.add("molten-button-bar-button-middle");
+        styles.add("molten-button-bar-button-right");
+        return styles;
     }
 
     public Node getComponent() {
