@@ -1,7 +1,6 @@
 package concurrent;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -21,14 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static javafx.concurrent.WorkerStateEvent.WORKER_STATE_CANCELLED;
-import static javafx.concurrent.WorkerStateEvent.WORKER_STATE_FAILED;
-import static javafx.concurrent.WorkerStateEvent.WORKER_STATE_SUCCEEDED;
 
 public class BackgroundJobs extends Application {
-
-    private final ProgressIndicator progressIndicator = new ProgressIndicator();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static void main(String[] arguments) {
         launch(arguments);
@@ -36,45 +29,27 @@ public class BackgroundJobs extends Application {
 
     private final Label messageLabel = new Label("We start in Germany");
     private final Label eventTypeLabel = new Label("empty");
+
     private final List<Leg> journey = newArrayList(new Leg("France"), new Leg("Spain"), new Leg("Portugal"));
-    private final Task<StringWrapper> task = new TravelToPortugal(journey);
+    private final Task<TravelReport> task = new TravelToPortugal(journey);
+    private final ProgressIndicator progressIndicator = new ProgressIndicator();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final TravelService travelService = new TravelService();
 
-    public static class StartEndWorkerAdapter implements EventHandler<WorkerStateEvent> {
-        private boolean started = false;
-        private boolean ended = false;
 
-        @Override
-        public void handle(WorkerStateEvent workerStateEvent) {
-            EventType<? extends Event> type = workerStateEvent.getEventType();
-            boolean isBackGroundComputationDone = type == WORKER_STATE_CANCELLED || type == WORKER_STATE_FAILED || type == WORKER_STATE_SUCCEEDED;
-            boolean backGroupJobRunning = !isBackGroundComputationDone;
-
-            if(backGroupJobRunning && !started){
-                started = true;
-                this.started(workerStateEvent);
-            }else if(isBackGroundComputationDone && started && !ended) {
-                ended = true;
-                this.ended(workerStateEvent);
-            }
-        }
-
-        protected  void started(WorkerStateEvent workerStateEvent){
-            //nothing to do
-        }
-
-        protected  void ended(WorkerStateEvent workerStateEvent){
-            //nothing to do
-        }
+    public static interface EventSource {
+        <T extends Event> void addEventHandler(final EventType<T> eventType, final EventHandler<? super T> eventHandler);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("implicit exit on default: "+Platform.isImplicitExit());
         VBox container = new VBox();
         HBox buttonBar = createButtonBar();
         messageLabel.textProperty().bind(task.messageProperty());
 
-        task.addEventHandler(WorkerStateEvent.ANY, new EventHandler<WorkerStateEvent>() {
+        Task<TravelReport> worker = task;
+
+        worker.addEventHandler(WorkerStateEvent.ANY, new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
                 eventTypeLabel.setText(workerStateEvent.getEventType().getName());
@@ -82,7 +57,7 @@ public class BackgroundJobs extends Application {
             }
         });
 
-        task.addEventHandler(WorkerStateEvent.ANY, new StartEndWorkerAdapter() {
+        worker.addEventHandler(WorkerStateEvent.ANY, new StartEndWorkerAdapter() {
             @Override
             protected void started(WorkerStateEvent workerStateEvent) {
                 progressIndicator.setVisible(true);
@@ -115,21 +90,24 @@ public class BackgroundJobs extends Application {
         startTravel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                runTask(task);
+                executeSingleTask();
             }
         });
 
         carBreaksDown.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                task.cancel();
+                stopExecution();
             }
         });
         return buttonBar;
     }
 
-    private void runTask(Task<StringWrapper> task) {
-        executorService.execute(task);
+    private void stopExecution() {
+        task.cancel();
     }
 
+    private void executeSingleTask() {
+        executorService.execute(task);
+    }
 }

@@ -4,7 +4,7 @@ import javafx.concurrent.Task;
 
 import java.util.List;
 
-public class TravelToPortugal extends Task<StringWrapper> {
+public class TravelToPortugal extends Task<TravelReport> {
     private List<Leg> journey;
 
     public TravelToPortugal(List<Leg> journey) {
@@ -12,7 +12,7 @@ public class TravelToPortugal extends Task<StringWrapper> {
     }
 
     @Override
-    protected StringWrapper call() throws Exception {
+    protected TravelReport call() throws Exception {
         int legsCompleted = 0;
         int totalNumberOfLegs = journey.size();
         updateProgress(0, totalNumberOfLegs);
@@ -33,6 +33,6 @@ public class TravelToPortugal extends Task<StringWrapper> {
         if( null !=lastLeg){
             destination = lastLeg.destination;
         }
-        return new StringWrapper(destination);
+        return new TravelReport();
     }
 }
