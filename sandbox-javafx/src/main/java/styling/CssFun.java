@@ -62,7 +62,6 @@ public class CssFun extends Application {
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
 
-
         styleInputs.integrate(stylePad, "style");
         styleInputs.integrate(styleSheetPad, "stylesheet");
         styleInputs.integrateInto(adapted(splitPane));
