@@ -4,9 +4,7 @@ import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static concurrent.WorthToObserver.adapt;
 
 public class BackgroundJobs extends Application {
 
@@ -31,43 +30,33 @@ public class BackgroundJobs extends Application {
     private final Label eventTypeLabel = new Label("empty");
 
     private final List<Leg> journey = newArrayList(new Leg("France"), new Leg("Spain"), new Leg("Portugal"));
-    private final Task<TravelReport> task = new TravelToPortugal(journey);
     private final ProgressIndicator progressIndicator = new ProgressIndicator();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final Task<TravelReport> task = new TravelToPortugal(journey);
     private final TravelService travelService = new TravelService();
 
+    private final ExecutorService executor = Executors.newFixedThreadPool(3);
+    private final Starter taskStarter = new TaskStarter(task, executor);
+    private final Starter serviceStarter = new ServiceStarter(travelService);
 
-    public static interface EventSource {
-        <T extends Event> void addEventHandler(final EventType<T> eventType, final EventHandler<? super T> eventHandler);
-    }
+    private final BackgroundExecution service = new BackgroundExecution(adapt(travelService), serviceStarter, travelService);
+    private final BackgroundExecution singleTask = new BackgroundExecution(adapt(task), taskStarter, task);
+
+    private final BackgroundExecution actual = service;
 
     @Override
     public void start(Stage stage) throws Exception {
+        travelService.setExecutor(executor);
+
         VBox container = new VBox();
         HBox buttonBar = createButtonBar();
-        messageLabel.textProperty().bind(task.messageProperty());
 
-        Task<TravelReport> worker = task;
+        messageLabel.textProperty().bind(actual.messageProperty());
 
-        worker.addEventHandler(WorkerStateEvent.ANY, new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                eventTypeLabel.setText(workerStateEvent.getEventType().getName());
-                System.out.println(task.getState());
-            }
-        });
+        WorkerStatePresenter workerStatePresenter = new WorkerStatePresenter(eventTypeLabel);
+        ProgressPresenter progressPresenter = new ProgressPresenter(progressIndicator);
 
-        worker.addEventHandler(WorkerStateEvent.ANY, new StartEndWorkerAdapter() {
-            @Override
-            protected void started(WorkerStateEvent workerStateEvent) {
-                progressIndicator.setVisible(true);
-            }
-
-            @Override
-            protected void ended(WorkerStateEvent workerStateEvent) {
-                progressIndicator.setVisible(false);
-            }
-        });
+        actual.addEventHandler(WorkerStateEvent.ANY, workerStatePresenter);
+        actual.addEventHandler(WorkerStateEvent.ANY, progressPresenter);
 
         container.getChildren().addAll(buttonBar, messageLabel, eventTypeLabel, progressIndicator);
         progressIndicator.setVisible(false);
@@ -78,7 +67,7 @@ public class BackgroundJobs extends Application {
 
     @Override
     public void stop() throws Exception {
-        executorService.shutdown();
+        executor.shutdown();
     }
 
     private HBox createButtonBar() {
@@ -86,11 +75,10 @@ public class BackgroundJobs extends Application {
         Button startTravel = new Button("start background job");
         Button carBreaksDown = new Button("car breaks down");
         buttonBar.getChildren().addAll(startTravel, carBreaksDown);
-
         startTravel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                executeSingleTask();
+                runIt();
             }
         });
 
@@ -104,10 +92,13 @@ public class BackgroundJobs extends Application {
     }
 
     private void stopExecution() {
-        task.cancel();
+        actual.cancel();
     }
 
-    private void executeSingleTask() {
-        executorService.execute(task);
+    public void runIt() {
+        travelService.journeyProperty().clear();
+        travelService.journeyProperty().addAll(journey);
+        actual.start();
     }
+
 }
