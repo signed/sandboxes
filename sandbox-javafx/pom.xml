@@ -62,13 +62,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.oracle.javafx</groupId>
-            <artifactId>javafx-runtime-jar</artifactId>
-            <version>2.2.0-beta-09</version>
-            <scope>system</scope>
-            <systemPath>${fx.home}/rt/lib/jfxrt.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-javafx</artifactId>
             <version>4.2</version>
