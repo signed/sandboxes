@@ -10,9 +10,11 @@ import java.util.Set;
 
 public class Exhibit implements Manican, Scalable{
 
+    private final String name;
     private Node node;
 
-    public Exhibit(Node node) {
+    public Exhibit(String name, Node node) {
+        this.name = name;
         this.node = node;
     }
 
@@ -81,5 +83,9 @@ public class Exhibit implements Manican, Scalable{
 
     private Parent getParent() {
         return (Parent) node;
+    }
+
+    public String getName() {
+        return name;
     }
 }

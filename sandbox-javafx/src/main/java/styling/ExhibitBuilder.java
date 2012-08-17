@@ -14,13 +14,13 @@ public class ExhibitBuilder {
         TextArea textArea = new TextArea("Some lyrics\nHip Hop runner von dem Dach");
         textArea.setMaxWidth(250);
         textArea.setMaxHeight(200);
-        return new Exhibit(textArea);
+        return new Exhibit("TextArea", textArea);
     }
 
     public Exhibit prepareToggleButton() {
         ToggleButton node = new ToggleButton("Ich bin der Text");
         node.getStyleClass().add("fancy-toggle-button");
-        return new Exhibit(node);
+        return new Exhibit("ToggleButton", node);
     }
 
     public Exhibit prepareMoltenButtonBarDemo() {
@@ -45,7 +45,7 @@ public class ExhibitBuilder {
 
         HBox box = new HBox();
         moltenToggleButtonBar.addButtonsTo(box);
-        return new Exhibit(box.getChildren().get(0));
+        return new Exhibit("MoltenButtonBar", box.getChildren().get(0));
     }
 
 
