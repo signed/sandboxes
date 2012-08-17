@@ -22,6 +22,11 @@ public class Indicator extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
+        StackPane stack = new StackPane();
+        stack.setStyle("-fx-border-width:1;");
+
+        progressIndicator.setStyle("-fx-border-width:1;");
+        stack.getChildren().add(progressIndicator);
 
         VBox vBox = new VBox();
         HBox buttonBox = new HBox();
@@ -41,7 +46,7 @@ public class Indicator extends Application{
         });
         buttonBox.getChildren().addAll(show, hide);
         hideProgressIndicator();
-        stackPane.getChildren().addAll(new Button("behind the progress indicator"),progressIndicator);
+        stackPane.getChildren().addAll(new Button("behind the progress indicator"),stack);
         vBox.getChildren().addAll(buttonBox, stackPane);
         stage.setScene(new Scene(vBox));
         stage.show();

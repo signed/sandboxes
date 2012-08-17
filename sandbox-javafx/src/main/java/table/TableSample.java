@@ -1,5 +1,6 @@
 package table;
 
+import domain.ANumber;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
