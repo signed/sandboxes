@@ -1,7 +1,7 @@
 package progress.variants;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 
 public interface ProgressBarAndButtonStrategy {
@@ -9,5 +9,5 @@ public interface ProgressBarAndButtonStrategy {
 
     void configureButton(Button button);
 
-    void configureProgressBarr(ProgressBar progressIndicator, Button button);
+    void configureProgressBarr(ProgressIndicator progressIndicator, Button button);
 }
