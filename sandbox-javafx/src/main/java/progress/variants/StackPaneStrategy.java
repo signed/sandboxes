@@ -19,9 +19,12 @@ public class StackPaneStrategy implements ProgressBarAndButtonStrategy {
 
     @Override
     public void configureProgressBarr(ProgressBar progressIndicator, Button button) {
-        progressIndicator.setMaxWidth(27);
         progressIndicator.maxWidthProperty().bind(button.widthProperty());
         progressIndicator.prefWidthProperty().bind(button.widthProperty());
         progressIndicator.minWidthProperty().bind(button.widthProperty());
+
+        progressIndicator.maxHeightProperty().bind(button.heightProperty());
+        progressIndicator.prefHeightProperty().bind(button.heightProperty());
+        progressIndicator.minHeightProperty().bind(button.heightProperty());
     }
 }
