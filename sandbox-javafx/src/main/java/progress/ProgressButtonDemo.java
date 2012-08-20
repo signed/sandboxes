@@ -11,8 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import progress.variants.ProgressBarAndButton;
+import progress.variants.ProgressButton;
+import progress.variants.StackPaneStrategy;
+import progress.variants.VBoxStrategy;
 
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class ProgressButtonDemo extends Application {
 
@@ -83,8 +89,7 @@ public class ProgressButtonDemo extends Application {
 
     private HBox createButtonBar() {
         HBox buttonBar = new HBox();
-        ProgressButton progressBarAndButtonInVBox = new ProgressBarAndButtonInVBox();
-        allProgressDisplays.add(progressBarAndButtonInVBox);
+        allProgressDisplays.addAll(asList(new ProgressBarAndButton(new VBoxStrategy()), new ProgressBarAndButton(new StackPaneStrategy())));
         buttonBar.getChildren().addAll(allProgressDisplays());
         return buttonBar;
     }

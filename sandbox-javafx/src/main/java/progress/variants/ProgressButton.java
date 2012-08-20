@@ -1,4 +1,4 @@
-package progress;
+package progress.variants;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
