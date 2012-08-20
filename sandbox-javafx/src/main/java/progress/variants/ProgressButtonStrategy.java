@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 
-public interface ProgressBarAndButtonStrategy {
+public interface ProgressButtonStrategy {
     Pane createPane();
 
     void configureButton(Button button);

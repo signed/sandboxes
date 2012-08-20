@@ -9,20 +9,21 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class ConfiguratbleProgressButton implements ProgressButton {
+public class ConfigurableProgressButton implements ProgressButton {
     private Pane container = new StackPane();
     private final Button button = new Button("long running job");
     private final ProgressIndicator progressIndicator;
 
-    public static ProgressButton aBarWith(ProgressBarAndButtonStrategy strategy) {
-        return new ConfiguratbleProgressButton(new ProgressBar(), strategy);
+    public static ProgressButton aBarWith(ProgressButtonStrategy strategy) {
+        ProgressBar bar = new ProgressBar();
+        return new ConfigurableProgressButton(bar, strategy);
     }
 
-    public static ProgressButton aWheelWith(ProgressBarAndButtonStrategy strategy) {
-        return new ConfiguratbleProgressButton(new ProgressIndicator(), strategy);
+    public static ProgressButton aWheelWith(ProgressButtonStrategy strategy) {
+        return new ConfigurableProgressButton(new ProgressIndicator(), strategy);
     }
 
-    public ConfiguratbleProgressButton(ProgressIndicator progressIndicator, ProgressBarAndButtonStrategy strategy) {
+    public ConfigurableProgressButton(ProgressIndicator progressIndicator, ProgressButtonStrategy strategy) {
         container = strategy.createPane();
         strategy.configureButton(button);
         this.progressIndicator = progressIndicator;

@@ -11,7 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import progress.variants.ConfiguratbleProgressButton;
+import progress.variants.ConfigurableProgressButton;
+import progress.variants.ConfigurableProgressButton;
 import progress.variants.ProgressButton;
 import progress.variants.StackPaneStrategy;
 import progress.variants.VBoxStrategy;
@@ -89,9 +90,9 @@ public class ProgressButtonDemo extends Application {
 
     private HBox createButtonBar() {
         HBox buttonBar = new HBox();
-        ProgressButton barVBox = ConfiguratbleProgressButton.aBarWith(new VBoxStrategy());
-        ProgressButton barStackPane = ConfiguratbleProgressButton.aBarWith(new StackPaneStrategy());
-        ProgressButton wheelStackPane = ConfiguratbleProgressButton.aWheelWith(new StackPaneStrategy());
+        ProgressButton barVBox = ConfigurableProgressButton.aBarWith(new VBoxStrategy());
+        ProgressButton barStackPane = ConfigurableProgressButton.aBarWith(new StackPaneStrategy());
+        ProgressButton wheelStackPane = ConfigurableProgressButton.aWheelWith(new StackPaneStrategy());
         allProgressDisplays.addAll(asList(barVBox, barStackPane, wheelStackPane));
         buttonBar.getChildren().addAll(allProgressDisplays());
         return buttonBar;

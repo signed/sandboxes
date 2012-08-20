@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class VBoxStrategy implements ProgressBarAndButtonStrategy{
+public class VBoxStrategy implements ProgressButtonStrategy {
     @Override
     public Pane createPane() {
         VBox container = new VBox();

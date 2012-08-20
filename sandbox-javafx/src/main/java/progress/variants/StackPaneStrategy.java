@@ -5,7 +5,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class StackPaneStrategy implements ProgressBarAndButtonStrategy {
+public class StackPaneStrategy implements ProgressButtonStrategy {
 
     @Override
     public Pane createPane() {
