@@ -47,6 +47,4 @@ public class ExhibitBuilder {
         moltenToggleButtonBar.addButtonsTo(box);
         return new Exhibit("MoltenButtonBar", box.getChildren().get(0));
     }
-
-
 }
