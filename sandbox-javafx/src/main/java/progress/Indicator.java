@@ -23,9 +23,6 @@ public class Indicator extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         StackPane stack = new StackPane();
-        stack.setStyle("-fx-border-width:1;");
-
-        progressIndicator.setStyle("-fx-border-width:1;");
         stack.getChildren().add(progressIndicator);
 
         VBox vBox = new VBox();
