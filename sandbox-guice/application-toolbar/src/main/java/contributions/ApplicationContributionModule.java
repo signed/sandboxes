@@ -2,6 +2,6 @@ package contributions;
 
 import com.google.inject.Module;
 
-public interface ApplicationContributionModule {
-    Module instance();
+public interface ApplicationContributionModule extends Module {
+
 }

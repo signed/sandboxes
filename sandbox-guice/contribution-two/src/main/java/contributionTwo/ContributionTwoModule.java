@@ -2,7 +2,6 @@ package contributionTwo;
 
 import application.ToolBarContribution;
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import com.google.inject.multibindings.Multibinder;
 import contributions.ApplicationContributionModule;
 
@@ -13,10 +12,5 @@ public class ContributionTwoModule extends AbstractModule implements Application
         toolBarContributionMultibinder.addBinding().to(ContributionTwo.class);
 
         bind(TwoView.class).to(TwoViewJavaFx.class);
-    }
-
-    @Override
-    public Module instance() {
-        return this;
     }
 }

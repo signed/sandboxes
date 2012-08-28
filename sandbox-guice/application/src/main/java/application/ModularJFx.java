@@ -28,7 +28,7 @@ public class ModularJFx extends Application {
 
         ServiceLoader<ApplicationContributionModule> guiceModules = ServiceLoader.load(ApplicationContributionModule.class);
         for (ApplicationContributionModule guiceModule : guiceModules) {
-            allModules.add(guiceModule.instance());
+            allModules.add(guiceModule);
         }
 
         return allModules;
