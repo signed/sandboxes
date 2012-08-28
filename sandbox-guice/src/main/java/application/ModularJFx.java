@@ -1,9 +1,8 @@
 package application;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import contribution.ContributionOne;
+import contribution.ContributionOneModule;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,8 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 public class ModularJFx extends Application {
 
@@ -25,17 +22,14 @@ public class ModularJFx extends Application {
         void execute();
     }
 
-    private final Injector injector = Guice.createInjector(new ApplicationModule());
+    private final Injector injector = Guice.createInjector(new ApplicationModule(), new ContributionOneModule());
 
     @Override
     public void start(Stage stage) throws Exception {
         final ApplicationModel model = injector.getInstance(ApplicationModel.class);
-        List<ToolBarContribution> contributions = Lists.newArrayList();
-
-        contributions.add(injector.getInstance(ContributionOne.class));
 
         ToolBar toolBar = new ToolBar();
-        for (ToolBarContribution contribution : contributions) {
+        for (ToolBarContribution contribution : injector.getInstance(ToolBarContributions.class)) {
             contribution.addTo(toolBar);
         }
 
