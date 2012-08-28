@@ -1,15 +1,15 @@
-package contributionOne;
+package contributionTwo;
 
 import application.ToolBarContribution;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
-public class ContributionOneModule extends AbstractModule{
+public class ContributionTwoModule extends AbstractModule{
     @Override
     protected void configure() {
         Multibinder<ToolBarContribution> toolBarContributionMultibinder = Multibinder.newSetBinder(binder(), ToolBarContribution.class);
-        toolBarContributionMultibinder.addBinding().to(ContributionOne.class);
+        toolBarContributionMultibinder.addBinding().to(ContributionTwo.class);
 
-        bind(OneView.class).to(OneViewJavaFx.class);
+        bind(TwoView.class).to(TwoViewJavaFx.class);
     }
 }

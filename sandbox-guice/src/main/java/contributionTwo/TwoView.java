@@ -1,9 +1,9 @@
-package contributionOne;
+package contributionTwo;
 
 import lang.Closure;
 import javafx.scene.control.ToolBar;
 
-public interface OneView {
+public interface TwoView {
 
     void onAction(Closure closure);
 
