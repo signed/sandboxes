@@ -18,7 +18,7 @@ public class ModularJFx extends Application {
         launch(args);
     }
 
-    private final Injector injector = Guice.createInjector(new ApplicationModule(), new ContributionOneModule(), new ContributionTwoModule());
+    private final Injector injector = Guice.createInjector(new ApplicationModule(), new ContributionOneModule(), new ContributionTwoModule(), new ToolBarModule());
 
     @Override
     public void start(Stage stage) throws Exception {

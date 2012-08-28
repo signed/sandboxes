@@ -8,7 +8,6 @@ import com.google.inject.Singleton;
 public class ApplicationModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(ApplicationModel.class).in(Singleton.class);
         bind(InputView.class).to(InputViewJavaFx.class).in(Singleton.class);
     }
 }
