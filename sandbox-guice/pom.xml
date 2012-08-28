@@ -11,5 +11,9 @@
 
     <modules>
         <module>application</module>
+        <module>contribution-one</module>
+        <module>contribution-two</module>
+        <module>application-toolbar</module>
+        <module>lang</module>
     </modules>
 </project>

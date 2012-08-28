@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>application</artifactId>
+    <artifactId>lang</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>application</name>
+    <name>lang</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,26 +90,6 @@
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
             <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>contribution-one</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>contribution-two</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-toolbar</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>lang</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
