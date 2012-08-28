@@ -2,15 +2,19 @@ package application;
 
 import application.input.InputPresenter;
 import application.input.InputView;
+import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import contributionOne.ContributionOneModule;
-import contributionTwo.ContributionTwoModule;
+import com.google.inject.Module;
+import contributions.ApplicationContributionModule;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+
+import java.util.List;
+import java.util.ServiceLoader;
 
 public class ModularJFx extends Application {
 
@@ -18,7 +22,19 @@ public class ModularJFx extends Application {
         launch(args);
     }
 
-    private final Injector injector = Guice.createInjector(new ApplicationModule(), new ContributionOneModule(), new ContributionTwoModule(), new ToolBarModule());
+    private static List<Module> allGuiceModules(){
+        List<Module> allModules = Lists.newArrayList();
+        allModules.add(new ApplicationModule());
+
+        ServiceLoader<ApplicationContributionModule> guiceModules = ServiceLoader.load(ApplicationContributionModule.class);
+        for (ApplicationContributionModule guiceModule : guiceModules) {
+            allModules.add(guiceModule.instance());
+        }
+
+        return allModules;
+    }
+
+    private final Injector injector = Guice.createInjector(allGuiceModules());
 
     @Override
     public void start(Stage stage) throws Exception {
