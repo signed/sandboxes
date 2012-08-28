@@ -6,7 +6,7 @@ import javafx.scene.control.ToolBar;
 
 import javax.inject.Inject;
 
-public class ContributionTwo implements ToolBarContribution{
+public class ContributionTwo implements ToolBarContribution {
     private final TwoView view;
 
     @Inject

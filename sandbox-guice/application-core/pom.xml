@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>contribution-one</artifactId>
+    <artifactId>application-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Contribution One</name>
+    <name>application core</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,17 +93,17 @@
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-core</artifactId>
+            <artifactId>contribution-one</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.signed.sandboxes</groupId>
+            <artifactId>contribution-two</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
             <artifactId>lang</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-toolbar</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

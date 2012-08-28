@@ -93,12 +93,17 @@
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-toolbar</artifactId>
+            <artifactId>application-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
             <artifactId>lang</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.signed.sandboxes</groupId>
+            <artifactId>application-toolbar</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
