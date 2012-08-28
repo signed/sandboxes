@@ -1,11 +1,14 @@
 package application;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import contribution.ContributionOne;
-import contribution.JavaFxOneView;
-import contribution.OneView;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -22,12 +25,14 @@ public class ModularJFx extends Application {
         void execute();
     }
 
+    private final Injector injector = Guice.createInjector(new ApplicationModule());
+
     @Override
     public void start(Stage stage) throws Exception {
+        final ApplicationModel model = injector.getInstance(ApplicationModel.class);
         List<ToolBarContribution> contributions = Lists.newArrayList();
-        ApplicationModel applicationModel = new ApplicationModel();
-        OneView oneView = new JavaFxOneView();
-        contributions.add(new ContributionOne(oneView, applicationModel));
+
+        contributions.add(injector.getInstance(ContributionOne.class));
 
         ToolBar toolBar = new ToolBar();
         for (ToolBarContribution contribution : contributions) {
@@ -35,9 +40,18 @@ public class ModularJFx extends Application {
         }
 
         FlowPane pane = new FlowPane();
-        pane.getChildren().add(toolBar);
+        TextArea textArea = new TextArea();
+        textArea.setText(model.message());
+        textArea.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
+                model.message(s1);
+            }
+        });
+        pane.getChildren().addAll(toolBar, textArea);
 
         stage.setScene(new Scene(pane));
         stage.show();
     }
+
 }
