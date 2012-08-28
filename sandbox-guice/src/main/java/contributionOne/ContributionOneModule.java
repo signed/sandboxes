@@ -1,4 +1,4 @@
-package contribution;
+package contributionOne;
 
 import application.ToolBarContribution;
 import com.google.inject.AbstractModule;
@@ -9,5 +9,7 @@ public class ContributionOneModule extends AbstractModule{
     protected void configure() {
         Multibinder<ToolBarContribution> toolBarContributionMultibinder = Multibinder.newSetBinder(binder(), ToolBarContribution.class);
         toolBarContributionMultibinder.addBinding().to(ContributionOne.class);
+
+        bind(OneView.class).to(JavaFxOneView.class);
     }
 }

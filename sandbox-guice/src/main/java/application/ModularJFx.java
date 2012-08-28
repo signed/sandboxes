@@ -2,7 +2,7 @@ package application;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import contribution.ContributionOneModule;
+import contributionOne.ContributionOneModule;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

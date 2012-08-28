@@ -1,4 +1,4 @@
-package contribution;
+package contributionOne;
 
 import application.ModularJFx;
 import javafx.scene.control.ToolBar;
