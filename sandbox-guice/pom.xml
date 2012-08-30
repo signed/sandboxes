@@ -16,5 +16,6 @@
         <module>application-toolbar</module>
         <module>application-core</module>
         <module>lang</module>
+        <module>parent</module>
     </modules>
 </project>
