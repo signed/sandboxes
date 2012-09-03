@@ -2,16 +2,13 @@ package localvariabletofield;
 
 public class ChangesBehaviour {
 
-    private final DomainModel originalModel;
     private final DomainModel model;
 
-
-    public ChangesBehaviour(DomainModel model, DomainModel filteredDomainModel) {
-        this.originalModel = model;
-        this.model = filteredDomainModel;
+    public ChangesBehaviour(DomainModel model, DomainModel filteredModel) {
+        this.model = filteredModel;
     }
 
     public void initPresentation() {
-        AnotherDomainModel filterModel = new AnotherDomainModel(model);
+        AnotherDomainModel derivedDomainModel = new AnotherDomainModel(model);
     }
 }
