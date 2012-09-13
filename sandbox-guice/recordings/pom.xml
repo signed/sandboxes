@@ -11,7 +11,7 @@
 
     <artifactId>recordings</artifactId>
 
-    <name>application toolbar</name>
+    <name>recordings</name>
 
     <dependencies>
         <dependency>
