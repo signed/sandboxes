@@ -19,5 +19,6 @@
         <module>lang</module>
         <module>parent</module>
         <module>recordings</module>
+        <module>input-view</module>
     </modules>
 </project>
