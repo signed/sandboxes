@@ -42,7 +42,7 @@ public class ModularJFx extends Application {
         for (ToolBarContribution contribution : injector.getInstance(ToolBarContributions.class)) {
             contribution.addTo(toolBar);
         }
-        injector.getInstance(InputPresenter.class);
+        injector.getInstance(InputPresenter.class).wireModelAndView();
 
         FlowPane pane = new FlowPane();
         InputView inputView = injector.getInstance(InputView.class);
