@@ -38,20 +38,26 @@ public class ModularJFx extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        putSceneOn(stage);
+        linkModelAndView();
+        stage.show();
+    }
+
+    private void linkModelAndView() {
+        injector.getInstance(InputPresenter.class).wireModelAndView();
+    }
+
+    private void putSceneOn(Stage stage) {
         ToolBar toolBar = new ToolBar();
         for (ToolBarContribution contribution : injector.getInstance(ToolBarContributions.class)) {
             contribution.addTo(toolBar);
         }
-        injector.getInstance(InputPresenter.class).wireModelAndView();
 
         FlowPane pane = new FlowPane();
         InputView inputView = injector.getInstance(InputView.class);
 
         pane.getChildren().add(toolBar);
         inputView.addTo(pane);
-
         stage.setScene(new Scene(pane));
-        stage.show();
     }
-
 }
