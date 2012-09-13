@@ -2,6 +2,11 @@ package application;
 
 import application.input.InputPresenter;
 import application.input.InputView;
+import application.input.Presenter;
+import application.input.SubordinatingView;
+import application.recordings.RecordingsModel;
+import application.recordings.RecordingsPresenter;
+import application.recordings.view.RecordingsView;
 import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -40,26 +45,37 @@ public class ModularJFx extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        putSceneOn(stage);
-        linkModelAndView();
+        Presenter presenter = putSceneOn(stage);
+        linkModelAndView(presenter);
         stage.show();
     }
 
-    private void linkModelAndView() {
+    private void linkModelAndView(Presenter presenter) {
         injector.getInstance(InputPresenter.class).wireModelAndView();
+        presenter.wireModelAndView();
     }
 
-    private void putSceneOn(Stage stage) {
-        ToolBar toolBar = new ToolBar();
-        for (ToolBarContribution contribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ToolBarContribution>>(){}))) {
-            contribution.addTo(toolBar);
-        }
+    private Presenter putSceneOn(Stage stage) {
+        ToolBar toolBar = createToolBar();
+
+        RecordingsModel model = new RecordingsModel();
+        RecordingsView view = new RecordingsView();
 
         FlowPane pane = new FlowPane();
-        InputView inputView = injector.getInstance(InputView.class);
+        SubordinatingView subordinatingView = injector.getInstance(InputView.class);
 
         pane.getChildren().add(toolBar);
-        inputView.addTo(pane);
+        subordinatingView.addTo(pane);
+        view.addTo(pane);
         stage.setScene(new Scene(pane));
+        return new RecordingsPresenter(model, view);
+    }
+
+    private ToolBar createToolBar() {
+        ToolBar toolBar = new ToolBar();
+        for (ToolBarContribution contribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ToolBarContribution>>() { }))) {
+            contribution.addTo(toolBar);
+        }
+        return toolBar;
     }
 }

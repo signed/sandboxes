@@ -6,7 +6,7 @@ import lang.Closure;
 
 import javax.inject.Inject;
 
-public class InputPresenter {
+public class InputPresenter implements Presenter {
     private final InputView view;
     private final ApplicationModel model;
 
@@ -17,6 +17,7 @@ public class InputPresenter {
     }
 
 
+    @Override
     public void wireModelAndView(){
         view.onChange(new ArgumentClosure<String>() {
             @Override
