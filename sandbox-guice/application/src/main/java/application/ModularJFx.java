@@ -11,7 +11,6 @@ import com.google.inject.TypeLiteral;
 import extensionpoints.ViewContribution;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import micro.AllContributors;
@@ -53,25 +52,14 @@ public class ModularJFx extends Application {
     }
 
     private void putSceneOn(Stage stage) {
-        ToolBar toolBar = createToolBar();
-
 
         FlowPane pane = new FlowPane();
         SubordinatingView subordinatingView = injector.getInstance(InputView.class);
-        pane.getChildren().add(toolBar);
         subordinatingView.addTo(pane);
 
         for (ViewContribution viewContribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ViewContribution>>() { }))) {
             viewContribution.addTo(pane);
         }
         stage.setScene(new Scene(pane));
-    }
-
-    private ToolBar createToolBar() {
-        ToolBar toolBar = new ToolBar();
-        for (ToolBarContribution contribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ToolBarContribution>>() { }))) {
-            contribution.addTo(toolBar);
-        }
-        return toolBar;
     }
 }
