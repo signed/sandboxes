@@ -5,7 +5,9 @@ import application.input.InputView;
 import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Module;
+import com.google.inject.TypeLiteral;
 import contributions.ApplicationContributionModule;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -49,7 +51,7 @@ public class ModularJFx extends Application {
 
     private void putSceneOn(Stage stage) {
         ToolBar toolBar = new ToolBar();
-        for (ToolBarContribution contribution : injector.getInstance(ToolBarContributions.class)) {
+        for (ToolBarContribution contribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ToolBarContribution>>(){}))) {
             contribution.addTo(toolBar);
         }
 
