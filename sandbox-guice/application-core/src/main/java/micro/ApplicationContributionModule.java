@@ -1,4 +1,4 @@
-package contributions;
+package micro;
 
 import com.google.inject.Module;
 

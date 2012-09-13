@@ -1,6 +1,7 @@
 package application.input;
 
 import lang.ArgumentClosure;
+import view.SubordinatingView;
 
 public interface InputView extends SubordinatingView {
 

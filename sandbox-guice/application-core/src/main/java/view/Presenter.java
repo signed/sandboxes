@@ -1,4 +1,4 @@
-package application.input;
+package view;
 
 public interface Presenter {
     void wireModelAndView();

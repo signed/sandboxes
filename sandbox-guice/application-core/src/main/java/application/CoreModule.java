@@ -2,7 +2,7 @@ package application;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import contributions.ApplicationContributionModule;
+import micro.ApplicationContributionModule;
 
 public class CoreModule extends AbstractModule implements ApplicationContributionModule{
     @Override

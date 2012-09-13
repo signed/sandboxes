@@ -1,6 +1,5 @@
 package application.recordings.view;
 
-import application.input.SubordinatingView;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -14,10 +13,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import org.joda.time.DateTime;
+import view.SubordinatingView;
 
 import java.util.Collection;
 
-public class RecordingsView implements SubordinatingView {
+public class RecordingsView implements SubordinatingView{
 
     private final TableView<Recording> table = new TableView<>();
     private final TableColumn<Recording, Series> seriesColumn = new TableColumn<>();

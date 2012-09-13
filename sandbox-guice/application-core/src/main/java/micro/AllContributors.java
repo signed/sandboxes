@@ -1,4 +1,4 @@
-package application;
+package micro;
 
 import javax.inject.Inject;
 import java.util.Iterator;

@@ -18,5 +18,6 @@
         <module>micro-plugin-core</module>
         <module>lang</module>
         <module>parent</module>
+        <module>recordings</module>
     </modules>
 </project>

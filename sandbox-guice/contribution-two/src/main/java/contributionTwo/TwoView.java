@@ -3,7 +3,7 @@ package contributionTwo;
 import lang.Closure;
 import javafx.scene.control.ToolBar;
 
-public interface TwoView {
+public interface TwoView  {
 
     void onAction(Closure closure);
 

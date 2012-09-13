@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -9,9 +9,9 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>application</artifactId>
+    <artifactId>recordings</artifactId>
 
-    <name>application</name>
+    <name>application toolbar</name>
 
     <dependencies>
         <dependency>
@@ -46,32 +46,12 @@
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>contribution-one</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>contribution-two</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-toolbar</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
             <artifactId>lang</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.signed.sandboxes</groupId>
             <artifactId>application-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>recordings</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

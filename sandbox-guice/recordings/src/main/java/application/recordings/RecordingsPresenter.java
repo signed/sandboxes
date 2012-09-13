@@ -1,9 +1,9 @@
 package application.recordings;
 
-import application.input.Presenter;
 import application.recordings.view.RecordingsView;
 import domain.Recording;
 import lang.ArgumentClosure;
+import view.Presenter;
 
 import java.util.List;
 

@@ -1,12 +1,9 @@
 package application;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.multibindings.Multibinder;
+import micro.ModuleWithContributionSupport;
 
-public abstract class BaseModuleForToolBarContributor extends AbstractModule{
+public abstract class BaseModuleForToolBarContributor extends ModuleWithContributionSupport{
     public void contributeToToolBarWith(Class<? extends ToolBarContribution> contributor){
-        Multibinder<ToolBarContribution> toolBarContributionMultibinder = Multibinder.newSetBinder(binder(), ToolBarContribution.class);
-        toolBarContributionMultibinder.addBinding().to(contributor);
+        contributeTo(ToolBarContribution.class, contributor);
     }
-
 }

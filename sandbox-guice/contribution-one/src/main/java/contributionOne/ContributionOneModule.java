@@ -1,9 +1,8 @@
 package contributionOne;
 
 import application.BaseModuleForToolBarContributor;
-import contributions.ApplicationContributionModule;
 
-public class ContributionOneModule extends BaseModuleForToolBarContributor implements ApplicationContributionModule {
+public class ContributionOneModule extends BaseModuleForToolBarContributor {
     @Override
     protected void configure() {
         contributeToToolBarWith(ContributionOne.class);
