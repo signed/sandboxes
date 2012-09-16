@@ -3,13 +3,14 @@ package localvariabletofield;
 public class PassesWrongModelAfterConvertingToField {
 
     private final DomainModel model;
+    private final AnotherDomainModel derivedDomainModel;
 
     public PassesWrongModelAfterConvertingToField(DomainModel model, DomainModel filteredModel) {
         this.model = filteredModel;
+        derivedDomainModel = new AnotherDomainModel(model);
     }
 
     public void initPresentation() {
-        AnotherDomainModel derivedDomainModel = new AnotherDomainModel(model);
     }
 
     public static class DomainModel {
