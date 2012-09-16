@@ -11,4 +11,13 @@ public class ChangesBehaviour {
     public void initPresentation() {
         AnotherDomainModel derivedDomainModel = new AnotherDomainModel(model);
     }
+
+    public static class DomainModel {
+    }
+
+    public static class AnotherDomainModel {
+        public AnotherDomainModel(DomainModel model) {
+            //To change body of created methods use File | Settings | File Templates.
+        }
+    }
 }
