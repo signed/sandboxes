@@ -1,16 +1,16 @@
 package some.other;
 
-import static some.other.ImportingClass.Constants.ConstantFromSameModule;
+import static some.other.ImportingClass.Constants.ReallyImportantConstant;
 
 public class ImportingClass {
 
     public static void main(String[] args) {
-        System.out.println(ConstantFromSameModule);
-        System.out.println(Constants.ConstantFromSameModule);
+        System.out.println(ReallyImportantConstant);
+        System.out.println(Constants.ReallyImportantConstant);
     }
 
     public static class Constants {
-        public static String ConstantFromSameModule = "important";
+        public static String ReallyImportantConstant = "important";
     }
 
     public static class ImportantConstants {
