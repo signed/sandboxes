@@ -8,7 +8,7 @@ public class IntroduceParameterProducesWarning {
     private final List<Generic<?>> elements;
 
     public IntroduceParameterProducesWarning() {
-        elements = newArrayList(new StringGeneric(), new IntegerGeneric());
+        elements = newArrayList(new SomeGeneric(), new SomeOtherGeneric());
     }
 
     public void doStuff() {
@@ -21,11 +21,11 @@ public class IntroduceParameterProducesWarning {
         return list;
     }
 
-    private static class Doom{
+    private static class SomeClass {
 
     }
 
-    private static class JudgmentDay{
+    private static class SomeOtherClass {
 
     }
 
@@ -33,9 +33,9 @@ public class IntroduceParameterProducesWarning {
 
     }
 
-    private static class StringGeneric implements Generic<Doom> {
+    private static class SomeGeneric implements Generic<SomeClass> {
     }
 
-    private static class IntegerGeneric implements Generic<JudgmentDay> {
+    private static class SomeOtherGeneric implements Generic<SomeOtherClass> {
     }
 }
