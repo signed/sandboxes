@@ -9,7 +9,10 @@ import com.google.inject.TypeLiteral;
 import extensionpoints.ViewContribution;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import micro.AllContributors;
 import micro.ApplicationContributionModule;
@@ -45,9 +48,30 @@ public class ModularJFx extends Application {
 
     private void putSceneOn(Stage stage) {
         FlowPane pane = new FlowPane();
+
+        ViewContribution filterViewContribution = new ViewContribution() {
+
+            @Override
+            public void addTo(Pane pane) {
+                TilePane tilePane = new TilePane();
+
+                TextField seriesTextArea = new TextField();
+                seriesTextArea.promptTextProperty().setValue("series");
+
+                TextField seasonTextArea = new TextField();
+                seasonTextArea.promptTextProperty().setValue("season");
+
+                tilePane.getChildren().addAll(seriesTextArea, seasonTextArea);
+
+                pane.getChildren().add(tilePane);
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+
         for (ViewContribution viewContribution : injector.getInstance(Key.get(new TypeLiteral<AllContributors<ViewContribution>>() { }))) {
             viewContribution.addTo(pane);
         }
+        filterViewContribution.addTo(pane);
         stage.setScene(new Scene(pane));
     }
 }
