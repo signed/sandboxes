@@ -1,10 +1,10 @@
 package localvariabletofield;
 
-public class ChangesBehaviour {
+public class PassesWrongModelAfterConvertingToField {
 
     private final DomainModel model;
 
-    public ChangesBehaviour(DomainModel model, DomainModel filteredModel) {
+    public PassesWrongModelAfterConvertingToField(DomainModel model, DomainModel filteredModel) {
         this.model = filteredModel;
     }
 
