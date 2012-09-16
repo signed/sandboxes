@@ -1,7 +1,7 @@
 package introduceparameterproduceswarning;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Bug {
@@ -10,7 +10,17 @@ public class Bug {
     private final List<Generic<?>> elements;
 
     public Bug() {
-        elements = Lists.newArrayList(new StringGeneric(), new IntegerGeneric());
+        elements = newArrayList(new StringGeneric(), new IntegerGeneric());
+    }
+
+    public void doStuff() {
+        elements.size();
+    }
+
+    public static <E> ArrayList<E> newArrayList(E... elements) {
+        ArrayList<E> list = new ArrayList<E>();
+        Collections.addAll(list, elements);
+        return list;
     }
 
     private static class Doom{
