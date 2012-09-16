@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bug {
-
-
+public class IntroduceParameterProducesWarning {
     private final List<Generic<?>> elements;
 
-    public Bug() {
+    public IntroduceParameterProducesWarning() {
         elements = newArrayList(new StringGeneric(), new IntegerGeneric());
     }
 
