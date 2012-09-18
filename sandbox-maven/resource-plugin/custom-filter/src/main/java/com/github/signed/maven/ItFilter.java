@@ -13,9 +13,9 @@ public class ItFilter extends DefaultMavenResourcesFiltering{
 
     @Override
     public void filterResources(MavenResourcesExecution mavenResourcesExecution) throws MavenFilteringException {
-        super.filterResources(mavenResourcesExecution);
         System.out.println();
         System.out.println("move along nothing to see");
         System.out.println();
+        super.filterResources(mavenResourcesExecution);
     }
 }

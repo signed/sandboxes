@@ -2,12 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>sandbox-maven</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <parent>
+        <groupId>com.github.signed.sandboxes</groupId>
+        <artifactId>maven-resource-examples</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-    <name>sandbox-maven</name>
+    <artifactId>filter</artifactId>
+
+    <name>filter</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,13 +18,6 @@
     </properties>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.codehaus.plexus</groupId>
@@ -60,18 +56,8 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.5</version>
                     <configuration>
-                        <mavenFilteringHints>
-                            <mavenFilteringHint>itFilter</mavenFilteringHint>
-                        </mavenFilteringHints>
                         <encoding>UTF-8</encoding>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.signed.sandboxes</groupId>
-                            <artifactId>sandbox-maven</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
