@@ -7,9 +7,9 @@ import org.apache.maven.shared.filtering.MavenFilteringException;
 import org.apache.maven.shared.filtering.MavenResourcesExecution;
 import org.apache.maven.shared.filtering.MavenResourcesFiltering;
 import org.codehaus.plexus.util.FileUtils;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +17,11 @@ import java.util.List;
  *                   role-hint="itFilter"
  */
 public class ItFilter implements MavenResourcesFiltering {
+
+    /**
+     * @plexus.requirement
+     */
+    private BuildContext buildContext;
 
     @Override
     public void filterResources(List<Resource> resources, File outputDirectory, MavenProject mavenProject, String encoding, List<String> fileFilters, List<String> nonFilteredFileExtensions, MavenSession mavenSession) throws MavenFilteringException {
@@ -30,20 +35,24 @@ public class ItFilter implements MavenResourcesFiltering {
 
     @Override
     public List getDefaultNonFilteredFileExtensions() {
-        return Collections.emptyList();
+        throw new RuntimeException("not called");
     }
 
     @Override
     public boolean filteredFileExtension(String fileName, List<String> userNonFilteredFileExtensions) {
-        return fileName.endsWith(".me");
+        throw new RuntimeException("not called");
     }
 
     @Override
     public void filterResources(MavenResourcesExecution mavenResourcesExecution) throws MavenFilteringException {
         List<Resource> resources = mavenResourcesExecution.getResources();
+
         for (Resource resource : resources) {
             System.out.println(resource);
         }
+
+
+        System.out.println("build context: "+buildContext);
 
         System.out.println();
         System.out.println("maven Resource Execution"+mavenResourcesExecution);
