@@ -1,4 +1,4 @@
-package bugs.table.RT22385;
+package bugs.table.fixed.RT22385;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.application.Application;
