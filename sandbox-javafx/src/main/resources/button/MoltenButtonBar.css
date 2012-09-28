@@ -1,9 +1,26 @@
 .molten-button-bar-button-middle{
     -fx-background-radius:0;
 }
+
+.molten-button-bar-button-middle:focused{
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius:0;
+}
+
 .molten-button-bar-button-right{
     -fx-background-radius:0 5 4 0;
 }
+
+.molten-button-bar-button-right:focused{
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius:0 5 4 0;
+}
+
 .molten-button-bar-button-left{
+    -fx-background-radius:5 0 0 3;
+}
+
+.molten-button-bar-button-left:focused{
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius:5 0 0 3;
 }
