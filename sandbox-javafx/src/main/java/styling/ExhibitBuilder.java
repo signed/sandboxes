@@ -3,6 +3,7 @@ package styling;
 import button.MoltenToggleButtonBar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -21,6 +22,11 @@ public class ExhibitBuilder {
         ToggleButton node = new ToggleButton("Ich bin der Text");
         node.getStyleClass().add("fancy-toggle-button");
         return new Exhibit("ToggleButton", node);
+    }
+
+    public Exhibit prepareLabel(){
+        Label label = new Label("thread-1");
+        return new Exhibit("label with text", label);
     }
 
     public Exhibit prepareMoltenButtonBarDemo() {
