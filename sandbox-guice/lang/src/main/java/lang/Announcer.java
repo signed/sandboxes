@@ -41,7 +41,8 @@ public class Announcer<T> {
 
     private void announce(Method m, Object[] args) {
         try {
-            for (T listener : listeners) {
+            List<T> copy = new ArrayList<>(listeners);
+            for (T listener : copy) {
                 m.invoke(listener, args);
             }
         } catch (IllegalAccessException e) {
