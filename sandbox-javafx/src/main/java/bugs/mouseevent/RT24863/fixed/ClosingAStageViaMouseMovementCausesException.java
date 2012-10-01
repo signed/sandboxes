@@ -1,10 +1,9 @@
-package bugs.mouseevent.RT24863;
+package bugs.mouseevent.RT24863.fixed;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
