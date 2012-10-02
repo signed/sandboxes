@@ -50,5 +50,10 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.signed.sandboxes</groupId>
+            <artifactId>micro-plugin-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
