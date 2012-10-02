@@ -1,4 +1,4 @@
-package micro;
+package com.github.signed.microplugin.core;
 
 import javax.inject.Inject;
 import java.util.Iterator;

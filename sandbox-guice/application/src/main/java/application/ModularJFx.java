@@ -14,7 +14,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-import micro.AllContributors;
+import com.github.signed.microplugin.core.AllContributors;
 import micro.ApplicationContributionModule;
 
 import java.util.List;

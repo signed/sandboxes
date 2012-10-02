@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import extensionpoints.ViewContribution;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Pane;
-import micro.AllContributors;
+import com.github.signed.microplugin.core.AllContributors;
 
 public class ApplicationToolBarPlugin implements ViewContribution {
 
