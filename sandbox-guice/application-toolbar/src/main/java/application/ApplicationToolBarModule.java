@@ -1,11 +1,11 @@
 package application;
 
-import extensionpoints.ViewContribution;
 import com.github.signed.microplugin.core.ModuleWithContributionSupport;
+import extensionpoints.ViewExtensionPoint;
 
 public class ApplicationToolBarModule extends ModuleWithContributionSupport{
     @Override
     protected void configure() {
-        contributeTo(ViewContribution.class, ApplicationToolBarPlugin.class);
+        ViewExtensionPoint.contribute(binder()).aView(ApplicationToolBarPlugin.class);
     }
 }

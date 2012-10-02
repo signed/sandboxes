@@ -1,11 +1,11 @@
 package application.recordings;
 
-import extensionpoints.ViewContribution;
 import com.github.signed.microplugin.core.ModuleWithContributionSupport;
+import extensionpoints.ViewExtensionPoint;
 
 public class RecordingsModule extends ModuleWithContributionSupport{
     @Override
     protected void configure() {
-        contributeTo(ViewContribution.class, RecordingsPlugin.class);
+        ViewExtensionPoint.contribute(binder()).aView(RecordingsPlugin.class);
     }
 }
