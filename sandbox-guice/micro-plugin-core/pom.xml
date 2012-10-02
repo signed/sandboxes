@@ -44,15 +44,5 @@
             <artifactId>guice-multibindings</artifactId>
             <version>3.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>lang</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>application-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 </project>
