@@ -8,7 +8,7 @@ import com.google.inject.Singleton;
 public class ContributionTwoModule extends AbstractModule implements ApplicationContributionModule {
     @Override
     protected void configure() {
-        ToolBarExtensionPoint.contribute(binder()).aToolbarItem(ContributionTwo.class);
+        ToolBarExtensionPoint.contributeTo(binder()).theImplementer(ContributionTwo.class);
         bind(TwoView.class).to(TwoViewJavaFx.class).in(Singleton.class);
     }
 }

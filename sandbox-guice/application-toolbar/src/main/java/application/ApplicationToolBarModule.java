@@ -6,6 +6,6 @@ import extensionpoints.ViewExtensionPoint;
 public class ApplicationToolBarModule extends ModuleWithContributionSupport{
     @Override
     protected void configure() {
-        ViewExtensionPoint.contribute(binder()).aView(ApplicationToolBarPlugin.class);
+        ViewExtensionPoint.contributeTo(binder()).theImplementer(ApplicationToolBarPlugin.class);
     }
 }

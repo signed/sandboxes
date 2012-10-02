@@ -7,7 +7,7 @@ import extensionpoints.ViewExtensionPoint;
 public class InputViewModule extends ModuleWithContributionSupport{
     @Override
     protected void configure() {
-        ViewExtensionPoint.contribute(binder()).aView(InputViewPlugin.class);
+        ViewExtensionPoint.contributeTo(binder()).theImplementer(InputViewPlugin.class);
         bind(InputView.class).to(InputViewJavaFx.class).in(Singleton.class);
     }
 }

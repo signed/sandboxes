@@ -1,20 +1,15 @@
 package extensionpoints;
 
+import com.github.signed.microplugin.core.ExtensionPoint;
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
 
-public class ViewExtensionPoint {
-    private final Multibinder<ViewContribution> binder;
+public class ViewExtensionPoint extends ExtensionPoint<ViewContribution>{
 
-    public static ViewExtensionPoint contribute(Binder binder) {
-        return new ViewExtensionPoint(Multibinder.newSetBinder(binder, ViewContribution.class));
+    public static ViewExtensionPoint contributeTo(Binder binder) {
+        return new ViewExtensionPoint(binder);
     }
 
-    public ViewExtensionPoint(Multibinder<ViewContribution> binder) {
-        this.binder = binder;
-    }
-
-    public void aView(Class<?extends ViewContribution> implementer) {
-        binder.addBinding().to(implementer);
+    public ViewExtensionPoint(Binder binder) {
+        super(binder, ViewContribution.class);
     }
 }

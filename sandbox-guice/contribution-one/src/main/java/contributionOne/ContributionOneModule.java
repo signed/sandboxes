@@ -7,7 +7,7 @@ import com.google.inject.AbstractModule;
 public class ContributionOneModule extends AbstractModule implements ApplicationContributionModule {
     @Override
     protected void configure() {
-        ToolBarExtensionPoint.contribute(binder()).aToolbarItem(ContributionOne.class);
+        ToolBarExtensionPoint.contributeTo(binder()).theImplementer(ContributionOne.class);
         bind(OneView.class).to(OneViewJavaFx.class);
     }
 }

@@ -1,20 +1,15 @@
 package application.extensionpoints;
 
+import com.github.signed.microplugin.core.ExtensionPoint;
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
 
-public class ToolBarExtensionPoint {
-    private final Multibinder<ToolBarContribution> binder;
+public class ToolBarExtensionPoint extends ExtensionPoint<ToolBarContribution> {
 
-    public static ToolBarExtensionPoint contribute(Binder binder) {
-        return new ToolBarExtensionPoint(Multibinder.newSetBinder(binder, ToolBarContribution.class));
+    public static ToolBarExtensionPoint contributeTo(Binder binder) {
+        return new ToolBarExtensionPoint(binder);
     }
 
-    public ToolBarExtensionPoint(Multibinder<ToolBarContribution> binder) {
-        this.binder = binder;
-    }
-
-    public void aToolbarItem(Class<? extends ToolBarContribution> implementer) {
-        binder.addBinding().to(implementer);
+    public ToolBarExtensionPoint(Binder binder) {
+        super(binder, ToolBarContribution.class);
     }
 }
