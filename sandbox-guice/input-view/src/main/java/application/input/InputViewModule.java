@@ -2,7 +2,7 @@ package application.input;
 
 import com.google.inject.Singleton;
 import extensionpoints.ViewContribution;
-import micro.ModuleWithContributionSupport;
+import com.github.signed.microplugin.core.ModuleWithContributionSupport;
 
 public class InputViewModule extends ModuleWithContributionSupport{
     @Override

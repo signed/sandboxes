@@ -1,6 +1,6 @@
 package application;
 
-import micro.ModuleWithContributionSupport;
+import com.github.signed.microplugin.core.ModuleWithContributionSupport;
 
 public abstract class BaseModuleForToolBarContributor extends ModuleWithContributionSupport{
     public void contributeToToolBarWith(Class<? extends ToolBarContribution> contributor){

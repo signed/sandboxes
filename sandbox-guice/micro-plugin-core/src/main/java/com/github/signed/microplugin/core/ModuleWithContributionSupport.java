@@ -1,4 +1,4 @@
-package micro;
+package com.github.signed.microplugin.core;
 
 import com.github.signed.microplugin.core.ApplicationContributionModule;
 import com.google.inject.AbstractModule;

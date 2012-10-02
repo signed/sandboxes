@@ -1,7 +1,7 @@
 package application;
 
 import extensionpoints.ViewContribution;
-import micro.ModuleWithContributionSupport;
+import com.github.signed.microplugin.core.ModuleWithContributionSupport;
 
 public class ApplicationToolBarModule extends ModuleWithContributionSupport{
     @Override

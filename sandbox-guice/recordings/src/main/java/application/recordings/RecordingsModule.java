@@ -1,7 +1,7 @@
 package application.recordings;
 
 import extensionpoints.ViewContribution;
-import micro.ModuleWithContributionSupport;
+import com.github.signed.microplugin.core.ModuleWithContributionSupport;
 
 public class RecordingsModule extends ModuleWithContributionSupport{
     @Override
