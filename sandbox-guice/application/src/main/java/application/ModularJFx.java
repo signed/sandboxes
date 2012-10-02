@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import com.github.signed.microplugin.core.AllContributors;
-import micro.ApplicationContributionModule;
+import com.github.signed.microplugin.core.ApplicationContributionModule;
 
 import java.util.List;
 import java.util.ServiceLoader;
