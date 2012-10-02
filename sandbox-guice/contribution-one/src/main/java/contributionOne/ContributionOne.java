@@ -1,7 +1,7 @@
 package contributionOne;
 
 import application.ApplicationModel;
-import application.ToolBarContribution;
+import application.extensionpoints.ToolBarContribution;
 import javafx.scene.control.ToolBar;
 
 import javax.inject.Inject;

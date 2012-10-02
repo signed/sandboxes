@@ -1,5 +1,6 @@
 package application;
 
+import application.extensionpoints.ToolBarContribution;
 import com.google.inject.Inject;
 import extensionpoints.ViewContribution;
 import javafx.scene.control.ToolBar;

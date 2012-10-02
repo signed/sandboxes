@@ -1,4 +1,4 @@
-package application;
+package application.extensionpoints;
 
 import javafx.scene.control.ToolBar;
 
