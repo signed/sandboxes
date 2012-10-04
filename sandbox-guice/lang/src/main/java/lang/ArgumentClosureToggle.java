@@ -3,7 +3,7 @@ package lang;
 public class ArgumentClosureToggle<T> implements ArgumentClosure<T>{
 
     public static <T> ArgumentClosureToggle<T> toggleAround(ArgumentClosure<T> closure) {
-        return new ArgumentClosureToggle<T>(closure);
+        return new ArgumentClosureToggle<>(closure);
     }
 
     private final ArgumentClosure<T> closure;
@@ -15,9 +15,9 @@ public class ArgumentClosureToggle<T> implements ArgumentClosure<T>{
     }
 
     @Override
-    public void excecute(T t) {
+    public void execute(T t) {
         if(activated){
-            closure.excecute(t);
+            closure.execute(t);
         }
     }
 

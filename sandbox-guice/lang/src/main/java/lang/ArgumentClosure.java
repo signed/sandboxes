@@ -1,5 +1,5 @@
 package lang;
 
 public interface ArgumentClosure<T>{
-    void excecute(T argument);
+    void execute(T argument);
 }
