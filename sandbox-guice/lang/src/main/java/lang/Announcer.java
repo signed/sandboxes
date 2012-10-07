@@ -41,7 +41,10 @@ public class Announcer<T> {
 
     private void announce(Method m, Object[] args) {
         try {
-            List<T> copy = new ArrayList<>(listeners);
+            List<T> copy;
+            synchronized (this) {
+                copy = new ArrayList<T>(listeners);
+            }
             for (T listener : copy) {
                 m.invoke(listener, args);
             }
