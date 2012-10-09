@@ -59,7 +59,8 @@ public class CssFun extends Application {
         Exhibit second = builder.prepareToggleButton();
         Exhibit third = builder.prepareMoltenButtonBarDemo();
         Exhibit fourth = builder.prepareLabel();
-        exhibits = new ObservableListWrapper<>(Lists.newArrayList(fourth, first, second, third));
+        Exhibit five = builder.prepareLabelForLogLevel();
+        exhibits = new ObservableListWrapper<>(Lists.newArrayList(five, fourth, first, second, third));
         InMemoryUrl.registerInMemoryUrlHandler(memoryDictionary);
 
         exhibit = exhibits.get(0);
