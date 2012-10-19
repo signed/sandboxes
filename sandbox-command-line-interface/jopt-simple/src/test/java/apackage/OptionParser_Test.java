@@ -1,13 +1,18 @@
 package apackage;
 
+import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import joptsimple.ValueConverter;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,6 +30,33 @@ public class OptionParser_Test {
 
 
         assertThat(parsedOptions("-a").has("a"), is(true));
+    }
+
+    @Test
+    public void multipleArgumentsForTheSameParameter() throws Exception {
+        ValueConverter<Path> pathConverter = new ValueConverter<Path>() {
+            @Override
+            public Path convert(String value) {
+                return Paths.get(value);
+            }
+
+            @Override
+            public Class<Path> valueType() {
+                return Path.class;
+            }
+
+            @Override
+            public String valuePattern() {
+                return "some java nio path";
+            }
+        };
+
+        System.out.println(File.pathSeparatorChar);
+
+        ArgumentAcceptingOptionSpec<Path> spec = optionParser.accepts("path").withRequiredArg().withValuesConvertedBy(pathConverter).withValuesSeparatedBy('|');
+
+        List<Path> paths = parsedOptions("--path", "one|two").valuesOf(spec);
+        assertThat(paths, Matchers.containsInAnyOrder(Paths.get("one"), Paths.get("two")));
     }
 
     @Test
