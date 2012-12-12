@@ -14,3 +14,4 @@ gen/
 bin/
 .classpath
 project.properties
+out/

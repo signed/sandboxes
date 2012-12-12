@@ -1,15 +1,10 @@
 allprojects {
+    apply plugin: 'idea'
     apply plugin: 'java'
     group = 'org.gradle.sample'
     version = '1.0'
-}
 
-subprojects {
-    apply plugin: 'war'
-    repositories {
-        mavenCentral()
-    }
     dependencies {
-        compile "javax.servlet:servlet-api:2.5"
+        testCompile "junit:junit:4.11"
     }
 }
