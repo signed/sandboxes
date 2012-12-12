@@ -24,8 +24,12 @@ subprojects {
  
         testCompile 'junit:junit:4.11'
     }
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
  
     group = 'com.github.signed.sandbox.gradle'
-    version = '1.0-SNAPSHOT'
+    version = '0.0.1-SNAPSHOT'
     sourceCompatibility = 1.7
 }
