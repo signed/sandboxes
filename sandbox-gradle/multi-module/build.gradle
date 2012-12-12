@@ -1,10 +1,17 @@
+
 allprojects {
     apply plugin: 'idea'
+}
+
+subprojects{
     apply plugin: 'java'
+
     group = 'org.gradle.sample'
     version = '1.0'
 
     dependencies {
         testCompile "junit:junit:4.11"
     }
+
+
 }
