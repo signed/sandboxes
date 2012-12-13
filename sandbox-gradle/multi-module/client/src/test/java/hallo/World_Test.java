@@ -14,6 +14,6 @@ public class World_Test {
 
     @Test
     public void returnsExpectedString() throws Exception {
-        assertThat(new World().someMethod(), CoreMatchers.is("tew"));
+        assertThat(new World().someMethod(), CoreMatchers.is("one"));
     }
 }
