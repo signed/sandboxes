@@ -11,4 +11,9 @@ public class World_Test {
     public void createTheWorld() throws Exception {
         assertThat(new World(), CoreMatchers.notNullValue());
     }
+
+    @Test
+    public void returnsExpectedString() throws Exception {
+        assertThat(new World().someMethod(), CoreMatchers.is("tew"));
+    }
 }
