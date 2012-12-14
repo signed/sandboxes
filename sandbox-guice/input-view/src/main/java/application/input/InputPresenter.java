@@ -22,7 +22,7 @@ public class InputPresenter implements Presenter {
     public void wireModelAndView(){
         view.onChange(new ArgumentClosure<String>() {
             @Override
-            public void excecute(String argument) {
+            public void execute(String argument) {
                 model.message(argument);
             }
         });

@@ -22,7 +22,7 @@ public class RecordingsPresenter implements Presenter {
     public void wireModelAndView() {
         model.provideTo(new ArgumentClosure<List<Recording>>() {
             @Override
-            public void excecute(List<Recording> argument) {
+            public void execute(List<Recording> argument) {
                 view.display(argument);
             }
         });
