@@ -5,6 +5,7 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 import java.util.Map;
 
@@ -21,11 +22,16 @@ public class ResourceModule extends JerseyServletModule {
         enableJsonResponses();
         iThinkItEnablesReplaceUrlWithLinksWhenRendernHtml();
         scanThisPackageAndItsSubpackagesForResources("jersey");
+        someWayToConfigureJerseyOverAClass();
         serve("/*").with(GuiceContainer.class, params);
     }
 
-    private void scanThisPackageAndItsSubpackagesForResources(String jersey) {
-        params.put(PackagesResourceConfig.PROPERTY_PACKAGES, "jersey");
+    private void someWayToConfigureJerseyOverAClass() {
+        params.put(ServletContainer.RESOURCE_CONFIG_CLASS, ClassPathResourceConfig.class.getName());
+    }
+
+    private void scanThisPackageAndItsSubpackagesForResources(String packageToScan) {
+        params.put(PackagesResourceConfig.PROPERTY_PACKAGES, packageToScan);
     }
 
     private void iThinkItEnablesReplaceUrlWithLinksWhenRendernHtml() {
