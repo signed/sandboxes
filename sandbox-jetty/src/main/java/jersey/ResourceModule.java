@@ -22,7 +22,7 @@ public class ResourceModule extends JerseyServletModule {
         enableJsonResponses();
         iThinkItEnablesReplaceUrlWithLinksWhenRendernHtml();
         scanThisPackageAndItsSubpackagesForResources("jersey");
-        someWayToConfigureJerseyOverAClass();
+        //someWayToConfigureJerseyOverAClass();
         serve("/*").with(GuiceContainer.class, params);
     }
 
