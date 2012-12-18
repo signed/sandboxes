@@ -26,7 +26,6 @@ public class JettyServer {
         contexts.setHandlers(new Handler[]{webapp});
         server.setHandler(contexts);
 
-
         webapp.addDecorator(new DecoratorAdapter(){
             @Override
             public <T extends EventListener> T decorateListenerInstance(T listener) throws ServletException {
