@@ -35,6 +35,6 @@ public class RecordingsModel {
     }
 
     public void provideTo(ArgumentClosure<List<Recording>> sink){
-        sink.excecute(recordings);
+        sink.execute(recordings);
     }
 }

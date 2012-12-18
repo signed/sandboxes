@@ -45,7 +45,6 @@ public class ModularJFx extends Application {
         stage.show();
     }
 
-
     private void putSceneOn(Stage stage) {
         FlowPane pane = new FlowPane();
 

@@ -13,7 +13,7 @@ public class InputViewJavaFx implements InputView {
         textArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-                closure.excecute(s1);
+                closure.execute(s1);
             }
         });
     }
