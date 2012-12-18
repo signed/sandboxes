@@ -14,7 +14,7 @@ public class JettyServer {
     private static WebAppContext createContext(String contextPath, String contentDirectory) {
         WebAppContext webAppContext = new WebAppContext("webapp", contextPath);
         webAppContext.setResourceBase("server/src/main/" + contentDirectory);
-        webAppContext.setDescriptor("WEB-INF/web.xml");
+        webAppContext.setDescriptor("src/main/resources/WEB-INF/web.xml");
         return webAppContext;
     }
 
@@ -28,8 +28,17 @@ public class JettyServer {
         jerseyServlet.addServlet(DefaultServlet.class, "/");
         jerseyServlet.setContextPath("/buggy");
 
+
+        String contentRoot = JettyServer.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm();
+        System.out.println(contentRoot);
+
+        WebAppContext webapp = new WebAppContext();
+        webapp.setContextPath("/");
+        webapp.setServer(server);
+        webapp.setWar(contentRoot);
+
         ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.setHandlers(new Handler[]{jerseyServlet});
+        contexts.setHandlers(new Handler[]{webapp});
         server.setHandler(contexts);
 
         server.start();
