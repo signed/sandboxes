@@ -24,7 +24,6 @@ public class JettyServer {
         contexts.setHandlers(new Handler[]{webapp});
         server.setHandler(contexts);
 
-
         server.start();
         dumpListeners(webapp);
 
