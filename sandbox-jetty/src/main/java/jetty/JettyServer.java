@@ -5,14 +5,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class JettyServer {
+import java.util.EventListener;
 
-    private static WebAppContext createContext(String contextPath, String contentDirectory) {
-        WebAppContext webAppContext = new WebAppContext("webapp", contextPath);
-        webAppContext.setResourceBase("server/src/main/" + contentDirectory);
-        webAppContext.setDescriptor("src/main/resources/WEB-INF/web.xml");
-        return webAppContext;
-    }
+public class JettyServer {
 
     public static void main(String[] args) throws Exception {
         Server server = new Server(8182);
@@ -29,7 +24,19 @@ public class JettyServer {
         contexts.setHandlers(new Handler[]{webapp});
         server.setHandler(contexts);
 
+
         server.start();
+        dumpListeners(webapp);
+
+
         server.join();
+    }
+
+    private static void dumpListeners(WebAppContext webapp) {
+        EventListener[] eventListeners = webapp.getEventListeners();
+
+        for (EventListener eventListener : eventListeners) {
+            System.out.println(eventListener.getClass());
+        }
     }
 }
