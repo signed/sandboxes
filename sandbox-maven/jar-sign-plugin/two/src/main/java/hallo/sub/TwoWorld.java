@@ -1,4 +1,4 @@
-package hallo;
+package hallo.sub;
 
 import hallo.OneWorld;
 
