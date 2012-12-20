@@ -1,4 +1,7 @@
-mvn clean verify jarsigner:sign -Djarsigner.alias="cookie" -Djarsigner.keystore="../ci.keystore" -Djarsigner.storepass="pastry" -Djarsigner.keypass="delicious" deploy
+mvn clean release:prepare
 
+git checkout <release-tag>
 
-mvn clean verify -Psigned-release -DskipTests
+mvn clean verify
+
+mvn clean release:perform -Psigned-release -Darguments="-DskipTests"
