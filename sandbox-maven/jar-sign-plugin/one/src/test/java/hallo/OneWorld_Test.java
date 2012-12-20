@@ -5,10 +5,10 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Welt_Test {
+public class OneWorld_Test {
 
     @Test
     public void createTheWorld() throws Exception {
-        assertThat(new Welt(), CoreMatchers.notNullValue());
+        assertThat(new OneWorld(), CoreMatchers.notNullValue());
     }
 }

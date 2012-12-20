@@ -5,10 +5,12 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Welt_Test {
+public class TwoWorld_Test {
 
     @Test
     public void createTheWorld() throws Exception {
-        assertThat(new Welt(), CoreMatchers.notNullValue());
+        new TestHelper();
+        new TwoWorld();
+        assertThat(new TwoWorld(), CoreMatchers.notNullValue());
     }
 }

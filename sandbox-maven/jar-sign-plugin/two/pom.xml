@@ -12,4 +12,19 @@
 
     <artifactId>two</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.signed.sandboxes.jarsign</groupId>
+            <artifactId>one</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.signed.sandboxes.jarsign</groupId>
+            <artifactId>one</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+    </dependencies>
+
 </project>
