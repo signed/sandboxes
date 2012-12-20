@@ -8,6 +8,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <scm>
+        <url>scm:git:git@github.com:signed/sandboxes</url>
+        <connection>scm:git:ssh://git@github.com:signed/sandboxes.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:signed/sandboxes.gitt</developerConnection>
+    </scm>
+
     <distributionManagement>
         <repository>
             <id>release-repository</id>
@@ -36,28 +42,36 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>signed-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jarsigner-plugin</artifactId>
+                        <version>1.2</version>
+                        <configuration>
+                            <keystore>${jar-signe.keystore}</keystore>
+                            <alias>cookie</alias>
+                            <storepass>${jar-signe.storepass}</storepass>
+                            <keypass>${jar-signe.keypass}</keypass>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jarsigner-plugin</artifactId>
-                <version>1.2</version>
-                <configuration>
-                    <keystore>${jar-signe.keystore}</keystore>
-                    <alias>cookie</alias>
-                    <storepass>${jar-signe.storepass}</storepass>
-                    <keypass>${jar-signe.keypass}</keypass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>never</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
