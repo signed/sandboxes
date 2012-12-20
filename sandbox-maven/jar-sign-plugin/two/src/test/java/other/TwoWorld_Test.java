@@ -1,7 +1,9 @@
-package hallo;
+package other;
 
+import hallo.TestHelper;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import other.TwoWorld;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

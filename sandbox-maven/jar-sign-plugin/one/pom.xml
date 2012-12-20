@@ -20,6 +20,10 @@
                 <version>2.4</version>
                 <executions>
                     <execution>
+                        <id>signe-test-jar</id>
+                        <phase>
+                            prepare-package
+                        </phase>
                         <goals>
                             <goal>test-jar</goal>
                         </goals>
