@@ -7,4 +7,35 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <properties>
+        <jar-signe.keystore>../ci.keystore</jar-signe.keystore>
+        <jar-signe.keyalias>cookie</jar-signe.keyalias>
+        <jar-signe.storepass>pastry</jar-signe.storepass>
+        <jar-signe.keypass>delicious</jar-signe.keypass>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <id>sign</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <keystore>${jar-signe.keystore}</keystore>
+                    <alias>${jar-signe.keyalias}</alias>
+                    <storepass>${jar-signe.storepass}</storepass>
+                    <keypass>${jar-signe.keypass}</keypass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
