@@ -3,7 +3,7 @@ package other;
 import hallo.TestHelper;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import other.TwoWorld;
+import hallo.TwoWorld;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
