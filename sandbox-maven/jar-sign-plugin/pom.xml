@@ -17,5 +17,6 @@
         <module>parent</module>
         <module>one</module>
         <module>two</module>
+        <module>release</module>
     </modules>
 </project>
