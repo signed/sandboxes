@@ -49,18 +49,23 @@ class maven{
     creates => $local_maven_path,
   } ->
 
-      file { "put-maven-on-path":
-        path => "/etc/profile.d/put-maven-on-path.sh",
-        ensure => present,
-        content => "PATH=\$PATH:${local_maven_path}/bin",
-      }
+  file { "put-maven-on-path":
+    path => "/etc/profile.d/put-maven-on-path.sh",
+    ensure => present,
+    content => "PATH=\$PATH:${local_maven_path}/bin",
+  }
 }
 
 $user_name = "signed"
 
 group{ $user_name:
      ensure => present,
-     }
+}
+
+group{ 'nigel':
+  ensure => 'present',
+
+}
 
 user { 'nigel':
   ensure           => 'present',
