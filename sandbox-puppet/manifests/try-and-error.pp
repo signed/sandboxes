@@ -56,48 +56,46 @@ class maven{
   }
 }
 
+class gem-dependencies{
+  package{'make':
+      ensure => installed,
+  }
+}
+
 notice("Your wish is my command ...")
 
-$user_name = "signed"
 
-group{ $user_name:
-     ensure => present,
-}
+class create-my-account{
+    $user_name = "signed"
 
-user { $user_name:
-        ensure => present,
-        #ensure => absent,
-        gid => "signed",
-        shell => "/bin/bash",
-        #password => '$6$8/7I8a1F$c6AzeCEUyI77dRUca9Z8WixEt2D6lbF7Or1NbYKB8Dm.VfC9fC1FyiQdvFOq9Ddk7ao54xRcy.APYCjc.fWud.',
-        managehome => true,
-}
+    group{ $user_name:
+         ensure => present,
+    }
 
-
-group{ 'nigel':
-  ensure => 'present',
-}
-
-user { 'nigel':
-  ensure           => 'present',
-  comment          => 'nigel,,,',
-  gid              => 'nigel',
-  home             => '/home/nigel',
-  password => '$1$lU8491Lf$07pmQGDJNZKuRMc/VuRGG/',
-  password_max_age => '99999',
-  password_min_age => '0',
-  shell            => '/bin/bash',
+    user { $user_name:
+            #ensure => present,
+            ensure => absent,
+            gid => "signed",
+            shell => "/bin/bash",
+            #password => '$6$8/7I8a1F$c6AzeCEUyI77dRUca9Z8WixEt2D6lbF7Or1NbYKB8Dm.VfC9fC1FyiQdvFOq9Ddk7ao54xRcy.APYCjc.fWud.',
+            managehome => true,
+    }
 }
 
 
+#https://rubygems.org/
+#gems installed by hand
+#gem install ruby-shadow
+#gem install ruby-ldap
 
 file { "/opt/tmp" :
     ensure => directory,
 }
 
+include gem-dependencies
+include create-my-account
 include java
 include maven
-
 
 notice("I am done ...")
 
