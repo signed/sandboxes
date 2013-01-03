@@ -14,6 +14,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file  = "try-and-error.pp"
-
+    puppet.module_path = "modules"
+    puppet.options = "--verbose --debug"
   end
 end
