@@ -56,6 +56,8 @@ class maven{
   }
 }
 
+notice("Your wish is my command ...")
+
 $user_name = "signed"
 
 group{ $user_name:
@@ -88,11 +90,16 @@ user { 'nigel':
 }
 
 
+
 file { "/opt/tmp" :
     ensure => directory,
 }
 
 include java
 include maven
-    
+
+
+notice("I am done ...")
+
+
     
