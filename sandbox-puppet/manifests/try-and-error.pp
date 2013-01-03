@@ -62,15 +62,24 @@ group{ $user_name:
      ensure => present,
 }
 
+user { $user_name:
+        ensure => present,
+        #ensure => absent,
+        gid => "signed",
+        shell => "/bin/bash",
+        #password => '$6$8/7I8a1F$c6AzeCEUyI77dRUca9Z8WixEt2D6lbF7Or1NbYKB8Dm.VfC9fC1FyiQdvFOq9Ddk7ao54xRcy.APYCjc.fWud.',
+        managehome => true,
+}
+
+
 group{ 'nigel':
   ensure => 'present',
-
 }
 
 user { 'nigel':
   ensure           => 'present',
   comment          => 'nigel,,,',
-  gid              => 'signed',
+  gid              => 'nigel',
   home             => '/home/nigel',
   password => '$1$lU8491Lf$07pmQGDJNZKuRMc/VuRGG/',
   password_max_age => '99999',
@@ -78,15 +87,6 @@ user { 'nigel':
   shell            => '/bin/bash',
 }
 
-user { $user_name:
-        ensure => present,
-        #ensure => absent,
-        gid => "signed",
-        shell => "/bin/bash",
-        #password => '$6$8/7I8a1F$c6AzeCEUyI77dRUca9Z8WixEt2D6lbF7Or1NbYKB8Dm.VfC9fC1FyiQdvFOq9Ddk7ao54xRcy.APYCjc.fWud.',
-        password => 'eins',
-        managehome => true,
-}
 
 file { "/opt/tmp" :
     ensure => directory,
@@ -94,28 +94,5 @@ file { "/opt/tmp" :
 
 include java
 include maven
-
-
-
-    $pfad = '/home/signed/tmp/applications/'
-    
-    file {'testfolder':
-      path    => $pfad,
-      ensure  => directory,
-    }
-    
-    file{'link to latest applications':
-      path   => '/home/signed/tmp/current',
-      ensure => link,
-      target => $pfad,
-    }
-
-    file {'testfile':
-      path    => '/home/signed/tmp/testfile',
-      ensure  => present,
-      mode    => 0640,
-      content => "I'm a test file.",
-    }
-    
     
     
