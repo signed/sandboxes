@@ -65,7 +65,7 @@ class gem-dependencies{
 notice("Your wish is my command ...")
 
 
-class create-my-account{
+class create-my-user{
     $user_name = "signed"
 
     group{ $user_name:
@@ -73,11 +73,10 @@ class create-my-account{
     }
 
     user { $user_name:
-            #ensure => present,
-            ensure => absent,
+            ensure => present,
             gid => "signed",
             shell => "/bin/bash",
-            #password => '$6$8/7I8a1F$c6AzeCEUyI77dRUca9Z8WixEt2D6lbF7Or1NbYKB8Dm.VfC9fC1FyiQdvFOq9Ddk7ao54xRcy.APYCjc.fWud.',
+            password => '$1$1GeHnJqU$AmOhfFhOgsXEV1HurFrW8/', #openssl passwd -1
             managehome => true,
     }
 }
@@ -93,7 +92,7 @@ file { "/opt/tmp" :
 }
 
 include gem-dependencies
-include create-my-account
+include create-my-user
 include java
 include maven
 
