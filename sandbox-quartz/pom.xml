@@ -3,11 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>sandbox-java</artifactId>
+    <artifactId>sandbox-quartz</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <name>sandbox-quartz</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -82,6 +80,22 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>13.0-rc2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.1.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>c3p0</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
 
