@@ -1,3 +1,4 @@
+# language: en
 Feature: Hello World
 
   Scenario: Say hello
