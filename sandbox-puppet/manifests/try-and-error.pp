@@ -80,8 +80,9 @@ class patch-ruby-for-puppet{
 
 
 class create-my-user{
-    Class['patch-ruby-for-puppet'] -> Class['create-my-user']
+    Class['patch-ruby-for-puppet'] -> Class['create-my-user']    
     $user_name = "signed"
+       
 
     group{ $user_name:
          ensure => present,
@@ -91,7 +92,7 @@ class create-my-user{
             ensure => present,
             gid => "signed",
             shell => "/bin/bash",
-            password => '$1$1GeHnJqU$AmOhfFhOgsXEV1HurFrW8/', #openssl passwd -1
+            password => '$6$uNXLCVGbLe$UtRiz3D9uHHN9vGHjfNKXUMLJt/WmNSdxIGDq0DnONd0vOvAliTlpiCWlaLX5LUW.35sIzEeMT4uAZangdxQ71', #openssl passwd -1 or #mkpasswd -m sha-512
             managehome => true,
     }
 }
