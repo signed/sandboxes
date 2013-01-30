@@ -13,7 +13,7 @@ import org.quartz.impl.matchers.KeyMatcher;
 
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
-public class TestPlan implements Main.Plan {
+public class TestPlan implements Plan {
     @Override
     public void beforeSchedulerStarts(Scheduler scheduler) {
         //noting to do

@@ -8,17 +8,8 @@ public class Main {
 
     public static void main(String [] args) throws SchedulerException {
 
-        //new Main().run(new ProductionPlan());
         new Main().run(new TestPlan());
     }
-
-
-    public static interface Plan{
-        void beforeSchedulerStarts(Scheduler scheduler) throws SchedulerException;
-
-        void afterSchedulerStarted(Scheduler scheduler) throws SchedulerException;
-    }
-
 
 
     private void run(Plan plan) throws SchedulerException {

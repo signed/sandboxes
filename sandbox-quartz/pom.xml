@@ -97,6 +97,12 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.2</version>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

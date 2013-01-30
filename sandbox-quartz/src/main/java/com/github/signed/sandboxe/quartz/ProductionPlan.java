@@ -11,7 +11,7 @@ import org.quartz.TriggerBuilder;
 
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
-public class ProductionPlan implements Main.Plan {
+public class ProductionPlan implements Plan {
 
     @Override
     public void beforeSchedulerStarts(Scheduler scheduler) throws SchedulerException {
