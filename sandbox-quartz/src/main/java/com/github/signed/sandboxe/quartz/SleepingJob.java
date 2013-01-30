@@ -9,6 +9,7 @@ import org.quartz.PersistJobDataAfterExecution;
 @DisallowConcurrentExecution
 @PersistJobDataAfterExecution
 public class SleepingJob implements Job {
+    public static final int HoursToSleep = 4;
     private String greeting = "silent";
     private Integer numberOfExecutionsUntilNow;
 
@@ -25,7 +26,7 @@ public class SleepingJob implements Job {
         int currentExecution = numberOfExecutionsUntilNow + 1;
         System.out.println("this is execution #" + currentExecution);
         System.out.println(greeting);
-        for(int hoursSlept=0; hoursSlept<4; ++hoursSlept){
+        for(int hoursSlept=0; hoursSlept< HoursToSleep; ++hoursSlept){
             try {
                 Thread.sleep(1 * 1000l);
             } catch (InterruptedException e) {
@@ -35,7 +36,7 @@ public class SleepingJob implements Job {
             System.out.print("snore ...");
         }
         System.out.println("Ring Ring");
-        System.out.println("Morgen");
+        System.out.println("Morgen\n");
         context.getJobDetail().getJobDataMap().put("numberOfExecutions", currentExecution);
     }
 }

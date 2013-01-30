@@ -1,22 +1,24 @@
 package com.github.signed.sandboxe.quartz.gui;
 
-import org.quartz.JobExecutionContext;
+import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.Trigger;
+import org.quartz.TriggerKey;
+import org.quartz.impl.matchers.KeyMatcher;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class OneShot implements ActionListener {
     private final Scheduler scheduler;
     private final JobKey jobKey;
+    private final TriggerKey triggerKey;
 
-    public OneShot(Scheduler scheduler, JobKey jobKey) {
+    public OneShot(Scheduler scheduler, JobKey jobKey, TriggerKey triggerKey) {
         this.scheduler = scheduler;
         this.jobKey = jobKey;
+        this.triggerKey = triggerKey;
     }
 
     @Override
@@ -29,15 +31,21 @@ public class OneShot implements ActionListener {
     }
 
     private void doStuff() throws SchedulerException {
-        List<? extends Trigger> triggersOfJob = scheduler.getTriggersOfJob(jobKey);
-        if (triggersOfJob.isEmpty()) {
-            return;
-        }
-
-        Trigger trigger = triggersOfJob.get(0);
-        List<JobExecutionContext> currentlyExecutingJobs = scheduler.getCurrentlyExecutingJobs();
-        for (JobExecutionContext currentlyExecutingJob : currentlyExecutingJobs) {
-
+        WaitForJobCompletion waitForJobCompletion = new WaitForJobCompletion(scheduler, triggerKey);
+        try {
+            scheduler.getListenerManager().addTriggerListener(waitForJobCompletion, KeyMatcher.keyEquals(triggerKey));
+            Integer lastExecution = waitForJobCompletion.fetchResultFromJob();
+            System.out.println("last execution was " + lastExecution);
+        } finally {
+            scheduler.getListenerManager().removeTriggerListener(waitForJobCompletion.getName());
         }
     }
+
+    private void triggerJobWithNewData() throws SchedulerException {
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put("numberOfExecutions", 42);
+        scheduler.triggerJob(jobKey, dataMap);
+    }
+
+
 }

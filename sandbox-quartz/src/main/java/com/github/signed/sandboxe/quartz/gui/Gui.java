@@ -11,6 +11,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
 import javax.swing.JButton;
@@ -57,9 +58,10 @@ public class Gui {
         panel.add(oneShot);
         frame.getContentPane().add(panel);
 
-        periodically.addActionListener(new Periodically(this.scheduler, jobKey));
+        TriggerKey triggerKey = TriggerKey.triggerKey("good night trigger", "polite");
+        periodically.addActionListener(new Periodically(this.scheduler, jobKey, triggerKey));
 
-        oneShot.addActionListener(new OneShot(scheduler, jobKey));
+        oneShot.addActionListener(new OneShot(scheduler, jobKey, triggerKey));
 
 
         frame.pack();
