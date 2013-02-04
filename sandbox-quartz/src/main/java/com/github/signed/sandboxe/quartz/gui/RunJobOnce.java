@@ -24,13 +24,15 @@ class RunJobOnce implements Runnable {
 
     private void doStuff() throws SchedulerException {
         String threadId = Long.toString(Thread.currentThread().getId());
-        WaitForJobCompletion waitForJobCompletion = new WaitForJobCompletion(scheduler, facts, threadId);
+        JobResult jobResult = new JobResult(threadId);
         try {
-            scheduler.getListenerManager().addTriggerListener(waitForJobCompletion, KeyMatcher.keyEquals(facts.triggerKey));
-            Integer lastExecution = waitForJobCompletion.fetchResultFromJob();
+            scheduler.getListenerManager().addTriggerListener(jobResult, KeyMatcher.keyEquals(facts.triggerKey));
+            new EnsureJobIsRunning(scheduler).ensureRunning(facts);
+            Integer lastExecution = jobResult.waitFor();
             System.out.println("last execution was " + lastExecution);
         } finally {
-            scheduler.getListenerManager().removeTriggerListener(waitForJobCompletion.getName());
+            scheduler.getListenerManager().removeTriggerListener(jobResult.getName());
         }
     }
+
 }
