@@ -1,7 +1,6 @@
 package com.github.signed.sandboxe.quartz.gui;
 
 import org.quartz.JobExecutionContext;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
@@ -18,28 +17,28 @@ public class EnsureJobIsRunning {
         this.scheduler = scheduler;
     }
 
-    public void ensureRunning(TriggerKey triggerKey, JobKey jobKey) {
+    public void ensureRunning(JobFacts facts) {
         try {
-            ensureRunningWithException(triggerKey, jobKey);
+            ensureRunningWithException(facts);
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void ensureRunningWithException(TriggerKey triggerKey, JobKey jobKey) throws SchedulerException {
-        if (isJobRunning(triggerKey)) {
+    private void ensureRunningWithException(JobFacts facts) throws SchedulerException {
+        if (isJobRunning(facts.triggerKey)) {
             System.out.println("job already running");
         } else {
             System.out.println("starting job");
 
-            if (null == scheduler.getTrigger(triggerKey)) {
+            if (null == scheduler.getTrigger(facts.triggerKey)) {
                 System.out.print("with one shoot trigger");
                 SimpleScheduleBuilder once = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0);
-                TriggerBuilder<SimpleTrigger> triggerTriggerBuilder = TriggerBuilder.newTrigger().forJob(jobKey).withIdentity(triggerKey).withSchedule(once).startNow();
+                TriggerBuilder<SimpleTrigger> triggerTriggerBuilder = TriggerBuilder.newTrigger().forJob(facts.jobKey).withIdentity(facts.triggerKey).withSchedule(once).startNow();
                 scheduler.scheduleJob(triggerTriggerBuilder.build());
             } else {
                 System.out.println("reschedule");
-                scheduler.rescheduleJob(triggerKey, scheduler.getTrigger(triggerKey));
+                scheduler.rescheduleJob(facts.triggerKey, scheduler.getTrigger(facts.triggerKey));
             }
         }
     }

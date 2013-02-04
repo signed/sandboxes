@@ -8,60 +8,47 @@ package com.github.signed.sandboxe.quartz.gui;
 import com.github.signed.sandboxe.quartz.SleepingJob;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.quartz.TriggerKey;
-import org.quartz.impl.StdSchedulerFactory;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import java.io.IOException;
-import java.util.Properties;
 
 import static javax.swing.SwingUtilities.invokeLater;
 
 public class Gui {
 
     public static void main(String[] args) throws Exception {
-        final Scheduler scheduler = createCustomizedScheduler();
+        final Scheduler scheduler = new JobScheduler().createCustomizedScheduler();
 
-        JobDetail jobDetail = JobBuilder.newJob(SleepingJob.class).withIdentity("greeting job", "polite").storeDurably().usingJobData("numberOfExecutions", 0).build();
+        final JobDetail jobDetail = JobBuilder.newJob(SleepingJob.class).withIdentity("greeting job", "polite").storeDurably().usingJobData("numberOfExecutions", 0).build();
         scheduler.addJob(jobDetail, false);
         scheduler.start();
-        final JobKey jobKey = jobDetail.getKey();
+
+        TriggerKey triggerKey = TriggerKey.triggerKey("good night trigger", "polite");
+        final JobFacts facts = new JobFacts(jobDetail.getKey(), triggerKey);
         invokeLater(new Runnable() {
             public void run() {
-                new Gui(scheduler, jobKey).createAndShowGUI();
+                new Gui(scheduler,facts).createAndShowGUI();
             }
         });
     }
 
-    private static Scheduler createCustomizedScheduler() throws IOException, SchedulerException {
-        Properties schedulerProperties = new Properties();
-        schedulerProperties.load(Scheduler.class.getResourceAsStream("/org/quartz/quartz.properties"));
-        schedulerProperties.put("org.quartz.jobStore.misfireThreshold", "1000");
-
-        StdSchedulerFactory factory = new StdSchedulerFactory();
-        factory.initialize(schedulerProperties);
-        return factory.getScheduler();
-    }
-
     private final Scheduler scheduler;
-    private final JobKey jobKey;
+    private final JobFacts facts;
 
-    public Gui(Scheduler scheduler, JobKey jobKey) {
+    public Gui(Scheduler scheduler, JobFacts facts) {
         this.scheduler = scheduler;
-        this.jobKey = jobKey;
+        this.facts = facts;
     }
 
     private void createAndShowGUI() {
         JFrame frame = new JFrame("Gui");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        final TriggerKey triggerKey = TriggerKey.triggerKey("good night trigger", "polite");
+        final TriggerKey triggerKey = facts.triggerKey;
 
         JPanel panel = new JPanel();
 
@@ -75,7 +62,7 @@ public class Gui {
 
         frame.getContentPane().add(panel);
 
-        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(scheduler, jobKey, triggerKey)));
+        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(scheduler, facts)));
 
 
         frame.pack();
@@ -85,7 +72,7 @@ public class Gui {
     private JPanel getPanelForSchedulerInteraction(final Scheduler scheduler) {
         JPanel schedulerInteraction = new JPanel();
         JButton listTriggerForJob = new JButton("list trigger for job");
-        listTriggerForJob.addActionListener(new ExecuteRunnableOnAction(new ListKnownTriggers(scheduler, jobKey)));
+        listTriggerForJob.addActionListener(new ExecuteRunnableOnAction(new ListKnownTriggers(scheduler, facts.jobKey)));
         JButton pauseScheduler = new JButton("pause");
         pauseScheduler.addActionListener(new ExecuteRunnableOnAction(new PauseScheduler(scheduler)));
         JButton resume = new JButton("resume");
@@ -105,7 +92,7 @@ public class Gui {
 
         periodicallyPanel.add(periodically);
         periodicallyPanel.add(cancelPeriodically);
-        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(scheduler, jobKey, triggerKey)));
+        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(scheduler, facts)));
         cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(triggerKey, scheduler)));
         return periodicallyPanel;
     }

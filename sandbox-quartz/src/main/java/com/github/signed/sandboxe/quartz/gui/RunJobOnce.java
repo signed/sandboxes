@@ -1,20 +1,16 @@
 package com.github.signed.sandboxe.quartz.gui;
 
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.KeyMatcher;
 
 class RunJobOnce implements Runnable {
     private final Scheduler scheduler;
-    private final JobKey jobKey;
-    private final TriggerKey triggerKey;
+    private final JobFacts facts;
 
-    public RunJobOnce(Scheduler scheduler, JobKey jobKey, TriggerKey triggerKey) {
+    public RunJobOnce(Scheduler scheduler, JobFacts facts) {
         this.scheduler = scheduler;
-        this.jobKey = jobKey;
-        this.triggerKey = triggerKey;
+        this.facts = facts;
     }
 
     @Override
@@ -28,9 +24,9 @@ class RunJobOnce implements Runnable {
 
     private void doStuff() throws SchedulerException {
         String threadId = Long.toString(Thread.currentThread().getId());
-        WaitForJobCompletion waitForJobCompletion = new WaitForJobCompletion(scheduler, triggerKey, jobKey, threadId);
+        WaitForJobCompletion waitForJobCompletion = new WaitForJobCompletion(scheduler, facts, threadId);
         try {
-            scheduler.getListenerManager().addTriggerListener(waitForJobCompletion, KeyMatcher.keyEquals(triggerKey));
+            scheduler.getListenerManager().addTriggerListener(waitForJobCompletion, KeyMatcher.keyEquals(facts.triggerKey));
             Integer lastExecution = waitForJobCompletion.fetchResultFromJob();
             System.out.println("last execution was " + lastExecution);
         } finally {

@@ -1,25 +1,21 @@
 package com.github.signed.sandboxe.quartz.gui;
 
 import org.quartz.JobExecutionContext;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
-import org.quartz.TriggerKey;
 import org.quartz.TriggerListener;
 
 class WaitForJobCompletion implements TriggerListener {
     private final Scheduler scheduler;
-    private final TriggerKey triggerKey;
-    private final JobKey jobKey;
+    private final JobFacts facts;
     private final String identifier;
     private boolean stillRunning = true;
     private Integer lastCompletedExecution;
 
-    public WaitForJobCompletion(Scheduler scheduler, TriggerKey triggerKey, JobKey jobKey, String identifier) {
+    public WaitForJobCompletion(Scheduler scheduler, JobFacts facts, String identifier) {
         this.scheduler = scheduler;
-        this.triggerKey = triggerKey;
-        this.jobKey = jobKey;
+        this.facts = facts;
         this.identifier = identifier;
     }
 
@@ -52,15 +48,15 @@ class WaitForJobCompletion implements TriggerListener {
 
     private void logIfTriggerStillInScheduler() {
         try {
-            Trigger trigger = scheduler.getTrigger(triggerKey);
-            System.out.println("trigger with key " + triggerKey + " is "+ trigger);
+            Trigger trigger = scheduler.getTrigger(facts.triggerKey);
+            System.out.println("trigger with key " + facts.triggerKey + " is "+ trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
     }
 
     public Integer fetchResultFromJob() {
-        new EnsureJobIsRunning(scheduler).ensureRunning(triggerKey, jobKey);
+        new EnsureJobIsRunning(scheduler).ensureRunning(facts);
 
         while (stillRunning) {
             try {
