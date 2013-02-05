@@ -28,6 +28,10 @@ public class Domain {
         schedulerFacade.unscheduleJob(this.facts.triggerKey);
     }
 
+    public boolean isRunningPeriodically(){
+        return schedulerFacade.isRunningPeriodically(this.facts.triggerKey);
+    }
+
     public void runPeriodically() {
         Trigger trigger = facts.triggerForPeriodicExecution(15 * 1000);
         schedulerFacade.scheduleJobSmart(trigger);

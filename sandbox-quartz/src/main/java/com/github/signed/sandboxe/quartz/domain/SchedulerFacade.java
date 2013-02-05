@@ -108,4 +108,13 @@ public class SchedulerFacade {
             throw new RuntimeException(ex);
         }
     }
+
+    public boolean isRunningPeriodically(TriggerKey triggerKey) {
+        try {
+            Trigger trigger = scheduler.getTrigger(triggerKey);
+            return null != trigger && null == trigger.getFinalFireTime();
+        } catch (SchedulerException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
