@@ -27,7 +27,7 @@ class RunJobOnce implements Runnable {
         JobResult jobResult = new JobResult(threadId);
         try {
             scheduler.getListenerManager().addTriggerListener(jobResult, KeyMatcher.keyEquals(facts.triggerKey));
-            new EnsureJobIsRunning(scheduler).ensureRunning(facts);
+            new EnsureJobIsRunning(new SchedulerFacade(scheduler)).ensureRunning(facts);
             Integer lastExecution = jobResult.waitFor();
             System.out.println("last execution was " + lastExecution);
         } finally {
