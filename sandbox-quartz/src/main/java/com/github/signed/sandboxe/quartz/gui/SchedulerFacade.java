@@ -6,6 +6,8 @@ import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
+import org.quartz.TriggerListener;
+import org.quartz.impl.matchers.KeyMatcher;
 
 import java.util.List;
 
@@ -61,6 +63,30 @@ public class SchedulerFacade {
             rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public void addTriggerListener(TriggerListener jobResult, TriggerKey triggerKey) {
+        try {
+            this.scheduler.getListenerManager().addTriggerListener(jobResult, KeyMatcher.keyEquals(triggerKey));
+        } catch (SchedulerException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void removeTriggerListener(TriggerListener triggerListener) {
+        try {
+            this.scheduler.getListenerManager().removeTriggerListener(triggerListener.getName());
+        } catch (SchedulerException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void unscheduleJob(TriggerKey triggerKey) {
+        try {
+            this.scheduler.unscheduleJob(triggerKey);
+        } catch (SchedulerException e) {
+            throw new RuntimeException(e);
         }
     }
 }

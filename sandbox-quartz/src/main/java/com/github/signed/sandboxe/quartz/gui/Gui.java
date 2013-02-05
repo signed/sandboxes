@@ -38,10 +38,12 @@ public class Gui {
 
     private final Scheduler scheduler;
     private final JobFacts facts;
+    private final SchedulerFacade schedulerFacade;
 
     public Gui(Scheduler scheduler, JobFacts facts) {
         this.scheduler = scheduler;
         this.facts = facts;
+        schedulerFacade = new SchedulerFacade(scheduler);
     }
 
     private void createAndShowGUI() {
@@ -62,7 +64,7 @@ public class Gui {
 
         frame.getContentPane().add(panel);
 
-        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(scheduler, facts)));
+        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(facts, schedulerFacade)));
 
 
         frame.pack();
@@ -93,7 +95,7 @@ public class Gui {
         periodicallyPanel.add(periodically);
         periodicallyPanel.add(cancelPeriodically);
         periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(scheduler, facts)));
-        cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(triggerKey, scheduler)));
+        cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(triggerKey, schedulerFacade)));
         return periodicallyPanel;
     }
 
