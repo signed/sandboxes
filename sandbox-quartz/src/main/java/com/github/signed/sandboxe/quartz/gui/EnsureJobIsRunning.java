@@ -3,9 +3,6 @@ package com.github.signed.sandboxe.quartz.gui;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.SimpleTrigger;
-import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
 import java.util.List;
@@ -33,9 +30,7 @@ public class EnsureJobIsRunning {
 
             if (null == scheduler.getTrigger(facts.triggerKey)) {
                 System.out.print("with one shoot trigger");
-                SimpleScheduleBuilder once = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0);
-                TriggerBuilder<SimpleTrigger> triggerTriggerBuilder = TriggerBuilder.newTrigger().forJob(facts.jobKey).withIdentity(facts.triggerKey).withSchedule(once).startNow();
-                scheduler.scheduleJob(triggerTriggerBuilder.build());
+                scheduler.scheduleJob(facts.triggerForOneImmediateExecution());
             } else {
                 System.out.println("reschedule");
                 scheduler.rescheduleJob(facts.triggerKey, scheduler.getTrigger(facts.triggerKey));
