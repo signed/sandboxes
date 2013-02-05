@@ -14,11 +14,6 @@ public class RunJobPeriodically implements Runnable {
     @Override
     public void run() {
         Trigger trigger = facts.triggerForPeriodicExecution(15 * 1000);
-
-        if (schedulerFacade.noTriggerIsRegistered(facts.triggerKey)) {
-            schedulerFacade.scheduleJob(trigger);
-        } else {
-            schedulerFacade.rescheduleJob(trigger);
-        }
+        schedulerFacade.scheduleJobSmart(trigger);
     }
 }

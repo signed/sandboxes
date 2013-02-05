@@ -92,4 +92,12 @@ public class SchedulerFacade {
             throw new RuntimeException(e);
         }
     }
+
+    public void scheduleJobSmart(Trigger trigger) {
+        if (noTriggerIsRegistered(trigger.getKey())) {
+            scheduleJob(trigger);
+        } else {
+            rescheduleJob(trigger);
+        }
+    }
 }
