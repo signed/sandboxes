@@ -19,5 +19,4 @@ public class EnsureJobIsRunning {
         System.out.println("starting job");
         schedulerFacade.rescheduleExistingOrFallback(facts.triggerKey, facts.triggerForOneImmediateExecution());
     }
-
 }
