@@ -1,5 +1,6 @@
 package com.github.signed.sandboxe.quartz;
 
+import com.github.signed.sandboxe.quartz.domain.SleepingJob;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;

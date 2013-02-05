@@ -1,11 +1,9 @@
-
 package com.github.signed.sandboxe.quartz.gui;
 
-/*
- * Gui.java requires no other files.
- */
-
-import com.github.signed.sandboxe.quartz.SleepingJob;
+import com.github.signed.sandboxe.quartz.domain.Domain;
+import com.github.signed.sandboxe.quartz.domain.SleepingJob;
+import com.github.signed.sandboxe.quartz.domain.JobFacts;
+import com.github.signed.sandboxe.quartz.domain.JobScheduler;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -19,6 +17,8 @@ import javax.swing.WindowConstants;
 import static javax.swing.SwingUtilities.invokeLater;
 
 public class Gui {
+
+    private Domain domain;
 
     public static void main(String[] args) throws Exception {
         final Scheduler scheduler = new JobScheduler().createCustomizedScheduler();
@@ -44,18 +44,16 @@ public class Gui {
         this.scheduler = scheduler;
         this.facts = facts;
         schedulerFacade = new SchedulerFacade(scheduler);
+        domain = new Domain(this.facts, schedulerFacade);
     }
 
     private void createAndShowGUI() {
         JFrame frame = new JFrame("Gui");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        final TriggerKey triggerKey = facts.triggerKey;
-
         JPanel panel = new JPanel();
 
         JPanel schedulerInteraction = getPanelForSchedulerInteraction(scheduler);
-        JPanel periodicallyPanel = getPanelForPeriodicPolling(triggerKey);
+        JPanel periodicallyPanel = getPanelForPeriodicPolling();
         JButton oneShot = new JButton("trigger by hand");
 
         panel.add(schedulerInteraction);
@@ -64,7 +62,7 @@ public class Gui {
 
         frame.getContentPane().add(panel);
 
-        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(facts, schedulerFacade)));
+        oneShot.addActionListener(new ExecuteRunnableOnAction(new RunJobOnce(domain)));
 
 
         frame.pack();
@@ -86,7 +84,7 @@ public class Gui {
         return schedulerInteraction;
     }
 
-    private JPanel getPanelForPeriodicPolling(TriggerKey triggerKey) {
+    private JPanel getPanelForPeriodicPolling() {
         JPanel periodicallyPanel = new JPanel();
 
         JButton periodically = new JButton("run periodically");
@@ -94,8 +92,8 @@ public class Gui {
 
         periodicallyPanel.add(periodically);
         periodicallyPanel.add(cancelPeriodically);
-        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(facts, schedulerFacade)));
-        cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(triggerKey, schedulerFacade)));
+        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(new Domain(facts, schedulerFacade))));
+        cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(domain)));
         return periodicallyPanel;
     }
 

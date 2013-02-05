@@ -1,4 +1,4 @@
-package com.github.signed.sandboxe.quartz;
+package com.github.signed.sandboxe.quartz.domain;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;

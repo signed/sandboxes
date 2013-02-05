@@ -1,10 +1,10 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.domain;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.TriggerListener;
 
-class JobResult implements TriggerListener {
+public class JobResult implements TriggerListener {
     private final String identifier;
     private boolean stillRunning = true;
     private Integer lastCompletedExecution;
@@ -15,7 +15,7 @@ class JobResult implements TriggerListener {
 
     @Override
     public String getName() {
-        return "wait for result "+identifier;
+        return "wait for result " + identifier;
     }
 
     @Override
@@ -47,7 +47,7 @@ class JobResult implements TriggerListener {
         return stillRunning;
     }
 
-    Integer waitFor() {
+    public Integer waitFor() {
         while (stillRunning()) {
             try {
                 Thread.sleep(100);

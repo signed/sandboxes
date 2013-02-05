@@ -1,4 +1,4 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.domain;
 
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;

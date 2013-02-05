@@ -1,18 +1,16 @@
 package com.github.signed.sandboxe.quartz.gui;
 
-import org.quartz.TriggerKey;
+import com.github.signed.sandboxe.quartz.domain.Domain;
 
 public class StopPeriodicalExecution implements Runnable {
-    private final TriggerKey triggerKey;
-    private final SchedulerFacade schedulerFacade;
+    private final Domain domain;
 
-    public StopPeriodicalExecution(TriggerKey triggerKey, SchedulerFacade schedulerFacade) {
-        this.triggerKey = triggerKey;
-        this.schedulerFacade = schedulerFacade;
+    public StopPeriodicalExecution(Domain domain) {
+        this.domain = domain;
     }
 
     @Override
     public void run() {
-        schedulerFacade.unscheduleJob(this.triggerKey);
+        domain.stopPeriodicExecution();
     }
 }

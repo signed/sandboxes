@@ -1,19 +1,16 @@
 package com.github.signed.sandboxe.quartz.gui;
 
-import org.quartz.Trigger;
+import com.github.signed.sandboxe.quartz.domain.Domain;
 
 public class RunJobPeriodically implements Runnable {
-    private final JobFacts facts;
-    private final SchedulerFacade schedulerFacade;
+    private final Domain domain;
 
-    public RunJobPeriodically(JobFacts facts, SchedulerFacade schedulerFacade) {
-        this.facts = facts;
-        this.schedulerFacade = schedulerFacade;
+    public RunJobPeriodically(Domain domain) {
+        this.domain = domain;
     }
 
     @Override
     public void run() {
-        Trigger trigger = facts.triggerForPeriodicExecution(15 * 1000);
-        schedulerFacade.scheduleJobSmart(trigger);
+        domain.runPeriodically();
     }
 }

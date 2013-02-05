@@ -1,4 +1,4 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.domain;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
