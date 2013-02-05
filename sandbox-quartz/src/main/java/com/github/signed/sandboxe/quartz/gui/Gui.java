@@ -71,7 +71,7 @@ public class Gui {
         frame.setVisible(true);
     }
 
-    private JPanel getPanelForSchedulerInteraction(final Scheduler scheduler) {
+    private JPanel getPanelForSchedulerInteraction(Scheduler scheduler) {
         JPanel schedulerInteraction = new JPanel();
         JButton listTriggerForJob = new JButton("list trigger for job");
         listTriggerForJob.addActionListener(new ExecuteRunnableOnAction(new ListKnownTriggers(scheduler, facts.jobKey)));

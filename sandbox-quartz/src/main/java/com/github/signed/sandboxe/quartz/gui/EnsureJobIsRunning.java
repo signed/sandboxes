@@ -10,15 +10,16 @@ public class EnsureJobIsRunning {
     public void ensureRunning(JobFacts facts) {
         if (schedulerFacade.isJobBeingExecuted(facts.triggerKey)) {
             System.out.println("job already running");
+            return;
+        }
+
+        System.out.println("starting job");
+        if (schedulerFacade.noTriggerIsRegistered(facts.triggerKey)) {
+            System.out.print("with one shoot trigger");
+            schedulerFacade.scheduleJob(facts.triggerForOneImmediateExecution());
         } else {
-            System.out.println("starting job");
-            if (schedulerFacade.noTriggerIsRegistered(facts.triggerKey)) {
-                System.out.print("with one shoot trigger");
-                schedulerFacade.scheduleJob(facts.triggerForOneImmediateExecution());
-            } else {
-                System.out.println("reschedule");
-                schedulerFacade.rescheduleJobWithKnownTrigger(facts.triggerKey);
-            }
+            System.out.println("reschedule");
+            schedulerFacade.rescheduleJobWithKnownTrigger(facts.triggerKey);
         }
     }
 }
