@@ -1,27 +1,23 @@
 package com.github.signed.sandboxe.quartz.gui;
 
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
+import org.quartz.Trigger;
 
-public class RunJobPeriodically implements Runnable{
-    private final Scheduler scheduler;
+public class RunJobPeriodically implements Runnable {
     private final JobFacts facts;
+    private final SchedulerFacade schedulerFacade;
 
-    public RunJobPeriodically(Scheduler scheduler, JobFacts facts) {
-        this.scheduler = scheduler;
+    public RunJobPeriodically(JobFacts facts, SchedulerFacade schedulerFacade) {
         this.facts = facts;
+        this.schedulerFacade = schedulerFacade;
     }
 
     @Override
     public void run() {
-        try {
-            if(null == scheduler.getTrigger(facts.triggerKey)) {
-                scheduler.scheduleJob(facts.triggerForPeriodicExecution(15 * 1000));
-            }else{
-                scheduler.rescheduleJob(facts.triggerKey, facts.triggerForPeriodicExecution(15 * 1000));
-            }
-        } catch (SchedulerException e1) {
-            throw new RuntimeException(e1);
+        if (schedulerFacade.noTriggerIsRegistered(facts.triggerKey)) {
+            Trigger trigger = facts.triggerForPeriodicExecution(15 * 1000);
+            schedulerFacade.scheduleJob(trigger);
+        } else {
+            schedulerFacade.rescheduleJob(facts.triggerForPeriodicExecution(15 * 1000));
         }
     }
 }

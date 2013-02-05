@@ -3,7 +3,6 @@ package com.github.signed.sandboxe.quartz.gui;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 import org.quartz.TriggerListener;
@@ -41,9 +40,22 @@ public class SchedulerFacade {
         }
     }
 
-    public void scheduleJob(SimpleTrigger trigger) {
+    public void scheduleJob(Trigger trigger) {
         try {
             this.scheduler.scheduleJob(trigger);
+        } catch (SchedulerException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void rescheduleJob(Trigger trigger) {
+        this.rescheduleJob(trigger.getKey(), trigger);
+    }
+
+    public void rescheduleJobWithKnownTrigger(TriggerKey triggerKey) {
+        try {
+            Trigger trigger = this.scheduler.getTrigger(triggerKey);
+            rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException ex) {
             throw new RuntimeException(ex);
         }
@@ -52,15 +64,6 @@ public class SchedulerFacade {
     public void rescheduleJob(TriggerKey triggerKey, Trigger trigger) {
         try {
             this.scheduler.rescheduleJob(triggerKey, trigger);
-        } catch (SchedulerException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public void rescheduleJobWithKnownTrigger(TriggerKey triggerKey) {
-        try {
-            Trigger trigger = this.scheduler.getTrigger(triggerKey);
-            rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException ex) {
             throw new RuntimeException(ex);
         }

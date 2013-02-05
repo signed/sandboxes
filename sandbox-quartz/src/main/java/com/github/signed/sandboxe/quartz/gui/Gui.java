@@ -94,7 +94,7 @@ public class Gui {
 
         periodicallyPanel.add(periodically);
         periodicallyPanel.add(cancelPeriodically);
-        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(scheduler, facts)));
+        periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(facts, new SchedulerFacade(scheduler))));
         cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(triggerKey, schedulerFacade)));
         return periodicallyPanel;
     }
