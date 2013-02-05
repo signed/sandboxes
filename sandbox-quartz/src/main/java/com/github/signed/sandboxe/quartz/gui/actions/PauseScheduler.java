@@ -1,19 +1,19 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.gui.actions;
 
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
-public class ResumeAll implements Runnable {
+public class PauseScheduler implements Runnable {
     private final Scheduler scheduler;
 
-    public ResumeAll(Scheduler scheduler) {
+    public PauseScheduler(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
     @Override
     public void run() {
         try {
-            scheduler.resumeAll();
+            scheduler.pauseAll();
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

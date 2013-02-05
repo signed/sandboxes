@@ -1,7 +1,5 @@
 package com.github.signed.sandboxe.quartz.domain;
 
-import com.github.signed.sandboxe.quartz.gui.EnsureJobIsRunning;
-import com.github.signed.sandboxe.quartz.gui.SchedulerFacade;
 import org.quartz.Trigger;
 
 public class Domain {

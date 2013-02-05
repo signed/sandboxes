@@ -1,8 +1,6 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.domain;
 
-import com.github.signed.sandboxe.quartz.domain.JobFacts;
-
-public class EnsureJobIsRunning {
+class EnsureJobIsRunning {
     private final SchedulerFacade schedulerFacade;
 
     public EnsureJobIsRunning(SchedulerFacade schedulerFacade) {

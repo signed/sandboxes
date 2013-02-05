@@ -1,4 +1,4 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.gui.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

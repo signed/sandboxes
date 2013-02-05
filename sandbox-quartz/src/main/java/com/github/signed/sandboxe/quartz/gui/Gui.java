@@ -1,9 +1,17 @@
 package com.github.signed.sandboxe.quartz.gui;
 
 import com.github.signed.sandboxe.quartz.domain.Domain;
+import com.github.signed.sandboxe.quartz.domain.SchedulerFacade;
 import com.github.signed.sandboxe.quartz.domain.SleepingJob;
 import com.github.signed.sandboxe.quartz.domain.JobFacts;
 import com.github.signed.sandboxe.quartz.domain.JobScheduler;
+import com.github.signed.sandboxe.quartz.gui.actions.ExecuteRunnableOnAction;
+import com.github.signed.sandboxe.quartz.gui.actions.ListKnownTriggers;
+import com.github.signed.sandboxe.quartz.gui.actions.PauseScheduler;
+import com.github.signed.sandboxe.quartz.gui.actions.ResumeAll;
+import com.github.signed.sandboxe.quartz.gui.actions.RunJobOnce;
+import com.github.signed.sandboxe.quartz.gui.actions.RunJobPeriodically;
+import com.github.signed.sandboxe.quartz.gui.actions.StopPeriodicalExecution;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -21,6 +29,7 @@ public class Gui {
     private Domain domain;
 
     public static void main(String[] args) throws Exception {
+
         final Scheduler scheduler = new JobScheduler().createCustomizedScheduler();
 
         final JobDetail jobDetail = JobBuilder.newJob(SleepingJob.class).withIdentity("greeting job", "polite").storeDurably().usingJobData("numberOfExecutions", 0).build();

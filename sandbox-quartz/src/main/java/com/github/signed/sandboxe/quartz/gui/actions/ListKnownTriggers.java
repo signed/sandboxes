@@ -1,4 +1,4 @@
-package com.github.signed.sandboxe.quartz.gui;
+package com.github.signed.sandboxe.quartz.gui.actions;
 
 import org.quartz.JobKey;
 import org.quartz.Scheduler;

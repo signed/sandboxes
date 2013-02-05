@@ -4,7 +4,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.TriggerListener;
 
-public class JobResult implements TriggerListener {
+class JobResult implements TriggerListener {
     private final String identifier;
     private boolean stillRunning = true;
     private Integer lastCompletedExecution;
