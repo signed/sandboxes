@@ -52,15 +52,6 @@ public class SchedulerFacade {
         this.rescheduleJob(trigger.getKey(), trigger);
     }
 
-    public void rescheduleJobWithKnownTrigger(TriggerKey triggerKey) {
-        try {
-            Trigger trigger = this.scheduler.getTrigger(triggerKey);
-            rescheduleJob(triggerKey, trigger);
-        } catch (SchedulerException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
     public void rescheduleJob(TriggerKey triggerKey, Trigger trigger) {
         try {
             this.scheduler.rescheduleJob(triggerKey, trigger);
@@ -98,6 +89,23 @@ public class SchedulerFacade {
             scheduleJob(trigger);
         } else {
             rescheduleJob(trigger);
+        }
+    }
+
+    public void rescheduleExistingOrFallback(TriggerKey triggerKey, Trigger fallback) {
+        if (noTriggerIsRegistered(triggerKey)) {
+            scheduleJob(fallback);
+        } else {
+            rescheduleJobWithKnownTrigger(triggerKey);
+        }
+    }
+
+    private void rescheduleJobWithKnownTrigger(TriggerKey triggerKey) {
+        try {
+            Trigger trigger = this.scheduler.getTrigger(triggerKey);
+            rescheduleJob(triggerKey, trigger);
+        } catch (SchedulerException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }
