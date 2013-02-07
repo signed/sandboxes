@@ -9,14 +9,14 @@ class EnsureJobIsRunning {
 
     public void ensureRunning(JobFacts facts) {
         if (schedulerFacade.isJobBeingExecuted(facts.triggerKey)) {
-            System.out.println("job already running");
+            System.out.print("-job already running-");
             return;
         }
         startJob(facts);
     }
 
     private void startJob(JobFacts facts) {
-        System.out.println("starting job");
+        System.out.print("-starting job-");
         schedulerFacade.rescheduleExistingOrFallback(facts.triggerKey, facts.triggerForOneImmediateExecution());
     }
 }

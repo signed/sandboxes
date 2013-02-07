@@ -4,10 +4,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.TriggerListener;
 
+import java.util.concurrent.CountDownLatch;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 class JobResult implements TriggerListener {
+    private final CountDownLatch resultArrived = new CountDownLatch(1);
     private final String identifier;
-    private boolean stillRunning = true;
-    private Integer lastCompletedExecution;
+    private Integer lastCompletedExecution = -1;
 
     public JobResult(String identifier) {
         this.identifier = identifier;
@@ -35,26 +39,19 @@ class JobResult implements TriggerListener {
 
     @Override
     public void triggerComplete(Trigger trigger, JobExecutionContext context, Trigger.CompletedExecutionInstruction triggerInstructionCode) {
-        stillRunning = false;
-        lastCompletedExecution = context.getJobDetail().getJobDataMap().getInt("numberOfExecutions");
-    }
-
-    public Integer getResult() {
-        return lastCompletedExecution;
-    }
-
-    public boolean stillRunning() {
-        return stillRunning;
+        try {
+            lastCompletedExecution = context.getJobDetail().getJobDataMap().getInt("numberOfExecutions");
+        } finally {
+            resultArrived.countDown();
+        }
     }
 
     public Integer waitFor() {
-        while (stillRunning()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                return -1;
-            }
+        try {
+            resultArrived.await(15, SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
-        return getResult();
+        return lastCompletedExecution;
     }
 }
