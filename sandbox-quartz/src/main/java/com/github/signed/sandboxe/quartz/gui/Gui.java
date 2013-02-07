@@ -6,6 +6,7 @@ import com.github.signed.sandboxe.quartz.domain.SleepingJob;
 import com.github.signed.sandboxe.quartz.domain.JobFacts;
 import com.github.signed.sandboxe.quartz.domain.JobScheduler;
 import com.github.signed.sandboxe.quartz.gui.actions.ExecuteRunnableOnAction;
+import com.github.signed.sandboxe.quartz.gui.actions.IsRunningPeriodically;
 import com.github.signed.sandboxe.quartz.gui.actions.ListKnownTriggers;
 import com.github.signed.sandboxe.quartz.gui.actions.PauseScheduler;
 import com.github.signed.sandboxe.quartz.gui.actions.ResumeAll;
@@ -98,11 +99,14 @@ public class Gui {
 
         JButton periodically = new JButton("run periodically");
         JButton cancelPeriodically = new JButton("cancel periodical execution");
+        JButton isPeriodicPollingEnabled = new JButton("enabled?");
 
         periodicallyPanel.add(periodically);
         periodicallyPanel.add(cancelPeriodically);
+        periodicallyPanel.add(isPeriodicPollingEnabled);
         periodically.addActionListener(new ExecuteRunnableOnAction(new RunJobPeriodically(new Domain(facts, schedulerFacade))));
         cancelPeriodically.addActionListener(new ExecuteRunnableOnAction(new StopPeriodicalExecution(domain)));
+        isPeriodicPollingEnabled.addActionListener(new ExecuteRunnableOnAction(new IsRunningPeriodically(domain)));
         return periodicallyPanel;
     }
 
