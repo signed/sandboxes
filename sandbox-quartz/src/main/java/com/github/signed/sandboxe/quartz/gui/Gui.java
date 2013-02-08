@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import java.util.concurrent.TimeUnit;
+
 import static javax.swing.SwingUtilities.invokeLater;
 
 public class Gui {
@@ -31,7 +33,11 @@ public class Gui {
 
     public static void main(String[] args) throws Exception {
 
-        final Scheduler scheduler = new JobScheduler().createCustomizedScheduler();
+        JobScheduler jobScheduler = new JobScheduler();
+        jobScheduler.loadDefaultPropertiesFromQuartz();
+        jobScheduler.misfireThreshold((long) 1, TimeUnit.SECONDS);
+
+        final Scheduler scheduler = jobScheduler.createCustomizedScheduler();
 
         final JobDetail jobDetail = JobBuilder.newJob(SleepingJob.class).withIdentity("greeting job", "polite").storeDurably().usingJobData("numberOfExecutions", 0).build();
         scheduler.addJob(jobDetail, false);
