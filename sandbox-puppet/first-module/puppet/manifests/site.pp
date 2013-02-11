@@ -8,4 +8,5 @@ node default {
   }
 
   include thomas
+  include thomas::custom_facts::etc_issue
 }
