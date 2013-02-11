@@ -1,3 +1,8 @@
+#Puppet#
+##Command line##
+<!-- language: lang-bash -->
+    puppet config print modulepath
+
 #Provision with Puppet, librarian and vagrant#
 Sample [github][librarian-puppet-vagrant-sample]
 
