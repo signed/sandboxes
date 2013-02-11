@@ -2,6 +2,8 @@
 ##Command line##
 <!-- language: lang-bash -->
     puppet config print modulepath
+##Modules##
+[offical tutorial](http://docs.puppetlabs.com/puppet/3/reference/modules_fundamentals.html)
 
 #Provision with Puppet, librarian and vagrant#
 Sample [github][librarian-puppet-vagrant-sample]
