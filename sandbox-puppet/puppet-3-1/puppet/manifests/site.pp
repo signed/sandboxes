@@ -1,5 +1,5 @@
 node default {
-  notify{
-    "hello puppet":
+  package{ "puppet":
+    ensure=>latest,
   }
 }
