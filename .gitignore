@@ -16,3 +16,7 @@ bin/
 project.properties
 out/
 .vagrant
+
+#librarian-puppet
+Puppetfile.lock
+.tmp/
