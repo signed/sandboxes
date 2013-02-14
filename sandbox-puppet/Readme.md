@@ -11,9 +11,16 @@
 #Provision with Puppet, librarian and vagrant#
 Sample [github][librarian-puppet-vagrant-sample]
 
+
+#jenkins applicane with puppet or capistrano#
+[page](http://aussielunix.github.com/jenkins-appliance/) [source](https://github.com/aussielunix/jenkins-appliance)
+
+#puppet-java#
+[link](https://github.com/francispereira/puppet-java)
+
+
 [librarian-puppet-vagrant-sample]: https://github.com/purple52/librarian-puppet-vagrant
 #Tools#
 [vagrant](http://www.vagrantup.com/)
 [librarian](http://librarian-puppet.com/)
 [puppet](https://puppetlabs.com/ )
-
