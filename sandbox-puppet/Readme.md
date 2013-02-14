@@ -24,3 +24,7 @@ Sample [github][librarian-puppet-vagrant-sample]
 [vagrant](http://www.vagrantup.com/)
 [librarian](http://librarian-puppet.com/)
 [puppet](https://puppetlabs.com/ )
+
+#links#
+## blogs ##
+[Vagrant Tricks and Troubleshooting](http://devops.me/2011/10/10/vagrant-tricks-and-troubleshooting/) plus three posts about vagrant, veewee and puppet (not read)
