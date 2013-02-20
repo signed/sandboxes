@@ -32,7 +32,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-
+                    <packagingExcludes>**/exclude.properties</packagingExcludes>
                 </configuration>
             </plugin>
         </plugins>
