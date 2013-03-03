@@ -25,5 +25,4 @@ class Operators {
         def trimmed = [new AClass(attribute: 'one'), new AnotherClass()]*.attribute
         assertThat(trimmed, CoreMatchers.is(['one']))
     }
-
 }
