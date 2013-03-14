@@ -3,14 +3,14 @@
 
 Vagrant::Config.run do |config|
 
-  config.vm.box = "precise32-update-guest-additions"
+  config.vm.box = "precise32-updated"
   #config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
 
-  config.vm.provision :shell, :path => "shell/add-puppet-labs-repository.sh"
-  config.vm.provision :shell, :path => "shell/update-boxed-gem-command.sh"
+  #config.vm.provision :shell, :path => "shell/add-puppet-labs-repository.sh"
+  #config.vm.provision :shell, :path => "shell/update-boxed-gem-command.sh"
 
   config.vm.provision :puppet do |puppet|
     puppet.module_path    = ["puppet/modules/","puppet/library/"]
