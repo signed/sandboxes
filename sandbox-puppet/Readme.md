@@ -21,6 +21,10 @@ Sample [github][librarian-puppet-vagrant-sample]
 #jenkins applicane with puppet or capistrano#
 [page](http://aussielunix.github.com/jenkins-appliance/) [source](https://github.com/aussielunix/jenkins-appliance)
 
+##Automate Job Configuration
+[access the jenkins remote api with a ruby library](https://github.com/arangamani/jenkins_api_client)
+[use templating to generate jobs](http://tradeshift.com/blog/tstech-managing-jenkins-job-configurations-by-puppet/)
+
 #puppet-java#
 [link](https://github.com/francispereira/puppet-java)
 
