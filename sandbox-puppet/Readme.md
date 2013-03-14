@@ -8,6 +8,9 @@
 ##Modules##
 [offical tutorial](http://docs.puppetlabs.com/puppet/3/reference/modules_fundamentals.html)
 
+#Vagrant
+[bash completion](https://github.com/kura/vagrant-bash-completion)
+
 #Provision with Puppet, librarian and vagrant#
 Sample [github][librarian-puppet-vagrant-sample]
 
