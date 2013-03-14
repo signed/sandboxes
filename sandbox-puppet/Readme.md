@@ -11,8 +11,8 @@
 #Vagrant
 [bash completion](https://github.com/kura/vagrant-bash-completion)
 
-Build an update basebox from an already existing image [link](http://docs-v1.vagrantup.com/v1/docs/base_boxes.html)
-    vagrant package --base my_base_box
+Build an update basebox from an already existing image [link](http://docs-v1.vagrantup.com/v1/docs/getting-started/packaging.html)
+    vagrant package
 
 #Provision with Puppet, librarian and vagrant#
 Sample [github][librarian-puppet-vagrant-sample]
