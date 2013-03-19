@@ -49,8 +49,6 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.10</version>
                     <configuration>
-                        <skipTests>false</skipTests>
-                        <junitArtifactName>junit:junit-dep</junitArtifactName>
                         <includes>
                             <include>*/*Test.java</include>
                             <include>*/*Spec.java</include>
@@ -64,7 +62,7 @@
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
+            <artifactId>junit</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -89,8 +87,8 @@
         <dependencies>
             <dependency>
                 <groupId>junit</groupId>
-                <artifactId>junit-dep</artifactId>
-                <version>4.10</version>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
