@@ -3,7 +3,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+
 <h:head>
     <title>
         Greetings
@@ -13,8 +15,9 @@
 <h:body>
     <h:body>
         <h:outputText value="#{greeter.createGreeting('Thomas')}"/>
+
         <h:form>
-            <h:inputText value="#{chat.message}"/>
+            <ice:inputText value="#{chat.message}" effect="#{chat.appear}"/>
             <h:commandButton value="Add" action="#{chat.addMessage}" />
             <h:dataTable value="#{chat.messages}" var="greeting">
                 <h:column>

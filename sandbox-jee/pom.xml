@@ -56,6 +56,11 @@
             <artifactId>icefaces</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.icefaces</groupId>
+            <artifactId>icefaces-compat</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

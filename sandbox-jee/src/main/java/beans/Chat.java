@@ -1,8 +1,12 @@
 package beans;
 
+import com.icesoft.faces.context.effects.Appear;
+import com.icesoft.faces.context.effects.Effect;
 import org.icefaces.application.PushRenderer;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +38,11 @@ public class Chat {
 
     public void setMessages(List<String> messages) {
         this.messages = messages;
+    }
+
+    @Produces
+    @RequestScoped
+    public Effect getAppear() {
+        return new Appear();
     }
 }
