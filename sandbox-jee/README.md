@@ -1,0 +1,1 @@
+http://in.relation.to/Bloggers/AHitchhikersGuideToJavaEE6ApplicationSetupPartI
