@@ -13,6 +13,15 @@
 <h:body>
     <h:body>
         <h:outputText value="#{greeter.createGreeting('Thomas')}"/>
+        <h:form>
+            <h:inputText value="#{chat.message}"/>
+            <h:commandButton value="Add" action="#{chat.addMessage}" />
+            <h:dataTable value="#{chat.messages}" var="greeting">
+                <h:column>
+                    <h:outputText value="#{greeting}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
     </h:body>
 </h:body>
 </html>
