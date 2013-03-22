@@ -10,10 +10,13 @@ public class Parameter {
     @ManagedProperty(value="#{param.token}")
     private String token = "default";
     private String tokenPostConstruct;
+    private String another = "another default";
+    private String anotherPostConstruct;
 
     @PostConstruct
     public void construct() {
         tokenPostConstruct = token;
+        anotherPostConstruct = another;
     }
 
     public String getToken() {
@@ -26,5 +29,17 @@ public class Parameter {
 
     public String getTokenPostConstruct() {
         return tokenPostConstruct;
+    }
+
+    public void setAnother(String newAnother) {
+        this.another = newAnother;
+    }
+
+    public String getAnother() {
+        return another;
+    }
+
+    public String getAnotherPostConstruct() {
+        return anotherPostConstruct;
     }
 }
