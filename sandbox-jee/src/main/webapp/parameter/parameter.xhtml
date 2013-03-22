@@ -18,10 +18,18 @@
 
 <h:body>
     <h:body>
-        Token to post construct time: #{parameter.tokenPostConstruct}<br/>
-        Token to render Time: #{parameter.token}<br/>
-        Another to post construct time: #{parameter.anotherPostConstruct}<br/>
-        Another to render Time: #{parameter.another}<br/>
+
+        <h:outputLink value="#{request.requestURI}">
+            <h:outputText value="Show me the values" />
+            <f:param name="token" value="bite"/>
+            <f:param name="another" value="dust"/>
+        </h:outputLink>
+        <br/>
+
+        Token to post construct time: "#{parameter.tokenPostConstruct}"<br/>
+        Token to render Time: "#{parameter.token}"<br/>
+        Another to post construct time: "#{parameter.anotherPostConstruct}"<br/>
+        Another to render Time: "#{parameter.another}"<br/>
     </h:body>
 </h:body>
 </html>

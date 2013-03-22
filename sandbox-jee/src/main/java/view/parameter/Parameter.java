@@ -12,11 +12,14 @@ public class Parameter {
     private String tokenPostConstruct;
     private String another = "another default";
     private String anotherPostConstruct;
+    private String byHand = "by hand default";
+    private String byHandPostConstruct;
 
     @PostConstruct
     public void construct() {
         tokenPostConstruct = token;
         anotherPostConstruct = another;
+        byHandPostConstruct = byHand;
     }
 
     public String getToken() {
@@ -41,5 +44,17 @@ public class Parameter {
 
     public String getAnotherPostConstruct() {
         return anotherPostConstruct;
+    }
+
+    public String getByHandPostConstruct() {
+        return byHandPostConstruct;
+    }
+
+    public String getByHand() {
+        return byHand;
+    }
+
+    public void setByHand(String byHand) {
+        this.byHand = byHand;
     }
 }
