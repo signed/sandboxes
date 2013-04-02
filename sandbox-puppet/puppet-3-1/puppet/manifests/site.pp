@@ -2,6 +2,7 @@ node default {
     include apt
     include stdlib
     include jenkins
+    include jenkins_configuration
 
     package{ "puppet":
         ensure=>latest,
