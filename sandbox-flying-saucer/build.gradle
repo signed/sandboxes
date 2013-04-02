@@ -1,0 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies{
+    compile 'org.xhtmlrenderer:flying-saucer-core:9.0.1'
+    compile 'org.xhtmlrenderer:flying-saucer-pdf:9.0.1'
+    testCompile 'junit:junit:4.11'
+}
