@@ -1,0 +1,15 @@
+b {
+    color: green;
+}
+
+p:before {
+    content: counter(par-num, upper-roman) ". ";
+}
+
+p {
+    counter-increment: par-num;
+}
+
+h1 {
+    counter-reset: par-num;
+}
