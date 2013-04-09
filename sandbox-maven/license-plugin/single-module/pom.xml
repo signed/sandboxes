@@ -44,6 +44,7 @@
                         <configuration>
                             <useMissingFile>true</useMissingFile>
                             <excludedGroups>info\.*</excludedGroups>
+                            <failIfWarning>true</failIfWarning>
                         </configuration>
                     </execution>
                 </executions>
