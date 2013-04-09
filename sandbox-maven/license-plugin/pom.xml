@@ -32,10 +32,13 @@
                 <version>1.4</version>
                 <executions>
                     <execution>
-                        <id>download-licenses</id>
+                        <id>add-third-party</id>
                         <goals>
-                            <goal>download-licenses</goal>
+                            <goal>add-third-party</goal>
                         </goals>
+                        <configuration>
+                            <useMissingFile>true</useMissingFile>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
