@@ -37,6 +37,12 @@
                 <version>1.4</version>
                 <executions>
                     <execution>
+                        <id>download-licenses</id>
+                        <goals>
+                            <goal>download-licenses</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>add-third-party</id>
                         <goals>
                             <goal>add-third-party</goal>

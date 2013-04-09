@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<licenseSummary>
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.istack</groupId>
+            <artifactId>istack-commons-tools</artifactId>
+            <version>1.1</version>
+            <licenses>
+                <license>
+                    <name>CDDL v1.0 / GPL v2 dual license</name>
+                    <url>https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</url>
+                    <distribution>repo</distribution>
+                </license>
+            </licenses>
+        </dependency>
+    </dependencies>
+</licenseSummary>
