@@ -10,11 +10,13 @@ public class CodeWithSimpleDateFormat {
     public static final SimpleDateFormat HourMinutesAndSeconds = new SimpleDateFormat("HH:mm:ss");
     private static final String Format = "HH";
     private final SimpleDateFormat notInitialized;
+    private final String string;
     private final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
 
     public CodeWithSimpleDateFormat(SimpleDateFormat input) {
         this.notInitialized = input;
+        this.string = "juhu";
         new SimpleDateFormat(Format);
         new SimpleDateFormat(Format, Locale.GERMANY);
     }

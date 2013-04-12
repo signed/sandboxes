@@ -10,7 +10,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CodeWithSimpleDateFormat_Test {
-    private final CodeWithSimpleDateFormat code = new CodeWithSimpleDateFormat(new SimpleDateFormat("dd:yyyy"));
+    private final SimpleDateFormat input = new SimpleDateFormat("dd:yyyy");
+    private final CodeWithSimpleDateFormat code = new CodeWithSimpleDateFormat(input);
 
     @Test
     public void callTheConstructor() throws Exception {
