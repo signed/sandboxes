@@ -13,11 +13,13 @@ public class CodeWithSimpleDateFormat {
     private final String string;
     private final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
+    /*
     public CodeWithSimpleDateFormat(SimpleDateFormat input){
         this((FormatWrapper) input);
     }
+    */
 
-    public CodeWithSimpleDateFormat(FormatWrapper input) {
+    public CodeWithSimpleDateFormat(SimpleDateFormat input) {
         this.notInitialized = input;
         this.string = "juhu";
         new SimpleDateFormat(Format);

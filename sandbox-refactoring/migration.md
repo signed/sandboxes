@@ -7,6 +7,16 @@
     1. Replace one argument constructor
         * new SimpleDateFormat($string$)
         * new FormatWrapper($string$)
+1. For Each method/constructor that takes a ClassToReplace add a second method with the same parameter
+    * void method(Old param){
+        //do stuff
+      }
+    * void method(Old param){
+         this.method((New) param)); //this cast will never fail because we replaced all constructor calls
+      }
+      void method(New param){
+        //do stuff
+      }
 1. Switch variable declarations over to the Migration type
     1. Declarations that are initialized on Declaration
         * SimpleDateFormat $variablename$ = new FormatWrapper($param$);
