@@ -6,3 +6,7 @@
     1. Replace one argument constructor
         * new SimpleDateFormat($string$)
         * new FormatWrapper($string$)
+1. Switch variable declarations over to the Migration type
+    1. Declarations that are initialized on Declaration
+        * SimpleDateFormat $variablename$ = new FormatWrapper($param$);
+        * FormatWrapper $variablename$ = new FormatWrapper($param$);
