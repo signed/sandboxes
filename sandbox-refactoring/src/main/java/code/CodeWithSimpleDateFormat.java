@@ -7,11 +7,14 @@ import java.util.Date;
 public class CodeWithSimpleDateFormat {
 
     public static final SimpleDateFormat HourMinutesAndSeconds = new SimpleDateFormat("HH:mm:ss");
-    private final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+    private static final String Format = "HH";
     private final SimpleDateFormat notInitialized;
+    private final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
 
     public CodeWithSimpleDateFormat(SimpleDateFormat input) {
         this.notInitialized = input;
+        new SimpleDateFormat(Format);
     }
 
     public String getDateAsString(Date date) {
