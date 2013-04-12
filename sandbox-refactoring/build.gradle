@@ -1,0 +1,7 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies{
+    compile 'joda-time:joda-time:2.2'
+    testCompile 'junit:junit:4.11'
+}
