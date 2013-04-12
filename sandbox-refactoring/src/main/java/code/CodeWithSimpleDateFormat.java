@@ -3,6 +3,7 @@ package code;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CodeWithSimpleDateFormat {
 
@@ -15,6 +16,7 @@ public class CodeWithSimpleDateFormat {
     public CodeWithSimpleDateFormat(SimpleDateFormat input) {
         this.notInitialized = input;
         new SimpleDateFormat(Format);
+        new SimpleDateFormat(Format, Locale.GERMANY);
     }
 
     public String getDateAsString(Date date) {
