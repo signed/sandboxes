@@ -49,6 +49,7 @@
                         </goals>
                         <configuration>
                             <useMissingFile>true</useMissingFile>
+                            <fileTemplate>${basedir}/src/license/third-party-file-thomas.ftl</fileTemplate>
                             <excludedGroups>info\.*</excludedGroups>
                             <failIfWarning>true</failIfWarning>
                         </configuration>
