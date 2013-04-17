@@ -1,4 +1,14 @@
-package com.github.signed.sandboxes.maven-plugin;
+package com.github.signed.sandboxes.maven;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
@@ -15,18 +25,6 @@ package com.github.signed.sandboxes.maven-plugin;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Goal which touches a timestamp file.
