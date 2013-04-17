@@ -20,12 +20,17 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>${project.groupId}</groupId>
+                <groupId>com.github.signed.sandboxes.maven.plugindevelopment</groupId>
                 <artifactId>plugin</artifactId>
                 <version>${project.version}</version>
-                <configuration>
-                    
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>do-it</id>
+                        <goals>
+                            <goal>touch</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

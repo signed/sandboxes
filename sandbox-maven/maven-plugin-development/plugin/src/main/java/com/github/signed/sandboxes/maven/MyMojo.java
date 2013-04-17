@@ -24,8 +24,9 @@ public class MyMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
     private File outputDirectory;
 
-    public void execute()
-            throws MojoExecutionException {
+    public void execute() throws MojoExecutionException {
+
+        getLog().warn("I am touching you ...");
         File f = outputDirectory;
 
         if (!f.exists()) {
