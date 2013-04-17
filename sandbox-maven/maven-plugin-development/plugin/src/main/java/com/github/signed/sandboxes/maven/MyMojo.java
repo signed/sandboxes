@@ -1,14 +1,18 @@
 package com.github.signed.sandboxes.maven;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 
 /**
@@ -24,7 +28,27 @@ public class MyMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
     private File outputDirectory;
 
+    /**
+     * The Maven Project Object
+     *
+     * @since 1.0
+     */
+    @Component
+    private MavenProject project;
+
     public void execute() throws MojoExecutionException {
+
+        if (null == project) {
+            getLog().error("project is null");
+        } else {
+            Set<Artifact> artifacts = project.getDependencyArtifacts();
+            for (Artifact artifact : artifacts) {
+                String path = artifact.getFile().getPath();
+                getLog().error("-----");
+                getLog().warn("found you at" + path);
+                getLog().error("-----");
+            }
+        }
 
         getLog().warn("I am touching you ...");
         File f = outputDirectory;
