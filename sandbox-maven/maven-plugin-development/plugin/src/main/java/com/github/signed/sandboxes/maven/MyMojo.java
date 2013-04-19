@@ -19,10 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
-/**
- * Goal which touches a timestamp file.
- */
 @Mojo(name = "touch", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class MyMojo extends AbstractMojo {
     private final ZipDumper zipDumper = new ZipDumper();
