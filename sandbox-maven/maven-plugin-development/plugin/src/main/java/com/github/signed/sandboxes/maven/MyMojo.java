@@ -49,17 +49,18 @@ public class MyMojo extends AbstractMojo {
     private ArtifactMetadataSource source;
 
     public void execute() throws MojoExecutionException {
-
         Set<Artifact> artifacts = new TransitiveArtifactResolver(artifactFactory, localRepository, source, artifactResolver).allTransitiveDependencies(mavenProject, repositoriesToSearchForArtifacts());
 
         for (Artifact artifact : artifacts) {
-            try {
-                listContentOfZip(artifact, artifact.getFile());
-            } catch (net.lingala.zip4j.exception.ZipException e) {
-                getLog().error(String.format("unable to check artifact at '%s'.", artifact.getFile().getAbsolutePath()));
+
+            if("jar".equals(artifact.getType())){
+                try {
+                    findLicenseInformation(artifact, artifact.getFile());
+                } catch (net.lingala.zip4j.exception.ZipException e) {
+                    getLog().error(String.format("unable to check artifact at '%s'.", artifact.getFile().getAbsolutePath()));
+                }
             }
         }
-
     }
 
     private ArrayList<ArtifactRepository> repositoriesToSearchForArtifacts() {
@@ -70,7 +71,7 @@ public class MyMojo extends AbstractMojo {
         return repoList;
     }
 
-    private void listContentOfZip(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException {
+    private void findLicenseInformation(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException {
         getLog().info(artifact.getId());
         zipDumper.dumpZipContent(file, new LegalRelevantFiles() {
             @Override
