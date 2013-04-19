@@ -3,6 +3,11 @@ package com.github.signed.sandboxes.maven;
 import net.lingala.zip4j.model.FileHeader;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
+import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -15,6 +20,10 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,10 +46,17 @@ public class MyMojo extends AbstractMojo {
     @Component
     private ArtifactResolver artifactResolver;
 
+    @Parameter(defaultValue = "${project.remoteArtifactRepositories}", readonly = true, required = true)
+    private List<ArtifactRepository> pomRemoteRepositories;
+
+    @Parameter(defaultValue = "${localRepository}", readonly = true)
+    private ArtifactRepository localRepository;
+
+    @Component
+    private ArtifactMetadataSource source;
+
 
     public void execute() throws MojoExecutionException {
-
-
         searchForLicenseInArtifact();
 
         getLog().warn("I am touching you ...");
@@ -75,7 +91,7 @@ public class MyMojo extends AbstractMojo {
         if (null == mavenProject) {
             getLog().error("project is null");
         } else {
-            Set<Artifact> artifacts = mavenProject.getDependencyArtifacts();
+            Set<Artifact> artifacts = getDependenciesToScan();
             try {
                 for (Artifact artifact : artifacts) {
                     String path = artifact.getFile().getPath();
@@ -88,6 +104,15 @@ public class MyMojo extends AbstractMojo {
         }
     }
 
+    private Set<Artifact> getDependenciesToScan() throws MojoExecutionException {
+        Set<Artifact> directDependencies = mavenProject.getDependencyArtifacts();
+        Set<Artifact> allDependencies = new HashSet<Artifact>();
+        for (Artifact directDependency : directDependencies) {
+            allDependencies.addAll(resolveTransitiveDependencies(directDependency));
+        }
+        return allDependencies;
+    }
+
     private void listContentOfZip(Artifact artifact, String path, File file) throws net.lingala.zip4j.exception.ZipException {
         getLog().info(artifact.getId());
         zipDumper.dumpZipContent(file, new LegalRelevantFiles() {
@@ -95,6 +120,7 @@ public class MyMojo extends AbstractMojo {
             public void licenseFile(FileHeader license) {
                 getLog().info(license.getFileName());
             }
+
             @Override
             public void noticeFile(FileHeader notice) {
                 getLog().info(notice.getFileName());
@@ -102,4 +128,28 @@ public class MyMojo extends AbstractMojo {
         });
     }
 
+
+    private Set<Artifact> resolveTransitiveDependencies(Artifact toDownload) throws MojoExecutionException {
+        ArtifactRepositoryPolicy always =
+                new ArtifactRepositoryPolicy(true, ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS,
+                        ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
+
+        List<ArtifactRepository> repoList = new ArrayList<ArtifactRepository>();
+
+        if (pomRemoteRepositories != null) {
+            repoList.addAll(pomRemoteRepositories);
+        }
+
+
+        try {
+            ArtifactResolutionResult resolutionResult = artifactResolver.resolveTransitively(Collections.singleton(toDownload), dummyOriginatingArtifact(), repoList, localRepository, source);
+            return resolutionResult.getArtifacts();
+        } catch (AbstractArtifactResolutionException e) {
+            throw new MojoExecutionException("Couldn't download artifact: " + e.getMessage(), e);
+        }
+    }
+
+    private Artifact dummyOriginatingArtifact() {
+        return artifactFactory.createBuildArtifact("org.apache.maven.plugins", "maven-downloader-plugin", "1.0", "jar");
+    }
 }
