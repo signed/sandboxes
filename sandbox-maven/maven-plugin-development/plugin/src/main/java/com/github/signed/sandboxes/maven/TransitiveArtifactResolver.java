@@ -30,7 +30,8 @@ public class TransitiveArtifactResolver {
         this.artifactResolver = artifactResolver;
     }
 
-    public Set<Artifact> allTransitiveDependencies(MavenProject mavenProject, ArrayList<ArtifactRepository> repoList, ArtifactResolver artifactResolver) throws MojoExecutionException {
+    @SuppressWarnings("unchecked")
+    public Set<Artifact> allTransitiveDependencies(MavenProject mavenProject, ArrayList<ArtifactRepository> repoList) throws MojoExecutionException {
         Set<Artifact> directDependencies = mavenProject.getDependencyArtifacts();
         Set<Artifact> allDependencies = new HashSet<Artifact>();
         for (Artifact directDependency : directDependencies) {
@@ -39,6 +40,7 @@ public class TransitiveArtifactResolver {
         return allDependencies;
     }
 
+    @SuppressWarnings("unchecked")
     private Set<Artifact> resolveTransitiveDependencies(Artifact toDownload, List<ArtifactRepository> repoList) throws MojoExecutionException {
         try {
             ArtifactResolutionResult resolutionResult = this.artifactResolver.resolveTransitively(Collections.singleton(toDownload), dummyOriginatingArtifact(), repoList, localRepository, artifactMetadataSource);

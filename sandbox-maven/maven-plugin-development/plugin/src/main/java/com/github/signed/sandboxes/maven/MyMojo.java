@@ -50,7 +50,7 @@ public class MyMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
 
-        Set<Artifact> artifacts = new TransitiveArtifactResolver(artifactFactory, localRepository, source, artifactResolver).allTransitiveDependencies(mavenProject, repositoriesToSearchForArtifacts(), artifactResolver);
+        Set<Artifact> artifacts = new TransitiveArtifactResolver(artifactFactory, localRepository, source, artifactResolver).allTransitiveDependencies(mavenProject, repositoriesToSearchForArtifacts());
         try {
             for (Artifact artifact : artifacts) {
                 String path = artifact.getFile().getPath();
