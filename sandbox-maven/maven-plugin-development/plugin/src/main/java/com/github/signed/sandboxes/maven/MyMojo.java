@@ -1,6 +1,7 @@
 package com.github.signed.sandboxes.maven;
 
 import net.lingala.zip4j.model.FileHeader;
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -15,6 +16,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +24,7 @@ import java.util.Set;
 @Mojo(name = "touch", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class MyMojo extends AbstractMojo {
     private final ZipDumper zipDumper = new ZipDumper();
+
     /**
      * Location of the file.
      */
@@ -54,6 +57,8 @@ public class MyMojo extends AbstractMojo {
                     findLicenseInformation(artifact, artifact.getFile());
                 } catch (net.lingala.zip4j.exception.ZipException e) {
                     getLog().error(String.format("unable to check artifact at '%s'.", artifact.getFile().getAbsolutePath()));
+                } catch (IOException e) {
+                    getLog().error("could not write legal files");
                 }
             }
         }
@@ -67,17 +72,27 @@ public class MyMojo extends AbstractMojo {
         return repoList;
     }
 
-    private void findLicenseInformation(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException {
+    private void findLicenseInformation(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException, IOException {
         getLog().info(artifact.getId());
+
+        String sub = artifact.getGroupId().replaceAll("\\.", "/") + "/" + artifact.getArtifactId() + "/" + artifact.getVersion();
+
+        final File artifactDirectory = new File(outputDirectory, sub);
+        FileUtils.forceMkdir(artifactDirectory);
+        final SingleFileUnzip unzip = new SingleFileUnzip(artifact.getFile());
+
         zipDumper.dumpZipContent(file, new LegalRelevantFiles() {
+
             @Override
             public void licenseFile(FileHeader license) {
                 getLog().info(license.getFileName());
+                unzip.unzip(license, artifactDirectory);
             }
 
             @Override
             public void noticeFile(FileHeader notice) {
                 getLog().info(notice.getFileName());
+                unzip.unzip(notice, artifactDirectory);
             }
         });
     }
