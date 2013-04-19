@@ -29,7 +29,7 @@ public class MyMojo extends AbstractMojo {
     /**
      * Location of the file.
      */
-    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
+    @Parameter(defaultValue = "${project.build.directory}/legal", property = "outputDir", required = true)
     private File outputDirectory;
 
     @Component
@@ -51,14 +51,15 @@ public class MyMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
 
         Set<Artifact> artifacts = new TransitiveArtifactResolver(artifactFactory, localRepository, source, artifactResolver).allTransitiveDependencies(mavenProject, repositoriesToSearchForArtifacts());
-        try {
-            for (Artifact artifact : artifacts) {
-                String path = artifact.getFile().getPath();
-                listContentOfZip(artifact, path, new File(path));
+
+        for (Artifact artifact : artifacts) {
+            try {
+                listContentOfZip(artifact, artifact.getFile());
+            } catch (net.lingala.zip4j.exception.ZipException e) {
+                getLog().error(String.format("unable to check artifact at '%s'.", artifact.getFile().getAbsolutePath()));
             }
-        } catch (net.lingala.zip4j.exception.ZipException e) {
-            throw new MojoExecutionException("unable to open artifact as zip", e);
         }
+
     }
 
     private ArrayList<ArtifactRepository> repositoriesToSearchForArtifacts() {
@@ -69,7 +70,7 @@ public class MyMojo extends AbstractMojo {
         return repoList;
     }
 
-    private void listContentOfZip(Artifact artifact, String path, File file) throws net.lingala.zip4j.exception.ZipException {
+    private void listContentOfZip(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException {
         getLog().info(artifact.getId());
         zipDumper.dumpZipContent(file, new LegalRelevantFiles() {
             @Override
