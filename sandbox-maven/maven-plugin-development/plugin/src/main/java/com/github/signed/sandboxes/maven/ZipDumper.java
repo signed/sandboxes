@@ -15,14 +15,25 @@ public class ZipDumper {
         List<FileHeader> fileHeaders = zipFile.getFileHeaders();
 
         for (FileHeader fileHeader : fileHeaders) {
-            if( !fileHeader.isDirectory()) {
-                String baseName = FilenameUtils.getBaseName(fileHeader.getFileName());
-                if("license".equalsIgnoreCase(baseName)){
-                    legalRelevantFiles.licenseFile(fileHeader);
-                }else if("notice".equalsIgnoreCase(baseName)){
-                    legalRelevantFiles.noticeFile(fileHeader);
-                }
-            }
+            classifyFile(legalRelevantFiles, fileHeader);
+        }
+    }
+
+    private void classifyFile(LegalRelevantFiles legalRelevantFiles, FileHeader fileHeader) {
+        if (fileHeader.isDirectory()) {
+            return;
+        }
+
+        String extension = FilenameUtils.getExtension(fileHeader.getFileName());
+        if ("class".equals(extension)) {
+            return;
+        }
+
+        String baseName = FilenameUtils.getBaseName(fileHeader.getFileName());
+        if ("license".equalsIgnoreCase(baseName)) {
+            legalRelevantFiles.licenseFile(fileHeader);
+        } else if ("notice".equalsIgnoreCase(baseName)) {
+            legalRelevantFiles.noticeFile(fileHeader);
         }
     }
 }
