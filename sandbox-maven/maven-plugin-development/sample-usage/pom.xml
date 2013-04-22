@@ -43,6 +43,14 @@
             <artifactId>xstream</artifactId>
             <version>1.4.3</version>
         </dependency>
+
+        <!--download link broken.License can be found in a distribution archive on the projects page -->
+        <!--from http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-1.1.4c_all.zip-->
+        <dependency>
+            <groupId>xpp3</groupId>
+            <artifactId>xpp3_min</artifactId>
+            <version>1.1.4c</version>
+        </dependency>
     </dependencies>
 
 
