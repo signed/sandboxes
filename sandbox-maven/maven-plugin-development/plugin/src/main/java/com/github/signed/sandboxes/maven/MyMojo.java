@@ -101,9 +101,11 @@ public class MyMojo extends AbstractMojo {
         boolean isCDDL = false;
         for (License license : licenses) {
             isCDDL = isCDDL || StringUtils.containsIgnoreCase(license.getName(),"cddl");
-            getLog().error(license.getName());
         }
-        getLog().error("was cddl: "+ isCDDL);
+
+        if(!isCDDL){
+            return;
+        }
 
         String sub = artifact.getGroupId().replaceAll("\\.", "/") + "/" + artifact.getArtifactId() + "/" + artifact.getVersion();
 

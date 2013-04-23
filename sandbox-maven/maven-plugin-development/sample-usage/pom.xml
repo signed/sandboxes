@@ -71,6 +71,13 @@
             <artifactId>stax-api</artifactId>
             <version>1.0-2</version>
         </dependency>
+
+        <!-- Contains a license file, but the library has a dual license, gpl2 and cddl 1.0. I only want the cddl part of the license file-->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
 
