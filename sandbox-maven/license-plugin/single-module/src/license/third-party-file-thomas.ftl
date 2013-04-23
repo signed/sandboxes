@@ -44,7 +44,7 @@
     <#else>
         <#assign result = ""/>
         <#list project.licenses as license>
-            <#assign  result= result + "["+license.url+"]">
+            <#assign  result= result + "["+license.url!"no url defined"+"]">
         </#list>
         <#return result>
     </#if>
