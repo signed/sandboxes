@@ -57,6 +57,13 @@
             <artifactId>jetty-webapp</artifactId>
             <version>8.1.7.v20120910</version>
         </dependency>
+
+        <!-- uses a relative path in the license url -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0.4</version>
+        </dependency>
     </dependencies>
 
 
