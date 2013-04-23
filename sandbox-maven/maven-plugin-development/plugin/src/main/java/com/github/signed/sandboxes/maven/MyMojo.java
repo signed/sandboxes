@@ -7,6 +7,7 @@ import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.model.License;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
@@ -14,6 +15,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.project.ProjectBuildingException;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,8 +47,14 @@ public class MyMojo extends AbstractMojo {
     @Parameter(defaultValue = "${localRepository}", readonly = true)
     private ArtifactRepository localRepository;
 
+    @Parameter( defaultValue = "${project.remoteArtifactRepositories}", readonly = true )
+    private List remoteRepositories;
+
     @Component
     private ArtifactMetadataSource source;
+    @Component
+    private MavenProjectBuilder mavenProjectBuilder;
+
 
     public void execute() throws MojoExecutionException {
         Set<Artifact> artifacts = new TransitiveArtifactResolver(artifactFactory, localRepository, source, artifactResolver).allTransitiveDependencies(mavenProject, repositoriesToSearchForArtifacts());
@@ -72,8 +81,25 @@ public class MyMojo extends AbstractMojo {
         return repoList;
     }
 
+    private MavenProject buildProjectFrom(Artifact artifact){
+        try {
+            MavenProject depMavenProject = mavenProjectBuilder.buildFromRepository( artifact, remoteRepositories, localRepository, true );
+            depMavenProject.getArtifact().setScope( artifact.getScope() );
+            return depMavenProject;
+        } catch (ProjectBuildingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void findLicenseInformation(Artifact artifact, File file) throws net.lingala.zip4j.exception.ZipException, IOException {
         getLog().info(artifact.getId());
+
+        MavenProject mavenProjectForArtifact = buildProjectFrom(artifact);
+        List<License> licenses = mavenProjectForArtifact.getLicenses();
+
+        for (License license : licenses) {
+            getLog().error(license.getName());
+        }
 
         String sub = artifact.getGroupId().replaceAll("\\.", "/") + "/" + artifact.getArtifactId() + "/" + artifact.getVersion();
 
