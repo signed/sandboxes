@@ -2,6 +2,7 @@ package com.github.signed.sandboxes.maven;
 
 import net.lingala.zip4j.model.FileHeader;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -97,9 +98,12 @@ public class MyMojo extends AbstractMojo {
         MavenProject mavenProjectForArtifact = buildProjectFrom(artifact);
         List<License> licenses = mavenProjectForArtifact.getLicenses();
 
+        boolean isCDDL = false;
         for (License license : licenses) {
+            isCDDL = isCDDL || StringUtils.containsIgnoreCase(license.getName(),"cddl");
             getLog().error(license.getName());
         }
+        getLog().error("was cddl: "+ isCDDL);
 
         String sub = artifact.getGroupId().replaceAll("\\.", "/") + "/" + artifact.getArtifactId() + "/" + artifact.getVersion();
 
