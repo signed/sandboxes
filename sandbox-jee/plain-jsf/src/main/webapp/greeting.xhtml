@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>
+        Greetings
+    </title>
+</h:head>
+
+<h:body>
+    <h:body>
+        <h:outputText value="#{greeter.createGreeting('Thomas')}"/>
+
+        <h:form>
+            <ice:inputText value="#{chat.message}" effect="#{chat.appear}"/>
+            <h:commandButton value="Add" action="#{chat.addMessage}" />
+            <h:dataTable value="#{chat.messages}" var="greeting">
+                <h:column>
+                    <h:outputText value="#{greeting}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</h:body>
+</html>
