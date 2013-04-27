@@ -17,32 +17,30 @@
 </h:head>
 
 <h:body>
-    <h:body>
+    <h:outputLink value="#{request.requestURI}">
+        <h:outputText value="Show me the values"/>
+        <f:param name="token" value="bite"/>
+        <f:param name="another" value="dust"/>
+    </h:outputLink>
+    <br/>
 
-        <h:outputLink value="#{request.requestURI}">
-            <h:outputText value="Show me the values"/>
-            <f:param name="token" value="bite"/>
-            <f:param name="another" value="dust"/>
-        </h:outputLink>
-        <br/>
+    <h1>JSF Managed Bean</h1>
+    Token to post construct time: "#{parameter.tokenPostConstruct}"<br/>
+    Token to render Time: "#{parameter.token}"<br/>
+    Another to post construct time: "#{parameter.anotherPostConstruct}"<br/>
+    Another to render Time: "#{parameter.another}"<br/>
+    <br/>
 
-        <h1>JSF Managed Bean</h1>
-        Token to post construct time: "#{parameter.tokenPostConstruct}"<br/>
-        Token to render Time: "#{parameter.token}"<br/>
-        Another to post construct time: "#{parameter.anotherPostConstruct}"<br/>
-        Another to render Time: "#{parameter.another}"<br/>
-        <br/>
+    <h1>Cdi</h1>
 
-        <h1>Cdi</h1>
+    <p>
+        Token: "#{cdi.token}"
+        Token at PostConsturct: "#{cdi.tokenPostConstruct}"
+    </p>
 
-        <p>
-            Token: "#{cdi.token}"
-            Token at PostConsturct: "#{cdi.tokenPostConstruct}"
-        </p>
-        <p>
-            Another: "#{cdi.bogus}"
-            Another at PostConsturct: "#{cdi.bogusPostConstruct}"
-        </p>
-    </h:body>
+    <p>
+        Another: "#{cdi.bogus}"
+        Another at PostConsturct: "#{cdi.bogusPostConstruct}"
+    </p>
 </h:body>
 </html>
