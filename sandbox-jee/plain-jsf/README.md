@@ -1,6 +1,8 @@
 #faces-config.xml#
 [What is the use of faces-config.xml in JSF2](http://stackoverflow.com/questions/7583038/what-is-the-use-of-faces-config-xml-in-jsf-2 "Title")
 
+#jsf tags explained#
+[What is the JSF resource library for and how should it be used?](http://stackoverflow.com/questions/11988415/what-is-the-jsf-resource-library-for-and-how-should-it-be-used)
 
 http://in.relation.to/Bloggers/AHitchhikersGuideToJavaEE6ApplicationSetupPartI
 
