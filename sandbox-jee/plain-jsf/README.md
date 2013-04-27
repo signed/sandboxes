@@ -9,6 +9,10 @@
 [Implementing @RequestParam in CDI/WELD using Qualifier and InjectionPoint as @HttpParam](http://www.glxn.net/?p=141)
 [Injection point metadata API for Web Beans](http://relation.to/Bloggers/InjectionPointMetadataAPIForWebBeans)
 
+
+#The JEE 6 Tutorila (Oracle)#
+[Chapter 5 - Introduction to Facelets](http://docs.oracle.com/javaee/6/tutorial/doc/giepx.html)
+
 http://in.relation.to/Bloggers/AHitchhikersGuideToJavaEE6ApplicationSetupPartI
 
 http://blog.eisele.net/2012/01/arquillian-with-netbeans-glassfish.html
