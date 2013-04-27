@@ -13,6 +13,6 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>faces/welcome.xhtml</welcome-file>
+        <welcome-file>welcome.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

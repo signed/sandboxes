@@ -1,4 +1,4 @@
-package view.parameter;
+package view.parameter.jsf;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

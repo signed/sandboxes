@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+        >
 
 <f:metadata>
     <f:viewParam id="user_id" name="another" value="#{parameter.another}"/>
@@ -20,16 +20,22 @@
     <h:body>
 
         <h:outputLink value="#{request.requestURI}">
-            <h:outputText value="Show me the values" />
+            <h:outputText value="Show me the values"/>
             <f:param name="token" value="bite"/>
             <f:param name="another" value="dust"/>
         </h:outputLink>
         <br/>
 
+        <h1>JSF Managed Bean</h1>
         Token to post construct time: "#{parameter.tokenPostConstruct}"<br/>
         Token to render Time: "#{parameter.token}"<br/>
         Another to post construct time: "#{parameter.anotherPostConstruct}"<br/>
         Another to render Time: "#{parameter.another}"<br/>
+        <br/>
+
+        <h1>Cdi</h1>
+
+        <p>Content: "#{cdi.content}"</p>
     </h:body>
 </h:body>
 </html>

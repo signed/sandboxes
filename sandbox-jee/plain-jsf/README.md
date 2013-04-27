@@ -1,3 +1,7 @@
+#faces-config.xml#
+[What is the use of faces-config.xml in JSF2](http://stackoverflow.com/questions/7583038/what-is-the-use-of-faces-config-xml-in-jsf-2 "Title")
+
+
 http://in.relation.to/Bloggers/AHitchhikersGuideToJavaEE6ApplicationSetupPartI
 
 http://blog.eisele.net/2012/01/arquillian-with-netbeans-glassfish.html
