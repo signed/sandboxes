@@ -20,6 +20,7 @@
             <h:inputSecret id="secret" value="#{formData.secret}" label="the label">
                 <f:converter for="secret" converterId="converter.secrets"/>
                 <f:validateRequired/>
+                <f:validator for="secret" validatorId="validator.secret"/>
             </h:inputSecret>
             <h:message for="secret"/>
         </h:panelGrid>

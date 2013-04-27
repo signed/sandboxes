@@ -9,16 +9,14 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter("converter.secrets")
 public class SecretConverter implements Converter {
+
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        if( null == s || s.isEmpty()) {
-            return s;
-        }
         if("bunny".equals(s)){
             FacesMessage message = new FacesMessage( FacesMessage.SEVERITY_ERROR, "boring", "Thats no secret");
             throw new ConverterException(message);
         }
-        return "[Las Vegas] "+s;
+        return s;
     }
 
     @Override
