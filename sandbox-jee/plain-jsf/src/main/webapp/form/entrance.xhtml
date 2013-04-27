@@ -18,8 +18,8 @@
 
             Your secret:
             <h:inputSecret id="secret" value="#{formData.secret}" label="the label">
-                <f:validateRequired/>
                 <f:converter for="secret" converterId="converter.secrets"/>
+                <f:validateRequired/>
             </h:inputSecret>
             <h:message for="secret"/>
         </h:panelGrid>
