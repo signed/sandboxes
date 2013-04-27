@@ -11,7 +11,10 @@
 <h:body>
     <h3>JSF 2.0 Hello World Example - hello.xhtml</h3>
     <h:form>
-        <h:inputText value="#{formData.name}"/>
+        <h:inputText id="name" value="#{formData.name}">
+            <f:validateRequired/>
+        </h:inputText>
+        <h:message for="name"/>
         <h:commandButton value="Welcome Me" action="welcome"/>
     </h:form>
 </h:body>
