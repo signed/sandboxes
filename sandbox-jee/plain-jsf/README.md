@@ -4,6 +4,8 @@
 #jsf tags explained#
 [What is the JSF resource library for and how should it be used?](http://stackoverflow.com/questions/11988415/what-is-the-jsf-resource-library-for-and-how-should-it-be-used)
 [Composite Components In JSF 2.0](http://www.mkyong.com/jsf2/composite-components-in-jsf-2-0/)
+[How to create a custom converter in JSF 2.0](http://www.mkyong.com/jsf2/custom-converter-in-jsf-2-0/)
+[How to create a custom validator in JSF 2.0](http://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/)
 ## Resources ##
 [Resources (Library) In JSF 2.0](http://www.mkyong.com/jsf2/resources-library-in-jsf-2-0/)
 
