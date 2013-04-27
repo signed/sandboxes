@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class FormBean implements Serializable {
 
     private String name;
+    private String secret;
 
     public String getName() {
         return name;
@@ -18,4 +19,11 @@ public class FormBean implements Serializable {
         this.name = name;
     }
 
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String newSecret) {
+        this.secret = newSecret;
+    }
 }
