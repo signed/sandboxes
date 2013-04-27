@@ -10,15 +10,17 @@ public class CdiParameter {
     @Inject
     private Logger logger;
 
-    public String content = "Initial Cdi content assigned at field declaration";
+    @Inject
+    @HttpParam("token")
+    public String token = "Initial Cdi token assigned at field declaration";
 
-    public void setContent(String newContent) {
-        logger.severe("setContent( "+newContent+" )");
-        this.content = newContent;
+    public void setToken(String newContent) {
+        logger.severe("setToken( "+newContent+" )");
+        this.token = newContent;
     }
 
-    public String getContent() {
-        logger.severe("getContent()");
-        return this.content;
+    public String getToken() {
+        logger.severe("getToken()");
+        return this.token;
     }
 }
