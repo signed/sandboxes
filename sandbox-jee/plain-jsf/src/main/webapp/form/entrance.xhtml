@@ -3,7 +3,9 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:signed="http://github.com/signed"
+        >
 
 <h:head>
     <title>JSF 2.0 Hello World</title>
@@ -26,5 +28,8 @@
         </h:panelGrid>
         <h:commandButton value="Welcome Me" action="welcome"/>
     </h:form>
+    <signed:input label="print me"/>
+    <signed:input label="print you"/>
+    <signed:input label="print together"/>
 </h:body>
 </html>
