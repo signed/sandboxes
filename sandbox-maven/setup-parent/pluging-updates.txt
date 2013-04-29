@@ -1,0 +1,93 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] grandparent
+[INFO] parent
+[INFO] module
+[INFO] setup-parent
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building grandparent 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.0:display-plugin-updates (default-cli) @ grandparent ---
+[INFO] 
+[INFO] All plugins with a version specified are using the latest versions.
+[INFO] 
+[INFO] All plugins have a version specified.
+[INFO] 
+[INFO] Project defines minimum Maven version as: 3.0.4
+[INFO] Plugins require minimum Maven version of: 2.2.1
+[INFO] 
+[INFO] No plugins require a newer version of Maven than specified by the pom.
+[INFO] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building parent 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.0:display-plugin-updates (default-cli) @ parent ---
+[INFO] 
+[INFO] All plugins with a version specified are using the latest versions.
+[INFO] 
+[WARNING] The following plugins do not have their version specified:
+[WARNING]   maven-compiler-plugin ........................................ 3.1
+[INFO] 
+[INFO] Project defines minimum Maven version as: 3.0.4
+[INFO] Plugins require minimum Maven version of: 2.0.9
+[INFO] 
+[INFO] No plugins require a newer version of Maven than specified by the pom.
+[INFO] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building module 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.0:display-plugin-updates (default-cli) @ module ---
+[INFO] 
+[INFO] All plugins with a version specified are using the latest versions.
+[INFO] 
+[WARNING] The following plugins do not have their version specified:
+[WARNING]   maven-jar-plugin ............................ (from super-pom) 2.4
+[WARNING]   maven-resources-plugin ...................... (from super-pom) 2.6
+[WARNING]   maven-surefire-plugin .................... (from super-pom) 2.14.1
+[INFO] 
+[INFO] Project inherits minimum Maven version as: 3.0.4
+[INFO] Plugins require minimum Maven version of: 2.0.9
+[INFO] Note: the super-pom from Maven 3.0.5 defines some of the plugin
+[INFO]       versions and may be influencing the plugins required minimum Maven
+[INFO]       version.
+[INFO] 
+[INFO] No plugins require a newer version of Maven than specified by the pom.
+[INFO] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building setup-parent 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.0:display-plugin-updates (default-cli) @ setup-parent ---
+[INFO] 
+[INFO] All plugins with a version specified are using the latest versions.
+[INFO] 
+[INFO] All plugins have a version specified.
+[INFO] 
+[INFO] Project inherits minimum Maven version as: 3.0.4
+[INFO] Plugins require minimum Maven version of: null
+[INFO] 
+[INFO] No plugins require a newer version of Maven than specified by the pom.
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] grandparent ....................................... SUCCESS [0.908s]
+[INFO] parent ............................................ SUCCESS [0.055s]
+[INFO] module ............................................ SUCCESS [0.150s]
+[INFO] setup-parent ...................................... SUCCESS [0.014s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.774s
+[INFO] Finished at: Mon Apr 29 14:10:30 CEST 2013
+[INFO] Final Memory: 13M/174M
+[INFO] ------------------------------------------------------------------------
