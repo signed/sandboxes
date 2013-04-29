@@ -11,6 +11,10 @@
 ## Resources ##
 [Resources (Library) In JSF 2.0](http://www.mkyong.com/jsf2/resources-library-in-jsf-2-0/)
 
+## faclet-taglibrary##
+
+[Custom Facelet component in JSF](http://stackoverflow.com/questions/15006955/custom-facelet-component-in-jsf) Implements a TagHandler class in java
+
 #cdi#
 [Implementing @RequestParam in CDI/WELD using Qualifier and InjectionPoint as @HttpParam](http://www.glxn.net/?p=141)
 [Injection point metadata API for Web Beans](http://relation.to/Bloggers/InjectionPointMetadataAPIForWebBeans)
