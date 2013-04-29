@@ -12,6 +12,7 @@
 [Resources (Library) In JSF 2.0](http://www.mkyong.com/jsf2/resources-library-in-jsf-2-0/)
 
 ## faclet-taglibrary##
+[When to use <ui:include>, tag files, composite components and/or custom components?](http://stackoverflow.com/questions/6822000/when-to-use-uiinclude-tag-files-composite-components-and-or-custom-componen/6822269#6822269)
 [Primefaces outputLabel for composite component](http://stackoverflow.com/questions/15002441/primefaces-outputlabel-for-composite-component) Implements a Tag from a xhtml ui:composition
 [Custom Facelet component in JSF](http://stackoverflow.com/questions/15006955/custom-facelet-component-in-jsf) Implements a TagHandler class in java
 
