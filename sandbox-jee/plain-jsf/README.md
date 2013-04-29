@@ -12,7 +12,7 @@
 [Resources (Library) In JSF 2.0](http://www.mkyong.com/jsf2/resources-library-in-jsf-2-0/)
 
 ## faclet-taglibrary##
-
+[Primefaces outputLabel for composite component](http://stackoverflow.com/questions/15002441/primefaces-outputlabel-for-composite-component) Implements a Tag from a xhtml ui:composition
 [Custom Facelet component in JSF](http://stackoverflow.com/questions/15006955/custom-facelet-component-in-jsf) Implements a TagHandler class in java
 
 #cdi#
