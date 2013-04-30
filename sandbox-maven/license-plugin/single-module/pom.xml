@@ -49,7 +49,7 @@
                         </goals>
                         <configuration>
                             <useMissingFile>true</useMissingFile>
-                            <fileTemplate>${basedir}/src/license/third-party-file-thomas.ftl</fileTemplate>
+                            <fileTemplate>${basedir}/src/license/third-party-file-print-in-maven-format.ftl</fileTemplate>
                             <excludedGroups>info\.*</excludedGroups>
                             <failIfWarning>true</failIfWarning>
                         </configuration>
