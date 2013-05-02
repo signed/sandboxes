@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.github.signed.sandboxes.maven.plugindevelopment</groupId>
-        <artifactId>maven-plugin-development</artifactId>
+        <artifactId>maven-artifact-validation-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
