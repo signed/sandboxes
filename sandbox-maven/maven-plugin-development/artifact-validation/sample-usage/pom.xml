@@ -30,6 +30,15 @@
                         </goals>
                         <configuration>
                             <failIfNoTests>true</failIfNoTests>
+                            <includes>
+                                <include>**/*Validate.java</include>
+                            </includes>
+                            <systemProperties>
+                                <property>
+                                    <name>artifact</name>
+                                    <value>${project.build.directory}/${project.build.finalName}.${project.packaging}</value>
+                                </property>
+                            </systemProperties>
                         </configuration>
                     </execution>
                 </executions>
