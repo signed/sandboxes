@@ -1,44 +1,69 @@
 package com.github.signed.sandboxes.maven;
 
 import edu.emory.mathcs.backport.java.util.Collections;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
+import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.List;
 
-@Mojo(name = "configure", defaultPhase = LifecyclePhase.INITIALIZE)
-public class AddArtifactValidationExecution extends AbstractMojo {
+@Mojo(name = "passArtifactsToSurefire", defaultPhase = LifecyclePhase.VERIFY)
+public class AddConfigurationMojo extends AbstractMojo {
 
-    @Component
+    @Parameter(defaultValue = "${project.artifact}", required = true, readonly = true)
+    private Artifact artifact;
+
+    @Parameter(defaultValue = "${project.attachedArtifacts}", required = true, readonly = true)
+    private List<Artifact> attachedArtifacts;
+
+
+    @Parameter(readonly = true, defaultValue = "${project}", required = true)
     private MavenProject mavenProject;
-    @Component
-    private ArtifactFactory artifactFactory;
-    @Component
-    private ArtifactResolver artifactResolver;
-
-
-    @Component
-    private ArtifactMetadataSource source;
-    @Component
-    private MavenProjectBuilder mavenProjectBuilder;
-
-    private BuildPlugins buildPlugins;
 
     public void execute() throws MojoExecutionException {
-        mavenProject.addTestCompileSourceRoot("src/validate/java");
+
+
+
+        dumpArtifactInfo(artifact);
+
+        System.out.println("attached artifacts: " + attachedArtifacts.size());
+        for (Artifact artifact : attachedArtifacts) {
+            dumpArtifactInfo(artifact);
+        }
+
+        BuildPlugins buildPlugins = new BuildPlugins(mavenProject);
+        buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
+            @Override
+            public void plugin(Plugin plugin) {
+
+                List<PluginExecution> executions = plugin.getExecutions();
+                for (PluginExecution execution : executions) {
+                    System.out.println(execution.getConfiguration());
+                }
+            }
+
+            @Override
+            public void notFound(String pluginKey) {
+                System.out.println("not found: " + pluginKey);
+            }
+        });
+    }
+
+    private static void dumpArtifactInfo(Artifact artifact) {
+        PrintStream out = System.out;
+        out.println("artifact: " + artifact.getArtifactId());
+        out.println("classifer: " +artifact.getClassifier());
+        out.println("location:" + artifact.getFile());
     }
 
     public void execute2() throws MojoExecutionException {
@@ -65,7 +90,7 @@ public class AddArtifactValidationExecution extends AbstractMojo {
             shout(plugin.toString());
             List<PluginExecution> executions = plugin.getExecutions();
             for (PluginExecution execution : executions) {
-                shout("execution id: "+ execution.getId());
+                shout("execution id: " + execution.getId());
                 Xpp3Dom configuration = (Xpp3Dom) execution.getConfiguration();
                 shout("configuration: " + ((null == configuration) ? null : configuration));
             }

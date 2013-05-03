@@ -34,11 +34,16 @@
                 <version>${project.version}</version>
                 <executions>
                     <execution>
-                        <id>default</id>
+                        <id>add-validate-test-source-root</id>
                         <goals>
-                            <goal>configure</goal>
+                            <goal>addTestSourceRoot</goal>
                         </goals>
-                        <phase>initialize</phase>
+                    </execution>
+                    <execution>
+                        <id>alter-surefire-configuration</id>
+                        <goals>
+                            <goal>passArtifactsToSurefire</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -60,11 +65,35 @@
                             </includes>
                             <systemProperties>
                                 <property>
-                                    <name>artifact</name>
+                                    <name>maven.artifact</name>
                                     <value>${project.build.directory}/${project.build.finalName}.${project.packaging}</value>
                                 </property>
                             </systemProperties>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
