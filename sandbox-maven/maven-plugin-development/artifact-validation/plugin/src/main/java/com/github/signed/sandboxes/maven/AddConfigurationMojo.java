@@ -1,5 +1,8 @@
 package com.github.signed.sandboxes.maven;
 
+import com.github.signed.sandboxes.maven.surefire.ConfigurationSink;
+import com.github.signed.sandboxes.maven.surefire.ConfigurationTemplate;
+import com.github.signed.sandboxes.maven.surefire.Stuff;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
@@ -15,6 +18,7 @@ import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
 import java.io.PrintStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mojo(name = "passArtifactsToSurefire", defaultPhase = LifecyclePhase.VERIFY)
@@ -31,9 +35,6 @@ public class AddConfigurationMojo extends AbstractMojo {
     private MavenProject mavenProject;
 
     public void execute() throws MojoExecutionException {
-
-
-
         dumpArtifactInfo(artifact);
 
         System.out.println("attached artifacts: " + attachedArtifacts.size());
@@ -45,10 +46,18 @@ public class AddConfigurationMojo extends AbstractMojo {
         buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
             @Override
             public void plugin(Plugin plugin) {
-
+                ConfigurationTemplate template = new ConfigurationTemplate();
+                template.addArgumentsFor(allArtifacts());
                 List<PluginExecution> executions = plugin.getExecutions();
-                for (PluginExecution execution : executions) {
-                    System.out.println(execution.getConfiguration());
+                for (final PluginExecution execution : executions) {
+                    if("verify".equalsIgnoreCase(execution.getPhase())){
+                        template.attachConfigurationTo(new ConfigurationSink() {
+                            @Override
+                            public void consume(Xpp3Dom dom) {
+                                execution.setConfiguration(dom);
+                            }
+                        });
+                    }
                 }
             }
 
@@ -57,6 +66,19 @@ public class AddConfigurationMojo extends AbstractMojo {
                 System.out.println("not found: " + pluginKey);
             }
         });
+    }
+
+    private Iterable<Stuff> allArtifacts() {
+        List<Stuff> result = new ArrayList<Stuff>();
+        result.add(convert(this.artifact));
+        for (Artifact attachedArtifact : attachedArtifacts) {
+            result.add(convert(attachedArtifact));
+        }
+        return result;
+    }
+
+    private Stuff convert(final Artifact artifact) {
+        return new ArtifactAdapter(artifact);
     }
 
     private static void dumpArtifactInfo(Artifact artifact) {
@@ -135,4 +157,5 @@ public class AddConfigurationMojo extends AbstractMojo {
     private void shout(String message) {
         getLog().error(message);
     }
+
 }
