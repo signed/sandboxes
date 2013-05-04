@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.signed.sandboxes.maven.surefire;
+package com.github.signed.sandboxes.maven;
 
 import com.github.signed.sandboxes.maven.BuildArtifact;
 import com.github.signed.sandboxes.maven.artifacts.ArtifactSink;
 import com.github.signed.sandboxes.maven.artifacts.ArtifactsCreatedByThisBuild;
 import com.github.signed.sandboxes.maven.plugins.BuildPlugins;
 import com.github.signed.sandboxes.maven.plugins.PluginCallback;
+import com.github.signed.sandboxes.maven.surefire.ConfigurationSink;
+import com.github.signed.sandboxes.maven.surefire.ConfigurationTemplate;
+import com.github.signed.sandboxes.maven.surefire.SureFireExecution;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Plugin;
