@@ -30,8 +30,8 @@ public class ArtifactToPropertiesWriter_Test {
     @Before
     public void setUp() throws Exception {
         File rootDirectory = folder.getRoot();
-        writer = new ArtifactToPropertiesWriter(rootDirectory);
         outFile = new File(rootDirectory, "artifacts.properties");
+        writer = new ArtifactToPropertiesWriter(outFile);
     }
 
     @Test

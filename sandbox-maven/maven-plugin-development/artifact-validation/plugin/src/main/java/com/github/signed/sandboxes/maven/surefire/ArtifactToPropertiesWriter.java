@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ArtifactToPropertiesWriter {
-    private final File rootDirectory;
+    private final File outputFile;
 
-    public ArtifactToPropertiesWriter(File rootDirectory) {
-        this.rootDirectory = rootDirectory;
+    public ArtifactToPropertiesWriter(File outputFile) {
+        this.outputFile = outputFile;
     }
 
     public void write(Iterable<Stuff> artifacts) throws IOException {
@@ -61,6 +61,6 @@ public class ArtifactToPropertiesWriter {
     }
 
     private File outputFile() {
-        return new File(this.rootDirectory, "artifacts.properties");
+        return outputFile;
     }
 }
