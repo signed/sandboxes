@@ -33,7 +33,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
@@ -72,6 +71,7 @@ public class ExecuteSurefireMojo extends AbstractMojo {
 
 
     public void execute() throws MojoExecutionException {
+
         BuildPlugins buildPlugins = new BuildPlugins(mavenProject);
         buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
             @Override
@@ -84,8 +84,15 @@ public class ExecuteSurefireMojo extends AbstractMojo {
                 //do nothing, use the default version
             }
         });
-        ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
-        configurationTemplate.addArgumentsFor(allArtifacts());
+        final ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
+        ArtifactsCreatedByThisBuild artifacts = new ArtifactsCreatedByThisBuild(artifact, attachedArtifacts);
+        artifacts.handArtifactsTo(new ArtifactSink() {
+            @Override
+            public void consume(Iterable<Stuff> artifacts) {
+                    configurationTemplate.addArgumentsFor(artifacts);
+            }
+        });
+
         configurationTemplate.attachConfigurationTo(new ConfigurationSink() {
             @Override
             public void consume(Xpp3Dom configuration) {
@@ -94,18 +101,5 @@ public class ExecuteSurefireMojo extends AbstractMojo {
         });
         sureFireExecution.in(executionEnvironment(mavenProject, mavenSession, pluginManager));
         sureFireExecution.execute();
-    }
-
-    private Iterable<Stuff> allArtifacts() {
-        List<Stuff> result = new ArrayList<Stuff>();
-        result.add(convert(this.artifact));
-        for (Artifact attachedArtifact : attachedArtifacts) {
-            result.add(convert(attachedArtifact));
-        }
-        return result;
-    }
-
-    private Stuff convert(final Artifact artifact) {
-        return new ArtifactAdapter(artifact);
     }
 }
