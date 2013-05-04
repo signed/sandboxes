@@ -34,37 +34,16 @@
                 <version>${project.version}</version>
                 <executions>
                     <execution>
-                        <id>add-validate-test-source-root</id>
+                        <id>add-validation-test-source-folder</id>
                         <goals>
                             <goal>addTestSourceRoot</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>alter-surefire-configuration</id>
+                        <id>maven-executor-plugin</id>
                         <goals>
-                            <goal>passArtifactsToSurefire</goal>
+                            <goal>execute-surefire</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14.1</version>
-                <executions>
-                    <execution>
-                        <id>artifact-validation-test</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <failIfNoTests>true</failIfNoTests>
-                            <includes>
-                                <include>**/*Validate.java</include>
-                            </includes>
-                            <systemPropertiesFile>${project.build.directory}/artifact.properties</systemPropertiesFile>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

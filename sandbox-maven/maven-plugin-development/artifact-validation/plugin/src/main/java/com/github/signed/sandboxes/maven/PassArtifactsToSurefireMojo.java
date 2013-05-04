@@ -2,13 +2,11 @@ package com.github.signed.sandboxes.maven;
 
 import com.github.signed.sandboxes.maven.surefire.ArtifactToPropertiesWriter;
 import com.github.signed.sandboxes.maven.surefire.Stuff;
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -19,9 +17,10 @@ import java.io.File;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-@Mojo(name = "passArtifactsToSurefire", defaultPhase = LifecyclePhase.VERIFY)
+@Mojo(name = "passArtifactsToSurefire")
 public class PassArtifactsToSurefireMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "${project.artifact}", required = true, readonly = true)
@@ -88,7 +87,6 @@ public class PassArtifactsToSurefireMojo extends AbstractMojo {
         buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
             @Override
             public void plugin(Plugin plugin) {
-                addExecution(plugin);
                 addExecution(plugin);
             }
 

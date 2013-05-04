@@ -18,6 +18,7 @@ public class FromAnotherSourceDirectoryValidate {
     @Test
     public void dumpSystemProperties() throws Exception {
         Properties properties = System.getProperties();
+        System.out.println("dumping artifacts from system properties");
         for (Object o : properties.keySet()) {
             if(o.toString().startsWith("maven.artifact")){
                 System.out.println(o.toString());
