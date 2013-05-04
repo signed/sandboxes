@@ -18,6 +18,7 @@ package com.github.signed.sandboxes.maven;
 import com.github.signed.sandboxes.maven.surefire.ConfigurationSink;
 import com.github.signed.sandboxes.maven.surefire.ConfigurationTemplate;
 import com.github.signed.sandboxes.maven.surefire.Stuff;
+import com.github.signed.sandboxes.maven.surefire.SureFireExecution;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
@@ -36,13 +37,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.artifactId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.groupId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
 
 /**
  * Execute surefire in verify phase and run tests against the generated artifacts
@@ -74,34 +69,21 @@ public class ExecuteSurefireMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.attachedArtifacts}", required = true, readonly = true)
     private List<Artifact> attachedArtifacts;
 
+    private final SureFireExecution sureFireExecution = new SureFireExecution();
+
 
     public void execute() throws MojoExecutionException {
-        System.out.println("execution the mojo");
         ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
         configurationTemplate.addArgumentsFor(allArtifacts());
         configurationTemplate.attachConfigurationTo(new ConfigurationSink() {
             @Override
             public void consume(Xpp3Dom configuration) {
-                executeSurefireWith(configuration);
+                sureFireExecution.useConfiguration(configuration);
             }
         });
-    }
+        sureFireExecution.in(executionEnvironment(mavenProject, mavenSession, pluginManager));
+        sureFireExecution.execute();
 
-    private void executeSurefireWith(Xpp3Dom configuration) {
-        try{
-        executeMojo(
-                plugin(
-                        groupId("org.apache.maven.plugins"),
-                        artifactId("maven-surefire-plugin"),
-                        version("2.14.1")
-                ),
-                goal("test"),
-                configuration,
-                executionEnvironment(mavenProject, mavenSession, pluginManager)
-        );
-        }catch(MojoExecutionException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     private Iterable<Stuff> allArtifacts() {
@@ -128,7 +110,7 @@ public class ExecuteSurefireMojo extends AbstractMojo {
                     "                    <systemProperties>\n" +
                     "                        <property>\n" +
                     "                            <name>maven.artifact</name>\n" +
-                    "                            <value>"+this.artifact.getFile().getAbsolutePath()+"</value>\n" +
+                    "                            <value>" + this.artifact.getFile().getAbsolutePath() + "</value>\n" +
                     "                        </property>\n" +
                     "                    </systemProperties>\n" +
                     "                </configuration>";
