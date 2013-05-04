@@ -15,7 +15,6 @@
  */
 package com.github.signed.sandboxes.maven;
 
-import com.github.signed.sandboxes.maven.BuildArtifact;
 import com.github.signed.sandboxes.maven.artifacts.ArtifactSink;
 import com.github.signed.sandboxes.maven.artifacts.ArtifactsCreatedByThisBuild;
 import com.github.signed.sandboxes.maven.plugins.BuildPlugins;
@@ -62,7 +61,7 @@ public class ExecuteSurefireMojo extends AbstractMojo {
     /**
      * The Maven BuildPluginManager component.
      */
-    @Component()
+    @Component
     private BuildPluginManager pluginManager;
 
     @Parameter(defaultValue = "${project.artifact}", required = true, readonly = true)

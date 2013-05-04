@@ -31,5 +31,4 @@ public class ArtifactsCreatedByThisBuild {
     private BuildArtifact convert(Artifact artifact) {
         return new ArtifactAdapter(artifact);
     }
-
 }

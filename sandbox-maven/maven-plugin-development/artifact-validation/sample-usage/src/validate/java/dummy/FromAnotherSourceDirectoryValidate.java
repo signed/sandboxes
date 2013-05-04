@@ -1,7 +1,7 @@
 package dummy;
 
 import org.junit.Test;
-import validate.Artifact;
+import some.Artifact;
 
 import java.util.Properties;
 
