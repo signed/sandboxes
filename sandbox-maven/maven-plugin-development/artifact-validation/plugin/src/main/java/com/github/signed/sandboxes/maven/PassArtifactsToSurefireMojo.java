@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mojo(name = "passArtifactsToSurefire", defaultPhase = LifecyclePhase.VERIFY)
-public class AddConfigurationMojo extends AbstractMojo {
+public class PassArtifactsToSurefireMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "${project.artifact}", required = true, readonly = true)
     private Artifact artifact;
