@@ -1,7 +1,9 @@
 package com.github.signed.sandboxes.maven;
 
+import com.github.signed.sandboxes.maven.artifacts.ArtifactAdapter;
+import com.github.signed.sandboxes.maven.plugins.BuildPlugins;
+import com.github.signed.sandboxes.maven.plugins.PluginCallback;
 import com.github.signed.sandboxes.maven.surefire.ArtifactToPropertiesWriter;
-import com.github.signed.sandboxes.maven.surefire.Stuff;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
@@ -62,8 +64,8 @@ public class PassArtifactsToSurefireMojo extends AbstractMojo {
         });
     }
 
-    private Iterable<Stuff> allArtifacts() {
-        List<Stuff> result = new ArrayList<Stuff>();
+    private Iterable<BuildArtifact> allArtifacts() {
+        List<BuildArtifact> result = new ArrayList<BuildArtifact>();
         result.add(convert(this.artifact));
         for (Artifact attachedArtifact : attachedArtifacts) {
             result.add(convert(attachedArtifact));
@@ -71,7 +73,7 @@ public class PassArtifactsToSurefireMojo extends AbstractMojo {
         return result;
     }
 
-    private Stuff convert(final Artifact artifact) {
+    private BuildArtifact convert(final Artifact artifact) {
         return new ArtifactAdapter(artifact);
     }
 

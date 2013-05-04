@@ -1,5 +1,7 @@
 package com.github.signed.sandboxes.maven.surefire;
 
+import com.github.signed.sandboxes.maven.BuildArtifact;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,7 +15,7 @@ public class ArtifactToPropertiesWriter {
         this.outputFile = outputFile;
     }
 
-    public void write(Iterable<Stuff> artifacts) {
+    public void write(Iterable<BuildArtifact> artifacts) {
         try {
             Properties properties = readProperties();
             populateProperties(artifacts, properties);
@@ -45,8 +47,8 @@ public class ArtifactToPropertiesWriter {
         return properties;
     }
 
-    private void populateProperties(Iterable<Stuff> artifacts, Properties properties) {
-        for (Stuff artifact : artifacts) {
+    private void populateProperties(Iterable<BuildArtifact> artifacts, Properties properties) {
+        for (BuildArtifact artifact : artifacts) {
             String key = "maven.artifact" + (null == artifact.classifier() ? "" : "." + artifact.classifier());
             properties.put(key, artifact.location().getAbsolutePath());
         }

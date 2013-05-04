@@ -1,6 +1,6 @@
-package com.github.signed.sandboxes.maven;
+package com.github.signed.sandboxes.maven.artifacts;
 
-import com.github.signed.sandboxes.maven.surefire.Stuff;
+import com.github.signed.sandboxes.maven.BuildArtifact;
 import org.apache.maven.artifact.Artifact;
 
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ public class ArtifactsCreatedByThisBuild {
         sink.consume(allArtifacts());
     }
 
-    private Iterable<Stuff> allArtifacts() {
-        List<Stuff> result = new ArrayList<Stuff>();
+    private Iterable<BuildArtifact> allArtifacts() {
+        List<BuildArtifact> result = new ArrayList<BuildArtifact>();
         result.add(convert(this.artifact));
         for (Artifact attachedArtifact : attachedArtifacts) {
             result.add(convert(attachedArtifact));
@@ -28,7 +28,7 @@ public class ArtifactsCreatedByThisBuild {
         return result;
     }
 
-    private Stuff convert(Artifact artifact) {
+    private BuildArtifact convert(Artifact artifact) {
         return new ArtifactAdapter(artifact);
     }
 

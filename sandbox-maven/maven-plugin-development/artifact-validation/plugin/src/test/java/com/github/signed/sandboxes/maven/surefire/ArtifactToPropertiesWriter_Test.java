@@ -1,5 +1,6 @@
 package com.github.signed.sandboxes.maven.surefire;
 
+import com.github.signed.sandboxes.maven.BuildArtifact;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,7 +23,7 @@ public class ArtifactToPropertiesWriter_Test {
 
     @Rule
     public final TemporaryFolder folder = new TemporaryFolder();
-    private final List<Stuff> artifacts = new ArrayList<Stuff>();
+    private final List<BuildArtifact> artifacts = new ArrayList<BuildArtifact>();
 
     private ArtifactToPropertiesWriter writer;
     private File outFile;
@@ -42,7 +43,7 @@ public class ArtifactToPropertiesWriter_Test {
 
     @Test
     public void writeTheArtifactToFile() throws Exception {
-        artifacts.add(DummyArtifact.defaultArtifactAt("secret-location"));
+        artifacts.add(DummyBuildArtifact.defaultArtifactAt("secret-location"));
         writeArtifacts();
 
         assertThat(readProperty("maven.artifact"), CoreMatchers.endsWith("secret-location"));
@@ -50,7 +51,7 @@ public class ArtifactToPropertiesWriter_Test {
 
     @Test
     public void appendTheClassifierToThePropertyKey() throws Exception {
-        artifacts.add(DummyArtifact.attachedArtifactWith("classic", "some-place"));
+        artifacts.add(DummyBuildArtifact.attachedArtifactWith("classic", "some-place"));
         writeArtifacts();
 
         assertThat(readProperty("maven.artifact.classic"), endsWith("some-place"));

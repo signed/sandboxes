@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.signed.sandboxes.maven;
+package com.github.signed.sandboxes.maven.surefire;
 
-import com.github.signed.sandboxes.maven.surefire.ConfigurationSink;
-import com.github.signed.sandboxes.maven.surefire.ConfigurationTemplate;
-import com.github.signed.sandboxes.maven.surefire.Stuff;
-import com.github.signed.sandboxes.maven.surefire.SureFireExecution;
+import com.github.signed.sandboxes.maven.BuildArtifact;
+import com.github.signed.sandboxes.maven.artifacts.ArtifactSink;
+import com.github.signed.sandboxes.maven.artifacts.ArtifactsCreatedByThisBuild;
+import com.github.signed.sandboxes.maven.plugins.BuildPlugins;
+import com.github.signed.sandboxes.maven.plugins.PluginCallback;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Plugin;
@@ -88,7 +89,7 @@ public class ExecuteSurefireMojo extends AbstractMojo {
         ArtifactsCreatedByThisBuild artifacts = new ArtifactsCreatedByThisBuild(artifact, attachedArtifacts);
         artifacts.handArtifactsTo(new ArtifactSink() {
             @Override
-            public void consume(Iterable<Stuff> artifacts) {
+            public void consume(Iterable<BuildArtifact> artifacts) {
                     configurationTemplate.addArgumentsFor(artifacts);
             }
         });

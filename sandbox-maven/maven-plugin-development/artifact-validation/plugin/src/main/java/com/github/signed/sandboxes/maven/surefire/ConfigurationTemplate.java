@@ -1,12 +1,13 @@
 package com.github.signed.sandboxes.maven.surefire;
 
+import com.github.signed.sandboxes.maven.BuildArtifact;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
 import java.io.StringReader;
 
 public class ConfigurationTemplate {
-    private Iterable<Stuff> artifacts;
+    private Iterable<BuildArtifact> artifacts;
 
     private Xpp3Dom configuration() {
         String configuration = "<configuration>\n" +
@@ -20,11 +21,11 @@ public class ConfigurationTemplate {
     }
 
 
-    public void addArgumentsFor(Iterable<Stuff> artifacts) {
+    public void addArgumentsFor(Iterable<BuildArtifact> artifacts) {
         this.artifacts = artifacts;
     }
 
-    private Xpp3Dom all(Iterable<Stuff> artifacts) {
+    private Xpp3Dom all(Iterable<BuildArtifact> artifacts) {
         Xpp3Dom systemProperties = systemProperties();
 
         String rawProperty = "<property>\n" +
@@ -33,7 +34,7 @@ public class ConfigurationTemplate {
                 "             </property>\n";
 
 
-        for (Stuff artifact : artifacts) {
+        for (BuildArtifact artifact : artifacts) {
             String classifier = (null == artifact.classifier()) ? "" : "." + artifact.classifier();
             String absolutePath = artifact.location().getAbsolutePath();
             String propertyXml = String.format(rawProperty, classifier, absolutePath);
