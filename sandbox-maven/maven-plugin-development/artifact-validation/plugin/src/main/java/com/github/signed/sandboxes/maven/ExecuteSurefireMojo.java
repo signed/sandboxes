@@ -21,6 +21,7 @@ import com.github.signed.sandboxes.maven.surefire.Stuff;
 import com.github.signed.sandboxes.maven.surefire.SureFireExecution;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
+import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.BuildPluginManager;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -31,9 +32,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
-import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +72,18 @@ public class ExecuteSurefireMojo extends AbstractMojo {
 
 
     public void execute() throws MojoExecutionException {
+        BuildPlugins buildPlugins = new BuildPlugins(mavenProject);
+        buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
+            @Override
+            public void plugin(Plugin plugin) {
+                sureFireExecution.useSurefireVersion(plugin.getVersion());
+            }
+
+            @Override
+            public void notFound(String pluginKey) {
+                //do nothing, use the default version
+            }
+        });
         ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
         configurationTemplate.addArgumentsFor(allArtifacts());
         configurationTemplate.attachConfigurationTo(new ConfigurationSink() {
@@ -83,7 +94,6 @@ public class ExecuteSurefireMojo extends AbstractMojo {
         });
         sureFireExecution.in(executionEnvironment(mavenProject, mavenSession, pluginManager));
         sureFireExecution.execute();
-
     }
 
     private Iterable<Stuff> allArtifacts() {
@@ -97,27 +107,5 @@ public class ExecuteSurefireMojo extends AbstractMojo {
 
     private Stuff convert(final Artifact artifact) {
         return new ArtifactAdapter(artifact);
-    }
-
-    private Xpp3Dom createConfiguration() {
-
-        try {
-            String configuration = "    <configuration>\n" +
-                    "                    <failIfNoTests>true</failIfNoTests>\n" +
-                    "                    <includes>\n" +
-                    "                        <include>**/*Validate.java</include>\n" +
-                    "                    </includes>\n" +
-                    "                    <systemProperties>\n" +
-                    "                        <property>\n" +
-                    "                            <name>maven.artifact</name>\n" +
-                    "                            <value>" + this.artifact.getFile().getAbsolutePath() + "</value>\n" +
-                    "                        </property>\n" +
-                    "                    </systemProperties>\n" +
-                    "                </configuration>";
-
-            return Xpp3DomBuilder.build(new StringReader(configuration));
-        } catch (Exception e) {
-            throw new RuntimeException("failed", e);
-        }
     }
 }
