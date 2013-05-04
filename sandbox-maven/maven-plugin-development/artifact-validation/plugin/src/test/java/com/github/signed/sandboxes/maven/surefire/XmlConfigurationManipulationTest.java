@@ -7,18 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XmlConfigurationManipulationTest {
+    private final ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
 
     @Test
-    public void testName() throws Exception {
-        ConfigurationTemplate configurationTemplate = new ConfigurationTemplate();
-
-        Stuff stuffWithClassifier = DummyArtifact.attachedArtifactWith("juhu", "asfdasd");
-
-        Stuff withoutClassifier = DummyArtifact.defaultArtifactAt("brot");
-
+    public void showAndTell() throws Exception {
         List<Stuff> stuff = new ArrayList<Stuff>();
-        stuff.add(withoutClassifier);
-        stuff.add(stuffWithClassifier);
+        stuff.add(DummyArtifact.defaultArtifactAt("brot"));
+        stuff.add(DummyArtifact.attachedArtifactWith("juhu", "asfdasd"));
 
         configurationTemplate.addArgumentsFor(stuff);
         configurationTemplate.attachConfigurationTo(new ConfigurationSink() {
