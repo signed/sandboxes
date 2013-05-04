@@ -13,10 +13,14 @@ public class ArtifactToPropertiesWriter {
         this.outputFile = outputFile;
     }
 
-    public void write(Iterable<Stuff> artifacts) throws IOException {
-        Properties properties = readProperties();
-        populateProperties(artifacts, properties);
-        writeProperties(properties);
+    public void write(Iterable<Stuff> artifacts) {
+        try {
+            Properties properties = readProperties();
+            populateProperties(artifacts, properties);
+            writeProperties(properties);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Properties readProperties() throws IOException {

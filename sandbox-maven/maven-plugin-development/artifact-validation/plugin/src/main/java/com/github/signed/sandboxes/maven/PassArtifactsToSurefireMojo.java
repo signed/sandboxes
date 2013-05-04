@@ -1,7 +1,6 @@
 package com.github.signed.sandboxes.maven;
 
-import com.github.signed.sandboxes.maven.surefire.ConfigurationSink;
-import com.github.signed.sandboxes.maven.surefire.ConfigurationTemplate;
+import com.github.signed.sandboxes.maven.surefire.ArtifactToPropertiesWriter;
 import com.github.signed.sandboxes.maven.surefire.Stuff;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.maven.artifact.Artifact;
@@ -16,6 +15,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -46,17 +46,12 @@ public class PassArtifactsToSurefireMojo extends AbstractMojo {
         buildPlugins.lookup("org.apache.maven.plugins:maven-surefire-plugin", new PluginCallback() {
             @Override
             public void plugin(Plugin plugin) {
-                ConfigurationTemplate template = new ConfigurationTemplate();
-                template.addArgumentsFor(allArtifacts());
                 List<PluginExecution> executions = plugin.getExecutions();
                 for (final PluginExecution execution : executions) {
                     if("verify".equalsIgnoreCase(execution.getPhase())){
-                        template.attachConfigurationTo(new ConfigurationSink() {
-                            @Override
-                            public void consume(Xpp3Dom dom) {
-                                execution.setConfiguration(dom);
-                            }
-                        });
+                        Xpp3Dom configuration = (Xpp3Dom)execution.getConfiguration();
+                        String systemPropertiesFile = configuration.getChild("systemPropertiesFile").getValue();
+                        new ArtifactToPropertiesWriter(new File(systemPropertiesFile)).write(allArtifacts());
                     }
                 }
             }

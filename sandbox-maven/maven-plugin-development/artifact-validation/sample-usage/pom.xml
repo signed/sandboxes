@@ -63,12 +63,7 @@
                             <includes>
                                 <include>**/*Validate.java</include>
                             </includes>
-                            <systemProperties>
-                                <property>
-                                    <name>maven.artifact</name>
-                                    <value>${project.build.directory}/${project.build.finalName}.${project.packaging}</value>
-                                </property>
-                            </systemProperties>
+                            <systemPropertiesFile>${project.build.directory}/artifact.properties</systemPropertiesFile>
                         </configuration>
                     </execution>
                 </executions>
