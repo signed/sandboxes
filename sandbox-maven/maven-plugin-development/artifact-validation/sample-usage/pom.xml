@@ -28,7 +28,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.github.signed.maven.plugin.maven-artifact-validation-plugin</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>artifact-validation-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <executions>
