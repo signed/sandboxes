@@ -12,5 +12,79 @@
         <module>dependency-convergence</module>
         <module>ban-duplicate-classes</module>
     </modules>
+
+    <properties>
+        <dependency.version.org.codehaus.mojo.extra-enforcer-rules>1.0-alpha-4</dependency.version.org.codehaus.mojo.extra-enforcer-rules>
+        <dependency.version.slf4j>1.7.2</dependency.version.slf4j>
+
+        <enforcer.fail.on.dependency-convergence>true</enforcer.fail.on.dependency-convergence>
+        <enforcer.fail.on.duplicate-classes>true</enforcer.fail.on.duplicate-classes>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${dependency.version.slf4j}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforcer-dependency-convergence</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <DependencyConvergence />
+                            </rules>
+                            <fail>${enforcer.fail.on.dependency-convergence}</fail>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-ban-duplicate-classes</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <banDuplicateClasses />
+                            </rules>
+                            <fail>${enforcer.fail.on.duplicate-classes}</fail>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.0.4</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>${dependency.version.org.codehaus.mojo.extra-enforcer-rules}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 
