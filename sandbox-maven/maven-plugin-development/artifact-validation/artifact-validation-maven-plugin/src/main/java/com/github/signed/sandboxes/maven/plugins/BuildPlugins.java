@@ -1,4 +1,4 @@
-package com.github.signed.sandboxes.maven;
+package com.github.signed.sandboxes.maven.plugins;
 
 import org.apache.maven.model.Plugin;
 import org.apache.maven.project.MavenProject;

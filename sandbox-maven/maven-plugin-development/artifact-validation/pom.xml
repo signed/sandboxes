@@ -12,7 +12,8 @@
     </properties>
 
     <modules>
-        <module>plugin</module>
+        <module>artifact-validation</module>
+        <module>artifact-validation-maven-plugin</module>
         <module>sample-usage</module>
     </modules>
 </project>
