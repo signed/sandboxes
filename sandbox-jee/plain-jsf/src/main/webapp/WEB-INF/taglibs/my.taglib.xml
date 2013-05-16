@@ -16,4 +16,10 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>secretvalidator</tag-name>
+        <validator>
+            <validator-id>validator.secret</validator-id>
+        </validator>
+    </tag>
 </facelet-taglib>

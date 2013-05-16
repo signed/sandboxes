@@ -19,10 +19,10 @@
             <h:message for="name"/>
 
             Your secret:
-            <h:inputSecret id="secret" value="#{formData.secret}" label="the label">
+            <h:inputSecret id="secret" value="#{formData.secret}" label="the label" >
                 <f:converter for="secret" converterId="converter.secrets"/>
                 <f:validateRequired/>
-                <f:validator for="secret" validatorId="validator.secret"/>
+                <signed:secretvalidator attribute="no its not"/>
             </h:inputSecret>
             <h:message for="secret"/>
         </h:panelGrid>
