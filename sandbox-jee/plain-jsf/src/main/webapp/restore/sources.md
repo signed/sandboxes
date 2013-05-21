@@ -5,3 +5,5 @@ http://stackoverflow.com/questions/4105439/com-sun-faces-numberofviewsinsession-
 http://www.nofluffjuststuff.com/blog/ed_burns/2009/09/dealing_gracefully_with_viewexpiredexception_in_jsf2
 
 http://www.gregbugaj.com/?p=164
+
+http://javalabor.blogspot.de/2011/09/jsf-2-global-exception-handling.html
