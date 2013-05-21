@@ -30,11 +30,6 @@
         <param-value>/WEB-INF/taglibs/my.taglib.xml</param-value>
     </context-param>
 
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/restore/toslow.xhtml</location>
-    </error-page>
-
     <context-param>
         <param-name>com.sun.faces.numberOfLogicalViews</param-name>
         <param-value>1</param-value>
