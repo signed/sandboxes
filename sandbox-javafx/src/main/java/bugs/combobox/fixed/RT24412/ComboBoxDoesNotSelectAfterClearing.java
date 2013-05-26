@@ -1,4 +1,4 @@
-package bugs.combobox.RT24412;
+package bugs.combobox.fixed.RT24412;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
