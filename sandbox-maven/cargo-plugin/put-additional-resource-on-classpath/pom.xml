@@ -44,11 +44,13 @@
                     <configuration>
                         <properties>
                             <cargo.servlet.port>8083</cargo.servlet.port>
+                            <storage.root>${project.build.directory}/application/</storage.root>
                         </properties>
                         <files>
                             <file>
                                 <file>${project.basedir}/src/test/resources/configuration.properties</file>
                                 <todir>cargo-domain/lib/classes/</todir>
+                                <configfile>true</configfile>
                             </file>
                         </files>
                     </configuration>
