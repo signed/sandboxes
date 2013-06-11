@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>move-static-variables</artifactId>
+    <artifactId>sandbox-intellij</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
