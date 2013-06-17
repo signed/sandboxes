@@ -8,9 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>filter</artifactId>
-
-    <name>filter</name>
+    <artifactId>custom-filter</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

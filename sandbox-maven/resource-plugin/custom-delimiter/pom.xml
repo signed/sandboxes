@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.github.signed.sandboxes.maven.resource-plugin</groupId>
-    <artifactId>basic-filter</artifactId>
+    <artifactId>custom-delimiter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
