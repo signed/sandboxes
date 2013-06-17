@@ -14,7 +14,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class Filter_Test {
     @Test
     public void replaceThePattern() throws Exception {
-        assertThat(filteredTestFile(), containsString("Hallo @Thomas"));
+        assertThat(filteredTestFile(), containsString("Hallo Thomas!"));
+    }
+
+    @Test
+    public void doNotApplyDefaultFilterPattern() throws Exception {
+        assertThat(filteredTestFile(), containsString("${are}"));
     }
 
     private String filteredTestFile() throws IOException {

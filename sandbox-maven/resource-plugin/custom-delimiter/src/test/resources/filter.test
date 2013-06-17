@@ -1,4 +1,4 @@
 Die Version des Projekts ist ${project.version}.
-Hallo @${name}
+Hallo @name@!
 
 Not existing properties ${are} not replaced ${name}
