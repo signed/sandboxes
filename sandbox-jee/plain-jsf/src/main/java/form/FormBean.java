@@ -3,10 +3,12 @@ package form;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 @Named("formData")
 @SessionScoped
 public class FormBean implements Serializable {
+    private Logger logger = Logger.getLogger(FormBean.class.getName());
 
     private String name;
     private String secret;
@@ -25,5 +27,10 @@ public class FormBean implements Serializable {
 
     public void setSecret(String newSecret) {
         this.secret = newSecret;
+    }
+
+    public String tellSecret(){
+        logger.info("muhahahha");
+        return "welcome";
     }
 }

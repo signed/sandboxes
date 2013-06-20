@@ -26,7 +26,9 @@
             </h:inputSecret>
             <h:message for="secret"/>
         </h:panelGrid>
-        <h:commandButton value="Welcome Me" action="welcome"/>
+        <h:commandButton value="Welcome Me" action="${formData.tellSecret}">
+            <f:actionListener type="form.GossipSource"/>
+        </h:commandButton>
     </h:form>
     <signed:input label="print me"/>
     <signed:input label="print you"/>
