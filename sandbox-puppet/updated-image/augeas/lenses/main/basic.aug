@@ -9,7 +9,7 @@ let colon = del /:[ \t]*/ ": "
 (* note that no space is allowed between "Source" and ':' *)
 let source = [ key "Source" . colon . store /[^ \t]+/ . eol ]
 
-let row = [ del /\[/ "[" . key /[a-zA-Z ]+/ . del /\]/ "]" . eol]
+let category = [ del /\[/ "[" . key /[a-zA-Z ]+/ . del /\]/ "]" . eol]
 
 (* this lens will get more complex in time *)
 let lns = source
