@@ -1,2 +1,2 @@
-$augeas_pagaes = [ "augeas-tools" ]
-package { $augeas_pagaes: ensure => "installed" }
+$augeas_pages = [ "augeas-tools" ]
+package { $augeas_pages: ensure => "installed" }
