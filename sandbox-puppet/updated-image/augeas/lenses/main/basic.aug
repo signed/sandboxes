@@ -11,5 +11,7 @@ let source = [ key "Source" . colon . store /[^ \t]+/ . eol ]
 
 let category = [ del /\[/ "[" . key /[a-zA-Z ]+/ . del /\]/ "]" . eol]
 
+let friendlyName = key
+
 (* this lens will get more complex in time *)
 let lns = source
