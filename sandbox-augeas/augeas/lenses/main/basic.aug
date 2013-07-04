@@ -12,8 +12,8 @@ let shortcut_key = [ key /([\{\}_-]|[a-zA-Z0-9])+/ ]
 let sep_spc = del /[ \t]+/ " "
 let keys = [ label "key" . store word ] .[ label "key" . sep_spc . store word ]*
 
-let my_word = /(Ctrl|Alt|Shift|Meta|Space|F[1-9][0-2]*|.)/
+let key = /(Ctrl|Alt|Shift|Meta|Space|F[1-9][0-2]*|.)/
 
-let try = [ label "key". store my_word ].[ label "key". del "+" "+" . store my_word ]*
+let try = [ label "key". store key ].[ label "key". del "+" "+" . store key ]*
 
 let lns = shortcut_key
