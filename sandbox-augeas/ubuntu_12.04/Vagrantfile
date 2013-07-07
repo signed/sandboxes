@@ -11,7 +11,8 @@ Vagrant::Config.run do |config|
   config.ssh.username
 
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "manifests"
+    puppet.module_path = "puppet/modules/"
+    puppet.manifests_path = "puppet/manifests/"
     puppet.manifest_file  = "init.pp"
     #puppet.options = "--verbose --debug"
   end
