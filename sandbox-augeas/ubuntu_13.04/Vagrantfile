@@ -8,8 +8,9 @@ Vagrant::Config.run do |config|
   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
 
   config.vm.provision :puppet do |puppet|
-    puppet.module_path = "puppet/modules/"
+    puppet.module_path = ["puppet/modules/","puppet/library/"]
     puppet.manifests_path = "puppet/manifests/"
     puppet.manifest_file  = "init.pp"
+    puppet.options = "--verbose --debug"
   end
 end
