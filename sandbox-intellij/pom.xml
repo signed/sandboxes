@@ -11,5 +11,6 @@
         <module>extract-method-with-array-return-type</module>
         <module>move-static-variables</module>
         <module>extract-field-dialog</module>
+        <module>extract-parameter-dialog</module>
     </modules>
 </project>
