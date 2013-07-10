@@ -1,4 +1,4 @@
-package menomic;
+package mnemonic;
 
 public class AllOccurrences {
 
@@ -9,6 +9,6 @@ public class AllOccurrences {
     }
 
     private void calledMethod(){
-        System.out.println("first: "+ field + " second: "+field);
+        System.out.println("first: "+ field + " second: "+ field);
     }
 }
