@@ -8,7 +8,13 @@ Vagrant::configure("2") do |config|
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
+
   config.ssh.username
+
+
+  config.vm.provider "virtualbox" do |virtualbox|
+    #put your box specific stuff here
+  end
 
   config.vm.provision :puppet do |puppet|
     puppet.module_path = ["puppet/modules/","puppet/library/"]
