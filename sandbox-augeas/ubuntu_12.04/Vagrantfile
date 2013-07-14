@@ -11,6 +11,8 @@ Vagrant::configure("2") do |config|
 
   config.ssh.username
 
+  config.vm.synced_folder "../augeas/", "/augeas"
+
 
   config.vm.provider "virtualbox" do |virtualbox|
     #put your box specific stuff here
