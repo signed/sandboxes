@@ -1,0 +1,2 @@
+$augeas_pages = ["git-core", "build-essential", "autoconf", "automake", "bison", "flex", "libtool", "pkg-config", "libreadline6", "libreadline6-dev", "libxml2-dev"]
+package { $augeas_pages : ensure => "installed" }
