@@ -1,0 +1,8 @@
+<component>
+    <files>
+        <file>
+            <outputDirectory>/</outputDirectory>
+            <source>src/main/resources/README.txt</source>
+        </file>
+    </files>
+</component>

@@ -7,14 +7,8 @@
     </formats>
     <baseDirectory>the-essentials</baseDirectory>
 
-    <files>
-        <file>
-            <outputDirectory>/essentials</outputDirectory>
-            <source>src/main/resources/README.txt</source>
-        </file>
-        <file>
-            <outputDirectory>essentials</outputDirectory>
-            <source>src/main/resources/LICENSE.txt</source>
-        </file>
-    </files>
+    <componentDescriptors>
+        <componentDescriptor>src/main/assembly/shared.xml</componentDescriptor>
+    </componentDescriptors>
+
 </assembly>

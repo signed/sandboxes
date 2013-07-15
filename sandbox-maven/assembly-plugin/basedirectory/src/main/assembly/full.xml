@@ -6,11 +6,14 @@
         <format>zip</format>
     </formats>
 
+    <baseDirectory>so-full</baseDirectory>
+
+    <componentDescriptors>
+        <componentDescriptor>src/main/assembly/shared.xml</componentDescriptor>
+    </componentDescriptors>
+
+
     <files>
-        <file>
-            <outputDirectory>/full</outputDirectory>
-            <source>src/main/resources/README.txt</source>
-        </file>
         <file>
             <outputDirectory>/full</outputDirectory>
             <source>src/main/resources/LICENSE.txt</source>
