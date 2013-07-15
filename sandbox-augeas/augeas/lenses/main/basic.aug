@@ -10,10 +10,9 @@ let category = [ del /\[/ "[" . key /[a-zA-Z ]+/ . del /\]/ "]" . eol]
 let shortcut_key = [ key /([\{\}_-]|[a-zA-Z0-9])+/ ]
 
 let sep_spc = del /[ \t]+/ " "
-let keys = [ label "key" . store word ] .[ label "key" . sep_spc . store word ]*
 
 let key = /([^\\+]+)/
 
-let try = [ label "key". store key ].[ label "key". del "+" "+" . store key ]*
+let keys = [ label "key". store key ].[ label "key". del "+" "+" . store key ]*
 
 let lns = shortcut_key
