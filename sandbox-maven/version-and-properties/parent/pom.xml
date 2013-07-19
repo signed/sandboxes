@@ -4,12 +4,15 @@
 
     <groupId>com.github.signed.sandboxes.maven.version</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>42</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <application.version>1.1.0</application.version>
+        <version.domain>3.2</version.domain>
+        <version.gui>4.7</version.gui>
+        <version.storage>2.8.8</version.storage>
     </properties>
 
 </project>
