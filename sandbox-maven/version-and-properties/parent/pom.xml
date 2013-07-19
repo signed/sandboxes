@@ -15,4 +15,23 @@
         <version.storage>2.8.8</version.storage>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.signed.sandboxes.maven.version</groupId>
+                <artifactId>domain</artifactId>
+                <version>${version.domain}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.signed.sandboxes.maven.version</groupId>
+                <artifactId>storage</artifactId>
+                <version>${version.storage}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.signed.sandboxes.maven.version</groupId>
+                <artifactId>gui</artifactId>
+                <version>${version.gui}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
