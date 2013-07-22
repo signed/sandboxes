@@ -5,4 +5,13 @@
     <groupId>idea</groupId>
     <artifactId>extract-parameter-dialog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.5</version>
+            <classifier>sources</classifier>
+        </dependency>
+
+    </dependencies>
 </project>
