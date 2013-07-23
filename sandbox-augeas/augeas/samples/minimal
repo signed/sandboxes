@@ -5,3 +5,4 @@ _k_friendly_name=KDE Keyboard Layout Switcher
 [kactivitymanagerd]
 _k_friendly_name=KDE-Aktivitätenverwaltung
 switch-to-activity-87f827c5-d591-4a98-bf4a-5bcbf05a20d4=none,none,Switch to activity "Neue Aktivität"
+Kill Window=Ctrl+Alt+4,Ctrl+Alt+Esc,Kill Window
