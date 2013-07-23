@@ -5,7 +5,8 @@ test Basic.category get category = {"naMe me"}
 
 test Basic.shortcut_key get "-_{a_b-}0" = { "-_{a_b-}0" }
 
-test Basic.keys get "Meta+Ctrl+Alt+Shift+Space+F1+F12+Ö" =
+let lense  = Basic.key_combination "any counter name for test"
+test lense get "Meta+Ctrl+Alt+Shift+Space+F1+F12+Ö" =
 { "key"
     {"1"= "Meta"}
     {"2"= "Ctrl"}

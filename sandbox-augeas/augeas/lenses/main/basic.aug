@@ -20,8 +20,6 @@ let key_combination (counter_name:string) =
 let active_shortcut = key_combination "active"
 let default_shortcut = key_combination "default"
 
-let keys = key_combination "test only"
-
 let binding_value_separator = del /,/ ","
 
 let binding_value = [ label "active" . active_shortcut] . binding_value_separator . [label "default" . default_shortcut] . binding_value_separator . [ label "humanreadable" . store /.*/ ]
