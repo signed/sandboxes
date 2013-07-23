@@ -37,3 +37,21 @@ test Basic.binding_value get "a+b+c,4+5+6,Kill Window"  =
         }
     }
     {"humanreadable" = "Kill Window"}
+
+test Basic.binding get "KillWindow=Ctrl+Alt+4,Ctrl+Alt+Esc,Kill Window" =
+    {"action" = "KillWindow"}
+    {"active"
+        {"key"
+            {"1" = "Ctrl"}
+            {"2" = "Alt"}
+            {"3" = "4"}
+        }
+    }
+    {"default"
+        { "key"
+            {"1" = "Ctrl"}
+            {"2" = "Alt"}
+            {"3" = "Esc"}
+        }
+    }
+    {"humanreadable" = "Kill Window"}

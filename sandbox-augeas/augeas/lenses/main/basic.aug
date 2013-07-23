@@ -24,4 +24,6 @@ let binding_value_separator = del /,/ ","
 
 let binding_value = [ label "active" . active_shortcut] . binding_value_separator . [label "default" . default_shortcut] . binding_value_separator . [ label "humanreadable" . store /.*/ ]
 
+let binding = [label "action" . store /[^=]+/] . del /=/ "=" . binding_value
+
 let lns = shortcut_key
