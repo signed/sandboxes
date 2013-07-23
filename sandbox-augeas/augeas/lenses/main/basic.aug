@@ -13,13 +13,17 @@ let sep_spc = del /[ \t]+/ " "
 
 let key = /([^\\+,]+)/
 
-let keys = [label "key" . [seq "key-stroke" . store key] .  [del "+" "+" . seq "key-stroke" . store key]*]
-let active_keys = [label "key" . [seq "active-key-stroke" . store key] .  [del "+" "+" . seq "active-key-stroke" . store key]*]
+let key_combination (counter_name:string) =
+ [label "key" . [seq counter_name . store key] .  [del "+" "+" . seq counter_name . store key]*]
+
+
+let active_shortcut = key_combination "active"
+let default_shortcut = key_combination "default"
+
+let keys = key_combination "test only"
 
 let binding_value_separator = del /,/ ","
 
-let binding_value = [ label "active" . active_keys] . binding_value_separator . [label "default" . keys] . binding_value_separator . [ label "humanreadable" . store /.*/ ]
-
-(* [ key k . colon . [ seq k . store email] . [ seq k . sep_comma_with_nl . store email ]* . eol ] *)
+let binding_value = [ label "active" . active_shortcut] . binding_value_separator . [label "default" . default_shortcut] . binding_value_separator . [ label "humanreadable" . store /.*/ ]
 
 let lns = shortcut_key
