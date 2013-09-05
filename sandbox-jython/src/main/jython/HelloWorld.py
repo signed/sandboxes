@@ -6,3 +6,4 @@ class HelloWorld:
         print 'hello world'
 
 HelloWorld().great()
+
