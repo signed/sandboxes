@@ -1,9 +1,11 @@
 __author__ = 'signed'
 
+import sys
 
 class HelloWorld:
     def great(self):
-        print 'hello world'
+        for letter in 'nice':
+            print 'hello world'
 
 HelloWorld().great()
 
