@@ -1,10 +1,21 @@
 __author__ = 'signed'
 
-import tokenize
+import ast
 
-print 'running...'
+
+class ToJavaCodeNodeVisitor(ast.NodeVisitor):
+
+    def __init__(self):
+        pass
+
+    def generic_visit(self, node):
+        print node.__class__.__name__
+        super(ToJavaCodeNodeVisitor, self).generic_visit(node)
+
 
 source = open("HelloWorld.py", 'r').read()
 
-for t in tokenize.generate_tokens(iter([source]).next):
-    tokenize.printtoken(*t)
+tree = ast.parse(source)
+
+ToJavaCodeNodeVisitor().visit(tree)
+
