@@ -38,8 +38,9 @@ public class Embedded_Test {
     }
 
     private List<Demo> readWithHibernate() {
-        Properties properties = new Properties();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", properties);
+        Properties overridePropertiesFromPersistenceXml = new Properties();
+        overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "false");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", overridePropertiesFromPersistenceXml);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
         try {
