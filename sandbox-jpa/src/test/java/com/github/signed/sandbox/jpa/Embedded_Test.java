@@ -1,7 +1,6 @@
 package com.github.signed.sandbox.jpa;
 
 import org.h2.tools.Server;
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,6 +25,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
+    private final String userName = "sa";
+    private final String password = "sa";
 
     @Test
     public void basicSetupForInMemoryH2Database() throws Exception {
@@ -39,7 +40,13 @@ public class Embedded_Test {
 
     private List<Demo> readWithHibernate() {
         Properties overridePropertiesFromPersistenceXml = new Properties();
+        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.driver", "org.h2.Driver");
+        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.url", jdbcUrlBuilder.buildUrl());
+        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.user", userName);
+        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.password", password);
         overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "false");
+        overridePropertiesFromPersistenceXml.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", overridePropertiesFromPersistenceXml);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
