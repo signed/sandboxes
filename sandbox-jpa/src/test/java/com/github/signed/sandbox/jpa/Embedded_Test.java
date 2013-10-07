@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,18 +22,21 @@ public class Embedded_Test {
     public void basicSetupForInMemoryH2Database() throws Exception {
         Server server = Server.createTcpServer("-tcpPort", "9081", "-tcpAllowOthers");
         server.start();
-        doJdbcStuff();
-        doJpaHibernateStuff();
+        writeWithJdbc();
+        readWithHibernate();
         server.shutdown();
     }
 
-    private void doJpaHibernateStuff() {
+    private void readWithHibernate() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
+            TypedQuery<Demo> query = entityManager.createQuery("select d from Demo d", Demo.class);
+            Demo demo = query.getSingleResult();
+            System.out.println("jpd read: "+demo.getId() + " " +demo.getComment());
             transaction.commit();
         } catch (Exception ex) {
             if (null != transaction) {
@@ -41,7 +45,7 @@ public class Embedded_Test {
         }
     }
 
-    private void doJdbcStuff() throws SQLException {
+    private void writeWithJdbc() throws SQLException {
         Connection connection = DriverManager.getConnection(jdbcUrlBuilder.buildUrl(), "sa", "sa");
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE DEMO(ID INT PRIMARY KEY, comment VARCHAR)");
@@ -52,5 +56,8 @@ public class Embedded_Test {
             String comment = resultSet.getString(2);
             System.out.println(id + " " + comment);
         }
+        statement.close();
+        connection.commit();
+        connection.close();
     }
 }
