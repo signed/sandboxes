@@ -1,6 +1,7 @@
 package com.github.signed.sandbox.jpa;
 
 import org.h2.tools.Server;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,6 +19,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
@@ -27,11 +31,12 @@ public class Embedded_Test {
         Server server = Server.createTcpServer("-tcpPort", "9081", "-tcpAllowOthers");
         server.start();
         writeWithJdbc();
-        readWithHibernate();
+        List<Demo> demos = readWithHibernate();
+        assertThat(demos.get(0).getComment(), is("hello"));
         server.shutdown();
     }
 
-    private void readWithHibernate() {
+    private List<Demo> readWithHibernate() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
@@ -40,10 +45,8 @@ public class Embedded_Test {
             transaction.begin();
             TypedQuery<Demo> query = entityManager.createQuery("select d from Demo d", Demo.class);
             List<Demo> demos = query.getResultList();
-            for (Demo demo : demos) {
-                print(demo);
-            }
             transaction.commit();
+            return demos;
         } catch (Exception ex) {
             if (null != transaction) {
                 transaction.rollback();
@@ -52,10 +55,7 @@ public class Embedded_Test {
             ex.printStackTrace(new PrintWriter(stringWriter));
             Assert.fail(stringWriter.toString());
         }
-    }
-
-    private void print(Demo demo) {
-        System.out.println("jpd read: " + demo.getId() + " " + demo.getComment());
+        throw new UnreachableCodeException();
     }
 
     private void writeWithJdbc() throws SQLException {
@@ -63,7 +63,6 @@ public class Embedded_Test {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE DEMO(ID INT PRIMARY KEY, comment VARCHAR)");
         statement.execute("INSERT INTO DEMO (id, comment) VALUES (1, 'hello') ");
-        statement.execute("INSERT INTO DEMO (id, comment) VALUES (2, 'hello two') ");
         ResultSet resultSet = statement.executeQuery("SELECT * from DEMO");
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
