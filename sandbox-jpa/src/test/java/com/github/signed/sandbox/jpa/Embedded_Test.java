@@ -1,6 +1,7 @@
 package com.github.signed.sandbox.jpa;
 
 import org.h2.tools.Server;
+import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
@@ -8,11 +9,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Embedded_Test {
 
@@ -35,14 +39,23 @@ public class Embedded_Test {
             transaction = entityManager.getTransaction();
             transaction.begin();
             TypedQuery<Demo> query = entityManager.createQuery("select d from Demo d", Demo.class);
-            Demo demo = query.getSingleResult();
-            System.out.println("jpd read: "+demo.getId() + " " +demo.getComment());
+            List<Demo> demos = query.getResultList();
+            for (Demo demo : demos) {
+                print(demo);
+            }
             transaction.commit();
         } catch (Exception ex) {
             if (null != transaction) {
                 transaction.rollback();
             }
+            StringWriter stringWriter = new StringWriter();
+            ex.printStackTrace(new PrintWriter(stringWriter));
+            Assert.fail(stringWriter.toString());
         }
+    }
+
+    private void print(Demo demo) {
+        System.out.println("jpd read: " + demo.getId() + " " + demo.getComment());
     }
 
     private void writeWithJdbc() throws SQLException {
@@ -50,6 +63,7 @@ public class Embedded_Test {
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE DEMO(ID INT PRIMARY KEY, comment VARCHAR)");
         statement.execute("INSERT INTO DEMO (id, comment) VALUES (1, 'hello') ");
+        statement.execute("INSERT INTO DEMO (id, comment) VALUES (2, 'hello two') ");
         ResultSet resultSet = statement.executeQuery("SELECT * from DEMO");
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
