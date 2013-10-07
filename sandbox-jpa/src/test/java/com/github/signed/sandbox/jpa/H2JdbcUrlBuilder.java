@@ -22,11 +22,7 @@ public class H2JdbcUrlBuilder {
     }
 
     public String buildUrl() {
-        String additionalArguments = "";
-        if( !arguments.isEmpty()){
-            additionalArguments = ";"+Joiner.on(";").join(arguments);
-
-        }
-        return "jdbc:h2:mem:" + databaseName+additionalArguments;
+        String additionalArguments = Joiner.on(";").join(arguments);
+        return String.format("jdbc:h2:mem:%s;%s", databaseName, additionalArguments);
     }
 }

@@ -60,7 +60,9 @@ public class Embedded_Test {
     }
 
     private void writeWithJdbc() throws SQLException {
-        Connection connection = DriverManager.getConnection(jdbcUrlBuilder.buildUrl(), "sa", "sa");
+        String jdbcUrl = jdbcUrlBuilder.buildUrl();
+        System.out.println("jdbcUrl = " + jdbcUrl);
+        Connection connection = DriverManager.getConnection(jdbcUrl, "sa", "sa");
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE DEMO(ID INT PRIMARY KEY, comment VARCHAR)");
         statement.execute("INSERT INTO DEMO (id, comment) VALUES (1, 'hello') ");
