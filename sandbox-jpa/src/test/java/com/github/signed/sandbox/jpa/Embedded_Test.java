@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +38,8 @@ public class Embedded_Test {
     }
 
     private List<Demo> readWithHibernate() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit");
+        Properties properties = new Properties();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", properties);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
         try {
