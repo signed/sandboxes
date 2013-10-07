@@ -3,6 +3,10 @@ package com.github.signed.sandbox.jpa;
 import org.h2.tools.Server;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,6 +20,26 @@ public class Embedded_Test {
     @Test
     public void basicSetupForInMemoryH2Database() throws Exception {
         Server server = Server.createTcpServer("-tcpPort", "9081", "-tcpAllowOthers");
+        server.start();
+        doJdbcStuff();
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            transaction.commit();
+        } catch (Exception ex) {
+            if (null != transaction) {
+                transaction.rollback();
+            }
+        }
+
+        server.shutdown();
+    }
+
+    private void doJdbcStuff() throws SQLException {
         Connection connection = DriverManager.getConnection(jdbcUrlBuilder.buildUrl(), "sa", "sa");
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE DEMO(ID INT PRIMARY KEY, comment VARCHAR)");
@@ -24,51 +48,7 @@ public class Embedded_Test {
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
             String comment = resultSet.getString(2);
-            System.out.println(id +" "+comment);
+            System.out.println(id + " " + comment);
         }
-        server.start();
-        server.shutdown();
     }
-
-
-    /**
-     * This sample program opens the same database once in embedded mode,
-     * and once in the server mode. The embedded mode is faster, but only
-     * the server mode supports remote connections.
-     */
-
-    public static void main(String[] args) throws Exception {
-
-        // start the server, allows to access the database remotly
-        Server server = Server.createTcpServer("-tcpPort", "9081");
-        server.start();
-        System.out.println("You can access the database remotely now, using the URL:");
-        System.out.println("jdbc:h2:tcp://localhost:9081/~/test (user: sa, password: sa)");
-
-        // now use the database in your application in embedded mode
-        Class.forName("org.h2.Driver");
-
-        Connection conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
-
-        // some simple 'business usage'
-        Statement stat = conn.createStatement();
-        stat.execute("DROP TABLE TIMER IF EXISTS");
-        stat.execute("CREATE TABLE TIMER(ID INT PRIMARY KEY, TIME VARCHAR)");
-        System.out.println("Execute this a few times: SELECT TIME FROM TIMER");
-        System.out.println("To stop this application (and the server), run: DROP TABLE TIMER");
-        try {
-            while (true) {
-                // runs forever, except if you drop the table remotely
-                stat.execute("MERGE INTO TIMER VALUES(1, NOW())");
-                Thread.sleep(1000);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.toString());
-        }
-        conn.close();
-
-        // stop the server
-        server.stop();
-    }
-
 }

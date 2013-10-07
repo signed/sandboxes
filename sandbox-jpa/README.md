@@ -1,0 +1,1 @@
+http://docs.jboss.org/hibernate/entitymanager/3.5/reference/en/html/configuration.html
