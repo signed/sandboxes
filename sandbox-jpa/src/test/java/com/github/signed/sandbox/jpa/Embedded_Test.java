@@ -43,7 +43,8 @@ public class Embedded_Test {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Demo> query = entityManager.createQuery("select d from Demo d", Demo.class);
+            //TypedQuery<Demo> query = entityManager.createQuery("select d from Demo d", Demo.class);
+            TypedQuery<Demo> query = entityManager.createNamedQuery("Demo.findAll", Demo.class);
             List<Demo> demos = query.getResultList();
             transaction.commit();
             return demos;
