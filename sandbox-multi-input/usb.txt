@@ -1,0 +1,6 @@
+Which USB device uses which /dev/hidraw file http://ubuntuforums.org/showthread.php?t=1817942
+
+
+Configure udev to change permissions on USB HID device? http://askubuntu.com/questions/15570/configure-udev-to-change-permissions-on-usb-hid-device
+
+How to distinguish between identical USB-to-serial adapters http://askubuntu.com/questions/49910/how-to-distinguish-between-identical-usb-to-serial-adapters
