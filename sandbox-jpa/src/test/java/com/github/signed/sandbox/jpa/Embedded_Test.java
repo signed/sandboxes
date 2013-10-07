@@ -22,7 +22,11 @@ public class Embedded_Test {
         Server server = Server.createTcpServer("-tcpPort", "9081", "-tcpAllowOthers");
         server.start();
         doJdbcStuff();
+        doJpaHibernateStuff();
+        server.shutdown();
+    }
 
+    private void doJpaHibernateStuff() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
@@ -35,8 +39,6 @@ public class Embedded_Test {
                 transaction.rollback();
             }
         }
-
-        server.shutdown();
     }
 
     private void doJdbcStuff() throws SQLException {
