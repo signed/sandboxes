@@ -11,4 +11,13 @@
     <groupId>com.github.signed.sandboxes.jpa</groupId>
     <artifactId>hibernate</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.signed.sandboxes.jpa</groupId>
+            <artifactId>hibernate-mappings</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
