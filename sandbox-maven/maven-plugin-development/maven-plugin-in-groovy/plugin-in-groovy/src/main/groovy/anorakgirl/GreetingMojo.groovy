@@ -1,5 +1,6 @@
 package anorakgirl
 
+import com.github.signed.sandbox.maven.plugin.Logic
 import org.codehaus.gmaven.mojo.GroovyMojo
 
 /**
@@ -9,6 +10,6 @@ import org.codehaus.gmaven.mojo.GroovyMojo
  */
 public class GreetingMojo extends GroovyMojo {
     void execute() {
-        log.info('Hello Groovy World!')
+        log.info(new Logic().executeLogic())
     }
 }

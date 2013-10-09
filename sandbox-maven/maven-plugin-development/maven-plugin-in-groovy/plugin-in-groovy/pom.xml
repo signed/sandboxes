@@ -11,23 +11,43 @@
 
     <artifactId>plugin-in-groovy</artifactId>
     <packaging>maven-plugin</packaging>
- 
+
     <dependencies>
+        <dependency>
+            <groupId>com.github.signed.sandboxes.maven.plugin</groupId>
+            <artifactId>logic-in-groovy</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- generated help mojo has a dependency to plexus-utils -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0.15</version>
+        </dependency>
         <dependency>
             <groupId>org.codehaus.gmaven</groupId>
             <artifactId>gmaven-mojo</artifactId>
-			<version>1.5</version>
+            <version>1.5</version>
         </dependency>
     </dependencies>
- 
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
-				<version>1.5</version>
+                <version>1.5</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <providerSelection>1.5</providerSelection>
+                        </configuration>
                         <goals>
                             <goal>generateStubs</goal>
                             <goal>compile</goal>
@@ -36,9 +56,6 @@
                         </goals>
                     </execution>
                 </executions>
-				<configuration>
-					<providerSelection>1.5</providerSelection>
-				</configuration>
             </plugin>
         </plugins>
     </build>
