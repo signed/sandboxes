@@ -1,54 +1,49 @@
 __author__ = 'signed'
 
 import ast
+import sys
 
 
 class ToJavaCodeNodeVisitor(ast.NodeVisitor):
-
     def __init__(self):
         pass
 
-    def visit_Import(self, stmt_import):
-        # retrieve the name from the returned object
-        # normally, there is just a single alias
-        for alias in stmt_import.names:
-            print 'import name "%s"' % alias.name
-            print 'import object %s' % str(alias)
+    def generic_visit(self, node):
+        #print 'default' + node.__class__.__name__
+        super(ToJavaCodeNodeVisitor, self).generic_visit(node)
 
-        # allow parser to continue to parse the statement's children
-        super(ToJavaCodeNodeVisitor, self).generic_visit(stmt_import)
+    def nothing(self, node):
+        pass
 
-    # def visit_BinOp(self, stmt_binop):
-    #     for child in ast.iter_fields(stmt_binop):
-    #         print 'child %s' % str(child)
+    def print_node(self, node):
+        print 'called from module' + node.__class__.__name__
+        self.generic_visit(node)
+
 
     def visit_Module(self, module):
-        def nothing(node):
-            print 'do nothing'
-            return
-
-        def print_node(node):
-            print node
-
-        process = {ast.ClassDef: print_node}
+        process = {ast.Import: self.visit, ast.ClassDef: self.visit}
         for element in module.body:
-            process.get(type(element), nothing)(element)
-            super(ToJavaCodeNodeVisitor, self).generic_visit(element)
+            process.get(type(element), self.nothing)(element)
 
-    def plain_return(self, string):
-        return string
+    def visit_Import(self, stmt_import):
+        for name in stmt_import.names:
+            sys.stdout.write('import ' + name.name + ";\n")
 
-    def call_generic_visit_in_super_class(self, node):
-        super(ToJavaCodeNodeVisitor, self).generic_visit(node)
+    def visit_ClassDef(self, class_def):
+        class_name = class_def.name
+        print 'public class ' + class_name + ' {\n'
+        for element in class_def.body:
+            self.visit(element)
+        print '\n}'
 
-    def generic_visit(self, node):
-        # print node.__class__.__name__
-        super(ToJavaCodeNodeVisitor, self).generic_visit(node)
+    def visit_FunctionDef(self, function_definition):
+        print 'public Object '+ function_definition.name + '( '+ 'args missing' +'){'
+        for element in function_definition.body:
+            print element
+        print '\n}'
 
 
 source = open("HelloWorld.py", 'r').read()
-
 tree = ast.parse(source)
-
 ToJavaCodeNodeVisitor().visit(tree)
 
