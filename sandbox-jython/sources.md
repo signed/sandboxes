@@ -2,3 +2,14 @@
 http://codemonkeytips.blogspot.de/2010/08/simple-python-nodevisitor-example.html
 http://stackoverflow.com/questions/1515357/simple-example-of-how-to-use-ast-nodevisitor
 https://github.com/pypy/pypy/blob/master/py/_code/_assertionnew.py
+
+
+
+figure out types
+
+http://stackoverflow.com/questions/11858630/how-do-i-obtain-the-type-of-a-java-instance-in-jython
+
+lambdas in python
+
+http://stackoverflow.com/questions/6629876/how-to-make-an-anonymous-function-in-python-without-christening-it/6635029#6635029
+http://stackoverflow.com/questions/6392739/what-does-the-symbol-do-in-python
