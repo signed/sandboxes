@@ -23,3 +23,9 @@ lambdas in python
 http://stackoverflow.com/questions/6629876/how-to-make-an-anonymous-function-in-python-without-christening-it/6635029#6635029
 http://stackoverflow.com/questions/6392739/what-does-the-symbol-do-in-python
 http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators
+
+
+Testing python
+
+http://pythontesting.net/framework/nose/nose-introduction/
+http://stackoverflow.com/questions/3660054/using-jython-with-maven
