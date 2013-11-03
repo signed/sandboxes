@@ -15,5 +15,5 @@ class VisitChildren(ast.NodeVisitor):
     pass
 
 
-class ModulePrinter(ast.NodeVisitor):
+class ModulePrinterDriver(ast.NodeVisitor):
     pass
