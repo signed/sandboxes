@@ -1,10 +1,12 @@
-import unittest, FirstTest, TestLists, jump.test_PrinterStorage
+import unittest
+
+import test_MotorHome
+import test_Printer
 
 loader = unittest.TestLoader()
-math_suite = loader.loadTestsFromModule(FirstTest)
-lists_suite = loader.loadTestsFromModule(TestLists)
-printer_storage_suit = loader.loadTestsFromModule(jump.test_PrinterStorage)
+printer_suite = loader.loadTestsFromModule(test_Printer)
+motor_home_suite = loader.loadTestsFromModule(test_MotorHome)
 
-global_suite = unittest.TestSuite([math_suite, lists_suite, printer_storage_suit])
+global_suite = unittest.TestSuite([printer_suite, motor_home_suite])
 
 unittest.TextTestRunner(verbosity=2).run(global_suite)
