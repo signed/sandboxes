@@ -7,6 +7,9 @@ class Printer(object):
     def write(self, text):
         self.paper.append(text)
 
+    def newline(self):
+        self.paper.append('\n')
+
 
 class Paper(object):
     text = ''

@@ -12,3 +12,9 @@ class TestPrinter(TestCase):
     def test_justVisitAllChildrenIfNoSpecialPrinterIsRegistered(self):
         self.printer.write('Some text')
         self.assertEqual(self.paper.text, 'Some text')
+
+    def test_changeLine(self):
+        self.printer.write('Some text')
+        self.printer.newline()
+        self.printer.write('more text')
+        self.assertEqual(self.paper.text, 'Some text\nmore text')
