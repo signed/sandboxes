@@ -24,6 +24,18 @@ class TestPrinter(TestCase):
         self.printer.write('Some text')
         self.assertEqual(self.paper.text, '    Some text')
 
+    def test_decreaseIndentationLevelInNextLine(self):
+        self.printer.increaseIndentation()
+        self.printer.decreaseIndentation()
+        self.printer.write('Some text')
+        self.assertEqual(self.paper.text, 'Some text')
+
+    def test_doNotAllowNegativeIndentationLevels(self):
+        self.printer.decreaseIndentation()
+        self.printer.increaseIndentation()
+        self.printer.write('Some text')
+        self.assertEqual(self.paper.text, '    Some text')
+
     def test_addIndentationAtTheStartOfALineAsLongAsItIsNotRemoved(self):
         self.printer.increaseIndentation()
         self.printer.write('Some text')
