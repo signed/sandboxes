@@ -20,3 +20,5 @@ out/
 #librarian-puppet
 Puppetfile.lock
 .tmp/
+
+*py.class
