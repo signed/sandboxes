@@ -5,7 +5,7 @@ from drivers import VisitChildren
 from drivers import ModulePrinterDriver
 
 
-class TestPrinterStorage(TestCase):
+class TestMotorHome(TestCase):
     def setUp(self):
         self.storage = MotorHome()
 
