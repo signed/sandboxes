@@ -9,7 +9,6 @@ class ToJavaCodeNodeVisitor(ast.NodeVisitor):
         pass
 
     def generic_visit(self, node):
-        #print 'default' + node.__class__.__name__
         super(ToJavaCodeNodeVisitor, self).generic_visit(node)
 
     def nothing(self, node):
@@ -18,7 +17,6 @@ class ToJavaCodeNodeVisitor(ast.NodeVisitor):
     def print_node(self, node):
         print 'called from module' + node.__class__.__name__
         self.generic_visit(node)
-
 
     def visit_Module(self, module):
         process = {ast.Import: self.visit, ast.ClassDef: self.visit}
@@ -37,7 +35,7 @@ class ToJavaCodeNodeVisitor(ast.NodeVisitor):
         print '\n}'
 
     def visit_FunctionDef(self, function_definition):
-        print 'public Object '+ function_definition.name + '( '+ 'args missing' +'){'
+        print 'public Object ' + function_definition.name + '( ' + 'args missing' + '){'
         for element in function_definition.body:
             print element
         print '\n}'
