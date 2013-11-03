@@ -18,7 +18,8 @@ class Printer(object):
         self.indentationLevel += 1
 
     def decreaseIndentation(self):
-        self.indentationLevel = max(0, self.indentationLevel -1)
+        self.indentationLevel = max(0, self.indentationLevel - 1)
+
 
 class Paper(object):
     text = ''
