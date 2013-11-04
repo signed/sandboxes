@@ -12,7 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <version.cucumber>1.1.1</version.cucumber>
+        <version.cucumber>1.1.5</version.cucumber>
     </properties>
 
     <dependencies>

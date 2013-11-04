@@ -1,16 +1,16 @@
 package com.github.signed.cucumber;
 
+import com.pholser.junit.quickcheck.ForAll;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.hamcrest.Matchers;
+import org.junit.contrib.theories.Theories;
+import org.junit.contrib.theories.Theory;
+import org.junit.runner.RunWith;
 
-import static org.hamcrest.CoreMatchers.is;
-
+@RunWith(Theories.class)
 public class Hello_Test {
 
-    @Test
-    public void randomTest() throws Exception {
-        Hello hello = new Hello("Mahlzeit");
-        MatcherAssert.assertThat(hello.sayHi(), is("Mahlzeit World"));
-
+    @Theory public void anyIntegerIsGreaterThanSeven(@ForAll int value) throws Exception {
+        MatcherAssert.assertThat(value, Matchers.greaterThan(7));
     }
 }

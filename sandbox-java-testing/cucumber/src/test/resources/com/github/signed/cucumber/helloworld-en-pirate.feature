@@ -1,7 +1,7 @@
 # language: en-pirate
-Ahoy matey! Hello World
+Ahoy matey!: Hello World
 
-  Heave to: : Say hello
+  Heave to: Say hello
     Gangway! I have a hello app with "Howdy"
     Blimey! I ask it to say hi
     Let go and haul it should answer with "Howdy World"
