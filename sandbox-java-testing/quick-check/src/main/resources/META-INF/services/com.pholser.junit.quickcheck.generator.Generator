@@ -1,1 +1,2 @@
-com.github.signed.quickcheck.generator.jodatime.LocalDateGenerator
+com.github.signed.quickcheck.generator.jodatime.AnyLocalDateGenerator
+com.github.signed.quickcheck.generator.jodatime._25_Hour_TimeChangeDateGenerator
