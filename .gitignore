@@ -22,3 +22,4 @@ Puppetfile.lock
 .tmp/
 
 *py.class
+.DS_Store
