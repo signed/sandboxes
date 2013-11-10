@@ -13,6 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <dependency.version.quickcheck>0.3</dependency.version.quickcheck>
     </properties>
 
     <dependencies>
@@ -24,12 +25,12 @@
         <dependency>
             <groupId>com.pholser</groupId>
             <artifactId>junit-quickcheck-core</artifactId>
-            <version>0.3</version>
+            <version>${dependency.version.quickcheck}</version>
         </dependency>
         <dependency>
             <groupId>com.pholser</groupId>
             <artifactId>junit-quickcheck-generators</artifactId>
-            <version>0.3</version>
+            <version>${dependency.version.quickcheck}</version>
         </dependency>
     </dependencies>
 </project>
