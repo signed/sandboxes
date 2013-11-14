@@ -12,25 +12,29 @@
         <version.hamcrest>1.3</version.hamcrest>
     </properties>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.10</version>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.10</version>
+
                 <configuration>
+                    <configLocation>${project.basedir}/src/test/checkstyle/configuration-by-signed.xml</configLocation>
                     <enableRulesSummary>false</enableRulesSummary>
+                    <failOnViolation>true</failOnViolation>
+                    <consoleOutput>true</consoleOutput>
                 </configuration>
+
+                <executions>
+                    <execution>
+                        <id>run-checkstyle</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
