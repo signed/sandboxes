@@ -2,16 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.signed.sandboxes</groupId>
-    <artifactId>sandbox-checkstyle</artifactId>
+    <groupId>com.github.signed.sandboxes.checkstyle</groupId>
+    <artifactId>project-under-the-microscope</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-
-    <modules>
-        <module>checkstyle-contributions</module>
-        <module>project-under-the-microscope</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,11 +20,19 @@
                 <version>2.10</version>
 
                 <configuration>
-                    <configLocation>${project.basedir}/src/test/checkstyle/configuration-by-signed.xml</configLocation>
+                    <configLocation>src/test/checkstyle/configuration.xml</configLocation>
                     <enableRulesSummary>false</enableRulesSummary>
-                    <failOnViolation>true</failOnViolation>
+                    <failOnViolation>false</failOnViolation>
                     <consoleOutput>true</consoleOutput>
                 </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.signed.checkstyle</groupId>
+                        <artifactId>checkstyle-contributions</artifactId>
+                        <version>0.0.1-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
 
                 <executions>
                     <execution>
