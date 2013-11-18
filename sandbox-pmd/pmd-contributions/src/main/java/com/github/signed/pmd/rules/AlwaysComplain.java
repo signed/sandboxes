@@ -7,7 +7,9 @@ public class AlwaysComplain extends AbstractJavaRule{
 
     @Override
     public Object visit(ASTClassOrInterfaceDeclaration node, Object data) {
-        System.out.println("\nhello world\n");
+        if("AccessSingleton".equals(node.getImage())){
+            addViolationWithMessage(data, node, "bite me", 0,7);
+        }
         return data;
     }
 }

@@ -8,7 +8,7 @@
         This is my ruleset.
     </description>
 
-    <rule name="AvoidThrowingCheckedException"
+    <rule name="AlwaysComplain"
           language="java"
           message="I complain all the time."
           class="com.github.signed.pmd.rules.AlwaysComplain"

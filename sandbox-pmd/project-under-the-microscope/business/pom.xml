@@ -10,8 +10,37 @@
 
     <artifactId>business</artifactId>
 
+    <properties>
+        <additional.build.files.directory>${project.build.directory}/build</additional.build.files.directory>
+    </properties>
+
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>extract-build-configuration-files-into-target-directory</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.signed.sandboxes.pmd.project-under-the-microscope</groupId>
+                                    <artifactId>build</artifactId>
+                                    <version>0.0.1-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${additional.build.files.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
@@ -19,13 +48,16 @@
                 <configuration>
                     <aggregate>false</aggregate>
                     <sourceEncoding>UTF-8</sourceEncoding>
-                    <verbose>true</verbose>
+                    <verbose>false</verbose>
+                    <printFailingErrors>true</printFailingErrors>
                     <failOnViolation>false</failOnViolation>
                     <rulesets>
                         <ruleset>/pmd/ruleset.xml</ruleset> <!-- It is vital to append .xml -->
                     </rulesets>
                     <indentSize>4</indentSize>
                     <linkXRef>false</linkXRef>
+                    <targetDirectory>${project.build.directory}/pmd</targetDirectory>
+                    <excludeFromFailureFile>${additional.build.files.directory}/pmd/excluded-violations.properties</excludeFromFailureFile>
                 </configuration>
                 <executions>
                     <execution>
