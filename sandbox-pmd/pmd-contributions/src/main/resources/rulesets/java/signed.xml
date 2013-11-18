@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset name="Codecop"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>
+        This is my ruleset.
+    </description>
+
+    <rule name="AvoidThrowingCheckedException"
+          language="java"
+          message="I complain all the time."
+          class="com.github.signed.pmd.rules.AlwaysComplain"
+          typeResolution="true" >
+        <description>
+            Do not ask me. You know I am picky.
+        </description>
+        <priority>2</priority>
+        <example>
+            <![CDATA[
+try me ...
+]]>
+        </example>
+    </rule>
+</ruleset>

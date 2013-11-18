@@ -20,10 +20,12 @@
                     <aggregate>false</aggregate>
                     <sourceEncoding>UTF-8</sourceEncoding>
                     <verbose>true</verbose>
-                    <failOnViolation>true</failOnViolation>
+                    <failOnViolation>false</failOnViolation>
                     <rulesets>
                         <ruleset>/pmd/ruleset.xml</ruleset> <!-- It is vital to append .xml -->
                     </rulesets>
+                    <indentSize>4</indentSize>
+                    <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>
                     <execution>
@@ -36,6 +38,11 @@
                     <dependency>
                         <groupId>com.github.signed.sandboxes.pmd.project-under-the-microscope</groupId>
                         <artifactId>build</artifactId>
+                        <version>0.0.1-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.github.signed.pmd</groupId>
+                        <artifactId>pmd-contributions</artifactId>
                         <version>0.0.1-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
