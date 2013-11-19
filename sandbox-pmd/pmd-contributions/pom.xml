@@ -57,5 +57,10 @@
             <artifactId>hamcrest-library</artifactId>
             <version>${dependency.version.hamcrest}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
     </dependencies>
 </project>
