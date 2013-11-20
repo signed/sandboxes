@@ -41,7 +41,7 @@ public class AstParser_Test {
     }
 
     @Test
-    public void testName() throws Exception {
+    public void joist() throws Exception {
         GClass singleton = new GClass("singletons.Singleton");
         GMethod instanceMethod = singleton.getMethod("instance");
         instanceMethod.returnType("singletons.Singleton");
