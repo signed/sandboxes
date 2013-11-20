@@ -21,6 +21,7 @@ public class AstParser_Test {
 
     private final File file = new File("project-under-the-microscope/business/src/main/java/singletons/AccessSingleton.java");
     private String sourceCode;
+    private AstParser astParser = new AstParser();
 
     @Before
     public void setUp() throws Exception {
@@ -28,18 +29,17 @@ public class AstParser_Test {
     }
 
     @Test
-    public void testName() throws Exception {
-        JavaNode ast = new AstParser().parse(sourceCode);
-
-        ast.jjtAccept(new AlwaysComplain(), null);
+    public void justParseToRootNode() throws Exception {
+        JavaNode node = astParser.parse(sourceCode);
+        System.out.println(node);
     }
 
 
     @Test
-    public void testName2() throws Exception {
+    public void runIntegrationTestWithPMD() throws Exception {
         Report report = new Report();
-        PMD p = new PMD();
-        p.getConfiguration().setDefaultLanguageVersion(LanguageVersion.JAVA_17);
+        PMD pmd = new PMD();
+        pmd.getConfiguration().setDefaultLanguageVersion(LanguageVersion.JAVA_17);
         RuleContext ctx = new RuleContext();
         ctx.setReport(report);
         ctx.setSourceCodeFilename("n/a");
@@ -47,7 +47,7 @@ public class AstParser_Test {
 //        ctx.setIgnoreExceptions(false);
         RuleSet rules = new RuleSet();
         rules.addRule(new AlwaysComplain());
-        p.getSourceCodeProcessor().processSourceCode(new StringReader(sourceCode), new RuleSets(rules), ctx);
+        pmd.getSourceCodeProcessor().processSourceCode(new StringReader(sourceCode), new RuleSets(rules), ctx);
         System.out.println(report);
     }
 }
