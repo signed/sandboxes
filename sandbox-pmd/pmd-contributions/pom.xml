@@ -67,5 +67,10 @@
             <artifactId>mockito-core</artifactId>
             <version>1.9.5</version>
         </dependency>
+        <dependency>
+            <groupId>joist</groupId>
+            <artifactId>joist-util</artifactId>
+            <version>1.5.22</version>
+        </dependency>
     </dependencies>
 </project>
