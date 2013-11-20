@@ -7,7 +7,6 @@ import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
-import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.LanguageVersionHandler;
 import net.sourceforge.pmd.lang.Parser;
@@ -42,7 +41,6 @@ public class AstParser {
             Parser parser = PMD.parserFor(languageVersion, configuration);
             Node rootNode = parser.parse(ctx.getSourceCodeFilename(), sourceCode);
             languageVersionHandler.getSymbolFacade().start(rootNode);
-            Language language = languageVersion.getLanguage();
             languageVersion.getLanguageVersionHandler().getDataFlowFacade().start(rootNode);
             VisitorStarter typeResolutionFacade = languageVersion.getLanguageVersionHandler().getTypeResolutionFacade(configuration.getClassLoader());
             typeResolutionFacade.start(rootNode);
