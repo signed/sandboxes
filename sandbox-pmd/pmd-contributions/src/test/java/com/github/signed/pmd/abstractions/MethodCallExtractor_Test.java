@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MethodCallExtractor_Test {
@@ -36,14 +37,20 @@ public class MethodCallExtractor_Test {
         JDefinedClass singletonAccessor = model._class("apackage.SingletonAccess");
         JMethod methodWithSingletonAccess = singletonAccessor.method(JavaCCParser.ModifierSet.PUBLIC, model.VOID, "doStuff");
         methodWithSingletonAccess.body().add(singleton.staticInvoke(instanceMethod));
-
     }
 
     @Test
-    public void testName() throws Exception {
+    public void extractTheMethodInvocation() throws Exception {
         extractMethodCallsInClass("SingletonAccess");
 
         assertThat(extractor.methods(), Matchers.hasSize(1));
+    }
+
+    @Test
+    public void extractTheNameOfTheInvokedMethod() throws Exception {
+        extractMethodCallsInClass("SingletonAccess");
+
+        assertThat(extractor.methods().get(0).name(), is("instance"));
     }
 
     private void extractMethodCallsInClass(String className) throws IOException, PMDException {
