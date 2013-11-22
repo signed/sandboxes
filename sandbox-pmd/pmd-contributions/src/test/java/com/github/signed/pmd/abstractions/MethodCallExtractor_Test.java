@@ -3,9 +3,11 @@ package com.github.signed.pmd.abstractions;
 import com.beust.jcommander.internal.Maps;
 import com.github.signed.pmd.AstParser;
 import com.sun.codemodel.CodeWriter;
+import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
+import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JPackage;
 import net.sourceforge.pmd.PMDException;
@@ -25,18 +27,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MethodCallExtractor_Test {
 
-    private final JCodeModel model = new JCodeModel();
+    private final Project project = new Project();
     private final MethodCallExtractor extractor = new MethodCallExtractor();
+
+
+    public static class Project {
+        private final JCodeModel model = new JCodeModel();
+        private JMethod instanceMethod;
+        private JInvocation getSingletInstance;
+
+        public void withSingleton() throws JClassAlreadyExistsException {
+            JDefinedClass singleton = model._class("singletons.Singleton");
+            instanceMethod = singleton.method(JavaCCParser.ModifierSet.PUBLIC | JavaCCParser.ModifierSet.STATIC, singleton, "instance");
+            instanceMethod.body()._return(JExpr._new(singleton));
+            getSingletInstance =  singleton.staticInvoke(instanceMethod);
+        }
+
+        public JInvocation singletonInstanceInvocation(){
+            return getSingletInstance;
+        }
+    }
 
     @Before
     public void setUp() throws Exception {
-        JDefinedClass singleton = model._class("singletons.Singleton");
-        JMethod instanceMethod = singleton.method(JavaCCParser.ModifierSet.PUBLIC | JavaCCParser.ModifierSet.STATIC, singleton, "instance");
-        instanceMethod.body()._return(JExpr._new(singleton));
+        project.withSingleton();
 
-        JDefinedClass singletonAccessor = model._class("apackage.SingletonAccess");
-        JMethod methodWithSingletonAccess = singletonAccessor.method(JavaCCParser.ModifierSet.PUBLIC, model.VOID, "doStuff");
-        methodWithSingletonAccess.body().add(singleton.staticInvoke(instanceMethod));
+        JDefinedClass singletonAccessor = project.model._class("apackage.SingletonAccess");
+        JMethod methodWithSingletonAccess = singletonAccessor.method(JavaCCParser.ModifierSet.PUBLIC, project.model.VOID, "doStuff");
+        methodWithSingletonAccess.body().add(project.singletonInstanceInvocation());
     }
 
     @Test
@@ -55,7 +73,7 @@ public class MethodCallExtractor_Test {
 
     private void extractMethodCallsInClass(String className) throws IOException, PMDException {
         InMemoryCodeWriter writer = new InMemoryCodeWriter();
-        model.build(writer);
+        project.model.build(writer);
         JavaNode classWithSingletonAccess = new AstParser().parse(writer.getSourceForClass(className));
 
         classWithSingletonAccess.jjtAccept(extractor, null);
