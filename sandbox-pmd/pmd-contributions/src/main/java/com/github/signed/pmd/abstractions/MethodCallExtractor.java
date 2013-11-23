@@ -2,6 +2,8 @@ package com.github.signed.pmd.abstractions;
 
 import com.beust.jcommander.internal.Lists;
 import net.sourceforge.pmd.lang.java.ast.ASTArguments;
+import net.sourceforge.pmd.lang.java.ast.ASTCompilationUnit;
+import net.sourceforge.pmd.lang.java.ast.ASTImportDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTName;
 import net.sourceforge.pmd.lang.java.ast.ASTPrimaryExpression;
 import net.sourceforge.pmd.lang.java.ast.ASTPrimaryPrefix;
@@ -31,6 +33,10 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
             final ASTPrimaryPrefix prefix = node.getFirstChildOfType(ASTPrimaryPrefix.class);
             final ASTName methodName = prefix.getFirstChildOfType(ASTName.class);
 
+            ASTCompilationUnit compilationUnit = node.getParentsOfType(ASTCompilationUnit.class).get(0);
+            List<ASTImportDeclaration> imports = compilationUnit.findChildrenOfType(ASTImportDeclaration.class);
+            final String theImport = imports.get(0).getFirstChildOfType(ASTName.class).getImage();
+
             methodCalls.add(new MethodCall() {
                 @Override
                 public String name() {
@@ -39,7 +45,7 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
 
                 @Override
                 public String classMethodIsDeclaredIn() {
-                    return "singletons."+ declaringClass();
+                    return theImport;
                 }
 
                 private String methodName() {
