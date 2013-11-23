@@ -37,21 +37,21 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
                     return methodName();
                 }
 
-                private String methodName() {
-                    return expression()[1];
-                }
-
-                private String[] expression() {
-                    return methodName.getImage().split(Pattern.quote("."));
-                }
-
                 @Override
                 public String classMethodIsDeclaredIn() {
                     return "singletons."+ declaringClass();
                 }
 
+                private String methodName() {
+                    return expression()[1];
+                }
+
                 private String declaringClass() {
                     return expression()[0];
+                }
+
+                private String[] expression() {
+                    return methodName.getImage().split(Pattern.quote("."));
                 }
             });
         }
