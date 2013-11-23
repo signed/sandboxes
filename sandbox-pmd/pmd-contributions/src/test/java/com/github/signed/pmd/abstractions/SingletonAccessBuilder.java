@@ -1,6 +1,7 @@
 package com.github.signed.pmd.abstractions;
 
 import com.github.signed.pmd.AstParser;
+import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
@@ -30,6 +31,13 @@ public class SingletonAccessBuilder {
         methodWithSingletonAccess.body().add(instanceMethodCall());
     }
 
+    public void invokeInstanceMethodAndAssignedToLocalVariableInAnyMethod() throws JClassAlreadyExistsException{
+        JDefinedClass singletonAccessor = model._class("apackage.SingletonAccess");
+        JMethod methodWithSingletonAccess = singletonAccessor.method(JavaCCParser.ModifierSet.PUBLIC, model.VOID, "doStuff");
+        JBlock body = methodWithSingletonAccess.body();
+        body.decl(singleton, "instance", instanceMethodCall());
+    }
+
     private JInvocation instanceMethodCall() {
         return singleton.staticInvoke(instanceMethod);
     }
@@ -37,6 +45,8 @@ public class SingletonAccessBuilder {
     public JavaNode toPmdAst() throws IOException, PMDException {
         InMemoryCodeWriter writer = new InMemoryCodeWriter();
         model.build(writer);
-        return new AstParser().parse(writer.getSourceForClass("SingletonAccess"));
+        String sourceCode = writer.getSourceForClass("SingletonAccess");
+        System.out.println(sourceCode);
+        return new AstParser().parse(sourceCode);
     }
 }
