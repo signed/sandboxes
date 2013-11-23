@@ -35,7 +35,7 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
 
             ASTCompilationUnit compilationUnit = node.getParentsOfType(ASTCompilationUnit.class).get(0);
             List<ASTImportDeclaration> imports = compilationUnit.findChildrenOfType(ASTImportDeclaration.class);
-            final String theImport = imports.get(0).getFirstChildOfType(ASTName.class).getImage();
+            final TypesInScope typesInScope = new TypesInScope(imports);
 
             methodCalls.add(new MethodCall() {
                 @Override
@@ -45,7 +45,7 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
 
                 @Override
                 public String classMethodIsDeclaredIn() {
-                    return theImport;
+                    return typesInScope.typeByClassName(declaringClass());
                 }
 
                 private String methodName() {
