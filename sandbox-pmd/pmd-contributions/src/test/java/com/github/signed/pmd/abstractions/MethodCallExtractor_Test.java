@@ -38,6 +38,13 @@ public class MethodCallExtractor_Test {
         assertThat(extractor.methods().get(0).name(), is("instance"));
     }
 
+    @Test
+    public void extractTheFullQualifiedClassNameThatDeclaresTheInvokedMethod() throws Exception {
+        extractMethodCallsFromTheSingletonAccessClass();
+
+        assertThat(extractor.methods().get(0).classMethodIsDeclaredIn(), is("singletons.Singleton"));
+    }
+
     private void extractMethodCallsFromTheSingletonAccessClass() throws IOException, PMDException {
         JavaNode classWithSingletonAccess = singletonAccess.toPmdAst();
         classWithSingletonAccess.jjtAccept(extractor, null);

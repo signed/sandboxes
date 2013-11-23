@@ -31,11 +31,27 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
             final ASTPrimaryPrefix prefix = node.getFirstChildOfType(ASTPrimaryPrefix.class);
             final ASTName methodName = prefix.getFirstChildOfType(ASTName.class);
 
-
             methodCalls.add(new MethodCall() {
                 @Override
                 public String name() {
-                    return methodName.getImage().split(Pattern.quote("."))[1];
+                    return methodName();
+                }
+
+                private String methodName() {
+                    return expression()[1];
+                }
+
+                private String[] expression() {
+                    return methodName.getImage().split(Pattern.quote("."));
+                }
+
+                @Override
+                public String classMethodIsDeclaredIn() {
+                    return "singletons."+ declaringClass();
+                }
+
+                private String declaringClass() {
+                    return expression()[0];
                 }
             });
         }
