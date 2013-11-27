@@ -30,12 +30,17 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 public class AstParser_Test {
-    private final File file = new File("project-under-the-microscope/business/src/main/java/singletons/AccessSingleton.java");
     private String sourceCode;
     private AstParser astParser = new AstParser();
 
     @Before
     public void setUp() throws Exception {
+        File file;
+        if( new File("do not care").getAbsoluteFile().getParentFile().getName().equals("sandbox-pmd")){
+            file = new File("project-under-the-microscope/business/src/main/java/singletons/AccessSingleton.java");
+        }else{
+            file = new File("../project-under-the-microscope/business/src/main/java/singletons/AccessSingleton.java");
+        }
         sourceCode = Files.toString(file, Charset.forName("UTF-8"));
     }
 
@@ -61,7 +66,6 @@ public class AstParser_Test {
         gClass.addImports("singletons.Singleton");
         GMethod method = gClass.getMethod("doNotCare");
         method.setBody("Singleton.instance()");
-        System.out.println(gClass.toCode());
     }
 
     @Test
@@ -78,8 +82,6 @@ public class AstParser_Test {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         CodeWriter codeWriter = new SingleStreamCodeWriter(out);
         model.build(codeWriter);
-
-        System.out.println(out.toString("UTF-8"));
     }
 
     @Test
@@ -95,6 +97,5 @@ public class AstParser_Test {
         RuleSet rules = new RuleSet();
         rules.addRule(new AlwaysComplain());
         pmd.getSourceCodeProcessor().processSourceCode(new StringReader(sourceCode), new RuleSets(rules), ctx);
-        System.out.println(report);
     }
 }

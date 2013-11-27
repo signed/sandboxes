@@ -12,4 +12,9 @@ public class AccessSingleton {
         this.staticImport = instance();
         this.constructorCall = new CentralData();
     }
+
+    public String someOtherStuff(){
+        centralData.doStuff();
+        return "a string";
+    }
 }
