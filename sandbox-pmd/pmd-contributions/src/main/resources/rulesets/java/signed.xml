@@ -23,4 +23,15 @@ try me ...
 ]]>
         </example>
     </rule>
+    <rule name="SingletonAccess"
+          language="java"
+          message="Accesses a singleton"
+          class="com.github.signed.pmd.rules.SingletonAccess"
+          typeResolution="true" >
+        <description>
+            Reports call to static instance() method calls on singleton objects
+        </description>
+        <priority>5</priority>
+    </rule>
+
 </ruleset>

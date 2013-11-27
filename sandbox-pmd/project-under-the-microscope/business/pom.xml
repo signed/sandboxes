@@ -48,7 +48,7 @@
                 <configuration>
                     <aggregate>false</aggregate>
                     <sourceEncoding>UTF-8</sourceEncoding>
-                    <verbose>false</verbose>
+                    <verbose>true</verbose>
                     <printFailingErrors>true</printFailingErrors>
                     <failOnViolation>false</failOnViolation>
                     <rulesets>
