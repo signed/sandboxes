@@ -1,6 +1,6 @@
 package com.github.signed.pmd.abstractions;
 
-import com.github.signed.pmd.AstParser;
+import com.github.signed.pmd.CodeModelToPmdAst;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class SingletonAccessBuilder {
 
+    private final CodeModelToPmdAst converter = new CodeModelToPmdAst();
     private final JDefinedClass singleton;
     private final JMethod instanceMethod;
     private final JCodeModel model;
@@ -43,10 +44,6 @@ public class SingletonAccessBuilder {
     }
 
     public JavaNode toPmdAst() throws IOException, PMDException {
-        InMemoryCodeWriter writer = new InMemoryCodeWriter();
-        model.build(writer);
-        String sourceCode = writer.getSourceForClass("SingletonAccess");
-        System.out.println(sourceCode);
-        return new AstParser().parse(sourceCode);
+        return converter.convertClassToJavaNode("SingletonAccess", model);
     }
 }
