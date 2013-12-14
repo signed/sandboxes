@@ -2,6 +2,8 @@ package com.github.signed.integration.camel;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.file.remote.FtpComponent;
 import org.apache.camel.component.jms.JmsComponent;
@@ -19,13 +21,21 @@ public class Camel {
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("ftp://localhost:10021/boon?username=sally&password=secret").to("jms:out");
+                from("ftp://localhost:10021/boon?username=sally&password=secret&delay=2500").to("jms://filein");
+
+                from("jms://filein").process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Object camelFileName = exchange.getIn().getHeader("CamelFileName");
+                        System.out.println("Straight from the queue: "+camelFileName);
+                    }
+                });
             }
         });
 
 
         context.start();
-        Thread.sleep(10000);
+        Thread.sleep(100000);
         context.stop();
     }
 }
