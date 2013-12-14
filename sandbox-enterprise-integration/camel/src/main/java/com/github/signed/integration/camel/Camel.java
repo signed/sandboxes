@@ -23,11 +23,23 @@ public class Camel {
             public void configure() throws Exception {
                 from("ftp://localhost:10021/boon?username=sally&password=secret&delay=2500").to("jms://filein");
 
-                from("jms://filein").process(new Processor() {
+                from("jms://filein").choice().when(header("CamelFileName").endsWith("txt")).to("jms://textfile")
+                        .otherwise().to("jms://unreadable");
+
+
+                from("jms://textfile").process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         Object camelFileName = exchange.getIn().getHeader("CamelFileName");
-                        System.out.println("Straight from the queue: "+camelFileName);
+                        System.out.println("Reading : "+camelFileName);
+                    }
+                });
+
+                from("jms://unreadable").process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Object camelFileName = exchange.getIn().getHeader("CamelFileName");
+                        System.out.println("I cant read this ... : "+camelFileName);
                     }
                 });
             }
