@@ -2,5 +2,6 @@ dependencies {
 
     compile(
             'org.apache.activemq:activemq-broker:5.9.0'
+            , 'org.slf4j:slf4j-simple:1.7.5'
     )
 }
