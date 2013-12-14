@@ -2,6 +2,8 @@ dependencies {
     compile(
             'com.google.guava:guava:15.0'
             , 'org.apache.camel:camel-core:2.12.2'
+            , 'org.apache.camel:camel-jms:2.12.2'
+            , 'org.apache.activemq:activemq-client:5.9.0'
     )
 
     testCompile(

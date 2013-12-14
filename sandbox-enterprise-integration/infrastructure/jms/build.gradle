@@ -1,6 +1,6 @@
 dependencies {
 
     compile(
-            'org.apache.activemq:activemq-all:5.9.0'
+            'org.apache.activemq:activemq-broker:5.9.0'
     )
 }

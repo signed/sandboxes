@@ -5,7 +5,7 @@ import org.apache.activemq.broker.TransportConnector;
 
 import java.net.URI;
 
-public class Start {
+public class StartJmsServer {
 
     public static void main(String[] args) throws Exception {
         BrokerService brokerService = new BrokerService();

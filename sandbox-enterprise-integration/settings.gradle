@@ -1,1 +1,1 @@
-include 'camel', 'infrastructure:ftp', 'infrastructure:', 'infrastructure:jms', 'infrastructure:mail', 'infrastructure:sftp'
+include 'camel', 'infrastructure:ftp', 'infrastructure:jms', 'infrastructure:mail', 'infrastructure:sftp'
