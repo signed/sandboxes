@@ -1,0 +1,10 @@
+dependencies {
+    compile(
+            'com.google.guava:guava:15.0'
+            , 'org.apache.camel:camel-core:2.12.2'
+    )
+
+    testCompile(
+            'junit:junit:4.11'
+    )
+}
