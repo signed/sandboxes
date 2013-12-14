@@ -24,6 +24,7 @@ public class Camel {
                 from("ftp://localhost:10021/boon?username=sally&password=secret&delay=2500").to("jms://filein");
 
                 from("jms://filein").choice().when(header("CamelFileName").endsWith("txt")).to("jms://textfile")
+                        .when(header("CamelFileName").endsWith("pdf")).to("jms://pdffile")
                         .otherwise().to("jms://unreadable");
 
 
@@ -32,6 +33,14 @@ public class Camel {
                     public void process(Exchange exchange) throws Exception {
                         Object camelFileName = exchange.getIn().getHeader("CamelFileName");
                         System.out.println("Reading : "+camelFileName);
+                    }
+                });
+
+                from("jms://pdffile").process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Object camelFileName = exchange.getIn().getHeader("CamelFileName");
+                        System.out.println("Pretty : "+camelFileName);
                     }
                 });
 
