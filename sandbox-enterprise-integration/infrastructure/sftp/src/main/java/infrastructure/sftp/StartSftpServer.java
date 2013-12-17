@@ -1,9 +1,12 @@
 package infrastructure.sftp;
 
+import java.io.File;
+import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.sshd.SshServer;
 import org.apache.sshd.common.NamedFactory;
-import org.apache.sshd.common.file.FileSystemFactory;
-import org.apache.sshd.common.file.nativefs.NativeFileSystemFactory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.PasswordAuthenticator;
 import org.apache.sshd.server.PublickeyAuthenticator;
@@ -15,10 +18,6 @@ import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.session.ServerSession;
 import org.apache.sshd.server.sftp.SftpSubsystem;
 
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.List;
-
 public class StartSftpServer {
 
     public static void main(String [] args ) throws Exception{
@@ -26,8 +25,9 @@ public class StartSftpServer {
         sshd.setPort(10022);
         sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("hostkey.ser"));
 
-        FileSystemFactory fileSystemFactory = new NativeFileSystemFactory();
-        sshd.setFileSystemFactory(fileSystemFactory);
+        File serverRoot = new File("/tmp/sftp/");
+        serverRoot.mkdirs();
+        sshd.setFileSystemFactory(new TestFileSystemFactory(serverRoot));
 
         List<NamedFactory<UserAuth>> userAuthFactories = new ArrayList<NamedFactory<UserAuth>>();
         userAuthFactories.add(new UserAuthPassword.Factory());
@@ -46,10 +46,6 @@ public class StartSftpServer {
                 return true;
             }
         });
-
-
-
-
 
         sshd.setCommandFactory(new ScpCommandFactory());
 
