@@ -1,0 +1,1 @@
+http://stackoverflow.com/questions/17197885/building-a-test-support-artifact-with-dependencies

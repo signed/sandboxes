@@ -1,0 +1,10 @@
+dependencies {
+    compile(
+            project(':example')
+    )
+
+    testCompile(
+            project(path: ':example', configuration: 'testCompile')
+    )
+
+}
