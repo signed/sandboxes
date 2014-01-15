@@ -3,3 +3,16 @@ dependencies {
             'joda-time:joda-time:2.3'
     )
 }
+
+sourceSets {
+    testsupport {
+        java {
+            srcDir 'src/testsupport/java'
+        }
+        resources {
+            srcDir 'src/testsupport/resources'
+        }
+        compileClasspath += sourceSets.test.compileClasspath
+        runtimeClasspath += sourceSets.test.runtimeClasspath
+    }
+}
