@@ -1,0 +1,65 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.1'
+    }
+}
+
+apply plugin: 'cargo'
+
+repositories {
+
+    mavenLocal()
+
+    maven {
+        url "http://localhost:8081/nexus/content/groups/public/"
+    }
+    maven {
+        url "http://repository.jboss.org/nexus/content/groups/public"
+    }
+    maven {
+        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+    }
+    maven {
+        url "https://repository.jboss.org/nexus/content/repositories/releases/"
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    def cargoVersion = '1.4.5'
+    cargo("org.codehaus.cargo:cargo-core-uberjar:$cargoVersion"
+            , "org.codehaus.cargo:cargo-ant:$cargoVersion"
+            , "org.codehaus.cargo:cargo-core-container-jboss:$cargoVersion"
+            , "org.codehaus.cargo:cargo-core-tools-jboss-deployer-5.1-and-6:$cargoVersion"
+    )
+
+    cargo('org.jboss.jbossas:jboss-as-client:6.1.0.Final'){
+        exclude group : 'com.sun.istack', module:'istack-commons-runtime'
+        exclude group : 'org.hibernate', module:'hibernate-annotations'
+        exclude group : 'org.jboss.aop', module:'jboss-aop'
+        exclude group : 'org.jboss.ejb3', module:'jboss-ejb3-jpa-int'
+        exclude group : 'org.jboss.ejb3'
+
+    }
+}
+
+
+cargo {
+    containerId = 'jboss61x'
+    port = 8080
+
+    deployable {
+        file = file('wars/jenkins.war')
+    }
+
+    remote {
+        hostname = '192.168.9.218'
+    }
+}
+
+version = '0.0.1'

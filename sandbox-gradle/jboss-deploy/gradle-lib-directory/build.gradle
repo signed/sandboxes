@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'de.undercouch:gradle-download-task:0.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'download-task'
+
+
+dependencies {
+    compile fileTree(dir: 'libs', includes: ['*.jar'])
+}
+
+
+task unzip(type: Copy) {
+
+    download {
+        def cacheDirectory = file('zip/')
+        cacheDirectory.mkdirs()
+        src 'http://download.jboss.org/jbossas/6.1/jboss-as-distribution-6.1.0.Final.zip'
+        dest cacheDirectory
+        overwrite false
+        onlyIfNewer true
+    }
+
+    def zip = file('zip/jboss-as-distribution-6.1.0.Final.zip')
+    def libraryDirectory = file('lib')
+
+    delete libraryDirectory
+
+    from ({zipTree(zip)}){
+        include '*/lib/**/*.jar'
+        include '*/common/lib/*.jar'
+        include '*/common/lib/endorsed/*.jar'
+    }
+    into libraryDirectory
+
+    includeEmptyDirs = false
+}
