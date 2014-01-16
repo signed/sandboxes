@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+
+repositories {
+    mavenLocal()
+    maven {
+        url "http://scm:8081/nexus/content/groups/public/"
+    }
+}
+
+dependencies {
+
+    compile(
+            'org.jboss.jbossas:jboss-as-client:6.1.0.Final'
+            , 'org.jboss.jbossas:jboss-as-profileservice-client:6.1.0.Final'
+    )
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}
