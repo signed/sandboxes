@@ -1,10 +1,12 @@
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
 
     dependencies {
         classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.1'
+        classpath 'de.undercouch:gradle-download-task:0.4'
     }
 }
 
@@ -48,6 +50,18 @@ dependencies {
     }
 }
 
+def warDirectory = file("wars")
+warDirectory.mkdirs();
+
+task downloadJenkins(type: de.undercouch.gradle.tasks.download.Download) {
+    src 'http://mirrors.jenkins-ci.org/war/latest/jenkins.war'
+    dest warDirectory
+    onlyIfNewer true
+}
+
+cargoDeployRemote.dependsOn downloadJenkins
+
+
 
 cargo {
     containerId = 'jboss61x'
@@ -58,7 +72,7 @@ cargo {
     }
 
     remote {
-        hostname = '192.168.9.218'
+        hostname = '192.168.9.82'
     }
 }
 
