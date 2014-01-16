@@ -1,21 +1,63 @@
 apply plugin: 'java'
 
 
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'com.sun.istack' && details.requested.name == 'istack-commons-runtime') {
+            details.useVersion '2.2.1'
+        }
+
+        if (details.requested.version == '${version.org.jboss.ejb3.jboss-ejb3-jpa-int}') {
+            def map = [
+                    'org.jboss.ejb3:jboss-ejb3-core': '1.7.21'
+                    , 'org.jboss.ejb3:jboss-ejb3-jpa-int': '1.0.0'
+
+            ]
+            details.useVersion map[details.requested.group + ":" + details.requested.name]
+        }
+
+        if (details.requested.group == 'org.jboss.ejb3' && details.requested.name == 'jboss-ejb3-core') {
+            details.useVersion '1.7.21'
+        }
+
+        if (details.requested.group == 'org.hibernate' && details.requested.name == 'hibernate-annotations') {
+            details.useVersion '3.3.1.GA'
+        }
+
+        if (details.requested.group == 'org.jboss.ejb3' && details.requested.name == 'jboss-ejb3-common') {
+            if (details.requested.version == '1.0.2') {
+                println details.requested.version
+                println details.target
+                //details.useTarget group: details.requested.group, name: details.requested.version, version: details.requested.version, classifier: 'client'
+            }
+
+        }
+    }
+}
+
 repositories {
     mavenLocal()
     maven {
-        url "http://scm:8081/nexus/content/groups/public/"
+        url "http://localhost:8081/nexus/content/groups/public/"
     }
 }
 
 dependencies {
 
-    compile(
-            'org.jboss.jbossas:jboss-as-client:6.1.0.Final'
-            , 'org.jboss.jbossas:jboss-as-profileservice-client:6.1.0.Final'
-    )
+    compile('org.jboss.jbossas:jboss-as-client:6.1.0.Final') {
+        exclude group: 'org.jboss.ejb3', module: 'jboss-ejb3-common'
+        exclude group: 'org.jboss.ejb3', module: 'jboss-ejb3-proxy-impl'
+        exclude group: 'org.jboss.ejb3', module: 'jboss-ejb3-proxy-clustered'
+    }
+
+    compile('org.jboss.jbossas:jboss-as-profileservice-client:6.1.0.Final')
+    compile('joda-time:joda-time:2.3')
+
+//    compile group: 'org.jboss.ejb3', name: 'jboss-ejb3-common', version: '1.0.2', classifier: 'client'
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.10'
 }
+
+version = '1'
