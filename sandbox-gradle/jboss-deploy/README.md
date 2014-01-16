@@ -12,3 +12,8 @@ http://forums.gradle.org/gradle/topics/how_do_you_attach_a_debugger_to_gradle_so
 
 export GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006"
 ./gradlew cargoDeployRemote --no-daemon -Dorg.gradle.debug=true
+
+
+
+How to search in jars
+find . -name *.jar -exec bash -c "echo {} && jar tvf {} | grep ClientLoginModule " \;
