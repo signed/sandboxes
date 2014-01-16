@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.1'
+        classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.2.2'
         classpath 'de.undercouch:gradle-download-task:0.4'
     }
 }
@@ -16,9 +16,10 @@ repositories {
 
     mavenLocal()
 
-    maven {
-        url "http://localhost:8081/nexus/content/groups/public/"
-    }
+//    maven {
+//        url "http://localhost:8081/nexus/content/groups/public/"
+//    }
+
     maven {
         url "http://repository.jboss.org/nexus/content/groups/public"
     }
@@ -26,18 +27,39 @@ repositories {
         url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
     }
     maven {
+        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-uploads"
+    }
+    maven {
+        url "https://repository.jboss.org/nexus/content/repositories/releases/"
+    }
+
+    maven{
         url "https://repository.jboss.org/nexus/content/repositories/releases/"
     }
 
     mavenCentral()
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.software' && details.requested.name == 'some-library' && details.requested.version == '1.2') {
+            //prefer different version which contains some necessary fixes
+            details.useVersion '1.2.1'
+        }
+    }
+}
+
+
 dependencies {
-    def cargoVersion = '1.4.5'
+    cargo(fileTree(dir: file('jboss/libs'), includes: ['**/jbosssx.jar']))
+
+    def cargoVersion = '1.4.6'
     cargo("org.codehaus.cargo:cargo-core-uberjar:$cargoVersion"
             , "org.codehaus.cargo:cargo-ant:$cargoVersion"
             , "org.codehaus.cargo:cargo-core-container-jboss:$cargoVersion"
             , "org.codehaus.cargo:cargo-core-tools-jboss-deployer-5.1-and-6:$cargoVersion"
+            , "org.jboss.jbossas:jboss-as-profileservice-client:6.1.0.Final"
+
     )
 
     cargo('org.jboss.jbossas:jboss-as-client:6.1.0.Final'){
@@ -46,8 +68,13 @@ dependencies {
         exclude group : 'org.jboss.aop', module:'jboss-aop'
         exclude group : 'org.jboss.ejb3', module:'jboss-ejb3-jpa-int'
         exclude group : 'org.jboss.ejb3'
-
+        exclude group : 'org.jboss.ejb3.depchain', module: 'jboss-ejb3-depchain-as6'
     }
+
+
+
+
+    //cargo(fileTree(dir: file('jboss/libs'), includes: ['**/*.jar']))
 }
 
 def warDirectory = file("wars")
@@ -59,7 +86,35 @@ task downloadJenkins(type: de.undercouch.gradle.tasks.download.Download) {
     onlyIfNewer true
 }
 
+def cacheDirectory = file('jboss/')
+cacheDirectory.mkdirs()
+
+task downloadJBoss(type: de.undercouch.gradle.tasks.download.Download) {
+    src 'http://localhost:8080/files/jboss/jboss-as-distribution-6.1.0.Final.zip'
+    dest cacheDirectory
+    onlyIfNewer true
+}
+
+def zip = file("$cacheDirectory/jboss-as-distribution-6.1.0.Final.zip")
+def libraryDirectory = file("$cacheDirectory/libs")
+
+task unzip(type: Copy, dependsOn: downloadJBoss) {
+    File file;
+    println "unzip running"
+    delete libraryDirectory
+
+    from ({zipTree(zip)}){
+        include '*/lib/**/*.jar'
+        include '*/common/lib/*.jar'
+//        include '*/common/lib/endorsed/*.jar'
+    }
+    into libraryDirectory
+
+    includeEmptyDirs = false
+}
+
 cargoDeployRemote.dependsOn downloadJenkins
+cargoDeployRemote.dependsOn unzip
 
 
 
