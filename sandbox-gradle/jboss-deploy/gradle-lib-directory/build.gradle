@@ -16,12 +16,16 @@ dependencies {
 }
 
 
+task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
+    gradleVersion = '1.10'
+}
+
 task unzip(type: Copy) {
 
     download {
         def cacheDirectory = file('zip/')
         cacheDirectory.mkdirs()
-        src 'http://download.jboss.org/jbossas/6.1/jboss-as-distribution-6.1.0.Final.zip'
+        src 'http://localhost:8080/files/jboss/jboss-as-distribution-6.1.0.Final.zip'
         dest cacheDirectory
         overwrite false
         onlyIfNewer true
