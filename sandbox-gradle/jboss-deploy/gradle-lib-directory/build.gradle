@@ -16,7 +16,7 @@ dependencies {
 }
 
 
-task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
+task wrapper(type: Wrapper) {
     gradleVersion = '1.10'
 }
 
