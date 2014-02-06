@@ -17,3 +17,14 @@ export GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,add
 
 How to search in jars
 find . -name *.jar -exec bash -c "echo {} && jar tvf {} | grep ClientLoginModule " \;
+
+
+# How to configure jboss #
+https://community.jboss.org/thread/168789?tstart=120
+
+http://jaitechwriteups.blogspot.de/2011/09/jboss-as-702-arc-released.html
+
+https://issues.jboss.org/browse/AS7-1752
+
+
+https://issues.jboss.org/browse/AS7-4123 add-user
