@@ -28,3 +28,6 @@ https://issues.jboss.org/browse/AS7-1752
 
 
 https://issues.jboss.org/browse/AS7-4123 add-user
+
+# Manual steps to do #
+* add a management user to jboss
