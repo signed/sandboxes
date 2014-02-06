@@ -45,8 +45,6 @@ dependencies {
     cargo("org.codehaus.cargo:cargo-core-uberjar:$cargoVersion"
             , "org.codehaus.cargo:cargo-ant:$cargoVersion"
             , 'org.jboss.as:jboss-as-controller-client:7.1.1.Final'
-            , 'org.jboss.as:jboss-as-ejb-client-bom:7.1.1.Final'
-            , 'org.jboss.as:jboss-as-jms-client-bom:7.1.1.Final'
     )
 
 }
