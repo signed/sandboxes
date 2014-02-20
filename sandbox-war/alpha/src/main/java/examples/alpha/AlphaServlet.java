@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import shared.ResponseWriter;
 
-
-/**
- * Simple Hello servlet.
- */
-
 public final class AlphaServlet extends HttpServlet {
 
 
