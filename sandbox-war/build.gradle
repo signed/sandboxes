@@ -1,14 +1,17 @@
-apply plugin: 'war'
+subprojects {
+    apply plugin: 'java'
 
+    repositories {
+        mavenLocal()
+    }
 
-repositories {
-    mavenLocal()
+    dependencies {
+        testCompile "junit:junit:4.11"
+    }
+
 }
 
-dependencies {
-    providedCompile "javax.servlet:servlet-api:2.5"
-    testCompile "junit:junit:4.11"
-}
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.10'

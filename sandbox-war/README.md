@@ -1,5 +1,15 @@
 # JBoss #
 
+
+## logging ##
+
+http://martijnverburg.blogspot.de/2010/12/jboss-separating-application-logs.html
+Intresting approach to add some directory to the classpath using the manifest of the war
+
+## classloader ##
+
+https://community.jboss.org/wiki/classloadingconfiguration
+
 ## 6.1.0 final ##
 
 ### Analysis result ###
@@ -14,6 +24,10 @@ This also works with files in arbitrary subdirectories of conf.
 
 
 ## 7.1 ##
+
+### classloader ###
+
+* http://www.javacodegeeks.com/2012/09/jboss-as-7-classloading-explained.html
 
 ### links ###
 * https://docs.jboss.org/author/display/AS71/Class+Loading+in+AS7

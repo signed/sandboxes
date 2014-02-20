@@ -25,14 +25,14 @@ public final class Hello extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.println("<html>");
         writer.println("<head>");
-        writer.println("<title>Sample Application Servlet Page</title>");
+        writer.println("<title>Alpha</title>");
         writer.println("</head>");
         writer.println("<body bgcolor=white>");
 
         writer.println("<table border=\"0\" cellpadding=\"10\">");
         writer.println("<tr>");
         writer.println("<td>");
-        writer.println("<h1>Sample Application Servlet</h1>");
+        writer.println("<h1>Alpha Servlet</h1>");
         writer.println("</td>");
         writer.println("</tr>");
         writer.println("</table>");
