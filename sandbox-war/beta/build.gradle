@@ -4,9 +4,3 @@ dependencies {
     compile project(':shared')
     providedCompile "javax.servlet:servlet-api:2.5"
 }
-
-war {
-    manifest {
-        attributes 'Dependencies': 'org.example.beta'
-    }
-}

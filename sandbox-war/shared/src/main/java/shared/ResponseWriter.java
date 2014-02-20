@@ -1,7 +1,10 @@
 package shared;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Date;
+import java.util.Properties;
 
 
 public class ResponseWriter {
@@ -22,7 +25,7 @@ public class ResponseWriter {
         writer.println("<table border=\"0\" cellpadding=\"10\">");
         writer.println("<tr>");
         writer.println("<td>");
-        writer.println("<h1>"+identifier+" Servlet</h1>");
+        writer.println("<h1>"+identifier+" Servlet "+ new Date()+"</h1>");
         writer.println("</td>");
         writer.println("</tr>");
         writer.println("</table>");
@@ -53,6 +56,17 @@ public class ResponseWriter {
 
         builder.append("<br>");
         builder.append("The url to "+resource +"  is: " + resourceUrl);
+        if( resourceUrl != null){
+            Properties properties = new Properties();
+            builder.append("<br>");
+            try {
+                properties.load(this.getClass().getClassLoader().getResourceAsStream(resource));
+                builder.append(properties.getProperty("configuration"));
+            } catch (IOException e) {
+                builder.append("could not read");
+            }
+
+        }
         builder.append("<br>");
         return builder;
     }
