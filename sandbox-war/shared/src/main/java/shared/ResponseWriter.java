@@ -13,8 +13,6 @@ public class ResponseWriter {
     }
 
     public void writeInto(PrintWriter writer) {
-        URL resource = this.getClass().getClassLoader().getResource("configuration.properties");
-        URL xml = this.getClass().getClassLoader().getResource("props/hornetq-roles.properties");
         writer.println("<html>");
         writer.println("<head>");
         writer.println("<title>"+identifier+"</title>");
@@ -29,13 +27,9 @@ public class ResponseWriter {
         writer.println("</tr>");
         writer.println("</table>");
 
-        writer.print("<br>");
-        writer.println("the resource is " + resource);
-        writer.print("<br>");
 
-        writer.print("<br>");
-        writer.println("the xml-resource is " + xml);
-        writer.print("<br>");
+        writer.write(resourceAsString("configuration.properties").toString());
+        writer.write(resourceAsString("props/hornetq-roles.properties").toString());
 
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         writer.append(new HtmlClassPathPrinter().classpathAsHtmlString(systemClassLoader, "SystemClassloader"));
@@ -51,5 +45,15 @@ public class ResponseWriter {
 
         writer.println("</body>");
         writer.println("</html>");
+    }
+
+    private StringBuilder resourceAsString(String resource) {
+        URL resourceUrl = this.getClass().getClassLoader().getResource(resource);
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("<br>");
+        builder.append("The url to "+resource +"  is: " + resourceUrl);
+        builder.append("<br>");
+        return builder;
     }
 }
