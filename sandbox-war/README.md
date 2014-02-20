@@ -2,7 +2,15 @@
 
 ## 6.1.0 final ##
 
+### Analysis result ###
+
+Files that are put into server/<instance>/conf can be accesses by each web application that runs within <instance> (eg. default instance).
+This also works with files in arbitrary subdirectories of conf.
+
 ### links ###
+* https://community.jboss.org/message/571408
+
+
 
 
 ## 7.1 ##
