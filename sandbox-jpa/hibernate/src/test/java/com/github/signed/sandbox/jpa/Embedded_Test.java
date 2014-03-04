@@ -1,7 +1,6 @@
 package com.github.signed.sandbox.jpa;
 
 import org.h2.tools.Server;
-import org.hibernate.hql.ast.QuerySyntaxException;
 import org.junit.Assert;
 import org.junit.Test;
 
