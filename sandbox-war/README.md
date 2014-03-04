@@ -35,3 +35,9 @@ This also works with files in arbitrary subdirectories of conf.
 * https://community.jboss.org/wiki/HowToPutAnExternalFileInTheClasspath
 * http://stackoverflow.com/questions/15365036/jboss-as-7-application-specific-properties-file
 
+
+
+
+# To Read#
+
+* https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Web_Platform/5/html/JBoss_Microcontainer_User_Guide/sect-JBoss_Microcontainer_User_Guide-The_ClassLoading_Layer-ClassLoading_VFS.html

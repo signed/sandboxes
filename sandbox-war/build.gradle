@@ -3,6 +3,7 @@ subprojects {
 
     repositories {
         mavenLocal()
+        mavenCentral()
     }
 
     dependencies {
