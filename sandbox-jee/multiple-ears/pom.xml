@@ -14,8 +14,7 @@
 
     <modules>
         <module>one</module>
-    <module>jboss</module>
-  </modules>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
