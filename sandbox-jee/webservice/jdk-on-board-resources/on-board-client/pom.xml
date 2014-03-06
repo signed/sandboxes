@@ -25,6 +25,7 @@
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/hello.wsdl</wsdl>
+                                    <wsdlLocation>classpath:hello.wsdl</wsdlLocation>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
