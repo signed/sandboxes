@@ -1,16 +1,15 @@
 package com.github.signed.sandboxes.jee.multipleears.one;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.LocalBean;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
+
 @Singleton
 @Startup
-@LocalBean
 public class OneService {
 
     @Inject
