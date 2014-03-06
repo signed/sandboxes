@@ -23,6 +23,7 @@ public class OneService {
     public void myStart() {
         System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
         two.dumpToSystemOut();
+        two.access().invoke();
         logger.info("Start ....................");
         logger.info(getClass().getName() + ": " + new Date());
         logger.info("Finished ....................");

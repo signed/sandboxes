@@ -6,4 +6,6 @@ import javax.ejb.Remote;
 public interface Two {
 
     void dumpToSystemOut();
+
+    Doom access();
 }

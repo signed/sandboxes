@@ -9,4 +9,9 @@ public class OnlyTwo implements Two {
     public void dumpToSystemOut() {
         System.out.println("I am the might two");
     }
+
+    @Override
+    public Doom access() {
+        return new Y2k();
+    }
 }
