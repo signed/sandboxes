@@ -4,6 +4,7 @@ DEPLOY_DIRECTORY="$HOME/dev/server/jboss-as-7.1.1.Final/standalone/deployments"
 
 rm -f $DEPLOY_DIRECTORY/*.ear
 rm -f $DEPLOY_DIRECTORY/*.failed
+rm -f $DEPLOY_DIRECTORY/*.deployed
 
 ears=()
 ears+=( "one/one-ear/target/one-ear-1.0-SNAPSHOT.ear" )

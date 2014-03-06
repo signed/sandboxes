@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ public class OneService {
 
     @Inject
     public Logger logger;
-    @Inject
+    @EJB(lookup = "java:global/two-ear-1.0-SNAPSHOT/two-ejb-1.0-SNAPSHOT/OnlyTwo")
     public Two two;
 
 
