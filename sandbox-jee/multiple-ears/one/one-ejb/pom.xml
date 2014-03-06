@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.signed.sandboxes.jee.multipleears</groupId>
+            <artifactId>two-interfaces</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
         </dependency>

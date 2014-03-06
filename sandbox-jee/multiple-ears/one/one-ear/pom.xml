@@ -19,11 +19,6 @@
             <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
-        <dependency>
-            <groupId>com.github.signed.sandboxes.jee.multipleears</groupId>
-            <artifactId>two-interfaces</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <!--<build>-->

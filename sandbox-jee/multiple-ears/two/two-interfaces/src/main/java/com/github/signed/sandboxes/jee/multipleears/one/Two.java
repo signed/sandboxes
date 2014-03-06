@@ -4,4 +4,6 @@ import javax.ejb.Remote;
 
 @Remote
 public interface Two {
+
+    void dumpToSystemOut();
 }
