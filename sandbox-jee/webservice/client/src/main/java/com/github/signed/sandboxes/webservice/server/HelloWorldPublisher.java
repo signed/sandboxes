@@ -1,6 +1,6 @@
-package com.github.signed.sandboxes.jee.endpoint;
+package com.github.signed.sandboxes.webservice.server;
 
-import com.github.signed.sandboxes.jee.webservice.HelloWorldImpl;
+import com.github.signed.sandboxes.webservice.hello.HelloWorldImpl;
 
 import javax.xml.ws.Endpoint;
  

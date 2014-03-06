@@ -1,4 +1,4 @@
-package com.github.signed.sandboxes.jee.webservice;
+package com.github.signed.sandboxes.webservice.hello;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

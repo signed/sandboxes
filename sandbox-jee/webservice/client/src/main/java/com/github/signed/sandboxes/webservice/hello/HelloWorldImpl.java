@@ -1,8 +1,8 @@
-package com.github.signed.sandboxes.jee.webservice;
+package com.github.signed.sandboxes.webservice.hello;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "com.github.signed.sandboxes.jee.webservice.HelloWorld")
+@WebService(endpointInterface = "com.github.signed.sandboxes.webservice.hello.HelloWorld")
 public class HelloWorldImpl implements HelloWorld{
  
 	@Override
