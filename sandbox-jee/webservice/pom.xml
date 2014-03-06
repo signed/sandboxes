@@ -13,7 +13,7 @@
     </properties>
 
     <modules>
-        <module>client</module>
+        <module>jdk-on-board-resources</module>
         <module>server</module>
     </modules>
 

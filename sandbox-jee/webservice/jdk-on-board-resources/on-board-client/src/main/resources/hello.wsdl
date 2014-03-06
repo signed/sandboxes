@@ -2,12 +2,12 @@
 <definitions
         xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-        xmlns:tns="http://webservice.jee.sandboxes.signed.github.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns="http://schemas.xmlsoap.org/wsdl/"
-        targetNamespace="http://webservice.jee.sandboxes.signed.github.com/" name="HelloWorldImplService">
+        xmlns:tns="http://hello.webservice.sandboxes.signed.github.com/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/"
+        targetNamespace="http://hello.webservice.sandboxes.signed.github.com/" name="HelloWorldImplService">
     <types>
         <xsd:schema>
-            <xsd:import namespace="http://webservice.jee.sandboxes.signed.github.com/"
+            <xsd:import namespace="http://hello.webservice.sandboxes.signed.github.com/"
                         schemaLocation="http://localhost:9999/ws/hello?xsd=1"></xsd:import>
         </xsd:schema>
     </types>
@@ -19,9 +19,9 @@
     </message>
     <portType name="HelloWorld">
         <operation name="getHelloWorldAsString">
-            <input wsam:Action="http://webservice.jee.sandboxes.signed.github.com/HelloWorld/getHelloWorldAsStringRequest"
+            <input wsam:Action="http://hello.webservice.sandboxes.signed.github.com/HelloWorld/getHelloWorldAsStringRequest"
                    message="tns:getHelloWorldAsString"></input>
-            <output wsam:Action="http://webservice.jee.sandboxes.signed.github.com/HelloWorld/getHelloWorldAsStringResponse"
+            <output wsam:Action="http://hello.webservice.sandboxes.signed.github.com/HelloWorld/getHelloWorldAsStringResponse"
                     message="tns:getHelloWorldAsStringResponse"></output>
         </operation>
     </portType>
