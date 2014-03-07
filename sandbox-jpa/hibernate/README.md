@@ -12,6 +12,7 @@
 
 ## to read ##
 [serializing-cglib-enhanced-proxy-into-json-using-xstream](http://www.anzaan.com/2010/06/serializing-cglib-enhanced-proxy-into-json-using-xstream/)
+[release-your-entities](http://alexander.holbreich.org/2012/02/release-your-entities/ )
 
 ## libraries ##
 
