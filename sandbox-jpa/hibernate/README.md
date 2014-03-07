@@ -10,6 +10,9 @@
 [Code](https://community.jboss.org/message/358205#358205)
 [Code but later impelmentation](https://community.jboss.org/message/358214#358214)
 
+## to read ##
+[serializing-cglib-enhanced-proxy-into-json-using-xstream](http://www.anzaan.com/2010/06/serializing-cglib-enhanced-proxy-into-json-using-xstream/)
+
 ## libraries ##
 
 [jpa cloner](https://github.com/nociar/jpa-cloner)
