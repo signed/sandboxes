@@ -22,4 +22,5 @@
 [dozer sourceforge](http://dozer.sourceforge.net/)
 [gilead](http://sourceforge.net/projects/gilead/)
 [gilead targeted hiberate 4 jboss 7](https://github.com/emsouza/gilead)
-[entity-pruner](http://code.google.com/p/entity-pruner/)
+[entity-pruner](https://github.com/stevesaliman/entity-pruner)
+[entity-pruner (google-code)](http://code.google.com/p/entity-pruner/)
