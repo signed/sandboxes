@@ -6,3 +6,7 @@
 
 # Problems #
 [returning-superclass-of-return-type-from-remote-ejb-method](http://stackoverflow.com/questions/2591245/returning-superclass-of-return-type-from-remote-ejb-method)
+
+
+# Known Bugs #
+[Exclusion of Modules does not work with EAR to EAR communication](https://issues.jboss.org/browse/AS7-4984)
