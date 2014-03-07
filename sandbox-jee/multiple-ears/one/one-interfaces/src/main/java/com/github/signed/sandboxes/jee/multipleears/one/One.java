@@ -4,4 +4,5 @@ import javax.ejb.Remote;
 
 @Remote
 public interface One {
+    void doStuff();
 }

@@ -7,7 +7,14 @@ public class OnlyTwo implements Two {
 
     @Override
     public void dumpToSystemOut() {
-        System.out.println("I am the might two");
+        System.out.println("I am the mighty two");
+    }
+
+    @Override
+    public void executeWith(Argument argument) {
+        for (String message : argument) {
+            System.out.println(message);
+        }
     }
 
     @Override

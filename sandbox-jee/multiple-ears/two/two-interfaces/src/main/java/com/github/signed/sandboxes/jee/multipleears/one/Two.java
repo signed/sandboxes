@@ -7,5 +7,7 @@ public interface Two {
 
     void dumpToSystemOut();
 
+    void executeWith(Argument argument);
+
     Doom access();
 }
