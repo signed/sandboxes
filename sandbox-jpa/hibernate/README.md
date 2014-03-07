@@ -14,6 +14,7 @@
 
 [jpa cloner](https://github.com/nociar/jpa-cloner)
 [dehibernator](https://code.google.com/p/dehibernator/)
-[dozer](http://dozer.sourceforge.net/)
+[dozer](https://github.com/DozerMapper/dozer/)
+[dozer sourceforge](http://dozer.sourceforge.net/)
 [gilead](http://sourceforge.net/projects/gilead/)
 [gilead targeted hiberate 4 jboss 7](https://github.com/emsouza/gilead)
