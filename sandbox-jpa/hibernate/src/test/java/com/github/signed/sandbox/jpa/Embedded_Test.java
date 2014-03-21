@@ -1,12 +1,8 @@
 package com.github.signed.sandbox.jpa;
 
-import org.h2.tools.Server;
-import org.junit.Assert;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -16,13 +12,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+import org.h2.tools.Server;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
+import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
 
 public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
     private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder);
+
+    @Before
+    public void setUp() throws Exception {
+        connector.createEntityManagerFactory();
+    }
 
     @Test
     public void basicSetupForInMemoryH2Database() throws Exception {
@@ -89,7 +98,6 @@ public class Embedded_Test {
         System.out.println("jdbcUrl = " + jdbcUrl);
         Connection connection = DriverManager.getConnection(jdbcUrl, "sa", "sa");
         Statement statement = connection.createStatement();
-        statement.execute("CREATE TABLE "+tableName+"(ID INT PRIMARY KEY, comment VARCHAR)");
         statement.execute("INSERT INTO "+tableName+" (id, comment) VALUES (1, 'hello "+tableName+"') ");
         ResultSet resultSet = statement.executeQuery("SELECT * from "+tableName);
         while (resultSet.next()) {

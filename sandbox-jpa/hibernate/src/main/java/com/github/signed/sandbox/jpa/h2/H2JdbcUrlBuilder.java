@@ -1,9 +1,9 @@
-package com.github.signed.sandbox.jpa;
+package com.github.signed.sandbox.jpa.h2;
+
+import java.util.List;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-
-import java.util.List;
 
 public class H2JdbcUrlBuilder {
 

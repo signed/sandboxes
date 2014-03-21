@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.github.signed.sandbox.jpa.bookstore.Bookstore" table="Bookstores">
+        <id name="id" type="java.lang.Long" column="id">
+            <generator class="native" />
+        </id>
+        <property name="name" type="string" column="name" />
+
+        <bag name="books" table="Books">
+            <key>
+                <column name="fk_bookshop" sql-type="NUMBER" />
+            </key>
+            <one-to-many class="com.github.signed.sandbox.jpa.bookstore.Book" />
+        </bag>
+    </class>
+</hibernate-mapping>

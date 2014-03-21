@@ -1,4 +1,4 @@
-package com.github.signed.sandbox.jpa;
+package com.github.signed.sandbox.jpa.h2;
 
 import java.util.Properties;
 
@@ -23,13 +23,12 @@ public class DatabaseConnector {
         overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.url", jdbcUrlBuilder.buildUrl());
         overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.user", userName);
         overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.password", password);
-        overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "false");
+        overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "true");
         overridePropertiesFromPersistenceXml.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", overridePropertiesFromPersistenceXml);
     }
 
     public EntityManager entityManagerForLocalHsqlDatabase() {
-        createEntityManagerFactory();
         return entityManagerFactory.createEntityManager();
     }
 
