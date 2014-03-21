@@ -66,10 +66,15 @@ public class OverrideLazyLoading_Test {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Bookstore> query = criteriaBuilder.createQuery(Bookstore.class);
         Root<Bookstore> root = query.from(Bookstore.class);
+
+        //root.fetch("books", JoinType.LEFT);
+
+
         CriteriaQuery<Bookstore> selectAll = query.select(root);
         TypedQuery<Bookstore> allQuery = entityManager.createQuery(selectAll);
         List<Bookstore> resultList = allQuery.getResultList();
 
+        System.out.println("done loading\n\n\n");
         System.out.println(resultList);
     }
 
