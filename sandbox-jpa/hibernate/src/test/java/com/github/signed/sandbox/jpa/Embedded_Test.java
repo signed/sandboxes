@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
 import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
+import com.github.signed.sandbox.jpa.h2.JpaDatabase;
 
 public class Embedded_Test {
 
@@ -37,7 +38,9 @@ public class Embedded_Test {
     public void basicSetupForInMemoryH2Database() throws Exception {
         Server server = Server.createTcpServer("-tcpPort", "9081", "-tcpAllowOthers");
         server.start();
-        writeIntoTable("DEMO");
+        Demo demo = new Demo();
+        demo.setComment("hello DEMO");
+        new JpaDatabase(connector).persist(demo);
         List<Demo> demos = readWithHibernate();
         assertThat(demos.get(0).getComment(), is("hello DEMO"));
     }
@@ -46,31 +49,10 @@ public class Embedded_Test {
     public void loadHibernateMappingsFromAnotherJar() throws Exception {
         Server server = Server.createTcpServer("-tcpPort", "9082", "-tcpAllowOthers");
         server.start();
-        writeIntoTable("WORLD");
-        List<World> worlds = readWithHibernateMappingsInAnotherArtifact();
-        assertThat(worlds.get(0).getComment(), is("hello WORLD"));
+        World world = new World();
+        world.setComment("hello WORLD");
+        new JpaDatabase(connector).persist(world);
     }
-
-    private List<World> readWithHibernateMappingsInAnotherArtifact() {
-        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            TypedQuery<World> query = entityManager.createQuery("select w from World w", World.class);
-            List<World> worlds = query.getResultList();
-            transaction.commit();
-            return worlds;
-        } catch (RuntimeException ex) {
-            if (null != transaction) {
-                transaction.rollback();
-            }
-            StringWriter stringWriter = new StringWriter();
-            ex.printStackTrace(new PrintWriter(stringWriter));
-            throw ex;
-        }
-    }
-
 
     private List<Demo> readWithHibernate() {
         EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
@@ -93,20 +75,5 @@ public class Embedded_Test {
         throw new UnreachableCodeException();
     }
 
-    private void writeIntoTable(String tableName) throws SQLException {
-        String jdbcUrl = jdbcUrlBuilder.buildUrl();
-        System.out.println("jdbcUrl = " + jdbcUrl);
-        Connection connection = DriverManager.getConnection(jdbcUrl, "sa", "sa");
-        Statement statement = connection.createStatement();
-        statement.execute("INSERT INTO "+tableName+" (id, comment) VALUES (1, 'hello "+tableName+"') ");
-        ResultSet resultSet = statement.executeQuery("SELECT * from "+tableName);
-        while (resultSet.next()) {
-            int id = resultSet.getInt(1);
-            String comment = resultSet.getString(2);
-            System.out.println(id + " " + comment);
-        }
-        statement.close();
-        connection.commit();
-        connection.close();
-    }
+
 }
