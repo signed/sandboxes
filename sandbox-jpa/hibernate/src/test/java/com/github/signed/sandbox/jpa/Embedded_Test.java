@@ -5,9 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -17,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,8 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
-    private final String userName = "sa";
-    private final String password = "sa";
+    private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder);
 
     @Test
     public void basicSetupForInMemoryH2Database() throws Exception {
@@ -35,7 +31,6 @@ public class Embedded_Test {
         writeIntoTable("DEMO");
         List<Demo> demos = readWithHibernate();
         assertThat(demos.get(0).getComment(), is("hello DEMO"));
-        server.shutdown();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -44,21 +39,11 @@ public class Embedded_Test {
         server.start();
         writeIntoTable("WORLD");
         List<World> worlds = readWithHibernateMappingsInAnotherArtifact();
-        assertThat(worlds.get(0).getComment(), is( "hello WORLD"));
-        server.shutdown();
+        assertThat(worlds.get(0).getComment(), is("hello WORLD"));
     }
 
     private List<World> readWithHibernateMappingsInAnotherArtifact() {
-        Properties overridePropertiesFromPersistenceXml = new Properties();
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.driver", "org.h2.Driver");
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.url", jdbcUrlBuilder.buildUrl());
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.user", userName);
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.password", password);
-        overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "false");
-        overridePropertiesFromPersistenceXml.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", overridePropertiesFromPersistenceXml);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
@@ -77,17 +62,9 @@ public class Embedded_Test {
         }
     }
 
-    private List<Demo> readWithHibernate() {
-        Properties overridePropertiesFromPersistenceXml = new Properties();
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.driver", "org.h2.Driver");
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.url", jdbcUrlBuilder.buildUrl());
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.user", userName);
-        overridePropertiesFromPersistenceXml.setProperty("javax.persistence.jdbc.password", password);
-        overridePropertiesFromPersistenceXml.setProperty("hibernate.show_sql", "false");
-        overridePropertiesFromPersistenceXml.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("the-demo-unit", overridePropertiesFromPersistenceXml);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+    private List<Demo> readWithHibernate() {
+        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
