@@ -28,6 +28,7 @@ public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
     private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder);
+    private final JpaDatabase jpaDatabase = new JpaDatabase(connector);
 
     @Before
     public void setUp() throws Exception {
@@ -40,7 +41,7 @@ public class Embedded_Test {
         server.start();
         Demo demo = new Demo();
         demo.setComment("hello DEMO");
-        new JpaDatabase(connector).persist(demo);
+        jpaDatabase.persist(demo);
         List<Demo> demos = readWithHibernate();
         assertThat(demos.get(0).getComment(), is("hello DEMO"));
     }
