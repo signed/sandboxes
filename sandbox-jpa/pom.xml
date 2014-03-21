@@ -12,7 +12,8 @@
         <version.hamcrest>1.3</version.hamcrest>
         <version.jboss.6.1.0.final.dependency.hibernate>3.6.6.Final</version.jboss.6.1.0.final.dependency.hibernate>
         <version.jboss.7.1.1.final.dependency.hibernate>4.0.1.Final</version.jboss.7.1.1.final.dependency.hibernate>
-        <version.dependency.hibernate>${version.jboss.7.1.1.final.dependency.hibernate}</version.dependency.hibernate>
+        <version.with.criteria.api.fix>4.1.1.Final</version.with.criteria.api.fix>
+        <version.dependency.hibernate>${version.with.criteria.api.fix}</version.dependency.hibernate>
     </properties>
 
     <modules>

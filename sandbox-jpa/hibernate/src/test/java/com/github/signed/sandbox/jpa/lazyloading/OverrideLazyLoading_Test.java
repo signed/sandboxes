@@ -1,6 +1,13 @@
 package com.github.signed.sandbox.jpa.lazyloading;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.junit.After;
 import org.junit.Before;
@@ -55,8 +62,15 @@ public class OverrideLazyLoading_Test {
         jpaDatabase.persist(thalia);
 
         System.out.println("juhu");
+        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Bookstore> query = criteriaBuilder.createQuery(Bookstore.class);
+        Root<Bookstore> root = query.from(Bookstore.class);
+        CriteriaQuery<Bookstore> selectAll = query.select(root);
+        TypedQuery<Bookstore> allQuery = entityManager.createQuery(selectAll);
+        List<Bookstore> resultList = allQuery.getResultList();
 
-
+        System.out.println(resultList);
     }
 
     private Book refactoring(Author fowler) {
