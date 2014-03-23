@@ -1,17 +1,5 @@
 package com.github.signed.sandbox.jpa.lazyloading;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import com.github.signed.sandbox.jpa.bookstore.Author;
 import com.github.signed.sandbox.jpa.bookstore.Book;
 import com.github.signed.sandbox.jpa.bookstore.Bookstore;
@@ -19,6 +7,17 @@ import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
 import com.github.signed.sandbox.jpa.h2.DatabaseServer;
 import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
 import com.github.signed.sandbox.jpa.h2.JpaDatabase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OverrideLazyLoading_Test {
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
@@ -41,6 +40,37 @@ public class OverrideLazyLoading_Test {
     @Test
     public void testName() throws Exception {
 
+        putThaliaIntoTheDatabase();
+
+        System.out.println("juhu");
+        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
+
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Bookstore> query = criteriaBuilder.createQuery(Bookstore.class);
+        Root<Bookstore> root = query.from(Bookstore.class);
+
+        //root.fetch("books", JoinType.LEFT);
+
+
+        CriteriaQuery<Bookstore> selectAll = query.select(root);
+        TypedQuery<Bookstore> allQuery = entityManager.createQuery(selectAll);
+        List<Bookstore> resultList = allQuery.getResultList();
+
+        System.out.println("done loading\n\n\n");
+        System.out.println(resultList);
+    }
+
+    @Test
+    public void dozerMappingTest() throws Exception {
+        putThaliaIntoTheDatabase();
+        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
+        Bookstore bookstore = (Bookstore)entityManager.createQuery("select b from Bookstore b").getSingleResult();
+
+        System.out.println(bookstore);
+    }
+
+    private void putThaliaIntoTheDatabase() {
         Author fowler = fowler();
         Author martin = martin();
         jpaDatabase.persist(fowler);
@@ -60,22 +90,6 @@ public class OverrideLazyLoading_Test {
 
         thalia.setBooks(books);
         jpaDatabase.persist(thalia);
-
-        System.out.println("juhu");
-        EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Bookstore> query = criteriaBuilder.createQuery(Bookstore.class);
-        Root<Bookstore> root = query.from(Bookstore.class);
-
-        //root.fetch("books", JoinType.LEFT);
-
-
-        CriteriaQuery<Bookstore> selectAll = query.select(root);
-        TypedQuery<Bookstore> allQuery = entityManager.createQuery(selectAll);
-        List<Bookstore> resultList = allQuery.getResultList();
-
-        System.out.println("done loading\n\n\n");
-        System.out.println(resultList);
     }
 
     private Book refactoring(Author fowler) {

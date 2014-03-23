@@ -24,3 +24,15 @@
 [gilead targeted hiberate 4 jboss 7](https://github.com/emsouza/gilead)
 [entity-pruner](https://github.com/stevesaliman/entity-pruner)
 [entity-pruner (google-code)](http://code.google.com/p/entity-pruner/)
+
+
+# Performance Optimizing #
+
+[fetching-profiles](http://docs.jboss.org/hibernate/orm/4.0/manual/en-US/html/performance.html#performance-fetching-profiles)
+
+## to try ##
+[Dozer](https://github.com/DozerMapper/dozer/) Create a copy without any hibernate proxies
+
+
+## to read ##
+[Fetching arbitrary object graphs in JPA 2](http://jdevelopment.nl/fetching-arbitrary-object-graphs-jpa-2/)
