@@ -1,4 +1,4 @@
-package converter;
+package dozer;
 
 import beans.ClassWithCollections;
 import beans.IntegerBean;

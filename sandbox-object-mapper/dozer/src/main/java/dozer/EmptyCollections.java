@@ -1,4 +1,4 @@
-package converter;
+package dozer;
 
 import org.dozer.DozerConverter;
 import org.dozer.Mapper;

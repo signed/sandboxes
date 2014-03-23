@@ -4,6 +4,9 @@ subprojects {
         mavenLocal()
         mavenCentral()
     }
+    dependencies{
+        testCompile project(':test-suite')
+    }
 }
 
 task wrapper(type: Wrapper) {
