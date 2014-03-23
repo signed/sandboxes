@@ -30,9 +30,18 @@
 
 [fetching-profiles](http://docs.jboss.org/hibernate/orm/4.0/manual/en-US/html/performance.html#performance-fetching-profiles)
 
-## to try ##
-[Dozer](https://github.com/DozerMapper/dozer/) Create a copy without any hibernate proxies
-
-
 ## to read ##
 [Fetching arbitrary object graphs in JPA 2](http://jdevelopment.nl/fetching-arbitrary-object-graphs-jpa-2/)
+
+
+## Bean mapping ##
+
+## to try ##
+[Dozer](https://github.com/DozerMapper/dozer/) Create a copy without any hibernate proxies
+[ModelMapper](http://modelmapper.org/)
+[Moo](http://geoffreywiseman.github.io/Moo/)
+[transmorph](https://github.com/cchabanois/transmorph/wiki)
+
+## to read ##
+[list of bean mappers] (http://www.halyph.com/2013/10/java-object-to-object-mapper.html)
+[stackoverflow list of bean mappers] (http://stackoverflow.com/questions/1432764/any-tool-for-java-object-to-object-mapping)

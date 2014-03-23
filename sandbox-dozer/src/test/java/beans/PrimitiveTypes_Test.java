@@ -2,6 +2,7 @@ package beans;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.TypeMappingOptions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class PrimitiveTypes_Test {
     }
 
     @Test
-    public void testName() throws Exception {
+    public void basicMapping() throws Exception {
         BeanMappingBuilder builder = new BeanMappingBuilder() {
             @Override
             protected void configure() {
@@ -35,6 +36,30 @@ public class PrimitiveTypes_Test {
 
         assertThatDozerMappedCorrectlyTo(mapper.map(primitiveTypes, PrimitiveTypes.class));
     }
+
+    @Test
+    public void twoPossibleMappings() throws Exception {
+
+        DozerBeanMapper mapper = new DozerBeanMapper();
+        BeanMappingBuilder one = new BeanMappingBuilder() {
+            @Override
+            protected void configure() {
+                mapping(PrimitiveTypes.class, PrimitiveTypes.class);
+            }
+        };
+
+        BeanMappingBuilder two = new BeanMappingBuilder() {
+            @Override
+            protected void configure() {
+                mapping(PrimitiveTypes.class, PrimitiveTypes.class, TypeMappingOptions.mapId("BananaSplit"));
+            }
+        };
+        mapper.addMapping(one);
+        mapper.addMapping(two);
+
+        assertThatDozerMappedCorrectlyTo(mapper.map(primitiveTypes, PrimitiveTypes.class, "BananaSplit"));
+    }
+
 
     private void assertThatDozerMappedCorrectlyTo(PrimitiveTypes mapped) {
         assertThat(mapped.getString(), is("Hello Dozer"));
