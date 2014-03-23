@@ -5,6 +5,8 @@ import org.dozer.loader.api.BeanMappingBuilder;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PrimitiveTypes_Test {
@@ -27,13 +29,11 @@ public class PrimitiveTypes_Test {
         DozerBeanMapper mapper = new DozerBeanMapper();
         mapper.addMapping(builder);
 
-
-
-        PrimitiveTypes mapped = new PrimitiveTypes();
-        mapped = mapper.map(primitiveTypes, PrimitiveTypes.class);
+        PrimitiveTypes mapped = mapper.map(primitiveTypes, PrimitiveTypes.class);
         assertThat(mapped.getString(), is("Hello Dozer"));
         assertThat(mapped.get_double(), is(3.3));
         assertThat(mapped.get_int(), is(42));
         assertThat(mapped.get_long(), is(23l));
+        assertThat(mapped, not(sameInstance(primitiveTypes)));
     }
 }
