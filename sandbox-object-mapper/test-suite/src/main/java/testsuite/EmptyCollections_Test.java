@@ -1,9 +1,8 @@
-package dozer;
+package testsuite;
 
 import beans.ClassWithCollections;
 import beans.IntegerBean;
 import beans.StringBean;
-import org.dozer.DozerBeanMapper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class EmptyCollectionsTest {
+public abstract class EmptyCollections_Test {
 
     @Test
     public void stripCollectionsOfContent() throws Exception {
@@ -25,10 +24,7 @@ public class EmptyCollectionsTest {
         integerBean.setInteger(45);
         classWithCollections.setIntegerBean(integerBean);
 
-        DozerBeanMapper mapper = new DozerBeanMapper();
-        mapper.setCustomFieldMapper(new DoNotMapContentOfCollection());
-
-        ClassWithCollections mapped = mapper.map(classWithCollections, ClassWithCollections.class);
+        ClassWithCollections mapped = emptyCollectionsWhileMapping(classWithCollections);
 
         assertThat(mapped.getStringBeans().size(), is(0));
         assertThat(mapped.getIntegerBean().getInteger(), is(45));
@@ -40,4 +36,6 @@ public class EmptyCollectionsTest {
         stringBean.setString(one);
         return stringBean;
     }
+
+    protected abstract ClassWithCollections emptyCollectionsWhileMapping(ClassWithCollections classWithCollections);
 }

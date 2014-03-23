@@ -1,5 +1,6 @@
-package beans;
+package dozer;
 
+import beans.PrimitiveTypes;
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingOptions;
