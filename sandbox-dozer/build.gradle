@@ -5,6 +5,14 @@ repositories{
      mavenCentral()
 }
 
+dependencies{
+    compile ('net.sf.dozer:dozer:5.4.0'){
+        exclude group: 'org.slf4j' , module: 'slf4j-log4j12'
+    }
+    compile ("org.slf4j:slf4j-simple:1.6.6")
+    testCompile "junit:junit:4.11"
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
