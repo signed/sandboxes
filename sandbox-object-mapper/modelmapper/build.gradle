@@ -1,3 +1,4 @@
 dependencies{
     compile 'org.modelmapper:modelmapper:0.6.3'
+    compile project(':shared')
 }

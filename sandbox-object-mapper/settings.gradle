@@ -1,1 +1,1 @@
-include 'test-suite', 'dozer', 'modelmapper'
+include 'test-suite', 'dozer', 'modelmapper', 'shared'

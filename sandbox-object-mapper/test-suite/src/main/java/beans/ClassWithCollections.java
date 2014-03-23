@@ -34,4 +34,12 @@ public class ClassWithCollections {
     public void setStringBeansSet(Set<StringBean> stringBeansSet) {
         this.stringBeansSet = stringBeansSet;
     }
+
+    public Map<String, IntegerBean> getIntegerBeansMap() {
+        return integerBeansMap;
+    }
+
+    public void setIntegerBeansMap(Map<String, IntegerBean> integerBeansMap) {
+        this.integerBeansMap = integerBeansMap;
+    }
 }
