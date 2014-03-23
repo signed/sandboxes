@@ -7,6 +7,11 @@ import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
 import com.github.signed.sandbox.jpa.h2.DatabaseServer;
 import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
 import com.github.signed.sandbox.jpa.h2.JpaDatabase;
+import org.dozer.CustomFieldMapper;
+import org.dozer.DozerBeanMapper;
+import org.dozer.classmap.ClassMap;
+import org.dozer.fieldmap.FieldMap;
+import org.hibernate.Hibernate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +22,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OverrideLazyLoading_Test {
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
@@ -32,7 +41,7 @@ public class OverrideLazyLoading_Test {
     }
 
     @After
-    public void stopServer(){
+    public void stopServer() {
         connector.close();
         server.stop();
     }
@@ -65,9 +74,34 @@ public class OverrideLazyLoading_Test {
     public void dozerMappingTest() throws Exception {
         putThaliaIntoTheDatabase();
         EntityManager entityManager = connector.entityManagerForLocalHsqlDatabase();
-        Bookstore bookstore = (Bookstore)entityManager.createQuery("select b from Bookstore b").getSingleResult();
+        Bookstore bookstore = (Bookstore) entityManager.createQuery("select b from Bookstore b").getSingleResult();
 
-        System.out.println(bookstore);
+        entityManager.detach(bookstore);
+
+        DozerBeanMapper mapper = new DozerBeanMapper();
+        mapper.setCustomFieldMapper(new CustomFieldMapper() {
+            @Override
+            public boolean mapField(Object source, Object destination, Object sourceFieldValue, ClassMap classMap, FieldMap fieldMapping) {
+                if (Hibernate.isInitialized(sourceFieldValue)) {
+                    return false;
+                }
+                Class<?> destinationFieldType = fieldMapping.getDestFieldType(destination.getClass());
+
+                if(Collection.class.isAssignableFrom(destinationFieldType)){
+                    if(List.class.isAssignableFrom(destinationFieldType)){
+                        fieldMapping.writeDestValue(destination, new ArrayList());
+                        return true;
+                    }
+                    throw new RuntimeException("Unhandled collection mapping");
+                }
+
+                throw new RuntimeException("Unhandled type mapping");
+            }
+        });
+
+        Bookstore mapped = mapper.map(bookstore, Bookstore.class);
+
+        assertThat(mapped.getBooks().isEmpty(), is(true));
     }
 
     private void putThaliaIntoTheDatabase() {
