@@ -31,7 +31,7 @@ public class PrimitiveTypesDozer_Test extends PrimitiveTypes_Test {
         assertThatMappedCorrectlyTo(mapper.map(primitiveTypes, PrimitiveTypes.class, "BananaSplit"));
     }
 
-    public PrimitiveTypes mapIntoAnotherInstance(PrimitiveTypes primitiveTypes) {
+    public PrimitiveTypes mapIntoAnotherInstance(PrimitiveTypes source) {
         BeanMappingBuilder builder = new BeanMappingBuilder() {
             @Override
             protected void configure() {
@@ -40,6 +40,6 @@ public class PrimitiveTypesDozer_Test extends PrimitiveTypes_Test {
         };
         DozerBeanMapper mapper = new DozerBeanMapper();
         mapper.addMapping(builder);
-        return mapper.map(primitiveTypes, PrimitiveTypes.class);
+        return mapper.map(source, PrimitiveTypes.class);
     }
 }

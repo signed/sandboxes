@@ -25,7 +25,7 @@ public abstract class PrimitiveTypes_Test {
         assertThatMappedCorrectlyTo(mapIntoAnotherInstance(primitiveTypes));
     }
 
-    public abstract PrimitiveTypes mapIntoAnotherInstance(PrimitiveTypes primitiveTypes);
+    public abstract PrimitiveTypes mapIntoAnotherInstance(PrimitiveTypes source);
 
 
     protected void assertThatMappedCorrectlyTo(PrimitiveTypes mapped) {
