@@ -1,0 +1,1 @@
+[Stackoverflow with list of available libraries](http://stackoverflow.com/questions/2261947/are-there-alternatives-to-cglib)

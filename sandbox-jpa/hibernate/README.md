@@ -9,6 +9,7 @@
 [hibernate proxy cleaner](http://maherkilani.blogspot.de/2008/12/hibernate-proxy-cleaner.html)
 [Code](https://community.jboss.org/message/358205#358205)
 [Code but later impelmentation](https://community.jboss.org/message/358214#358214)
+[understanding hibernate proxy objects](http://java-success.blogspot.de/2012/09/understanding-hibernate-proxy-objects.html)
 
 ## to read ##
 [serializing-cglib-enhanced-proxy-into-json-using-xstream](http://www.anzaan.com/2010/06/serializing-cglib-enhanced-proxy-into-json-using-xstream/)

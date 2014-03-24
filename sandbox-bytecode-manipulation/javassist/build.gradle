@@ -1,0 +1,15 @@
+apply plugin:'java'
+
+repositories{
+     mavenLocal()
+     mavenCentral()
+}
+
+dependencies{
+    compile 'org.javassist:javassist:3.18.1-GA'
+    testCompile "junit:junit:4.11"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
