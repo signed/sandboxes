@@ -1,5 +1,9 @@
 # Wischan
 
+## Sources ##
+[gemspec and gemfile](http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/)
+[bundler on rubgems](http://bundler.io/rubygems.html)
+
 TODO: Write a gem description
 
 ## Installation
