@@ -1,5 +1,7 @@
 require "wischan/version"
 
 module Wischan
-  # Your code goes here...
+  def self.greet(recipient)
+    "Hello #{recipient}"
+  end
 end
