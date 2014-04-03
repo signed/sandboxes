@@ -1,7 +1,7 @@
 class Page
 
-  def self.created_at(*yearMonthDay)
-    Page.new(Time.new(*yearMonthDay))
+  def self.created_at(*year_month_day)
+    Page.new(Time.new(*year_month_day))
   end
 
   def initialize(date)
