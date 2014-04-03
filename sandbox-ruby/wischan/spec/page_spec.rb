@@ -9,16 +9,16 @@ describe Page do
     end
   end
 
-  first_page_in_2012 = Page.created_at([2012, 3, 5])
-  last_page_in_2012 = Page.created_at([2012, 7, 18])
+  first_page_in_2012 = Page.created_at(2012, 3, 5)
+  last_page_in_2012 = Page.created_at(2012, 7, 18)
 
   it "should return true for the last page in the year" do
-    pages = [last_page_in_2012, Page.created_at([2012, 7, 5]), Page.created_at([2013, 7, 5]), first_page_in_2012]
+    pages = [last_page_in_2012, Page.created_at(2012, 7, 5), Page.created_at(2013, 7, 5), first_page_in_2012]
     last_page_in_2012.last_in_year(pages).should == true
   end
 
   it "should return false if the page is not the last in the year" do
-    pages = [last_page_in_2012, Page.created_at([2012, 7, 5]), Page.created_at([2013, 7, 5]), first_page_in_2012]
+    pages = [last_page_in_2012, Page.created_at(2012, 7, 5), Page.created_at(2013, 7, 5), first_page_in_2012]
     first_page_in_2012.last_in_year(pages).should == false
   end
 
