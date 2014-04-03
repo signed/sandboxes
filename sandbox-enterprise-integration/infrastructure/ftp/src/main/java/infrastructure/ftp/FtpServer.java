@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.Authority;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -14,7 +13,7 @@ import org.apache.ftpserver.usermanager.impl.ConcurrentLoginPermission;
 import org.apache.ftpserver.usermanager.impl.TransferRatePermission;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
 
-public class StartFtpServer {
+public class FtpServer {
 
     public static void main(String[] args) throws Exception {
 
@@ -22,27 +21,37 @@ public class StartFtpServer {
         temporaryFileToDelete.delete();
         File tmpDirectory = temporaryFileToDelete.getParentFile();
         File temporaryFtpRoot = new File(tmpDirectory, "ftp");
-        File userHome = new File(temporaryFtpRoot, "sally");
-        userHome.mkdirs();
-
-        StartFtpServer startFtpServer = new StartFtpServer();
-        startFtpServer.runOnPort(10021);
-        startFtpServer.addUser("sally", "secret", userHome);
+        FtpServer ftpServer = new FtpServer(temporaryFtpRoot);
+        ftpServer.runOnPort(10021);
+        ftpServer.addUser("sally", "secret");
+        ftpServer.addUser("harry", "secret");
 
         System.out.println("ftp root: "+temporaryFtpRoot);
 
-        startFtpServer.start();
+        ftpServer.start();
+    }
+
+    private static File createUserHome(File temporaryFtpRoot, String sally) {
+        File userHome = new File(temporaryFtpRoot, sally);
+        userHome.mkdirs();
+        return userHome;
     }
 
     private final FtpServerFactory serverFactory = new FtpServerFactory();
     private final InMemoryUserManager userManager = new InMemoryUserManager();
     private final ListenerFactory listenerFactory = new ListenerFactory();
+    private File temporaryFtpRoot;
+
+    public FtpServer(File temporaryFtpRoot) {
+        this.temporaryFtpRoot = temporaryFtpRoot;
+    }
 
     private void runOnPort(int port) {
         listenerFactory.setPort(port);
     }
 
-    private void addUser(String userName, String secret, File userHome) throws FtpException {
+    private void addUser(String userName, String secret) throws FtpException {
+        File userHome = createUserHome(temporaryFtpRoot, userName);
         BaseUser user = new BaseUser();
         user.setName(userName);
         user.setPassword(secret);
@@ -61,7 +70,7 @@ public class StartFtpServer {
     private void start() throws FtpException {
         serverFactory.addListener("default", listenerFactory.createListener());
         serverFactory.setUserManager(userManager);
-        FtpServer server = serverFactory.createServer();
+        org.apache.ftpserver.FtpServer server = serverFactory.createServer();
         server.start();
     }
 }
