@@ -1,5 +1,9 @@
 package infrastructure.ftp;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.Authority;
@@ -9,10 +13,6 @@ import org.apache.ftpserver.usermanager.impl.BaseUser;
 import org.apache.ftpserver.usermanager.impl.ConcurrentLoginPermission;
 import org.apache.ftpserver.usermanager.impl.TransferRatePermission;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartFtpServer {
 
@@ -28,6 +28,8 @@ public class StartFtpServer {
         StartFtpServer startFtpServer = new StartFtpServer();
         startFtpServer.runOnPort(10021);
         startFtpServer.addUser("sally", "secret", userHome);
+
+        System.out.println("ftp root: "+temporaryFtpRoot);
 
         startFtpServer.start();
     }
