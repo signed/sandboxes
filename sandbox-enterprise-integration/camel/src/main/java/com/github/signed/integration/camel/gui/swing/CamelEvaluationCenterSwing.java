@@ -5,16 +5,19 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import com.github.signed.integration.camel.TemplateTrigger;
 import com.github.signed.integration.camel.gui.StartStop;
 
 public class CamelEvaluationCenterSwing {
     private final JFrame frame = new JFrame();
     private final JPanel mainPanel = new JPanel();
     private final StartStopSwing startStop = new StartStopSwing();
+    private final TemplateTriggerSwing templateTrigger = new TemplateTriggerSwing();
 
     public CamelEvaluationCenterSwing() {
         frame.add(mainPanel);
         startStop.addTo(mainPanel);
+        templateTrigger.addTo(mainPanel);
     }
 
     public void constructApplicationFrame() {
@@ -37,4 +40,7 @@ public class CamelEvaluationCenterSwing {
         return startStop;
     }
 
+    public TemplateTrigger templateTrigger() {
+        return templateTrigger;
+    }
 }
