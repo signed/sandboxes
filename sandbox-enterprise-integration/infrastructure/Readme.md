@@ -1,11 +1,14 @@
 ### ftp
-http://mina.apache.org/ftpserver-project/index.htm
+[mina ftpserver project](http://mina.apache.org/ftpserver-project/index.htm)
 
 ### jms
-http://activemq.apache.org/
+[activemq](http://activemq.apache.org/)
 
 ### mail
-http://www.icegreen.com/greenmail/
+[greenmail](http://www.icegreen.com/greenmail/)
 
 ### sftp
-http://mina.apache.org/sshd-project/
+[mina sshd project](http://mina.apache.org/sshd-project/)
+
+### http
+[stackoverflow with list of recomendations](http://stackoverflow.com/questions/393099/mocking-http-server)
