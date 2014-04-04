@@ -1,6 +1,7 @@
 package com.github.signed.integration.camel;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.file.remote.FtpComponent;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -19,6 +20,8 @@ public class FtpUpload {
                         .log("Uploaded file ${file:name} complete.");
             }
         });
+
+        ProducerTemplate producerTemplate = context.createProducerTemplate();
 
         context.start();
         Thread.sleep(100000);
