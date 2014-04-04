@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.github.signed.integration.camel.gui.StartStop;
 import com.github.signed.integration.camel.gui.UserCommand;
@@ -22,12 +23,30 @@ public class StartStopSwing implements StartStop {
 
     @Override
     public void displayStart() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    displayStart();
+                }
+            });
+            return;
+        }
         hideStop();
         start.setVisible(true);
     }
 
     @Override
     public void displayStop() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    displayStop();
+                }
+            });
+            return;
+        }
         hideStart();
         stop.setVisible(true);
     }

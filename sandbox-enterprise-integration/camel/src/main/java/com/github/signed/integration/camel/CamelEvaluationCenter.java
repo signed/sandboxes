@@ -8,13 +8,16 @@ import com.github.signed.integration.camel.gui.swing.CamelEvaluationCenterSwing;
 public class CamelEvaluationCenter {
 
     public static void main(String[] args) {
-        CamelEvaluationCenterSwing gui = new CamelEvaluationCenterSwing();
-        gui.constructApplicationFrame();
-
-        CamelContext context = new DefaultCamelContext();
-        CamelContextIgnition camelContextIgnition = new CamelContextIgnition(context, gui.startStop());
         CamelEvaluationCenter camelEvaluationCenter = new CamelEvaluationCenter();
-        gui.start();
+        camelEvaluationCenter.run();
+
     }
 
+    private void run() {
+        CamelEvaluationCenterSwing gui = new CamelEvaluationCenterSwing();
+        gui.constructApplicationFrame();
+        CamelContext context = new DefaultCamelContext();
+        new CamelContextIgnition(context, gui.startStop());
+        gui.start();
+    }
 }
