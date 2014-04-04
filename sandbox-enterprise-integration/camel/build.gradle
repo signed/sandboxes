@@ -5,6 +5,7 @@ dependencies {
             , 'org.apache.camel:camel-jms:2.13.0'
             , 'org.apache.camel:camel-ftp:2.13.0'
             , 'org.apache.camel:camel-stream:2.13.0'
+            , 'org.apache.camel:camel-http:2.13.0'
             , 'org.apache.activemq:activemq-client:5.9.0'
             , 'org.slf4j:slf4j-simple:1.7.5'
     )
