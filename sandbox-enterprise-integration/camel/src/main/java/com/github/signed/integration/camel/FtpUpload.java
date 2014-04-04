@@ -1,6 +1,9 @@
 package com.github.signed.integration.camel;
 
+import java.util.HashMap;
+
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.file.remote.FtpComponent;
@@ -25,7 +28,10 @@ public class FtpUpload {
 
         context.start();
         ProducerTemplate template = context.createProducerTemplate();
-        template.sendBody("direct:trigger-download", null);
+        HashMap<String, Object> headers = new HashMap<String, Object>();
+        headers.put(Exchange.HTTP_URI, "http://scm:8081/nexus/content/repositories/releases/de/idos/operatingreserve/moccamote-application/1.3.0/moccamote-application-1.3.0.pom");
+        template.sendBodyAndHeaders("direct:trigger-download", null, headers);
+        //template.sendBody("direct:trigger-download", null);
         //template.sendBody("direct:system-out", new URI("http://scm:8081/nexus/content/repositories/releases/de/idos/operatingreserve/moccamote-application/1.3.0/moccamote-application-1.3.0.pom"));
         Thread.sleep(100000);
         context.stop();
