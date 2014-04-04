@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import com.github.signed.integration.camel.gui.StartStop;
 import com.github.signed.integration.camel.gui.UserCommand;
@@ -56,7 +57,15 @@ public class StartStopSwing implements StartStop {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                command.given();
+                SwingWorker<Void, Void> swingWorker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        command.given();
+                        return null;
+                    }
+                };
+                swingWorker.execute();
+
             }
         });
 
@@ -67,7 +76,14 @@ public class StartStopSwing implements StartStop {
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                command.given();
+                SwingWorker<Void, Void> swingWorker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        command.given();
+                        return null;
+                    }
+                };
+                swingWorker.execute();
             }
         });
     }
