@@ -28,21 +28,27 @@
                 <version>0.9.0</version>
                 <executions>
                     <execution>
-                        <id>highsource-example</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <schemaDirectory>src/main/schemas/highsource</schemaDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>generate-list</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
                             <schemaDirectory>src/main/schemas/entso</schemaDirectory>
+                            <schemaIncludes>
+                                <include>etso-code-lists.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>highsource-example</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/schemas/highsource</schemaDirectory>
+                            <schemaIncludes>
+                                <include>po.xsd</include>
+                            </schemaIncludes>
                         </configuration>
                     </execution>
                 </executions>
