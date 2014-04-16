@@ -28,12 +28,21 @@
                 <version>0.9.0</version>
                 <executions>
                     <execution>
-                        <id>generate-list</id>
+                        <id>highsource-example</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
                             <schemaDirectory>src/main/schemas/highsource</schemaDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-list</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/schemas/entso</schemaDirectory>
                         </configuration>
                     </execution>
                 </executions>
