@@ -33,10 +33,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <schemaDirectory>src/main/schemas/entso</schemaDirectory>
-                            <schemaIncludes>
-                                <include>etso-code-lists.xsd</include>
-                            </schemaIncludes>
+                            <schemaDirectory>src/main/schemas/highsource</schemaDirectory>
                         </configuration>
                     </execution>
                 </executions>

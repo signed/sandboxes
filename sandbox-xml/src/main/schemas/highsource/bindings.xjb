@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+        version="2.1"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        >
+
+    <jaxb:bindings schemaLocation="po.xsd" node="/xs:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tutorials.po.steptwo"/>
+        </jaxb:schemaBindings>
+        <jaxb:bindings node="xs:complexType[@name='PurchaseOrderType']">
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='USAddress']">
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='Items']//xs:complexType">
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='Items']//xs:attribute[@name='partNum']">
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='Items']//xs:element[@name='USPrice']">
+        </jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>
