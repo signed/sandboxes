@@ -1,0 +1,1 @@
+[xml binding](http://www.onjava.com/pub/a/onjava/2003/12/10/jaxb.html)

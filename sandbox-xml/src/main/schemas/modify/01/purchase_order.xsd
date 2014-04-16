@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:element name="PurchaseOrder">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="BillTo"/>
+                <xs:element ref="Items"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BillTo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Street" type="xs:string"/>
+                <xs:element name="City" type="xs:string"/>
+                <xs:element name="State" type="xs:string"/>
+                <xs:element name="Zip" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Items">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Item" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Item">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ProductName" type="xs:string"/>
+                <xs:element name="Quantity" type="xs:positiveInteger"/>
+                <xs:element name="Price" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

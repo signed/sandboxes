@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+           jaxb:version="1.0" jaxb:extensionBindingPrefixes="xjc">
+    <xs:element name="Widgets">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="Rectangle" type="Rectangle"/>
+                <xs:element name="Square" type="Square"/>
+                <xs:element name="Circle" type="Circle"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Rectangle">
+        <xs:sequence>
+            <xs:element name="Width" type="xs:integer"/>
+            <xs:element name="Height" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Square">
+        <xs:sequence>
+            <xs:element name="Length" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Circle">
+        <xs:sequence>
+            <xs:element name="Radius" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
