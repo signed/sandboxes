@@ -18,6 +18,11 @@
 ## naming the generated classes
 [prefixing-jaxb-generated-classes](http://stackoverflow.com/questions/892298/prefixing-jaxb-generated-classes)
 
+## Writing plugins
+
+[Writing a plugin Kohsuke Kawaguchi blog post](https://weblogs.java.net/blog/kohsuke/archive/2005/06/writing_a_plugi.html)
+[More up to date blog post](http://ricston.com/blog/xjc-plugin/)
+
 
 ## Map date to joda time
 [JAXB, Custom bindings, Adapter1.class and Joda-time](http://stackoverflow.com/a/18868465)
