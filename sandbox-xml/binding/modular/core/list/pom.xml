@@ -2,13 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.signed.sandbox.xml.codegeneration</groupId>
-    <artifactId>external-binding</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>com.github.signed.sandbox.xml.binding.modular</groupId>
+        <artifactId>core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <groupId>com.github.signed.sandbox.xml.binding.modular.core</groupId>
+    <artifactId>list</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <build>
         <plugins>
@@ -28,16 +30,14 @@
                 <version>0.9.0</version>
                 <executions>
                     <execution>
-                        <id>generate-list</id>
+                        <id>highsource-example</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <schemaDirectory>src/main/schemas/entso</schemaDirectory>
+                            <schemaDirectory>src/main/schemas/highsource</schemaDirectory>
                             <schemaIncludes>
-                                <include>etso-code-lists.xsd</include>
-                                <include>etso-core-cmpts.xsd</include>
-                                <include>acknowledgement-v5r1.xsd</include>
+                                <include>po.xsd</include>
                             </schemaIncludes>
                         </configuration>
                     </execution>
