@@ -36,6 +36,8 @@
                             <schemaDirectory>src/main/schemas/entso</schemaDirectory>
                             <schemaIncludes>
                                 <include>etso-code-lists.xsd</include>
+                                <include>etso-core-cmpts.xsd</include>
+                                <include>acknowledgement-v5r1.xsd</include>
                             </schemaIncludes>
                         </configuration>
                     </execution>
