@@ -9,6 +9,7 @@
 [Customizing JAXB Bindings Oracle](http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/2.0/tutorial/doc/JAXBUsing4.html#wp148690)
 [jaxb-how-to-change-xjc-generated-classes-names-when-attr-type-is-specified-in-x](http://stackoverflow.com/questions/4793637/jaxb-how-to-change-xjc-generated-classes-names-when-attr-type-is-specified-in-x)
 [jaxb-xjc-create-multiple-class-files](http://stackoverflow.com/questions/13175224/jaxb-xjc-create-multiple-class-files)
+[jaxb-xjc-code-generation-adding-xmlrootelement-and-joda-datetime](http://codereview.stackexchange.com/questions/1877/jaxb-xjc-code-generation-adding-xmlrootelement-and-joda-datetime)
 
 ## xjc How to deal with duplicated types in the same namespace
 [compile-several-xsds-containing-duplicate-definitions-of-the-same-element-with](http://stackoverflow.com/questions/9683907/compile-several-xsds-containing-duplicate-definitions-of-the-same-element-with)
