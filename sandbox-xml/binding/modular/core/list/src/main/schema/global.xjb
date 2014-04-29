@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         jaxb:extensionBindingPrefixes="xjc"
         version="2.1"
         >
     <jaxb:globalBindings>
-        <xjc:javaType name="org.joda.time.DateTime" xmlType="xsd:time"
-                      adapter="de.idos.jaxb.adapter.DateTimeAdapter"/>
+        <xjc:javaType name="org.joda.time.DateTime" xmlType="xsd:dateTime"
+                      adapter="nz.net.ultraq.jaxb.adapters.XMLDateTimeAdapter"/>
     </jaxb:globalBindings>
 
 </jaxb:bindings>
