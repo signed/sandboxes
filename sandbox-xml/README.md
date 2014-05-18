@@ -15,7 +15,10 @@
 
 [Fixing_broken_references_in_schema](https://jaxb.java.net/guide/Fixing_broken_references_in_schema.html)
 [jaxb - how to map xsd files to URL to find them](http://stackoverflow.com/questions/9789739/jaxb-how-to-map-xsd-files-to-url-to-find-them)
-[jaxb-how-to-map-xsd-files-to-url-to-find-them](http://stackoverflow.com/questions/9789739/jaxb-how-to-map-xsd-files-to-url-to-find-them)
+
+### [jaxb-how-to-map-xsd-files-to-url-to-find-them](http://stackoverflow.com/questions/9789739/jaxb-how-to-map-xsd-files-to-url-to-find-them)
+
+Sample how to implement your own Schema resolver
 
 ### [jaxb xjc imported schemas and xml](http://blog.bdoughan.com/2011/10/jaxb-xjc-imported-schemas-and-xml.html)
 
