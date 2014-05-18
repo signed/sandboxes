@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <systemSuffix systemIdSuffix="http://example.org/etso-code-lists.xsd" uri="maven:com.github.signed.sandbox.xml.binding.modular.core:list!/schema/etso-code-lists.xsd"/>
+    <!--<rewriteSystem systemIdStartString="http://example.org/etso-code-lists.xsd" rewritePrefix="maven:com.github.signed.sandbox.xml.binding.modular.core:list!/schema/etso-code-lists.xsd"/>-->
+</catalog>
