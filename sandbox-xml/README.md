@@ -45,3 +45,14 @@ Use Public rewrites if no schema location is present but the schema to import ha
 
 # Jibx
 [ibm articel 2009](http://www.ibm.com/developerworks/java/tutorials/j-jibx2/)
+
+
+## use cxf as code generator?
+
+[cxf as an alternative](http://stackoverflow.com/a/9199036)
+
+
+# Open bugs
+## Maleformed URL Exception
+[MalformedURLException](https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-82)
+[maven-jaxb-generate-fails-when-compiling-a-module-that-depends-on-multiple-modul](http://stackoverflow.com/questions/18163565/maven-jaxb-generate-fails-when-compiling-a-module-that-depends-on-multiple-modul/19528189#19528189)

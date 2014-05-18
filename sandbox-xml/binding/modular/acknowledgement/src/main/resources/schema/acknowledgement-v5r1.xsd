@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:ecc="etso-core-cmpts.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" ecc:VersionRelease="13.0">
-	<xsd:import namespace="etso-core-cmpts.xsd" schemaLocation="etso-core-cmpts.xsd"/>
+	<xsd:import namespace="etso-core-cmpts.xsd" schemaLocation="http://example.org/etso-core-cmpts.xsd"/>
 	<!--
 			ENTSO-E Document Automatically generated from a UML class diagram using XMI. 
 			Generation tool version 1.7
