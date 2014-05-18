@@ -11,6 +11,18 @@
 [jaxb-xjc-create-multiple-class-files](http://stackoverflow.com/questions/13175224/jaxb-xjc-create-multiple-class-files)
 [jaxb-xjc-code-generation-adding-xmlrootelement-and-joda-datetime](http://codereview.stackexchange.com/questions/1877/jaxb-xjc-code-generation-adding-xmlrootelement-and-joda-datetime)
 
+## xjc Fixing broken schema locations
+
+[Fixing_broken_references_in_schema](https://jaxb.java.net/guide/Fixing_broken_references_in_schema.html)
+[jaxb - how to map xsd files to URL to find them](http://stackoverflow.com/questions/9789739/jaxb-how-to-map-xsd-files-to-url-to-find-them)
+[jaxb-how-to-map-xsd-files-to-url-to-find-them](http://stackoverflow.com/questions/9789739/jaxb-how-to-map-xsd-files-to-url-to-find-them)
+
+### [jaxb xjc imported schemas and xml](http://blog.bdoughan.com/2011/10/jaxb-xjc-imported-schemas-and-xml.html)
+
+Use System rewrites if a schema location is present
+Use Public rewrites if no schema location is present but the schema to import has its own namespace 
+
+
 ## xjc How to deal with duplicated types in the same namespace
 [compile-several-xsds-containing-duplicate-definitions-of-the-same-element-with](http://stackoverflow.com/questions/9683907/compile-several-xsds-containing-duplicate-definitions-of-the-same-element-with)
 

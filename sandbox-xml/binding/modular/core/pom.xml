@@ -17,7 +17,7 @@
     </properties>
 
     <modules>
-        <!--<module>components</module>-->
+        <module>components</module>
         <module>list</module>
     </modules>
 </project>

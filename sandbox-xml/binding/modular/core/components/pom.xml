@@ -9,15 +9,14 @@
     </parent>
 
     <groupId>com.github.signed.sandbox.xml.binding.modular.core</groupId>
-    <artifactId>list</artifactId>
+    <artifactId>components</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
 
     <dependencies>
         <dependency>
-            <groupId>nz.net.ultraq.jaxb</groupId>
-            <artifactId>jaxb-utilities</artifactId>
-            <version>1.2.6</version>
+            <groupId>com.github.signed.sandbox.xml.binding.modular.core</groupId>
+            <artifactId>list</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -28,12 +27,21 @@
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>core-list</id>
+                        <id>core-components</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <extension>true</extension>
                             <schemaDirectory>src/main/resources/schema</schemaDirectory>
+                            <catalog>src/main/resources/schema/catalog.cat</catalog>
+                            <episodes>
+                                <episode>
+                                    <groupId>com.github.signed.sandbox.xml.binding.modular.core</groupId>
+                                    <artifactId>list</artifactId>
+                                    <version>${project.version}</version>
+                                </episode>
+                            </episodes>
                         </configuration>
                     </execution>
                 </executions>

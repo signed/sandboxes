@@ -1,0 +1,7 @@
+REWRITE_SYSTEM "http://example.org/etso-code-lists.xsd" "maven:com.github.signed.sandbox.xml.binding.modular.core:list!/schema/etso-code-lists.xsd"
+
+
+--
+REWRITE_SYSTEM "etso-code-lists.xsd" "maven:com.github.signed.sandbox.xml.binding.modular.core:list!/schema/etso-code-lists.xsd"
+REWRITE_SYSTEM "file:/home/signed/dev/arbeitskopie/sandboxes/sandbox-xml/binding/modular/core/components/src/main/resources/schema/etso-code-lists.xsd" "maven:com.github.signed.sandbox.xml.binding.modular.core:list!/schema/etso-code-lists.xsd"
+--
