@@ -1,12 +1,18 @@
 package com.github.signed.sandbox.jpa.lazyloading;
 
-import com.github.signed.sandbox.jpa.bookstore.Author;
-import com.github.signed.sandbox.jpa.bookstore.Book;
-import com.github.signed.sandbox.jpa.bookstore.Bookstore;
-import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
-import com.github.signed.sandbox.jpa.h2.DatabaseServer;
-import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
-import com.github.signed.sandbox.jpa.h2.JpaDatabase;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.dozer.CustomFieldMapper;
 import org.dozer.DozerBeanMapper;
 import org.dozer.classmap.ClassMap;
@@ -16,21 +22,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import com.github.signed.sandbox.jpa.bookstore.Author;
+import com.github.signed.sandbox.jpa.bookstore.Book;
+import com.github.signed.sandbox.jpa.bookstore.Bookstore;
+import com.github.signed.sandbox.jpa.h2.DatabaseConnector;
+import com.github.signed.sandbox.jpa.h2.DatabaseServer;
+import com.github.signed.sandbox.jpa.h2.H2JdbcUrlBuilder;
+import com.github.signed.sandbox.jpa.h2.JpaDatabase;
 
 public class OverrideLazyLoading_Test {
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
-    private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder);
+    private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder, "volatile-bookstore");
     private final JpaDatabase jpaDatabase = new JpaDatabase(connector);
     private final DatabaseServer server = new DatabaseServer(9081);
 

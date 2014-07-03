@@ -5,11 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,7 +22,7 @@ import com.github.signed.sandbox.jpa.h2.JpaDatabase;
 public class Embedded_Test {
 
     private final H2JdbcUrlBuilder jdbcUrlBuilder = new H2JdbcUrlBuilder().database("test").keepDataInMemoryUntilJvmShutdown();
-    private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder);
+    private final DatabaseConnector connector = new DatabaseConnector(jdbcUrlBuilder, "volatile-bookstore").verboseLogging().create_drop();
     private final JpaDatabase jpaDatabase = new JpaDatabase(connector);
 
     @Before

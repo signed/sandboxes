@@ -33,3 +33,10 @@
 
 ## to read ##
 [Fetching arbitrary object graphs in JPA 2](http://jdevelopment.nl/fetching-arbitrary-object-graphs-jpa-2/)
+
+
+        <dependency>
+            <groupId>org.apache.ddlutils</groupId>
+            <artifactId>ddlutils</artifactId>
+            <version>1.0</version>
+        </dependency>
