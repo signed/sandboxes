@@ -11,6 +11,15 @@
 
     <artifactId>on-board-client</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.signed.sandboxes.jee.webservice</groupId>
+            <artifactId>on-board-server</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
