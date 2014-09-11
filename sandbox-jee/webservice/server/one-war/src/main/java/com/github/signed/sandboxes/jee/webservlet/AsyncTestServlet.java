@@ -21,7 +21,7 @@ public class AsyncTestServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("caller method running in thread " + Thread.currentThread().getName());
-        //asyncBean.asyncMethod();
+        asyncBean.asyncMethod();
         response.getWriter().append("Hello you");
         System.out.println("caller method returned in thread " + Thread.currentThread().getName());
     }
