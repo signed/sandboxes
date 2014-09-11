@@ -1,0 +1,23 @@
+package com.github.signed.sandbox.jee.webservice;
+
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+
+import com.github.signed.sandboxes.jee.webservice.Math;
+
+public class CxfClient {
+
+    public static void main(String args[]) throws Exception {
+        JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
+
+        factory.getInInterceptors().add(new LoggingInInterceptor());
+        factory.getOutInterceptors().add(new LoggingOutInterceptor());
+        factory.setServiceClass(Math.class);
+        factory.setAddress("http://localhost:8080/one-war-1.0-SNAPSHOT");
+        Math client = (Math) factory.create();
+
+        System.out.println("Server said: " + client.sum(3,4));
+
+    }
+}

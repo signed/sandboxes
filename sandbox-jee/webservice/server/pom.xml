@@ -21,6 +21,7 @@
         <module>one-interfaces</module>
         <module>one-ejb</module>
         <module>one-war</module>
+        <module>one-cxf-client</module>
     </modules>
   
 
