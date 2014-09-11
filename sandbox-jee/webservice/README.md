@@ -13,3 +13,5 @@
 
 http://stackoverflow.com/questions/16061460/limit-concurrent-resource-usage-in-a-java-ee-application
 http://satishgopal.wordpress.com/2011/04/24/ejb-3-1-asynchronous-methods/
+
+http://tomee.apache.org/examples-trunk/simple-webservice/README.html
