@@ -14,7 +14,7 @@ public class CxfClient {
         factory.getInInterceptors().add(new LoggingInInterceptor());
         factory.getOutInterceptors().add(new LoggingOutInterceptor());
         factory.setServiceClass(Math.class);
-        factory.setAddress("http://localhost:8080/one-war-1.0-SNAPSHOT");
+        factory.setAddress("http://localhost:8080/the-war");
         Math client = (Math) factory.create();
 
         System.out.println("Server said: " + client.sum(3,4));
