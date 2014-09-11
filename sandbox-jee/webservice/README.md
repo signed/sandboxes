@@ -15,3 +15,6 @@ http://stackoverflow.com/questions/16061460/limit-concurrent-resource-usage-in-a
 http://satishgopal.wordpress.com/2011/04/24/ejb-3-1-asynchronous-methods/
 
 http://tomee.apache.org/examples-trunk/simple-webservice/README.html
+
+
+[huge list of examples](https://github.com/apache/tomee/tree/trunk/examples)
