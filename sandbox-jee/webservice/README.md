@@ -19,4 +19,6 @@ http://tomee.apache.org/examples-trunk/simple-webservice/README.html
 
 [huge list of examples](https://github.com/apache/tomee/tree/trunk/examples)
 
+# Servlet 3.0 
 [servlet 3.0 tutorial](http://www.mastertheboss.com/servlet-30/servlet-30-tutorial)
+[intor](http://blog.caucho.com/2009/10/06/servlet-30-tutorial-weblistener-webservlet-webfilter-and-webinitparam/)
