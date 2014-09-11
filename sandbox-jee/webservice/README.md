@@ -18,3 +18,5 @@ http://tomee.apache.org/examples-trunk/simple-webservice/README.html
 
 
 [huge list of examples](https://github.com/apache/tomee/tree/trunk/examples)
+
+[servlet 3.0 tutorial](http://www.mastertheboss.com/servlet-30/servlet-30-tutorial)
