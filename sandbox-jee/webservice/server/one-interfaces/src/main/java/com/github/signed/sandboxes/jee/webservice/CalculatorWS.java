@@ -2,7 +2,7 @@ package com.github.signed.sandboxes.jee.webservice;
 
 import javax.jws.WebService;
 
-@WebService(targetNamespace = "http://superbiz.org/wsdl")
+@WebService(targetNamespace = "http://example.org/wsdl")
 public interface CalculatorWS {
 
     public int sum(int add1, int add2);
