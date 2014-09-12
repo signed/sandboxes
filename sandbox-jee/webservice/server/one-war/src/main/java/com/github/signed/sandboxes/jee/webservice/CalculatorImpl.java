@@ -1,6 +1,9 @@
 package com.github.signed.sandboxes.jee.webservice;
 
+import com.github.signed.sandboxes.jee.async.AsyncBean;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jws.WebService;
 
 @Stateless
@@ -10,6 +13,9 @@ import javax.jws.WebService;
         targetNamespace = "http://example.org/wsdl",
         endpointInterface = "com.github.signed.sandboxes.jee.webservice.CalculatorWS")
 public class CalculatorImpl implements CalculatorWS {
+
+    @Inject
+    AsyncBean asyncBean;
 
     @Override
     public int sum(int add1, int add2) {
