@@ -13,7 +13,7 @@ public class BuildInClient {
     public static void main(String [] args) throws MalformedURLException {
 
         Service calculatorService = Service.create(
-                new URL("http://localhost:8080/one-war/CalculatorService/CalculatorImpl?wsdl"),
+                new URL("http://localhost:8080/the-war/CalculatorService/CalculatorImpl?wsdl"),
                 new QName("http://example.org/wsdl", "CalculatorService"));
 
         CalculatorWS calculator = calculatorService.getPort(CalculatorWS.class);

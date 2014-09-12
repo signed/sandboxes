@@ -14,7 +14,7 @@ public class CxfClient {
         factory.getInInterceptors().add(new LoggingInInterceptor());
         factory.getOutInterceptors().add(new LoggingOutInterceptor());
         factory.setServiceClass(CalculatorWS.class);
-        factory.setAddress("http://localhost:8080/one-war/CalculatorService/CalculatorImpl");
+        factory.setAddress("http://localhost:8080/the-war/CalculatorService/CalculatorImpl");
         CalculatorWS client = (CalculatorWS) factory.create();
 
         System.out.println("Server said: " + client.sum(3,4));

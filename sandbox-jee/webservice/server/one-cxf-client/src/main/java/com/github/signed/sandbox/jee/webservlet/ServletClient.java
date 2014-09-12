@@ -8,7 +8,7 @@ import org.apache.http.client.fluent.Request;
 public class ServletClient {
 
     public static void main(String[] args) throws IOException {
-        Content content = Request.Get("http://localhost:8080/one-war/async").execute().returnContent();
+        Content content = Request.Get("http://localhost:8080/the-war/async").execute().returnContent();
         System.out.println(content);
     }
 }
