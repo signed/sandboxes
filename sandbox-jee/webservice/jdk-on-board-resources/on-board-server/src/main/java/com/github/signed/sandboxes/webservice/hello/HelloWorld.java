@@ -9,5 +9,6 @@ import javax.jws.soap.SOAPBinding;
 public interface HelloWorld{
  
 	@WebMethod String getHelloWorldAsString(String name);
- 
+
+
 }
