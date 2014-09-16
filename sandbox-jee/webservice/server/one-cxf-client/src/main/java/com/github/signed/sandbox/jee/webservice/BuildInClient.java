@@ -21,9 +21,8 @@ public class BuildInClient {
 
         ImportWebservice importWebservice = new BuildInClient().dataImport();
         importWebservice.importDataForDay(new LocalDate().toDate(), "the best data ever");
-        importWebservice.importDataForDay(new LocalDate().plusDays(2).toDate(), "the best data ever");
-
-
+        importWebservice.importDataForDay(new LocalDate().toDate(), "more data");
+        //importWebservice.importDataForDay(new LocalDate().plusDays(2).toDate(), "data for another day");
     }
 
     private ImportWebservice dataImport() throws MalformedURLException {
