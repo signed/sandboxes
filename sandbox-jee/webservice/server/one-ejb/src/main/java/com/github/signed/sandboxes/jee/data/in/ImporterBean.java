@@ -1,5 +1,8 @@
 package com.github.signed.sandboxes.jee.data.in;
 
+import java.util.concurrent.Future;
+
+import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 
@@ -7,15 +10,17 @@ import javax.ejb.Stateless;
 public class ImporterBean {
 
     @Asynchronous
-    public void performImport(DataImportParameter parameter) {
+    public Future<Integer> performImport(DataImportParameter parameter) {
 
         String data = parameter.data();
         System.out.println("Starting to import: " + data);
+        int length = data.length();
         try {
-            Thread.sleep(data.length()*250);
+            Thread.sleep(length * 250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("Done importing: " + data);
+        return new AsyncResult<>(length);
     }
 }

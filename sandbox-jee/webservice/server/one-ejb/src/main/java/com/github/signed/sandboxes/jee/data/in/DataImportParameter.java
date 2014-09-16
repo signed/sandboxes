@@ -14,4 +14,8 @@ public class DataImportParameter {
     public String data() {
         return data;
     }
+
+    public LocalDate day() {
+        return day;
+    }
 }
