@@ -1,7 +1,29 @@
-apply plugin:'java'
-apply plugin:'idea'
+plugins {
+    id "nebula.provided-base" version "2.0.0"
+}
 
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.1'
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+
+repositories{
+    mavenCentral()
+    jcenter()
+}
+
+dependencies{
+    provided 'javax:javaee-api:6.0'
+}
+
+idea {
+  module {
+    //scopes.PROVIDED.plus += [ configurations.provided ]
+    downloadJavadoc = true
+    downloadSources = true
+  }
 }
