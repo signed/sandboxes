@@ -12,9 +12,10 @@ import com.github.signed.integration.camel.gui.UserCommand;
 
 public class TemplateTriggerSwing implements TemplateTrigger {
     private final JPanel panel = new JPanel();
-    private final JButton trigger = new JButton("trigger template");
+    private final JButton trigger;
 
-    public TemplateTriggerSwing() {
+    public TemplateTriggerSwing(String text) {
+        trigger = new JButton(text);
         panel.add(trigger);
     }
 

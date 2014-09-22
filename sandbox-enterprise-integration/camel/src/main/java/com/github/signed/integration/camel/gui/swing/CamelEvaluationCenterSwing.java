@@ -12,12 +12,14 @@ public class CamelEvaluationCenterSwing {
     private final JFrame frame = new JFrame();
     private final JPanel mainPanel = new JPanel();
     private final StartStopSwing startStop = new StartStopSwing();
-    private final TemplateTriggerSwing templateTrigger = new TemplateTriggerSwing();
+    private final TemplateTriggerSwing templateTrigger = new TemplateTriggerSwing("trigger template");
+    private final TemplateTriggerSwing sftpTemplateTrigger = new TemplateTriggerSwing("sftp template");
 
     public CamelEvaluationCenterSwing() {
         frame.add(mainPanel);
         startStop.addTo(mainPanel);
         templateTrigger.addTo(mainPanel);
+        sftpTemplateTrigger.addTo(mainPanel);
     }
 
     public void constructApplicationFrame() {
@@ -33,7 +35,6 @@ public class CamelEvaluationCenterSwing {
                 frame.setVisible(true);
             }
         });
-
     }
 
     public StartStop startStop() {
@@ -42,5 +43,9 @@ public class CamelEvaluationCenterSwing {
 
     public TemplateTrigger templateTrigger() {
         return templateTrigger;
+    }
+
+    public TemplateTrigger sftpTemplateTrigger() {
+        return sftpTemplateTrigger;
     }
 }
