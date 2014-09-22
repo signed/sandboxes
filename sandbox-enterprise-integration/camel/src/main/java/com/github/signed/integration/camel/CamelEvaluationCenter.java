@@ -55,7 +55,6 @@ public class CamelEvaluationCenter {
     }
 
     private CamelContext createCamelContext() {
-        DefaultCamelContext context = new DefaultCamelContext();
-        return context;
+        return new DefaultCamelContext();
     }
 }
