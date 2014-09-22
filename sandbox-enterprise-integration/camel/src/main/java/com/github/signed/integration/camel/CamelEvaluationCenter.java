@@ -15,7 +15,6 @@ public class CamelEvaluationCenter {
     public static void main(String[] args) {
         CamelEvaluationCenter camelEvaluationCenter = new CamelEvaluationCenter();
         camelEvaluationCenter.run();
-
     }
 
     private void run() {
