@@ -1,11 +1,11 @@
 dependencies {
     compile(
-            'com.google.guava:guava:15.0'
-            , 'org.apache.camel:camel-core:2.13.0'
-            , 'org.apache.camel:camel-jms:2.13.0'
-            , 'org.apache.camel:camel-ftp:2.13.0'
-            , 'org.apache.camel:camel-stream:2.13.0'
-            , 'org.apache.camel:camel-http:2.13.0'
+            'com.google.guava:guava:18.0'
+            , 'org.apache.camel:camel-core:2.14.0'
+            , 'org.apache.camel:camel-jms:2.14.0'
+            , 'org.apache.camel:camel-ftp:2.14.0'
+            , 'org.apache.camel:camel-stream:2.14.0'
+            , 'org.apache.camel:camel-http:2.14.0'
             , 'org.apache.activemq:activemq-client:5.9.0'
             , 'org.slf4j:slf4j-simple:1.7.5'
     )
