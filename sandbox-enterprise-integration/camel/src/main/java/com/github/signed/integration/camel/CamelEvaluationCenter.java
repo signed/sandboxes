@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
+import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.properties.PropertiesComponent;
@@ -41,7 +42,9 @@ public class CamelEvaluationCenter {
             public void given() {
                 System.out.println("triggerd sftp upload");
                 try {
-                    template.sendBody("direct:sftpupload", sampleFileInResourceDirectory());
+                    Map<String, Object> headers = Maps.newHashMap();
+                    headers.put(Exchange.FILE_NAME, "the-file.zip");
+                    template.sendBodyAndHeaders("direct:sftpupload", sampleFileInResourceDirectory(), headers);
                 } catch (CamelExecutionException ex) {
                     System.out.println(ex);
                 }
@@ -67,9 +70,7 @@ public class CamelEvaluationCenter {
         return new File("camel/src/main/resources/sample.txt").getAbsoluteFile();
     }
 
-
     private void addRoutesTo(CamelContext context) {
-
         Map<String, String> options = Maps.newHashMap();
         options.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
         options.put("maximumReconnectAttempts", "0");
@@ -105,11 +106,8 @@ public class CamelEvaluationCenter {
         Properties theProperties = new Properties();
         theProperties.put("configuration.sftp.knownhosts.file", "/tmp/camel/known_hosts");
         registry.put("com.github.signed.configuration", theProperties);
-
-
         PropertiesComponent propertiesComponent = new PropertiesComponent("ref:com.github.signed.configuration");
         context.addComponent("properties", propertiesComponent);
-
         return context;
     }
 }
