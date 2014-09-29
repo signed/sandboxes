@@ -18,6 +18,3 @@
 [larger sample application](https://github.com/DavidValeri/intro-to-camel-by-example)
 
 [camel-cdi example](https://github.com/tqvarnst/cdi-camel)
-
-## ##
-http://camel.465427.n5.nabble.com/how-to-hide-user-and-password-in-sftp-in-for-statement-td5715640.html
