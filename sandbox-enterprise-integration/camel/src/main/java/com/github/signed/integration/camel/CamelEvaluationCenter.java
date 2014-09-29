@@ -66,7 +66,7 @@ public class CamelEvaluationCenter {
                 public void configure() throws Exception {
                     from("file:camel/src/main/resources/?noop=true&fileName=sample.txt").routeId("welcome wagon").to("stream:out");
                     from("direct:trigger").routeId("triggered welcome wagon").to("stream:out");
-                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost");
+                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost?knownHostsFile=/tmp/camel/known_hosts&maximumReconnectAttempts=0&strictHostKeyChecking=yes");
                 }
             });
         } catch (Exception e) {
