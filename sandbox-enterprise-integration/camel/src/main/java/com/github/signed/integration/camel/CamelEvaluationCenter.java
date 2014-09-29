@@ -1,12 +1,15 @@
 package com.github.signed.integration.camel;
 
 import java.io.File;
+import java.util.Properties;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.impl.SimpleRegistry;
 import com.github.signed.integration.camel.gui.CamelContextIgnition;
 import com.github.signed.integration.camel.gui.UserCommand;
 import com.github.signed.integration.camel.gui.swing.CamelEvaluationCenterSwing;
@@ -66,7 +69,7 @@ public class CamelEvaluationCenter {
                 public void configure() throws Exception {
                     from("file:camel/src/main/resources/?noop=true&fileName=sample.txt").routeId("welcome wagon").to("stream:out");
                     from("direct:trigger").routeId("triggered welcome wagon").to("stream:out");
-                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost?knownHostsFile=/tmp/camel/known_hosts&maximumReconnectAttempts=0&strictHostKeyChecking=yes");
+                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost?knownHostsFile={{configuration.sftp.knownhosts.file}}&maximumReconnectAttempts=0&strictHostKeyChecking=yes");
                 }
             });
         } catch (Exception e) {
@@ -75,6 +78,16 @@ public class CamelEvaluationCenter {
     }
 
     private CamelContext createCamelContext() {
-        return new DefaultCamelContext();
+        SimpleRegistry registry = new SimpleRegistry();
+        DefaultCamelContext context = new DefaultCamelContext(registry);
+        Properties theProperties = new Properties();
+        theProperties.put("configuration.sftp.knownhosts.file", "/tmp/camel/known_hosts");
+        registry.put("com.github.signed.configuration", theProperties);
+
+
+        PropertiesComponent propertiesComponent = new PropertiesComponent("ref:com.github.signed.configuration");
+        context.addComponent("properties", propertiesComponent);
+
+        return context;
     }
 }
