@@ -9,6 +9,7 @@
 
 ## Camel User Mailing list ##
 [How-to-deploy-Camel-to-EJB-J2EE-container](http://camel.465427.n5.nabble.com/How-to-deploy-Camel-to-EJB-J2EE-container-td5716091.html)
+[how-to-hide-user-and-password-in-sftp-in-for-statement](http://camel.465427.n5.nabble.com/how-to-hide-user-and-password-in-sftp-in-for-statement-td5715640.html)
 
 - [Switch Yard](http://switchyard.jboss.org/)
 
@@ -18,3 +19,5 @@
 
 [camel-cdi example](https://github.com/tqvarnst/cdi-camel)
 
+## ##
+http://camel.465427.n5.nabble.com/how-to-hide-user-and-password-in-sftp-in-for-statement-td5715640.html
