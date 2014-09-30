@@ -54,6 +54,8 @@ public class CamelEvaluationCenter {
                 parameters.put("strictHostKeyChecking", "false");
                 parameters.put("pollStrategy", "#consumer.poll.strategy.custom");
                 parameters.put("sendEmptyMessageWhenIdle", "true");
+                parameters.put("maxMessagesPerPoll", "1");
+                parameters.put("move", ".done");
 
                 Exchange result = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
                 System.out.println("done polling");
