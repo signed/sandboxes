@@ -53,6 +53,7 @@ public class CamelEvaluationCenter {
                 parameters.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
                 parameters.put("strictHostKeyChecking", "false");
                 parameters.put("pollStrategy", "#consumer.poll.strategy.custom");
+                parameters.put("sendEmptyMessageWhenIdle", "true");
 
                 Exchange result = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
                 System.out.println("done polling");
