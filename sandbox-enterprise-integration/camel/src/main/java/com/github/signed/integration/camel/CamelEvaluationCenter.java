@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
+import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
@@ -16,9 +17,6 @@ import org.apache.camel.impl.SimpleRegistry;
 import com.github.signed.integration.camel.gui.CamelContextIgnition;
 import com.github.signed.integration.camel.gui.UserCommand;
 import com.github.signed.integration.camel.gui.swing.CamelEvaluationCenterSwing;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 
 public class CamelEvaluationCenter {
@@ -38,10 +36,25 @@ public class CamelEvaluationCenter {
         gui.templateTrigger().onTrigger(basicTemplateCommand(template));
         gui.sftpTemplateTrigger().onTrigger(sftpUploadCommand(template));
 
+        final ConsumerTemplate consumerTemplate = context.createConsumerTemplate();
+
         gui.sftpDownloadTrigger().onTrigger(new UserCommand() {
             @Override
             public void given() {
-                System.out.println("implement a file download example    ");
+                System.out.println("starting sftp download");
+
+                Parameters parameters = new Parameters();
+                parameters.put("throwExceptionOnConnectFailed", "true");
+                parameters.put("consumer.bridgeErrorHandler", "true");
+                parameters.put("maximumReconnectAttempts", "0");
+
+                Exchange result = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
+                if( null != result.getException()){
+                    result.getException().printStackTrace();
+                }else {
+                    String content = result.getOut().getBody(String.class);
+                    System.out.println(content);
+                }
             }
         });
 
@@ -50,6 +63,7 @@ public class CamelEvaluationCenter {
         new CamelContextIgnition(context, gui.startStop());
         gui.start();
     }
+
 
     private UserCommand sftpUploadCommand(final ProducerTemplate template) {
         return new UserCommand() {
@@ -72,8 +86,8 @@ public class CamelEvaluationCenter {
         return new UserCommand() {
             @Override
             public void given() {
-                template.sendBody("direct:trigger", "Banana Joe");
                 template.sendBody("direct:trigger", sampleFileInResourceDirectory());
+                template.sendBody("direct:trigger", "Banana Joe\n");
             }
         };
     }
@@ -83,7 +97,7 @@ public class CamelEvaluationCenter {
     }
 
     private void addRoutesTo(CamelContext context) {
-        Map<String, String> options = Maps.newHashMap();
+        final Parameters options = new Parameters();
         options.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
         options.put("maximumReconnectAttempts", "0");
         options.put("strictHostKeyChecking", "false");
@@ -91,20 +105,13 @@ public class CamelEvaluationCenter {
         options.put("password", "jenkins");
         options.put("disconnect", "true");
 
-        final String arguments = FluentIterable.from(options.entrySet()).transform(new Function<Map.Entry<String, String>, String>() {
-            @Override
-            public String apply(Map.Entry<String, String> input) {
-                return input.getKey() + "=" + input.getValue();
-            }
-        }).join(Joiner.on("&"));
-
         try {
             context.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {
                     from("file:camel/src/main/resources/?noop=true&fileName=sample.txt").routeId("welcome wagon").to("stream:out");
                     from("direct:trigger").routeId("triggered welcome wagon").to("stream:out");
-                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost/upload?" + arguments);
+                    from("direct:sftpupload").routeId("upload to sftp server").to("sftp://localhost/upload?" + options.toArgumentString());
                 }
             });
         } catch (Exception e) {
