@@ -63,8 +63,8 @@ public class CamelEvaluationCenter {
                     Message message = result.getIn();
                     String content = message.getBody(String.class);
                     System.out.println(content);
-
                 }
+                consumerTemplate.doneUoW(result);
             }
         });
 
