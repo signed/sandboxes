@@ -9,6 +9,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.properties.PropertiesComponent;
@@ -47,13 +48,22 @@ public class CamelEvaluationCenter {
                 parameters.put("throwExceptionOnConnectFailed", "true");
                 parameters.put("consumer.bridgeErrorHandler", "true");
                 parameters.put("maximumReconnectAttempts", "0");
+                parameters.put("username", "jenkins");
+                parameters.put("password", "jenkins");
+                parameters.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
+                parameters.put("strictHostKeyChecking", "false");
+                parameters.put("pollStrategy", "#consumer.poll.strategy.custom");
 
                 Exchange result = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
-                if( null != result.getException()){
+                System.out.println("done polling");
+
+                if (null != result.getException()) {
                     result.getException().printStackTrace();
-                }else {
-                    String content = result.getOut().getBody(String.class);
+                } else {
+                    Message message = result.getIn();
+                    String content = message.getBody(String.class);
                     System.out.println(content);
+
                 }
             }
         });
@@ -99,8 +109,8 @@ public class CamelEvaluationCenter {
     private void addRoutesTo(CamelContext context) {
         final Parameters options = new Parameters();
         options.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
-        options.put("maximumReconnectAttempts", "0");
         options.put("strictHostKeyChecking", "false");
+        options.put("maximumReconnectAttempts", "0");
         options.put("username", "jenkins");
         options.put("password", "jenkins");
         options.put("disconnect", "true");
@@ -125,6 +135,8 @@ public class CamelEvaluationCenter {
         Properties theProperties = new Properties();
         theProperties.put("configuration.sftp.knownhosts.file", "/tmp/camel/known_hosts");
         registry.put("com.github.signed.configuration", theProperties);
+        registry.put("consumer.poll.strategy.custom", new CustomPollStrategy());
+
         PropertiesComponent propertiesComponent = new PropertiesComponent("ref:com.github.signed.configuration");
         context.addComponent("properties", propertiesComponent);
         return context;
