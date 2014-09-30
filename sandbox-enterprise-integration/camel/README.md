@@ -14,6 +14,9 @@
 - [Switch Yard](http://switchyard.jboss.org/)
 
 
+## stackoverflow ##
+[camel-ftp-only-run-once](http://stackoverflow.com/questions/18211918/camel-ftp-only-run-once)
+
 ## Blogs / Github##
 [larger sample application](https://github.com/DavidValeri/intro-to-camel-by-example)
 
