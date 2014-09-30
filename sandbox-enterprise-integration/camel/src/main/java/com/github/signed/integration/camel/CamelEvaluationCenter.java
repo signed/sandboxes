@@ -1,5 +1,6 @@
 package com.github.signed.integration.camel;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Map;
 import java.util.Properties;
@@ -30,40 +31,51 @@ public class CamelEvaluationCenter {
     private void run() {
         CamelEvaluationCenterSwing gui = new CamelEvaluationCenterSwing();
         gui.constructApplicationFrame();
-        TemplateTrigger trigger = gui.templateTrigger();
-        TemplateTrigger sftpTemplateTrigger = gui.sftpTemplateTrigger();
+
         CamelContext context = createCamelContext();
 
         final ProducerTemplate template = context.createProducerTemplate();
-        wireBasicTemplateTrigger(trigger, template);
+        gui.templateTrigger().onTrigger(basicTemplateCommand(template));
+        gui.sftpTemplateTrigger().onTrigger(sftpUploadCommand(template));
 
-        sftpTemplateTrigger.onTrigger(new UserCommand() {
+        gui.sftpDownloadTrigger().onTrigger(new UserCommand() {
             @Override
             public void given() {
-                System.out.println("triggerd sftp upload");
-                try {
-                    Map<String, Object> headers = Maps.newHashMap();
-                    headers.put(Exchange.FILE_NAME, "the-file.zip");
-                    template.sendBodyAndHeaders("direct:sftpupload", sampleFileInResourceDirectory(), headers);
-                } catch (CamelExecutionException ex) {
-                    System.out.println(ex);
-                }
+                System.out.println("implement a file download example    ");
             }
         });
+
 
         addRoutesTo(context);
         new CamelContextIgnition(context, gui.startStop());
         gui.start();
     }
 
-    private void wireBasicTemplateTrigger(TemplateTrigger trigger, final ProducerTemplate template) {
-        trigger.onTrigger(new UserCommand() {
+    private UserCommand sftpUploadCommand(final ProducerTemplate template) {
+        return new UserCommand() {
+            @Override
+            public void given() {
+                System.out.println("triggerd sftp upload");
+                try {
+                    Map<String, Object> headers = Maps.newHashMap();
+                    headers.put(Exchange.FILE_NAME, "the-file-to-upload.txt");
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("hello from the byte array input stream".getBytes());
+                    template.sendBodyAndHeaders("direct:sftpupload", byteArrayInputStream, headers);
+                } catch (CamelExecutionException ex) {
+                    System.out.println(ex);
+                }
+            }
+        };
+    }
+
+    private UserCommand basicTemplateCommand(final ProducerTemplate template) {
+        return new UserCommand() {
             @Override
             public void given() {
                 template.sendBody("direct:trigger", "Banana Joe");
                 template.sendBody("direct:trigger", sampleFileInResourceDirectory());
             }
-        });
+        };
     }
 
     private File sampleFileInResourceDirectory() {
@@ -74,7 +86,7 @@ public class CamelEvaluationCenter {
         Map<String, String> options = Maps.newHashMap();
         options.put("knownHostsFile", "{{configuration.sftp.knownhosts.file}}");
         options.put("maximumReconnectAttempts", "0");
-        options.put("strictHostKeyChecking", "yes");
+        options.put("strictHostKeyChecking", "false");
         options.put("username", "jenkins");
         options.put("password", "jenkins");
         options.put("disconnect", "true");

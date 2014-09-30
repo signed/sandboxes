@@ -14,12 +14,14 @@ public class CamelEvaluationCenterSwing {
     private final StartStopSwing startStop = new StartStopSwing();
     private final TemplateTriggerSwing templateTrigger = new TemplateTriggerSwing("trigger template");
     private final TemplateTriggerSwing sftpTemplateTrigger = new TemplateTriggerSwing("sftp template");
+    private final TemplateTriggerSwing sftpDownloadTrigger = new TemplateTriggerSwing("sftp download template");
 
     public CamelEvaluationCenterSwing() {
         frame.add(mainPanel);
         startStop.addTo(mainPanel);
         templateTrigger.addTo(mainPanel);
         sftpTemplateTrigger.addTo(mainPanel);
+        sftpDownloadTrigger.addTo(mainPanel);
     }
 
     public void constructApplicationFrame() {
@@ -47,5 +49,9 @@ public class CamelEvaluationCenterSwing {
 
     public TemplateTrigger sftpTemplateTrigger() {
         return sftpTemplateTrigger;
+    }
+
+    public TemplateTrigger sftpDownloadTrigger() {
+        return sftpDownloadTrigger;
     }
 }
