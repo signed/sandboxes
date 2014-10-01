@@ -1,6 +1,9 @@
-
 # Producer Template #
 [send mail with attachment from java code](http://camel.465427.n5.nabble.com/ProducerTemplate-for-sending-mails-with-attachements-td5605511.html)
+
+# Consumer Template #
+[Create a Scheduled Batch Polling Consumer](https://issues.apache.org/jira/browse/CAMEL-4577)
+[consumertemplate-threading-worries-when-having-a-batch-consumer](http://grokbase.com/t/camel/users/126pqqqqy7/consumertemplate-threading-worries-when-having-a-batch-consumer)
 
 # JEE integration #
 
