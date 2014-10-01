@@ -14,6 +14,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.impl.SimpleRegistry;
 import com.github.signed.integration.camel.gui.CamelContextIgnition;
 import com.github.signed.integration.camel.gui.UserCommand;
@@ -56,6 +57,7 @@ public class CamelEvaluationCenter {
                 parameters.put("sendEmptyMessageWhenIdle", "true");
                 parameters.put("maxMessagesPerPoll", "1");
                 parameters.put("move", ".done");
+                parameters.put("moveFailed", ".error");
 
                 Exchange exchange = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
                 System.out.println("done polling");
@@ -64,8 +66,15 @@ public class CamelEvaluationCenter {
                     exchange.getException().printStackTrace();
                 } else {
                     Message message = exchange.getIn();
-                    String content = message.getBody(String.class);
-                    System.out.println(content);
+                    if (null == message) {
+                        System.out.println("no files found");
+                    } else {
+                        String content = message.getBody(String.class);
+                        System.out.println(content);
+                        DefaultMessage out = new DefaultMessage();
+                        out.setFault(true);
+                        exchange.setOut(out);
+                    }
                 }
                 consumerTemplate.doneUoW(exchange);
             }
@@ -89,7 +98,7 @@ public class CamelEvaluationCenter {
                     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("hello from the byte array input stream".getBytes());
                     template.sendBodyAndHeaders("direct:sftpupload", byteArrayInputStream, headers);
                 } catch (CamelExecutionException ex) {
-                    System.out.println(ex);
+                    ex.printStackTrace();
                 }
             }
         };
