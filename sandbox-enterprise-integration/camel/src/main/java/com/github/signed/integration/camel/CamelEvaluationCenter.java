@@ -57,17 +57,17 @@ public class CamelEvaluationCenter {
                 parameters.put("maxMessagesPerPoll", "1");
                 parameters.put("move", ".done");
 
-                Exchange result = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
+                Exchange exchange = consumerTemplate.receive("sftp://localhost/to_download?" + parameters.toArgumentString(), 3000);
                 System.out.println("done polling");
 
-                if (null != result.getException()) {
-                    result.getException().printStackTrace();
+                if (null != exchange.getException()) {
+                    exchange.getException().printStackTrace();
                 } else {
-                    Message message = result.getIn();
+                    Message message = exchange.getIn();
                     String content = message.getBody(String.class);
                     System.out.println(content);
                 }
-                consumerTemplate.doneUoW(result);
+                consumerTemplate.doneUoW(exchange);
             }
         });
 
