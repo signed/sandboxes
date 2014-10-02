@@ -1,9 +1,11 @@
-package com.github.signed.cucumber;
+package com.github.signed.cucumber.multilanguage;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+
+import com.github.signed.cucumber.multilanguage.Hello;
 
 public class Hello_Test {
 

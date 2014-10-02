@@ -1,4 +1,4 @@
-package com.github.signed.cucumber;
+package com.github.signed.cucumber.multilanguage;
 
 public class Hello {
     private final String greeting;
