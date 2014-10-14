@@ -35,6 +35,10 @@
                 <executions>
                     <execution>
                         <id>delete-res-directory</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
                         <configuration>
                             <skip>${build.clean.skip.delete.of.res.directory}</skip>
                             <filesets>
@@ -46,7 +50,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>
