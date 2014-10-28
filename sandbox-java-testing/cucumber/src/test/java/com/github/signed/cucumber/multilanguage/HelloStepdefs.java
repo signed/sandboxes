@@ -1,4 +1,4 @@
-package com.github.signed.cucumber;
+package com.github.signed.cucumber.multilanguage;
 
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -8,6 +8,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import static org.junit.Assert.assertEquals;
+
+import com.github.signed.cucumber.multilanguage.Hello;
 
 public class HelloStepdefs {
     private Hello hello;

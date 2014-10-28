@@ -1,4 +1,4 @@
-package com.github.signed.cucumber;
+package com.github.signed.cucumber.multilanguage;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.de.Dann;
