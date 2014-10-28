@@ -1,13 +1,11 @@
 package jetty;
 
-import jersey.guice.GuiceConfig;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import javax.servlet.ServletException;
-import java.util.EventListener;
+import jersey.guice.GuiceConfig;
 
 public class JettyServer {
 
@@ -27,14 +25,16 @@ public class JettyServer {
         server.setHandler(contexts);
 
         webapp.addDecorator(new DecoratorAdapter(){
+
             @Override
-            public <T extends EventListener> T decorateListenerInstance(T listener) throws ServletException {
-                if (listener instanceof GuiceConfig) {
-                    GuiceConfig guiceConfig = (GuiceConfig) listener;
+            public <T> T decorate(T t) {
+                if (t instanceof GuiceConfig) {
+                    GuiceConfig guiceConfig = (GuiceConfig) t;
                     guiceConfig.swapLogic();
                 }
 
-                return listener;
+                return t;
+
             }
         });
 
