@@ -92,25 +92,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.miglayout</groupId>
-            <artifactId>miglayout-javafx</artifactId>
-            <version>4.2</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
-            <version>4.10</version>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>13.0-rc2</version>
+            <version>18.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.signed.sandboxes</groupId>
-            <artifactId>sandbox-java</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.swinglabs.swingx</groupId>
+            <artifactId>swingx-all</artifactId>
+            <version>1.6.5-1</version>
         </dependency>
     </dependencies>
 </project>
