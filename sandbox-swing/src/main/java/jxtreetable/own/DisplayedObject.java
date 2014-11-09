@@ -30,4 +30,12 @@ public class DisplayedObject {
         return values.get(index);
     }
 
+    public String hiddenTooltip() {
+        return "the hidden tooltip";
+    }
+
+    @Override
+    public String toString() {
+        return "overridden for test";
+    }
 }

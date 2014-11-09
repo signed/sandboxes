@@ -9,9 +9,12 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.TableColumnModel;
+import javax.swing.tree.TreeCellRenderer;
 
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
+import org.jdesktop.swingx.renderer.StringValue;
 import org.jdesktop.swingx.table.DefaultTableColumnModelExt;
 import org.jdesktop.swingx.table.TableColumnExt;
 import org.jdesktop.swingx.treetable.AbstractMutableTreeTableNode;
@@ -54,6 +57,20 @@ public class TreeTableExample extends JFrame {
             }
         };
         treeTable.setTreeTableModel(model);
+        treeTable.setHighlighters(new NosyToolTipHighlighter());
+        TreeCellRenderer treeCellRenderer = treeTable.getTreeCellRenderer();
+        System.out.println(treeCellRenderer);
+
+        StringValue stringValue = new StringValue() {
+            @Override
+            public String getString(Object value) {
+                if(null == value) {
+                    return "ups";
+                }
+                return ((DisplayedObject)value).name();
+            }
+        };
+        treeTable.setTreeCellRenderer(new DefaultTreeRenderer(stringValue));
         add(new JScrollPane(treeTable));
     }
 

@@ -6,6 +6,7 @@ class DisplayObjectNode extends AbstractMutableTreeTableNode {
     private final DisplayedObject displayedObject;
 
     public DisplayObjectNode(DisplayedObject displayedObject) {
+        super(displayedObject);
         this.displayedObject = displayedObject;
     }
 
@@ -13,7 +14,7 @@ class DisplayObjectNode extends AbstractMutableTreeTableNode {
     public Object getValueAt(int column) {
         switch (column) {
             case 0:
-                return displayedObject.name();
+                return displayedObject;
             case 1:
                 return displayedObject.sum();
             case 2:
