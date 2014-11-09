@@ -9,7 +9,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.TableColumnModel;
-import javax.swing.tree.TreeCellRenderer;
 
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
@@ -58,9 +57,6 @@ public class TreeTableExample extends JFrame {
         };
         treeTable.setTreeTableModel(model);
         treeTable.setHighlighters(new NosyToolTipHighlighter());
-        TreeCellRenderer treeCellRenderer = treeTable.getTreeCellRenderer();
-        System.out.println(treeCellRenderer);
-
         StringValue stringValue = new StringValue() {
             @Override
             public String getString(Object value) {
