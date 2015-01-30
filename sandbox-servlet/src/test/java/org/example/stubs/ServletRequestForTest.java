@@ -231,7 +231,7 @@ public class ServletRequestForTest implements HttpServletRequest {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        ByteArrayInputStream theContent = new ByteArrayInputStream(content.getBytes());
+        final ByteArrayInputStream theContent = new ByteArrayInputStream(content.getBytes());
         return new ServletInputStream() {
 
             @Override

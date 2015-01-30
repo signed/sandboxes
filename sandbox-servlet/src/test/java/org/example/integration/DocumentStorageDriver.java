@@ -35,7 +35,7 @@ public class DocumentStorageDriver {
         Response invoke(Invocation.Builder invocation);
     }
 
-    public Response uploadDocumentWithContent(String content) {
+    public Response uploadDocumentWithContent(final String content) {
         return execute(new Request() {
             @Override
             public String path() {
