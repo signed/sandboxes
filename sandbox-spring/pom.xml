@@ -10,6 +10,7 @@
 
     <modules>
         <module>resttemplate</module>
+        <module>boot</module>
     </modules>
 
     <properties>
