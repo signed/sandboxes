@@ -34,6 +34,5 @@ public class Primer_Test {
         Collections.sort(somePrimers, Primer::someCompareMethod);
 
         assertThat(somePrimers, is(Arrays.asList(Primer.CreateWith("a"), Primer.CreateWith("c"), Primer.CreateWith("d"))));
-
     }
 }
