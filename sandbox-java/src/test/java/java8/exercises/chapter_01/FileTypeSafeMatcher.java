@@ -26,7 +26,7 @@ class FileTypeSafeMatcher extends TypeSafeMatcher<File> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("file named hello");
+        name.describeTo(description);
     }
 
     @Override
