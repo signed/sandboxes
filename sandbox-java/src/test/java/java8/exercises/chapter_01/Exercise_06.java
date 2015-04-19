@@ -1,10 +1,10 @@
 package java8.exercises.chapter_01;
 
-import static java8.exercises.chapter_01.Exercise_05.RunnableEx.uncheck;
+import static java8.exercises.chapter_01.Exercise_06.RunnableEx.uncheck;
 
 import org.junit.Test;
 
-public class Exercise_05 {
+public class Exercise_06 {
 
     public interface RunnableEx {
 
