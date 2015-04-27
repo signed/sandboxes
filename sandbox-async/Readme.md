@@ -13,6 +13,7 @@
 [reactive manifesto](http://www.reactivemanifesto.org/)
 [spring reactor rc1](https://spring.io/blog/2015/02/18/reactor-2-0-0-rc1-with-native-reactive-streams-support-now-available)
 [Building Microservices with Spring Boot](http://www.infoq.com/articles/boot-microservices)
+[Building Microservices with Spring Boot and Apache ](http://bsideup.blogspot.de/2015/04/spring-boot-thrift-part3.html)
 
 ## java is the new C ##
 [Comparison of different concurrency models: Actors, CSP, Disruptor and Threads](http://java-is-the-new-c.blogspot.de/2014/01/comparision-of-different-concurrency.html)
