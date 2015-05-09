@@ -1,7 +1,6 @@
-package java8.exercises.chapter_01;
+package java8.chapter_01.exercises;
 
 import static java.util.Comparator.comparing;
-import static java8.exercises.chapter_01.FileTypeSafeMatcher.fileNamed;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 
@@ -9,6 +8,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -41,7 +41,7 @@ public class Exercise_04 {
         };
         Arrays.sort(files, compareByType.thenComparing(comparing(File::getName)));
 
-        assertThat(files, arrayContaining(fileNamed("1"), fileNamed("2"), fileNamed("a"), fileNamed("z")));
+        assertThat(files, Matchers.arrayContaining(FileTypeSafeMatcher.fileNamed("1"), FileTypeSafeMatcher.fileNamed("2"), FileTypeSafeMatcher.fileNamed("a"), FileTypeSafeMatcher.fileNamed("z")));
     }
 
 }

@@ -1,6 +1,6 @@
-package java8.exercises.chapter_01;
+package java8.chapter_01.exercises;
 
-import static java8.exercises.chapter_01.Exercise_06.RunnableEx.uncheck;
+import static java8.chapter_01.exercises.Exercise_06.RunnableEx.uncheck;
 
 import org.junit.Test;
 

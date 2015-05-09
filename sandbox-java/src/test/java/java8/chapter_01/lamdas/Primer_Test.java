@@ -1,4 +1,4 @@
-package java8.lamdas;
+package java8.chapter_01.lamdas;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

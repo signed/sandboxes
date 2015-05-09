@@ -1,4 +1,4 @@
-package java8.exercises.chapter_01;
+package java8.chapter_01.exercises;
 
 import java.io.File;
 

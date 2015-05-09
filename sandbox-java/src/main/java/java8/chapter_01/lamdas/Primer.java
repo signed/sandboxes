@@ -1,4 +1,4 @@
-package java8.lamdas;
+package java8.chapter_01.lamdas;
 
 public class Primer {
 

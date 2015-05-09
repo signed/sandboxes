@@ -1,4 +1,4 @@
-package java8.defaultimplementations;
+package java8.chapter_01;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
