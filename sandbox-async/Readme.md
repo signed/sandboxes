@@ -3,6 +3,9 @@
 # samples # 
 [RxJava Samples](https://github.com/ReactiveX/RxJava/wiki/How-To-Use-RxJava)
 
+## Spring examples implemented async and sync ##
+[Initial blog post I found, follow the links](http://java.dzone.com/articles/implementing-correlation-ids-0)
+
 # talks #
 [netflix reactive rest](http://www.infoq.com/presentations/netflix-reactive-rest)
 [Youtube - SpringDeveloper](https://www.youtube.com/user/SpringSourceDev)
