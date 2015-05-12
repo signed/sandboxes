@@ -45,11 +45,11 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
         Spark.stop();
     }
 
-    final String url = "http://localhost:8085/transferobject";
+    private final String url = "http://localhost:8085/transferobject";
+    private final RestTemplate spring = new RestTemplate();
 
     @Test
     public void getWithSpringRestTemplateEntity() throws Exception {
-        final RestTemplate spring = new RestTemplate();
 
         ResponseEntity<TransferObject> responseEntity = spring.getForEntity(url, TransferObject.class);
 
@@ -58,8 +58,6 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
 
     @Test
     public void testName() throws Exception {
-        final RestTemplate spring = new RestTemplate();
-
         ResponseEntity<TransferObject> responseEntity = spring.exchange(url, HttpMethod.GET, null, TransferObject.class);
 
         assertThat(responseEntity.getBody().value, is("Hello Again"));
