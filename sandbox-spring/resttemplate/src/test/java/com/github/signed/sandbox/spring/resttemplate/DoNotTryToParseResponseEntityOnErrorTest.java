@@ -57,7 +57,7 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
     }
 
     @Test
-    public void testName() throws Exception {
+    public void getWithSpringRestTemplateExchange() throws Exception {
         ResponseEntity<TransferObject> responseEntity = spring.exchange(url, HttpMethod.GET, null, TransferObject.class);
 
         assertThat(responseEntity.getBody().value, is("Hello Again"));
