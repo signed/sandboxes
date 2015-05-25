@@ -11,6 +11,7 @@
     <modules>
         <module>resttemplate</module>
         <module>boot</module>
+        <module>boot-reactive</module>
     </modules>
 
     <properties>
