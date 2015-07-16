@@ -34,15 +34,13 @@ public class SampleController {
         Observable<ResponseEntity<EchoTransferObject>> firstObservable = client.callWith(Delay.OfSeconds(2), Message.WithText("first"));
         Observable<ResponseEntity<EchoTransferObject>> secondObservable = client.callWith(Delay.OfSeconds(4), Message.WithText("second"));
 
-        //firstObservable.doOnNext(ignore -> dumpCurrentSystemTime("first completed"));
-        //secondObservable.doOnNext(ignore -> dumpCurrentSystemTime("second completed"));
+        firstObservable = firstObservable.doOnNext(ignore -> dumpCurrentSystemTime("first completed"));
+        secondObservable = secondObservable.doOnNext(ignore -> dumpCurrentSystemTime("second completed"));
 
         Observable<TransferObject> resultObservable;
         resultObservable = Observable.combineLatest(firstObservable, secondObservable, this::constructResponse);
 
-        //resultObservable.doOnNext(dudu -> dumpCurrentSystemTime("zip completed"));
-
-        resultObservable.subscribeOn(Schedulers.computation()).subscribe(result::set, result::setException);
+        resultObservable.subscribeOn(Schedulers.computation()).doOnNext(dudu -> dumpCurrentSystemTime("combined both results")).subscribe(result::set, result::setException);
         dumpCurrentSystemTime("leaving controller method");
         return result;
     }
