@@ -1,4 +1,4 @@
-package com.github.signed.sandboxes.spring.boot.caller;
+package com.github.signed.sandboxes.spring.boot.caller.server;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.signed.sandboxes.spring.boot.caller.api.TransferObject;
 import com.github.signed.sandboxes.spring.boot.echo.api.EchoTransferObject;
 import com.github.signed.sandboxes.spring.boot.echo.client.Delay;
 import com.github.signed.sandboxes.spring.boot.echo.client.DelayEchoServiceClient;
