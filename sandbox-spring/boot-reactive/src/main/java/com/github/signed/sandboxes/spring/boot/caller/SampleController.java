@@ -1,4 +1,6 @@
-package com.github.signed.sandboxes.spring.boot;
+package com.github.signed.sandboxes.spring.boot.caller;
+
+import java.time.LocalDateTime;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +31,15 @@ public class SampleController {
         Observable<ResponseEntity<EchoTransferObject>> firstObservable = client.callWith(Delay.OfSeconds(2), Message.WithText("first"));
         Observable<ResponseEntity<EchoTransferObject>> secondObservable = client.callWith(Delay.OfSeconds(4), Message.WithText("second"));
 
-        Observable<TransferObject> zipped = Observable.zip(firstObservable, secondObservable, (first1, second1) -> {
-            EchoTransferObject firstResponse = first1.getBody();
-            EchoTransferObject secondResponse = second1.getBody();
+        Observable<TransferObject> zipped = Observable.zip(firstObservable, secondObservable, (first, second) -> {
+            EchoTransferObject firstResponse = first.getBody();
+            EchoTransferObject secondResponse = second.getBody();
             TransferObject result1 = new TransferObject();
-            result1.content = firstResponse.message + "|" + secondResponse.message;
+            LocalDateTime now = LocalDateTime.now();
+            result1.content = String.format("%s->%s|%s", now, firstResponse.message, secondResponse.message);
             return result1;
         });
         zipped.subscribe(result::set, result::setException);
         return result;
     }
-
 }

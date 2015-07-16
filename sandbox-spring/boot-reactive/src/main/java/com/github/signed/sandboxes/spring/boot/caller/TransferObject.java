@@ -1,4 +1,4 @@
-package com.github.signed.sandboxes.spring.boot;
+package com.github.signed.sandboxes.spring.boot.caller;
 
 public class TransferObject {
 
