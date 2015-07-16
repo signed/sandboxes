@@ -35,10 +35,10 @@ public class SampleController {
         Observable<TransferObject> zipped = Observable.zip(firstObservable, secondObservable, (first, second) -> {
             EchoTransferObject firstResponse = first.getBody();
             EchoTransferObject secondResponse = second.getBody();
-            TransferObject result1 = new TransferObject();
+            TransferObject transferObject = new TransferObject();
             LocalDateTime now = LocalDateTime.now();
-            result1.content = String.format("%s->%s|%s", now, firstResponse.message, secondResponse.message);
-            return result1;
+            transferObject.content = String.format("%s->%s|%s", now, firstResponse.message, secondResponse.message);
+            return transferObject;
         });
         zipped.subscribe(result::set, result::setException);
         return result;
