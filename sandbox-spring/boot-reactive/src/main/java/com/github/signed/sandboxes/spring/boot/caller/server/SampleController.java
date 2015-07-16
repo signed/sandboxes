@@ -17,6 +17,7 @@ import com.github.signed.sandboxes.spring.boot.echo.client.DelayEchoServiceClien
 import com.github.signed.sandboxes.spring.boot.echo.client.Message;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 
 @RestController
@@ -28,19 +29,34 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     public ListenableFuture<TransferObject> home() {
+        dumpCurrentSystemTime("start handling request");
         SettableListenableFuture<TransferObject> result = new SettableListenableFuture<>();
         Observable<ResponseEntity<EchoTransferObject>> firstObservable = client.callWith(Delay.OfSeconds(2), Message.WithText("first"));
         Observable<ResponseEntity<EchoTransferObject>> secondObservable = client.callWith(Delay.OfSeconds(4), Message.WithText("second"));
 
-        Observable<TransferObject> zipped = Observable.zip(firstObservable, secondObservable, (first, second) -> {
-            EchoTransferObject firstResponse = first.getBody();
-            EchoTransferObject secondResponse = second.getBody();
-            TransferObject transferObject = new TransferObject();
-            LocalDateTime now = LocalDateTime.now();
-            transferObject.content = String.format("%s->%s|%s", now, firstResponse.message, secondResponse.message);
-            return transferObject;
-        });
-        zipped.subscribe(result::set, result::setException);
+        //firstObservable.doOnNext(ignore -> dumpCurrentSystemTime("first completed"));
+        //secondObservable.doOnNext(ignore -> dumpCurrentSystemTime("second completed"));
+
+        Observable<TransferObject> resultObservable;
+        resultObservable = Observable.combineLatest(firstObservable, secondObservable, this::constructResponse);
+
+        //resultObservable.doOnNext(dudu -> dumpCurrentSystemTime("zip completed"));
+
+        resultObservable.subscribeOn(Schedulers.computation()).subscribe(result::set, result::setException);
+        dumpCurrentSystemTime("leaving controller method");
         return result;
+    }
+
+    private TransferObject constructResponse(ResponseEntity<EchoTransferObject> first, ResponseEntity<EchoTransferObject> second) {
+        EchoTransferObject firstResponse = first.getBody();
+        EchoTransferObject secondResponse = second.getBody();
+        TransferObject transferObject = new TransferObject();
+        LocalDateTime now = LocalDateTime.now();
+        transferObject.content = String.format("%s->%s|%s", now, firstResponse.message, secondResponse.message);
+        return transferObject;
+    }
+
+    private void dumpCurrentSystemTime(String information) {
+        System.out.println(LocalDateTime.now() +" "+ information);
     }
 }
