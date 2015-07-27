@@ -15,6 +15,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>1.9.0</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -22,7 +27,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.2.3.RELEASE</version>
+                <version>1.2.5.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
