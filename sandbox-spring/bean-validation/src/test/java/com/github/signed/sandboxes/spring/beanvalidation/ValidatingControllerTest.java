@@ -13,9 +13,6 @@ import retrofit.http.Body;
 import retrofit.http.PUT;
 
 public class ValidatingControllerTest {
-    private static class TransferObject {
-        public String name;
-    }
 
     private interface Client {
         @PUT("/")
