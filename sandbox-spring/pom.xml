@@ -12,6 +12,7 @@
         <module>resttemplate</module>
         <module>boot</module>
         <module>boot-reactive</module>
+        <module>bean-validation</module>
     </modules>
 
     <properties>
