@@ -3,6 +3,10 @@ package com.github.signed.sandboxes.spring.beanvalidation;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,13 +29,19 @@ public class SpringStyleIntegrationTest {
     @Value("${local.server.port}")
     private int port;
 
+    private final Map<String, Object> parameters = new HashMap<>();
+
+    @Before
+    public void setUp() throws Exception {
+        parameters.put("port", port);
+
+    }
+
     @Test
     public void ifNameIsMissingRespondWith400() throws Exception {
         TransferObject transferObject = new TransferObject();
         HttpEntity<TransferObject> requestEntity = new HttpEntity<>(transferObject);
-        String url = "http://localhost:" + port;
-        System.out.println(url);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}", HttpMethod.PUT, requestEntity, String.class, parameters);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
