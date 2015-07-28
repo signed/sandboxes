@@ -40,8 +40,20 @@ public class SpringStyleIntegrationTest {
     @Test
     public void ifNameIsMissingRespondWith400() throws Exception {
         TransferObject transferObject = new TransferObject();
-        HttpEntity<TransferObject> requestEntity = new HttpEntity<>(transferObject);
-        ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}", HttpMethod.PUT, requestEntity, String.class, parameters);
+        HttpEntity<?> requestEntity = new HttpEntity<>(transferObject);
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}/primitives", HttpMethod.PUT, requestEntity, String.class, parameters);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+    }
+
+    @Test
+    public void ensureCustomValidatorIsHookedUp() throws Exception {
+        PhoneNumberTransferObjectForClient transferObject = new PhoneNumberTransferObjectForClient();
+        transferObject.special = "no mater what";
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(transferObject);
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}/specialvalidator", HttpMethod.PUT, requestEntity, String.class, parameters);
+        System.out.println(response.getBody());
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
