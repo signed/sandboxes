@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = BootWithBeanValidationApplication.class)
 @WebIntegrationTest({"server.port=0", "management.port=0"})
@@ -56,8 +58,15 @@ public class SpringStyleIntegrationTest {
 
         HttpEntity<?> requestEntity = new HttpEntity<>(to);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}/specialvalidator", HttpMethod.PUT, requestEntity, String.class, parameters);
-        System.out.println(response.getBody());
+
+        System.out.println(prettyPrintJson(response.getBody()));
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+    }
+
+    private String prettyPrintJson(String jsonString) throws java.io.IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Object json = mapper.readValue(jsonString, Object.class);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
     }
 }
