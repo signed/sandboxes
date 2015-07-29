@@ -20,3 +20,32 @@ http://springinpractice.com/2013/10/09/generating-json-error-object-responses-wi
 
 # search terms #
 Spring 4 @ControllerAdvice
+
+
+# open points #
+## Provide a custom json error format ##
+The default json error body does not look that nice
+
+    {
+      "timestamp" : 1438203098844,
+      "status" : 400,
+      "error" : "Bad Request",
+      "exception" : "org.springframework.web.bind.MethodArgumentNotValidException",
+      "message" : "Validation failed for argument at index 0 in method: public org.springframework.http.ResponseEntity<?> com.github.signed.sandboxes.spring.beanvalidation.ValidatingController.putSpecialValidator(com.github.signed.sandboxes.spring.beanvalidation.AddressBookEntryTO), with 2 error(s): [Field error in object 'addressBookEntryTO' on field 'phoneNumber': rejected value [com.github.signed.sandboxes.spring.beanvalidation.PhoneNumberTO@bf30397]; codes [E164Number.addressBookEntryTO.phoneNumber,E164Number.phoneNumber,E164Number.com.github.signed.sandboxes.spring.beanvalidation.PhoneNumberTO,E164Number]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [addressBookEntryTO.phoneNumber,phoneNumber]; arguments []; default message [phoneNumber]]; default message [{com.github.signed.spring.beanvalidation.E164NumberValidator.message}]] [Field error in object 'addressBookEntryTO' on field 'name': rejected value [null]; codes [NotEmpty.addressBookEntryTO.name,NotEmpty.name,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [addressBookEntryTO.name,name]; arguments []; default message [name]]; default message [may not be empty]] ",
+      "path" : "/specialvalidator"
+    }
+
+
+I have no idea how to hook into the json generation if there are validation errors.
+There is a workaround to configure spring to throw a validation exception that can be caught via @ControllerAdvice and than be transformed.
+I do not know how to configure this and it feels wrong.
+
+## Validating enumerations ##
+From reading stackoverflow there is no out of the box validator for enumerations.
+I have not tried to validate enumerations until now.
+
+## Deep nested TOs need a getter to be properly validated ##
+
+    "JSR-303 validated property 'phoneNumber' does not have a corresponding accessor for Spring data binding - check your DataBinder's configuration (bean property versus direct field access)",
+
+The error message indicates that this can be configured but I do not know where
