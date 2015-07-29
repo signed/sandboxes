@@ -3,7 +3,7 @@ package com.github.signed.sandboxes.spring.beanvalidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class E164NumberValidator implements ConstraintValidator<E164Number, PhoneNumber> {
+public class E164NumberValidator implements ConstraintValidator<E164Number, PhoneNumberTO> {
 
     @Override
     public void initialize(E164Number annotation) {
@@ -11,7 +11,7 @@ public class E164NumberValidator implements ConstraintValidator<E164Number, Phon
     }
 
     @Override
-    public boolean isValid(PhoneNumber phoneNumber, ConstraintValidatorContext context) {
+    public boolean isValid(PhoneNumberTO phoneNumberTO, ConstraintValidatorContext context) {
         return false;
     }
 }
