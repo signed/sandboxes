@@ -48,10 +48,13 @@ public class SpringStyleIntegrationTest {
 
     @Test
     public void ensureCustomValidatorIsHookedUp() throws Exception {
+        AddressBookEntryTransferObjectForClient to = new AddressBookEntryTransferObjectForClient();
         PhoneNumberTransferObjectForClient transferObject = new PhoneNumberTransferObjectForClient();
         transferObject.special = "no mater what";
+        to.name = "A not empty name";
+        to.phoneNumber = transferObject;
 
-        HttpEntity<?> requestEntity = new HttpEntity<>(transferObject);
+        HttpEntity<?> requestEntity = new HttpEntity<>(to);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}/specialvalidator", HttpMethod.PUT, requestEntity, String.class, parameters);
         System.out.println(response.getBody());
 

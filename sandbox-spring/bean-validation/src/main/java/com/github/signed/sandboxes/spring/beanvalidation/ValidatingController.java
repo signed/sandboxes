@@ -30,8 +30,7 @@ public class ValidatingController {
 
     @RequestMapping(value = "/specialvalidator", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<?> putSpecialValidator(@Valid @RequestBody PhoneNumberTO phoneNumberTO) {
+    public ResponseEntity<?> putSpecialValidator(@Valid @RequestBody AddressBookEntryTO addressBookEntryTO) {
         return new ResponseEntity<>("Put done", HttpStatus.OK);
     }
-
 }
