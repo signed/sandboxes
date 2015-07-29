@@ -12,3 +12,11 @@ http://blog.trifork.com/2009/08/04/bean-validation-integrating-jsr-303-with-spri
 
 1. outdated (http://stackoverflow.com/questions/28819299/is-javax-validation-constraintpayload-deprecated-in-hibernate-validator-5-1-3-fi)
 1. gives a gentle introduction to Bean Validation JSR 303
+
+
+# produce custom json format for bean validation errors #
+http://springinpractice.com/2013/10/09/generating-json-error-object-responses-with-spring-web-mvc
+
+
+# search terms #
+Spring 4 @ControllerAdvice
