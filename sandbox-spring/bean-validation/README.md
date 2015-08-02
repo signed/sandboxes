@@ -41,6 +41,7 @@ The default json error body does not look that nice
 I have no idea how to hook into the json generation if there are validation errors.
 There is a workaround to configure spring to throw a validation exception that can be caught via @ControllerAdvice and than be transformed.
 I do not know how to configure this and it feels wrong.
+I figured out how to do this. Look at ExceptionsToResponseTranslator
 
 ## Validating enumerations ##
 From reading stackoverflow there is no out of the box validator for enumerations.
