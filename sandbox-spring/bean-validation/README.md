@@ -17,6 +17,8 @@ http://blog.trifork.com/2009/08/04/bean-validation-integrating-jsr-303-with-spri
 # produce custom json format for bean validation errors #
 http://springinpractice.com/2013/10/09/generating-json-error-object-responses-with-spring-web-mvc
 
+# Exception Handling #
+http://stackoverflow.com/questions/19498378/setting-precedence-of-multiple-controlleradvice-exceptionhandlers
 
 # search terms #
 Spring 4 @ControllerAdvice
