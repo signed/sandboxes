@@ -14,7 +14,20 @@ public class ExceptionsToResponseTranslator {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleBeansMarkedAsInvalidByBeanValidation(HttpServletRequest request, MethodArgumentNotValidException exception) {
         //look into the errors from the bean validation and provide proper feedback
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        ErrorReportTO report = new ErrorReportTO();
+        report.incident = "gamma alpha three";
+        report.errors.add(error("not.what.i.expected", "my.litte.property", "I do not know the value yet"));
+        report.errors.add(error("seriously", "2nd.path.down", "Value, I'll give you value!"));
+        return new ResponseEntity<>(report, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorTO error(String code, String path, String value) {
+        ErrorTO first = new ErrorTO();
+        first.code = code;
+        first.path = path;
+        first.value = value;
+        return first;
     }
 
 }
