@@ -28,7 +28,7 @@ http://blabadi.blogspot.de/2014/11/java-validation-standard-jsr-303.html
 
 
 # write your own validators #
-https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/chapter-method-constraints.html
+https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/validator-customconstraints.html
 
 http://musingsofaprogrammingaddict.blogspot.de/2009/02/getting-started-with-jsr-303-bean.html
 
