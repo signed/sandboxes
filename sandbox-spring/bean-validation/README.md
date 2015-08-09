@@ -24,6 +24,12 @@ http://stackoverflow.com/questions/19498378/setting-precedence-of-multiple-contr
 Spring 4 @ControllerAdvice
 
 
+# write your own validators #
+https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/chapter-method-constraints.html
+
+http://musingsofaprogrammingaddict.blogspot.de/2009/02/getting-started-with-jsr-303-bean.html
+
+
 # open points #
 ## Provide a custom json error format ##
 The default json error body does not look that nice
@@ -42,6 +48,16 @@ I have no idea how to hook into the json generation if there are validation erro
 There is a workaround to configure spring to throw a validation exception that can be caught via @ControllerAdvice and than be transformed.
 I do not know how to configure this and it feels wrong.
 I figured out how to do this. Look at ExceptionsToResponseTranslator
+
+
+## How to validate optional fields ##
+
+http://stackoverflow.com/questions/28546046/java-bean-validation-optional-fields-annotation
+
+http://stackoverflow.com/questions/27382953/java-bean-validation-enforce-a-pattern-only-when-the-property-is-not-blank
+
+Treat null as valid seems to be the documented way to handle this
+http://stackoverflow.com/questions/30426077/spring-bean-validation-handle-optional-field-validation
 
 ## Validating enumerations ##
 From reading stackoverflow there is no out of the box validator for enumerations.
