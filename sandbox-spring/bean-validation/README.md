@@ -23,6 +23,9 @@ http://stackoverflow.com/questions/19498378/setting-precedence-of-multiple-contr
 # search terms #
 Spring 4 @ControllerAdvice
 
+# use different TO objects for different operations #
+http://blabadi.blogspot.de/2014/11/java-validation-standard-jsr-303.html
+
 
 # write your own validators #
 https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/chapter-method-constraints.html
