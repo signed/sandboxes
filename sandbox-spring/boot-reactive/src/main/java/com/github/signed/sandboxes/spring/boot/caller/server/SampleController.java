@@ -2,7 +2,6 @@ package com.github.signed.sandboxes.spring.boot.caller.server;
 
 import java.time.LocalDateTime;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.SettableListenableFuture;
@@ -21,7 +20,6 @@ import rx.schedulers.Schedulers;
 
 
 @RestController
-@EnableAutoConfiguration
 public class SampleController {
 
     private final DelayEchoServiceClient client = new DelayEchoServiceClient();
