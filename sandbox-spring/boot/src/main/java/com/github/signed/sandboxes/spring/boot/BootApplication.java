@@ -1,7 +1,7 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Import;
 public class BootApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(BootApplication.class, args);
+        new SpringApplicationBuilder()
+                .sources(BootApplication.class)
+                .run(args);
+
     }
 
 }
