@@ -7,3 +7,7 @@ https://github.com/fge/json-patch
 https://github.com/netplex/json-smart-v2
 
 
+# how to register controllers without @ComponentScan #
+just expose it as a bean in a class annotated with @configuration
+
+
