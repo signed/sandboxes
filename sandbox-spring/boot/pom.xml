@@ -6,6 +6,10 @@
     <artifactId>boot</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <properties>
+        <version.spring>1.2.5.RELEASE</version.spring>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -22,7 +26,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.2.5.RELEASE</version>
+                <version>${version.spring}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -34,6 +38,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
