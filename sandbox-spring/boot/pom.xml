@@ -7,6 +7,7 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.spring>1.2.5.RELEASE</version.spring>
     </properties>
 
@@ -43,6 +44,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
