@@ -52,6 +52,8 @@ There is a workaround to configure spring to throw a validation exception that c
 I do not know how to configure this and it feels wrong.
 I figured out how to do this. Look at ExceptionsToResponseTranslator
 
+Perhaps providing a own implementation of ErrorAttributes as Bean would work too. 
+
 
 ## How to validate optional fields ##
 
