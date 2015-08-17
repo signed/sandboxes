@@ -12,6 +12,6 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     public String home() {
-        return LocalDateTime.now() +" Hello World!";
+        return LocalDateTime.now() +"Hello World!";
     }
 }
