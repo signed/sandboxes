@@ -1,16 +1,16 @@
 package com.github.signed.sandboxes.spring.beanvalidation;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-
 import retrofit.RestAdapter;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.PUT;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ValidatingControllerTest {
 
@@ -21,7 +21,10 @@ public class ValidatingControllerTest {
 
     @Test(expected = RuntimeException.class)
     public void testName() throws Exception {
-        SpringApplication springApplication = new SpringApplication(BootWithBeanValidationApplication.class);
+        SpringApplication springApplication = new SpringApplicationBuilder()
+                .showBanner(false)
+                .sources(BootWithBeanValidationApplication.class)
+                .build();
         ConfigurableApplicationContext context = springApplication.run();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
