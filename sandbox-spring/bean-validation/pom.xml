@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.signed.sandboxes.spring</groupId>
-    <artifactId>bean-validation</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>com.github.signed.sandboxes.spring</groupId>
+        <artifactId>sandbox-spring</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
 
-    <properties>
-        <version.spring>1.2.5.RELEASE</version.spring>
-    </properties>
+    <artifactId>bean-validation</artifactId>
 
     <dependencies>
         <dependency>
@@ -30,18 +30,6 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${version.spring}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -49,15 +37,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${version.spring}</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-
 </project>
