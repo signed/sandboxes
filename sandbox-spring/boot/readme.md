@@ -10,4 +10,9 @@ https://github.com/netplex/json-smart-v2
 # how to register controllers without @ComponentScan #
 just expose it as a bean in a class annotated with @configuration
 
+# how can I change the port of a programmatically started spring application #
+a
+ 
+# how can I change the implementing bean via application builder #
+
 
