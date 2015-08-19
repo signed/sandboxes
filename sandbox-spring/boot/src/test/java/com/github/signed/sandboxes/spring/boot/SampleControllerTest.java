@@ -1,7 +1,9 @@
 package com.github.signed.sandboxes.spring.boot;
 
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExternalResource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,12 +14,13 @@ import retrofit.http.GET;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-public class SampleControllerTest{
+public class SampleControllerTest {
 
     private interface Client {
         @GET("/")
@@ -27,50 +30,34 @@ public class SampleControllerTest{
         Response getInjected();
     }
 
+    @Rule
+    public final SpringApplicationRule springApplication = new SpringApplicationRule();
+
     @Test
     public void can_retrieve_content_from_rest() throws Exception {
-        SpringApplication springApplication = new SpringApplicationBuilder()
-                .showBanner(false)
-                .sources(BootApplication.class)
-                .build();
-        ConfigurableApplicationContext context = springApplication.run();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://localhost:8080")
-                .build();
-        Client client = restAdapter.create(Client.class);
-
-        Response response = client.get();
+        Response response = springApplication.query(rest_client()::get);
 
         assertThat(response.getStatus(), is(200));
         assertThat(response.getBody().mimeType(), containsString("charset=UTF-8"));
         assertThat(readBodyAsUtf8String(response), Matchers.endsWith("Hello World!"));
-
-        SpringApplication.exit(context);
     }
 
-    private String readBodyAsUtf8String(Response response) throws IOException {
-        return new String(readBytesFrom(response.getBody().in()), "UTF-8");
+    private Client rest_client() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://localhost:8080/")
+                .build();
+        return restAdapter.create(Client.class);
     }
 
     @Test
     public void replace_bean_implementation() throws Exception {
-        SpringApplication springApplication = new SpringApplicationBuilder()
-                .showBanner(false)
-                .sources(BootApplication.class)
-                .build();
-        ConfigurableApplicationContext context = springApplication.run();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://localhost:8080/")
-                .build();
-        Client client = restAdapter.create(Client.class);
-
-        String messageFromCollaborator = readBodyAsUtf8String(client.getInjected());
+        String messageFromCollaborator = this.springApplication.query(() -> readBodyAsUtf8String(rest_client().getInjected()));
 
         assertThat(messageFromCollaborator, is("Hello kind person"));
+    }
 
-        SpringApplication.exit(context);
+    private static String readBodyAsUtf8String(Response response) throws IOException {
+        return new String(readBytesFrom(response.getBody().in()), "UTF-8");
     }
 
     public static byte[] readBytesFrom(InputStream inputStream) throws IOException {
@@ -83,5 +70,33 @@ public class SampleControllerTest{
         }
 
         return out.toByteArray();
+    }
+
+    public interface Operation<T>{
+        T perform() throws Exception;
+    }
+
+    private static class SpringApplicationRule extends ExternalResource {
+
+        private final SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder()
+                .showBanner(false)
+                .sources(BootApplication.class);
+
+        private Optional<ConfigurableApplicationContext> context;
+
+        public <T> T query(Operation<T> operation) throws Exception {
+
+            SpringApplication springApplication = springApplicationBuilder.build();
+            context = Optional.of(springApplication.run());
+
+            return operation.perform();
+        }
+
+        @Override
+        protected void after() {
+            if(context.isPresent()){
+                SpringApplication.exit(context.get());
+            }
+        }
     }
 }
