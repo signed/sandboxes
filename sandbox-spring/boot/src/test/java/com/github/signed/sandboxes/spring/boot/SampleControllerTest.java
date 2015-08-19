@@ -1,24 +1,29 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExternalResource;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
-import retrofit.RestAdapter;
-import retrofit.client.Response;
-import retrofit.http.GET;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExternalResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
+
+import retrofit.RestAdapter;
+import retrofit.client.Response;
+import retrofit.http.GET;
 
 public class SampleControllerTest {
 
@@ -35,23 +40,16 @@ public class SampleControllerTest {
 
     @Test
     public void can_retrieve_content_from_rest() throws Exception {
-        Response response = springApplication.query(rest_client()::get);
+        Response response = springApplication.client(Client.class).get();
 
         assertThat(response.getStatus(), is(200));
         assertThat(response.getBody().mimeType(), containsString("charset=UTF-8"));
         assertThat(readBodyAsUtf8String(response), Matchers.endsWith("Hello World!"));
     }
 
-    private Client rest_client() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://localhost:8080/")
-                .build();
-        return restAdapter.create(Client.class);
-    }
-
     @Test
     public void replace_bean_implementation() throws Exception {
-        String messageFromCollaborator = this.springApplication.query(() -> readBodyAsUtf8String(rest_client().getInjected()));
+        String messageFromCollaborator = readBodyAsUtf8String(this.springApplication.client(Client.class).getInjected());
 
         assertThat(messageFromCollaborator, is("Hello kind person"));
     }
@@ -72,8 +70,18 @@ public class SampleControllerTest {
         return out.toByteArray();
     }
 
-    public interface Operation<T>{
-        T perform() throws Exception;
+    @Component
+    public static class RuleConfiguration {
+        @Autowired
+        public EmbeddedWebApplicationContext server;
+
+
+        public int port() {
+            return server.getEmbeddedServletContainer().getPort();
+        }
+
+//        @Value("${local.server.port}")
+//        public int port;
     }
 
     private static class SpringApplicationRule extends ExternalResource {
@@ -82,21 +90,41 @@ public class SampleControllerTest {
                 .showBanner(false)
                 .sources(BootApplication.class);
 
-        private Optional<ConfigurableApplicationContext> context;
+        private final RuleConfiguration ruleConfiguration = new RuleConfiguration();
+        private Optional<ConfigurableApplicationContext> context = Optional.empty();
 
-        public <T> T query(Operation<T> operation) throws Exception {
+        public <T> T client(Class<T> type){
+            ensureServerIsStarted();
 
-            SpringApplication springApplication = springApplicationBuilder.build();
-            context = Optional.of(springApplication.run());
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(baseUri())
+                    .build();
+            return restAdapter.create(type);
+        }
 
-            return operation.perform();
+        public String baseUri() {
+            return "http://localhost:" + ruleConfiguration.port();
         }
 
         @Override
         protected void after() {
-            if(context.isPresent()){
+            if (context.isPresent()) {
                 SpringApplication.exit(context.get());
             }
+        }
+
+        private void ensureServerIsStarted() {
+            if(context.isPresent()){
+                return;
+            }
+            SpringApplication springApplication = springApplicationBuilder.build();
+            ConfigurableApplicationContext configurableContext = springApplication.run();
+
+            ConfigurableListableBeanFactory beanFactory = configurableContext.getBeanFactory();
+            beanFactory.initializeBean(ruleConfiguration, "ruleConfiguration");
+            beanFactory.autowireBean(ruleConfiguration);
+
+            context = Optional.of(configurableContext);
         }
     }
 }
