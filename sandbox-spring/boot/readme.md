@@ -11,7 +11,8 @@ https://github.com/netplex/json-smart-v2
 just expose it as a bean in a class annotated with @configuration
 
 # how can I change the port of a programmatically started spring application #
+http://stackoverflow.com/questions/797894/dynamically-change-spring-beans
  
 # how can I change the implementing bean via application builder #
 
-
+# how to programmatically configure logging #
