@@ -22,6 +22,9 @@ public class SampleControllerTest{
     private interface Client {
         @GET("/")
         Response get();
+
+        @GET("/injected")
+        Response getInjected();
     }
 
     @Test
@@ -37,11 +40,35 @@ public class SampleControllerTest{
                 .build();
         Client client = restAdapter.create(Client.class);
 
-        Response putResponse = client.get();
+        Response response = client.get();
 
-        assertThat(putResponse.getStatus(), is(200));
-        assertThat(putResponse.getBody().mimeType(), containsString("charset=UTF-8"));
-        assertThat(new String(readBytesFrom(putResponse.getBody().in()), "UTF-8"), Matchers.endsWith("Hello World!"));
+        assertThat(response.getStatus(), is(200));
+        assertThat(response.getBody().mimeType(), containsString("charset=UTF-8"));
+        assertThat(readBodyAsUtf8String(response), Matchers.endsWith("Hello World!"));
+
+        SpringApplication.exit(context);
+    }
+
+    private String readBodyAsUtf8String(Response response) throws IOException {
+        return new String(readBytesFrom(response.getBody().in()), "UTF-8");
+    }
+
+    @Test
+    public void replace_bean_implementation() throws Exception {
+        SpringApplication springApplication = new SpringApplicationBuilder()
+                .showBanner(false)
+                .sources(BootApplication.class)
+                .build();
+        ConfigurableApplicationContext context = springApplication.run();
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://localhost:8080/")
+                .build();
+        Client client = restAdapter.create(Client.class);
+
+        String messageFromCollaborator = readBodyAsUtf8String(client.getInjected());
+
+        assertThat(messageFromCollaborator, is("Hello kind person"));
 
         SpringApplication.exit(context);
     }

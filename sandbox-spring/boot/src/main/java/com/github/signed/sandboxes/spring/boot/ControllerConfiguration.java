@@ -7,7 +7,12 @@ import org.springframework.context.annotation.Configuration;
 public class ControllerConfiguration {
 
     @Bean
-    public SampleController sampleController(){
-        return new SampleController();
+    public Collaborator politeCollaborator() {
+        return new PoliteCollaborator();
+    }
+
+    @Bean
+    public SampleController sampleController(Collaborator collaborator){
+        return new SampleController(collaborator);
     }
 }
