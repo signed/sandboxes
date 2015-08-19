@@ -17,8 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import retrofit.RestAdapter;
@@ -72,8 +75,13 @@ public class SampleControllerTest {
 
     @Component
     public static class RuleConfiguration {
-        @Autowired
+
         public EmbeddedWebApplicationContext server;
+
+        @Autowired
+        public void set(EmbeddedWebApplicationContext server) {
+            this.server = server;
+        }
 
 
         public int port() {
@@ -84,16 +92,26 @@ public class SampleControllerTest {
 //        public int port;
     }
 
+
+    @Configuration
+    public static class ChooseAnAvailablePort implements EmbeddedServletContainerCustomizer {
+
+        @Override
+        public void customize(ConfigurableEmbeddedServletContainer container) {
+            container.setPort(0);
+        }
+    }
+
     private static class SpringApplicationRule extends ExternalResource {
 
         private final SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder()
                 .showBanner(false)
-                .sources(BootApplication.class);
+                .sources(BootApplication.class, ChooseAnAvailablePort.class);
 
         private final RuleConfiguration ruleConfiguration = new RuleConfiguration();
         private Optional<ConfigurableApplicationContext> context = Optional.empty();
 
-        public <T> T client(Class<T> type){
+        public <T> T client(Class<T> type) {
             ensureServerIsStarted();
 
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -114,7 +132,7 @@ public class SampleControllerTest {
         }
 
         private void ensureServerIsStarted() {
-            if(context.isPresent()){
+            if (context.isPresent()) {
                 return;
             }
             SpringApplication springApplication = springApplicationBuilder.build();
@@ -123,7 +141,6 @@ public class SampleControllerTest {
             ConfigurableListableBeanFactory beanFactory = configurableContext.getBeanFactory();
             beanFactory.initializeBean(ruleConfiguration, "ruleConfiguration");
             beanFactory.autowireBean(ruleConfiguration);
-
             context = Optional.of(configurableContext);
         }
     }
