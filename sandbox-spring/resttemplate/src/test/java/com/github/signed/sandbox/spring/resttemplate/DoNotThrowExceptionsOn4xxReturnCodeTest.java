@@ -17,7 +17,8 @@ public class DoNotThrowExceptionsOn4xxReturnCodeTest {
     @Before
     public void setUp() throws Exception {
         Spark.port(8085);
-        Spark.get("/", (request, response) -> "Hello World");
+        Spark.get("/", (request, response) -> "Hello World");Thread.sleep(500);
+        Thread.sleep(500);
     }
 
     @After
