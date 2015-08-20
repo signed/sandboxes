@@ -16,6 +16,7 @@ http://stackoverflow.com/questions/797894/dynamically-change-spring-beans
 # how can I change the implementing bean via application builder #
 
 # how to programmatically configure logging #
+Especially the timezone
 
 # is it possible to put an aspect before an @ControllerAdvice?
 
