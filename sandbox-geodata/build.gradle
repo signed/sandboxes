@@ -1,0 +1,7 @@
+apply plugin:'idea'
+apply plugin:'java'
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}
