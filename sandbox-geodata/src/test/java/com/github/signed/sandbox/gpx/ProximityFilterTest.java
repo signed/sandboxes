@@ -1,17 +1,22 @@
 package com.github.signed.sandbox.gpx;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
 
 import org.junit.Test;
 
-import ca.carleton.gcrc.gpx.Gpx;
-import ca.carleton.gcrc.gpx.GpxPoint;
-import ca.carleton.gcrc.gpx.GpxWayPoint;
-import ca.carleton.gcrc.gpx._11.Gpx11;
+import com.topografix.gpx._1._1.GpxType;
+import com.topografix.gpx._1._1.WptType;
 
 public class ProximityFilterTest {
 
@@ -19,21 +24,27 @@ public class ProximityFilterTest {
     public void testName() throws Exception {
         File hutsFile = new File("src/test/resources/huts/blackforsthuts.gpx");
         File trackFile = new File("src/test/resources/tracks/schluchtensteig.gpx");
-        Gpx track = load(trackFile);
-        Gpx hutsGpx = load(hutsFile);
+        GpxType track = load(trackFile);
+        GpxType hutsGpx = load(hutsFile);
 
-        for (GpxWayPoint gpxWayPoint : hutsGpx.getWayPoints()) {
+        List<WptType> shelter = new ArrayList<>();
+        for (WptType gpxWayPoint : hutsGpx.getWpt()) {
             if (isCloseTo(track, gpxWayPoint)) {
-
-                System.out.println(gpxWayPoint.getName());
+                shelter.add(gpxWayPoint);
             }
         }
+
+        hutsGpx.getWpt().clear();
+        hutsGpx.getWpt().addAll(shelter);
+
+        String xml = toXml(hutsGpx);
+        System.out.println(xml);
     }
 
-    private boolean isCloseTo(Gpx track, GpxWayPoint gpxWayPoint) {
-        for (GpxPoint waypointOnTrack : track.getTracks().get(0).getSegments().get(0).getPoints()) {
-            double distance = distance(gpxWayPoint.getLat().doubleValue(), gpxWayPoint.getLong().doubleValue(), waypointOnTrack.getLat().doubleValue(), waypointOnTrack.getLong().doubleValue());
-            if (distance < 1) {
+    private boolean isCloseTo(GpxType track, WptType gpxWayPoint) {
+        for (WptType waypointOnTrack : track.getTrk().get(0).getTrkseg().get(0).getTrkpt()) {
+            double distance = distance(gpxWayPoint.getLat().doubleValue(), gpxWayPoint.getLon().doubleValue(), waypointOnTrack.getLat().doubleValue(), waypointOnTrack.getLon().doubleValue());
+            if (distance <= 1) {
                 System.out.println(distance);
                 return true;
             }
@@ -41,13 +52,26 @@ public class ProximityFilterTest {
         return false;
     }
 
-    private Gpx load(File file) throws Exception {
-        JAXBContext jc = JAXBContext.newInstance(com.topografix.gpx._1._1.GpxType.class);
+    private GpxType load(File file) throws Exception {
 
-        Unmarshaller unmarshaller = jc.createUnmarshaller();
-        com.topografix.gpx._1._1.GpxType fosterHome = ((JAXBElement<com.topografix.gpx._1._1.GpxType>) unmarshaller.unmarshal(file)).getValue();
+        Unmarshaller unmarshaller = context().createUnmarshaller();
+        JAXBElement<GpxType> unmarshal = (JAXBElement<GpxType>) unmarshaller.unmarshal(file);
+        com.topografix.gpx._1._1.GpxType fosterHome = unmarshal.getValue();
 
-        return new Gpx11(fosterHome);
+        return fosterHome;
+    }
+
+    public String toXml(GpxType hutsGpx) throws JAXBException {
+        JAXBElement<GpxType> element = new JAXBElement<>(new QName("http://www.topografix.com/GPX/1/1", "gpx", ""), GpxType.class, hutsGpx);
+        Marshaller marshaller = context().createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        marshaller.marshal(element, out);
+        return new String(out.toByteArray(), Charset.forName("UTF-8"));
+    }
+
+    private JAXBContext context() throws JAXBException {
+        return JAXBContext.newInstance(com.topografix.gpx._1._1.GpxType.class);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
