@@ -1,8 +1,9 @@
 package com.github.signed.sandboxes.spring.boot;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +22,27 @@ public class SpringStyleIntegrationTest {
     private int port;
 
     @Test
-    public void returnProductionValue() throws Exception {
-        assertThat(client(Client.class).get().commit_hash, Matchers.isA(String.class));
+    public void hasCommitHash() throws Exception {
+        assertThat(versionInformation().commit_hash, isA(String.class));
+    }
+
+    @Test
+    public void hasHardCodedBuildNumber() throws Exception {
+        assertThat(versionInformation().build_number, is("45"));
+    }
+
+    @Test
+    public void hasCurrentVersion() throws Exception {
+        assertThat(versionInformation().version, is("0.1.0-SNAPSHOT"));
+    }
+
+    @Test
+    public void hasBuildTimeStamp() throws Exception {
+        assertThat(versionInformation().timestamp, isA(String.class));
+    }
+
+    private ApplicationVersionTO versionInformation() {
+        return client(Client.class).get();
     }
 
     public <T> T client(Class<T> type) {

@@ -11,7 +11,9 @@
     <artifactId>injectbuildnumber</artifactId>
 
     <properties>
-        <build.number>2.1.7</build.number>
+        <application.version>${project.version}</application.version>
+        <application.build.timestamp>${maven.build.timestamp}</application.build.timestamp>
+        <application.build.number>45</application.build.number>
     </properties>
 
     <dependencies>
@@ -39,6 +41,15 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>version.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

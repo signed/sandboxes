@@ -21,6 +21,9 @@ public class BuildNumberController {
 
         ApplicationVersionTO entity = new ApplicationVersionTO();
         entity.commit_hash = applicationVersion.commitHash;
+        entity.version = applicationVersion.version;
+        entity.timestamp = applicationVersion.timestamp;
+        entity.build_number = applicationVersion.buildNumber;
 
         return ResponseEntity.ok(entity);
     }
