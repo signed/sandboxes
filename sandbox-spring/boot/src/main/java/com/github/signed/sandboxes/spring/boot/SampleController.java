@@ -23,12 +23,12 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     public ResponseEntity<?> home() {
-        return ResponseEntity.ok(LocalDateTime.now() +"Hello World!");
+        return ResponseEntity.ok(LocalDateTime.now() + "Hello World!");
     }
 
     @RequestMapping("/injected")
     @ResponseBody
-    public ResponseEntity<?> injected(){
+    public ResponseEntity<?> injected() {
         return ResponseEntity.ok(collaborator.message());
     }
 
