@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import retrofit.RestAdapter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { BootApplication.class})
+@SpringApplicationConfiguration(classes = { PropertiesFromConfigurationFileApplication.class})
 @WebIntegrationTest({"server.port=0", "management.port=0"})
 public class SpringStyleIntegrationTest {
 

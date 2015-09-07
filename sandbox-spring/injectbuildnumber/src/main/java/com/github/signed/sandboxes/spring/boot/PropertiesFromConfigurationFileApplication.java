@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @EnableAutoConfiguration
-@Import(value = {ControllerConfiguration.class})
-public class BootApplication {
+@Import(BuildNumberControllerConfiguration.class)
+public class PropertiesFromConfigurationFileApplication {
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder()
-                .sources(BootApplication.class)
+                .sources(PropertiesFromConfigurationFileApplication.class)
                 .run(args);
 
     }

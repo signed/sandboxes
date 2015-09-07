@@ -10,6 +10,10 @@
 
     <artifactId>injectbuildnumber</artifactId>
 
+    <properties>
+        <build.numer>2.1.7</build.numer>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
