@@ -13,6 +13,7 @@
         <module>boot</module>
         <module>boot-reactive</module>
         <module>bean-validation</module>
+        <module>injectbuildnumber</module>
     </modules>
 
 
