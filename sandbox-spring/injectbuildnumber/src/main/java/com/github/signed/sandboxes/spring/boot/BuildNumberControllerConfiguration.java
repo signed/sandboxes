@@ -30,7 +30,7 @@ public class BuildNumberControllerConfiguration {
     @Bean
     public BuildNumberController sampleController() {
         String commitHash = environment.getProperty("git.commit.id");
-        String version = environment.getProperty("application.version");
+        String version = environment.getProperty("application.build.version");
         String timestamp = environment.getProperty("application.build.timestamp");
         String buildNumber = environment.getProperty("application.build.number");
         ApplicationVersion applicationVersion = new ApplicationVersion(commitHash, version, timestamp, buildNumber);

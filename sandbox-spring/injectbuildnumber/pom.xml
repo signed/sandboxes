@@ -11,7 +11,7 @@
     <artifactId>injectbuildnumber</artifactId>
 
     <properties>
-        <application.version>${project.version}</application.version>
+        <application.build.version>${project.version}</application.build.version>
         <application.build.timestamp>${maven.build.timestamp}</application.build.timestamp>
         <application.build.number>45</application.build.number>
     </properties>
