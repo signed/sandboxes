@@ -18,6 +18,11 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs</artifactId>
+            <version>3.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -27,7 +32,7 @@
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${version.findbugs}</version>
                 <configuration>
-                    <!--<includeFilterFile>${project.basedir}/etc/findbugs.xml</includeFilterFile>-->
+                    <excludeFilterFile>${project.basedir}/etc/findbugs_exclude_filter.xml</excludeFilterFile>
                 </configuration>
                 <executions>
                     <execution>
