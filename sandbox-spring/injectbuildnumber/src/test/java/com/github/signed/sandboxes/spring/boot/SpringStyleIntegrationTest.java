@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import retrofit.RestAdapter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { PropertiesFromConfigurationFileApplication.class})
+@SpringApplicationConfiguration(classes = {PropertiesFromConfigurationFileApplication.class})
 @WebIntegrationTest({"server.port=0", "management.port=0"})
 public class SpringStyleIntegrationTest {
 
@@ -22,7 +22,7 @@ public class SpringStyleIntegrationTest {
 
     @Test
     public void returnProductionValue() throws Exception {
-        assertThat(Responses.readBodyAsUtf8String(client(Client.class).get()), Matchers.endsWith("Hello World!"));
+        assertThat(client(Client.class).get().commit_hash, Matchers.isA(String.class));
     }
 
     public <T> T client(Class<T> type) {

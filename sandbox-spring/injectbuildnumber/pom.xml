@@ -11,7 +11,7 @@
     <artifactId>injectbuildnumber</artifactId>
 
     <properties>
-        <build.numer>2.1.7</build.numer>
+        <build.number>2.1.7</build.number>
     </properties>
 
     <dependencies>
@@ -45,7 +45,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${version.spring}</version>
             </plugin>
-             <plugin>
+            <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <version>2.1.15</version>
@@ -57,9 +57,11 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!--<skip>true</skip>-->
                     <verbose>false</verbose>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
                     <includeOnlyProperties>
                         <includeOnlyProperty>^git.commit.id$</includeOnlyProperty>
                     </includeOnlyProperties>

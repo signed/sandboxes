@@ -1,7 +1,5 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import java.time.LocalDateTime;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,10 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BuildNumberController {
 
+    private final BuildNumberControllerConfiguration.ApplicationVersion applicationVersion;
+
+    public BuildNumberController(BuildNumberControllerConfiguration.ApplicationVersion applicationVersion) {
+        this.applicationVersion = applicationVersion;
+    }
+
     @RequestMapping("/")
     @ResponseBody
     public ResponseEntity<?> home() {
-        return ResponseEntity.ok(LocalDateTime.now() + "Hello World!");
+
+        ApplicationVersionTO entity = new ApplicationVersionTO();
+        entity.commit_hash = applicationVersion.commitHash;
+
+        return ResponseEntity.ok(entity);
     }
 
 
