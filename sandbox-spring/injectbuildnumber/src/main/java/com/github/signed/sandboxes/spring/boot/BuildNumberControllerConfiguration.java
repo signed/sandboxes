@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource(value = {"classpath:/git.properties", "classpath:/version.properties"})
+@PropertySource(value = {"classpath:/version.properties"})
 public class BuildNumberControllerConfiguration {
 
     @Autowired
@@ -29,7 +29,7 @@ public class BuildNumberControllerConfiguration {
 
     @Bean
     public BuildNumberController sampleController() {
-        String commitHash = environment.getProperty("git.commit.id");
+        String commitHash = environment.getProperty("application.build.hash");
         String version = environment.getProperty("application.build.version");
         String timestamp = environment.getProperty("application.build.timestamp");
         String buildNumber = environment.getProperty("application.build.number");

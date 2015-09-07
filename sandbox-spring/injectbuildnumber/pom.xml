@@ -68,14 +68,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--<skip>true</skip>-->
                     <verbose>false</verbose>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
-                    </generateGitPropertiesFilename>
-                    <includeOnlyProperties>
-                        <includeOnlyProperty>^git.commit.id$</includeOnlyProperty>
-                    </includeOnlyProperties>
                 </configuration>
             </plugin>
         </plugins>
