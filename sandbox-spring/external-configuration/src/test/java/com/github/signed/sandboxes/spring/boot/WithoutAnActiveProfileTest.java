@@ -1,47 +1,34 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import java.io.IOException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.jayway.jsonassert.JsonAssert;
-import com.jayway.jsonassert.JsonAsserter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import retrofit.RestAdapter;
-
-import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { ExternalConfigurationBootApplication.class})
-@WebIntegrationTest({"server.port=0", "management.port=0"})
-public class WithoutAnActiveProfileTest {
+public class WithoutAnActiveProfileTest implements EnvironmentFixture{
 
-    @Value("${local.server.port}")
-    private int port;
+    @Autowired
+    private Environment environment;
 
     @Test
     public void returnProductionValue() throws Exception {
-        propertyJsonFor("application.global").assertThat("$.['application.global']", is("overlord"));
+        assertThat(property("application.global"), is("overlord"));
     }
-
 
     @Test
     public void checkOverriddenPropertyIsPresent() throws Exception {
-        propertyJsonFor("overridden.in.dev").assertThat("$.['overridden.in.dev']", is("idonotwantto"));
+        assertThat(property("overridden.in.dev"), is("idonotwantto"));
     }
 
-    private JsonAsserter propertyJsonFor(String propertyKey) throws IOException {
-        String json = Responses.readBodyAsUtf8String(client(Client.class).get(propertyKey));
-        return JsonAssert.with(json);
-    }
-
-    public <T> T client(Class<T> type) {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(String.format("http://localhost:%d", port))
-                .build();
-        return restAdapter.create(type);
+    @Override
+    public Environment environment() {
+        return environment;
     }
 }

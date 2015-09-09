@@ -3,13 +3,11 @@ package com.github.signed.sandboxes.spring.boot;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @EnableAutoConfiguration
-@Import(value = {ExternalConfigurationControllerConfiguration.class})
 public class ExternalConfigurationBootApplication {
 
     @Configuration
