@@ -25,12 +25,12 @@ public class WithoutDevProfileActiveTest implements EnvironmentFixture{
     }
 
     @Test
-    public void returnProductionValue() throws Exception {
+    public void propertyDefinedInTheDevPropertiesIsPresent() throws Exception {
         assertThat(property("only.present.in.dev"), is("wtf"));
     }
 
     @Test
-    public void checkOverriddenPropertyIsPresent() throws Exception {
+    public void propertyValueOverriddenInDevPropertiesIsPresent() throws Exception {
         assertThat(property("overridden.in.dev"), is("itwonthurt"));
     }
 
