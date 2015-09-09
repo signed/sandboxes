@@ -1,6 +1,9 @@
 package com.github.signed.sandboxes.spring.boot;
 
+import java.io.IOException;
+
 import com.jayway.jsonassert.JsonAssert;
+import com.jayway.jsonassert.JsonAsserter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,16 +17,21 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { ExternalConfigurationBootApplication.class})
 @WebIntegrationTest({"server.port=0", "management.port=0"})
-public class SpringStyleIntegrationTest {
+public class WithoutAnActiveProfileTest {
 
     @Value("${local.server.port}")
     private int port;
 
     @Test
     public void returnProductionValue() throws Exception {
-        String json = Responses.readBodyAsUtf8String(client(Client.class).get("application.global"));
-        System.out.println(json);
-        JsonAssert.with(json).assertThat("$.['application.global']", is("overlord"));
+        String propertyKey = "application.global";
+        JsonAsserter with = propertyJsonFor(propertyKey);
+        with.assertThat("$.['application.global']", is("overlord"));
+    }
+
+    private JsonAsserter propertyJsonFor(String propertyKey) throws IOException {
+        String json = Responses.readBodyAsUtf8String(client(Client.class).get(propertyKey));
+        return JsonAssert.with(json);
     }
 
     public <T> T client(Class<T> type) {
