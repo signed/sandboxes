@@ -1,7 +1,6 @@
 package com.github.signed.sandboxes.spring.boot;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +27,6 @@ public class ExternalConfigurationController {
     public ResponseEntity<?> home(@RequestParam(value = "propertyKey") String propertyKey) {
         List<String> propertyKeys = Collections.singletonList(propertyKey);
         Map<String, String> collect = propertyKeys.stream().filter(environment::containsProperty).collect(toMap(t -> t, environment::getProperty));
-        collect = new HashMap<>();
-        String property = environment.getProperty("application.global");
-        System.out.println("\'"+property+"\'");
-        collect.put("application.global", property);
         return ResponseEntity.ok(collect);
     }
 
