@@ -1,5 +1,6 @@
 package com.github.signed.sandboxes.spring.boot;
 
+import com.jayway.jsonassert.JsonAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import retrofit.RestAdapter;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { ExternalConfigurationBootApplication.class})
@@ -21,7 +21,9 @@ public class SpringStyleIntegrationTest {
 
     @Test
     public void returnProductionValue() throws Exception {
-        assertThat(Responses.readBodyAsUtf8String(client(Client.class).get()), is("replaced in the test"));
+        String json = Responses.readBodyAsUtf8String(client(Client.class).get("application.global"));
+        System.out.println(json);
+        JsonAssert.with(json).assertThat("$.['application.global']", is("overlord"));
     }
 
     public <T> T client(Class<T> type) {
