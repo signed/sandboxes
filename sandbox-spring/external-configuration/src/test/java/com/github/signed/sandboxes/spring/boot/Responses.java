@@ -4,7 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class InputStreams {
+import retrofit.client.Response;
+
+public class Responses {
+
+    public static String readBodyAsUtf8String(Response response) throws IOException {
+        return new String(readBytesFrom(response.getBody().in()), "UTF-8");
+    }
 
     public static byte[] readBytesFrom(InputStream inputStream) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();

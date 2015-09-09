@@ -14,6 +14,7 @@
         <module>boot-reactive</module>
         <module>bean-validation</module>
         <module>injectbuildnumber</module>
+        <module>external-configuration</module>
     </modules>
 
 
