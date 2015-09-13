@@ -1,8 +1,8 @@
 package com.github.signed.sandbox.gpx;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -15,10 +15,14 @@ import com.topografix.gpx._1._1.GpxType;
 
 public class GpxPersister {
 
-    public GpxType load(File file) throws Exception {
-        Unmarshaller unmarshaller = context().createUnmarshaller();
-        JAXBElement<GpxType> unmarshal = (JAXBElement<GpxType>) unmarshaller.unmarshal(file);
-        return unmarshal.getValue();
+    public GpxType load(Path path) {
+        try {
+            Unmarshaller unmarshaller = context().createUnmarshaller();
+            JAXBElement<GpxType> unmarshal = (JAXBElement<GpxType>) unmarshaller.unmarshal(path.toFile());
+            return unmarshal.getValue();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String toXml(GpxType hutsGpx) throws JAXBException {
