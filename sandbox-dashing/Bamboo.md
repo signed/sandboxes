@@ -1,6 +1,8 @@
 fetch the latest master branch build result for plan SAM in project DAS
-/rest/api/latest/result/DAS-SAM?expand=results[0]
+/rest/api/latest/result/DAS-SAM.xml?expand=results[0]
 
+additionally fetches the latest result of each branch
+rest/api/latest/result/DAS-SAM.json?expand=results[0].result.plan.branches.branch.latestResult
 
 
 # helpfull links #
