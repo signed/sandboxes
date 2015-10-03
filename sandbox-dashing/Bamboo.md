@@ -7,6 +7,11 @@ rest/api/latest/result/DAS-SAM.json?expand=results[0].result.plan.branches.branc
 
 # helpfull links #
 
-https://answers.atlassian.com/questions/250383/bamboo-rest-api-list-all-results-including-branches
-https://answers.atlassian.com/questions/14814271/bamboo-rest-api-number-of-times-a-build-has-failed-
-https://answers.atlassian.com/questions/250383/bamboo-rest-api-list-all-results-including-branches
+[Dashing Workshop](https://vimeo.com/95307499)
+[bamboo-rest-api-list-all-results-including-branches](https://answers.atlassian.com/questions/250383/bamboo-rest-api-list-all-results-including-branches)  
+[bamboo-rest-api-number-of-times-a-build-has-failed-](https://answers.atlassian.com/questions/14814271/bamboo-rest-api-number-of-times-a-build-has-failed-)  
+[bamboo-rest-api-list-all-results-including-branches](https://answers.atlassian.com/questions/250383/bamboo-rest-api-list-all-results-including-branches)  
+
+# existing widgets #
+https://gist.github.com/gavinbunney/10617832
+https://github.com/kunday/dashing-bamboo
