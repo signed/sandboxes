@@ -5,7 +5,7 @@ additionally fetches the latest result of each branch
 rest/api/latest/result/DAS-SAM.json?expand=results[0].result.plan.branches.branch.latestResult
 
 
-# helpfull links #
+# helpful links #
 
 [Dashing Workshop](https://vimeo.com/95307499)
 [bamboo-rest-api-list-all-results-including-branches](https://answers.atlassian.com/questions/250383/bamboo-rest-api-list-all-results-including-branches)  
