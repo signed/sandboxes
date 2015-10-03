@@ -9,5 +9,8 @@ class Dashing.BambooPlanWithBranches extends Dashing.Widget
     # You can access the html node of this widget with `@node`
     # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
 
-  @accessor 'plan', ->
-    "the plan from coffee"
+  @accessor 'any_plan_failed', ->
+    @get('failed_plans').length >= 0
+
+#  @accessor 'bamboo_not_reachable', ->
+#    false
