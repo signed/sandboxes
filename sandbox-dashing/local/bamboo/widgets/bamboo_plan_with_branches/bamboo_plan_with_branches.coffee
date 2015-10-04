@@ -12,5 +12,8 @@ class Dashing.BambooPlanWithBranches extends Dashing.Widget
   @accessor 'any_plan_failed', ->
     @get('failed_plans').length >= 0
 
+  @accessor 'no_plan_failed', ->
+    @get('failed_plans').length == 0
+
 #  @accessor 'bamboo_not_reachable', ->
 #    false
