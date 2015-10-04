@@ -25,22 +25,22 @@ class BambooRestClient
     @port = port
   end
 
-  def latest_build_outcome_for_all_branches(plan_key, callback)
+  def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
       build_status_url = latest_rest_api+"result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
       response = RestClient.get(build_status_url) { |response, _, _| response }
     rescue => e
-      callback.could_not_connect_to_bamboo(e)
+      build_outcome_listener.could_not_connect_to_bamboo(e)
       return
     end
 
     if response.code == 404
-      callback.plan_does_not_exist
+      build_outcome_listener.plan_does_not_exist
       return
     end
 
     json = JSON.parse(response)
-    all_branch_results(json, callback)
+    all_branch_results(json, build_outcome_listener)
   end
 
   private
@@ -49,13 +49,13 @@ class BambooRestClient
     "http://#{@host}:#{@port}/bamboo/rest/api/latest/"
   end
 
-  def all_branch_results(json, callback)
+  def all_branch_results(json, build_outcome_listener)
     json_with_build_result_information = []
     master_branch_json = json['results']['result'][0]
     master_branch_json['planName'] = 'master'
     json_with_build_result_information << master_branch_json
     master_branch_json['plan']['branches']['branch'].each { |branch| json_with_build_result_information << branch['latestResult'] }
-    callback.branch_build_outcomes(json_with_build_result_information.map { |json| extract_build_outcome_from_json json })
+    build_outcome_listener.branch_build_outcomes(json_with_build_result_information.map { |json| extract_build_outcome_from_json json })
   end
 
   def extract_build_outcome_from_json(json)
