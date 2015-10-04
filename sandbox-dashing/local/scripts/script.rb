@@ -26,18 +26,29 @@ class BambooRestClient
   end
 
   def latest_build_outcome_for_all_branches(plan_key, callback)
-    build_status_url = "http://#{@host}:#{@port}/bamboo/rest/api/latest/result/#{plan_key}.json?expand=results%5B0%5D.result.plan.branches.branch.latestResult"
-    response = RestClient.get(build_status_url) { |response, _, _| response }
+    begin
+      build_status_url = latest_rest_api+"result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
+      response = RestClient.get(build_status_url) { |response, _, _| response }
+    rescue => e
+      callback.could_not_connect_to_bamboo(e)
+      return
+    end
+
     if response.code == 404
       callback.plan_does_not_exist
       return
     end
+
     json = JSON.parse(response)
     all_branch_results(json, callback)
-    return
   end
 
   private
+
+  def latest_rest_api
+    "http://#{@host}:#{@port}/bamboo/rest/api/latest/"
+  end
+
   def all_branch_results(json, callback)
     json_with_build_result_information = []
     master_branch_json = json['results']['result'][0]
@@ -57,8 +68,9 @@ class JsonBuilder
     print 'plan not found'
   end
 
-  def could_not_connect_to_bamboo
+  def could_not_connect_to_bamboo(exception)
     print 'could not connect to bamboo'
+    print exception
   end
 
   def branch_build_outcomes(build_outcomes)
