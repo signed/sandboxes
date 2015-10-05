@@ -15,3 +15,12 @@ rest/api/latest/result/DAS-SAM.json?expand=results[0].result.plan.branches.branc
 # existing widgets #
 https://gist.github.com/gavinbunney/10617832
 https://github.com/kunday/dashing-bamboo
+
+# icons in font awesome #
+
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/bug/
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/frown/
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/thumbs-up-alt/
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/wrench/
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/unlink/
+http://fortawesome.github.io/Font-Awesome/3.2.1/icon/ambulance/
