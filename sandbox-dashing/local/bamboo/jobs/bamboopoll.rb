@@ -115,7 +115,7 @@ end
 
 def status_json
   json_builder = JsonBuilder.new
-  bamboo_rest_client = BambooRestClient.new('http', 'http', 80, 'bamboo')
+  bamboo_rest_client = BambooRestClient.new('http', 'localhost', 6990, '/bamboo')
   bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAM', json_builder)
   json_builder.json
 end
