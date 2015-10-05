@@ -124,8 +124,13 @@ def status_json
   json_builder.json
 end
 
-# print status_json
 
-SCHEDULER.every '10s', allow_overlapping: false do |job|
-  send_event('bamboo', status_json)
+if __FILE__==$0
+  print status_json
+else
+  SCHEDULER.every '10s', allow_overlapping: false do |job|
+    send_event('bamboo', status_json)
+  end
 end
+
+
