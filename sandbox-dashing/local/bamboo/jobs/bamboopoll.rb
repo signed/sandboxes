@@ -87,23 +87,19 @@ class JsonBuilder
   end
 
   def plan_does_not_exist
-    # print 'plan not found'
     @json_dictionary[:plan_dos_not_exist] = true
   end
 
   def could_not_connect_to_bamboo(exception)
-    # print 'could not connect to bamboo'
-    # print exception
-    @json_dictionary[:plan_does_not_exist] = true
+    @json_dictionary[:bamboo_not_reachable] = true
   end
 
   def branch_build_outcomes(build_outcomes)
-    # build_outcomes.each { |result| print result.to_s + "\n" }
-    banana = build_outcomes.select { |build_outcome| build_outcome.failed? }.map { |failed| failed_branch failed }
-    @json_dictionary[:failed_plans] = banana
+    @json_dictionary[:failed_plans] = build_outcomes.select { |build_outcome| build_outcome.failed? }
+                                          .map { |failed| failed_branch failed }
   end
 
-  def json()
+  def json
     @json_dictionary
   end
 
@@ -123,7 +119,6 @@ def status_json
   bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAM', json_builder)
   json_builder.json
 end
-
 
 if __FILE__==$0
   print status_json
