@@ -123,7 +123,7 @@ end
 if __FILE__==$0
   print status_json
 else
-  SCHEDULER.every '10s', allow_overlapping: false do |job|
+  SCHEDULER.every '1s', allow_overlapping: false do |job|
     send_event('bamboo', status_json)
   end
 end
