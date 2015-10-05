@@ -41,6 +41,7 @@ class BambooRestClient
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
       build_status_url = latest_rest_api+"result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
+      print build_status_url + "\n"
       response = RestClient.get(build_status_url) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
@@ -87,7 +88,7 @@ class JsonBuilder
   end
 
   def plan_does_not_exist
-    @json_dictionary[:plan_dos_not_exist] = true
+    @json_dictionary[:plan_does_not_exist] = true
   end
 
   def could_not_connect_to_bamboo(exception)
@@ -116,7 +117,7 @@ end
 def status_json
   json_builder = JsonBuilder.new
   bamboo_rest_client = BambooRestClient.new('http', 'localhost', 6990, '/bamboo')
-  bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAM', json_builder)
+  bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAK', json_builder)
   json_builder.json
 end
 
