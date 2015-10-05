@@ -31,9 +31,11 @@ class BuildOutcome
 end
 
 class BambooRestClient
-  def initialize(host, port)
+  def initialize(protocol, host, port, path='')
+    @protocol = protocol
     @host = host
     @port = port
+    @path = path
   end
 
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
@@ -57,7 +59,7 @@ class BambooRestClient
   private
 
   def latest_rest_api
-    "http://#{@host}:#{@port}/bamboo/rest/api/latest/"
+    "#{@protocol}://#{@host}:#{@port}#{@path}/rest/api/latest/"
   end
 
   def all_branch_results(json, build_outcome_listener)
@@ -117,10 +119,12 @@ end
 
 def status_json
   json_builder = JsonBuilder.new
-  bamboo_rest_client = BambooRestClient.new('localhost', 6990)
+  bamboo_rest_client = BambooRestClient.new('http', 'http', 80, 'bamboo')
   bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAM', json_builder)
   json_builder.json
 end
+
+# print status_json
 
 SCHEDULER.every '10s', allow_overlapping: false do |job|
   send_event('bamboo', status_json)
