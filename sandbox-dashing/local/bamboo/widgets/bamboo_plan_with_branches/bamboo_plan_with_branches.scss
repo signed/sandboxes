@@ -3,7 +3,7 @@
 }
 
 .widget-bamboo-plan-with-branches {
-
+  background: lightblue;
 }
 
 .plan {
@@ -24,4 +24,8 @@
 
 .failed-branches {
   text-align: left;
+}
+
+.hidden {
+  visibility: hidden;
 }

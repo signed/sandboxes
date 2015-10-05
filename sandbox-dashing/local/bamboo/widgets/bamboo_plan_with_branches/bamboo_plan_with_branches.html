@@ -1,8 +1,8 @@
 <h1 class="plan" data-bind="plan"></h1>
+<i data-bind-class="connected"></i>
 <ul class="failed-branches">
     <li data-foreach-failed_plan="failed_plans">
         <a data-bind-href="failed_plan.link" data-bind="failed_plan.name" target="_blank"></a>
     </li>
 </ul>
-<span data-bind="random_number">default</span>
 

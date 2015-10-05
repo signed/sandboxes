@@ -10,10 +10,15 @@ class Dashing.BambooPlanWithBranches extends Dashing.Widget
     # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
 
   @accessor 'any_plan_failed', ->
-    @get('failed_plans').length >= 0
+    not @get('plan_does_not_exist') && @get('failed_plans').length >= 0
 
   @accessor 'no_plan_failed', ->
-    @get('failed_plans').length == 0
+    not @get('plan_does_not_exist') && @get('failed_plans').length == 0
 
-#  @accessor 'bamboo_not_reachable', ->
-#    false
+  @accessor 'connected', ->
+    if @get('bamboo_not_reachable')
+      return 'icon-unlink'
+    else if @get('plan_does_not_exist')
+      return 'icon-frown'
+    else
+      return 'hidden'
