@@ -127,5 +127,3 @@ else
     send_event('bamboo', status_json)
   end
 end
-
-
