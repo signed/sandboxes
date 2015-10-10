@@ -105,7 +105,8 @@ class JsonBuilder
   def branch_build_outcomes(build_outcomes)
     #build_outcomes.each{|outcome| print outcome.to_s + "\n"}
     failed_branches_to_report = build_outcomes.select { |build_outcome| build_outcome.failed? }
-              .map { |failed| failed_branch failed }
+                                    .select { |build_outcome| build_outcome.enabled? }
+                                    .map { |failed| failed_branch failed }
     @json_dictionary[:failed_plans] = failed_branches_to_report
   end
 
