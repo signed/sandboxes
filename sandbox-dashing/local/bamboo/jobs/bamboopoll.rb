@@ -80,7 +80,7 @@ class BambooRestClient
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
       url = @bamboo_url.build_status_url_for plan_key
-      print url + "\n"
+      #print url + "\n"
       response = RestClient.get(url) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
@@ -170,7 +170,7 @@ configuration[:plan_keys].map { |plan_key| {:plan_key => plan_key, :run_as_scrip
     pretty_print_json status_json_for(plan_key, bamboo_url)
   else
     SCHEDULER.every configuration[:refresh_rate], allow_overlapping: false do |job|
-      send_event('bamboo', status_json_for(plan_key, bamboo_url))
+      send_event(plan_key, status_json_for(plan_key, bamboo_url))
     end
   end
 end
