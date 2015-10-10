@@ -20,15 +20,20 @@ def pretty_print_json(json)
 end
 
 class BuildOutcome
-  def initialize(plan_name, key, state, enabled)
+  def initialize(plan_name, key, state, enabled, result_key)
     @plan_name = plan_name
     @key = key
     @state = state
     @enabled = enabled
+    @result_key = result_key
   end
 
   def plan_name
     @plan_name
+  end
+
+  def result_key
+    @result_key
   end
 
   def failed?
@@ -55,6 +60,10 @@ class BambooUrl
     latest_rest_api+"/result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
   end
 
+  def web_url_to_build_result(result_key)
+    @base + '/browse/'+result_key
+  end
+
   private
 
   def latest_rest_api
@@ -70,8 +79,9 @@ class BambooRestClient
 
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
-      #print build_status_url + "\n"
-      response = RestClient.get(@bamboo_url.build_status_url_for plan_key) { |response, _, _| response }
+      url = @bamboo_url.build_status_url_for plan_key
+      print url + "\n"
+      response = RestClient.get(url) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
       return
@@ -99,13 +109,14 @@ class BambooRestClient
 
   def extract_build_outcome_from_json(json)
     #pretty_print_json json
-    BuildOutcome.new json[:planName], json[:key], json[:buildState], json[:plan][:enabled]
+    BuildOutcome.new json[:planName], json[:key], json[:buildState], json[:plan][:enabled], json[:planResultKey][:key]
   end
 end
 
 class JsonBuilder
 
-  def initialize
+  def initialize(bamboo_url)
+    @bamboo_url = bamboo_url
     @json_dictionary = {
         :bamboo_not_reachable => false,
         :plan_does_not_exist => false,
@@ -138,13 +149,13 @@ class JsonBuilder
     {
         :name => build_outcome.plan_name,
         :failed_because => 'just failed',
-        :link => 'http://localhost:3030/sample'
+        :link => (@bamboo_url.web_url_to_build_result build_outcome.result_key)
     }
   end
 end
 
 def status_json_for(plan_key, bamboo_url)
-  json_builder = JsonBuilder.new
+  json_builder = JsonBuilder.new(bamboo_url)
   bamboo_rest_client = BambooRestClient.new(bamboo_url)
   bamboo_rest_client.latest_build_outcome_for_all_branches(plan_key, json_builder)
   json_builder.json
