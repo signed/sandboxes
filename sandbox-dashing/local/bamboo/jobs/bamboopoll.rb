@@ -11,7 +11,7 @@ configuration = {
     :bamboo_url => 'http://localhost:6990/bamboo',
     :rest_endpoint => '/rest/api/latest',
     :refresh_rate => '10s',
-    :plan_keys => %w[DAS-SAM].uniq
+    :plan_keys => %w[DAS-SAM AP-SUCCEED AP-FAIL].uniq
 }
 #--------------------------------------------------------------------------------
 
