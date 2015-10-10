@@ -143,7 +143,7 @@ class JsonBuilder
   end
 end
 
-def status_json(plan_key, bamboo_url)
+def status_json_for(plan_key, bamboo_url)
   json_builder = JsonBuilder.new
   bamboo_rest_client = BambooRestClient.new(bamboo_url)
   bamboo_rest_client.latest_build_outcome_for_all_branches(plan_key, json_builder)
@@ -156,10 +156,10 @@ configuration[:plan_keys].map { |plan_key| {:plan_key => plan_key, :run_as_scrip
   bamboo_url = BambooUrl.new(configuration[:bamboo_url], configuration[:rest_endpoint])
   plan_key = argument[:plan_key]
   if argument[:run_as_script]
-    pretty_print_json status_json(plan_key, bamboo_url)
+    pretty_print_json status_json_for(plan_key, bamboo_url)
   else
     SCHEDULER.every configuration[:refresh_rate], allow_overlapping: false do |job|
-      send_event('bamboo', status_json(plan_key, bamboo_url))
+      send_event('bamboo', status_json_for(plan_key, bamboo_url))
     end
   end
 end
