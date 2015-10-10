@@ -11,10 +11,11 @@ def pretty_print_json(json)
 end
 
 class BuildOutcome
-  def initialize(plan_name, key, state)
+  def initialize(plan_name, key, state, enabled)
     @plan_name = plan_name
     @key = key
     @state = state
+    @enabled = enabled
   end
 
   def plan_name
@@ -25,8 +26,13 @@ class BuildOutcome
     'Failed'.eql?(@state)
   end
 
+  def enabled?
+    @enabled
+  end
+
   def to_s
-    "#{@plan_name} #{@key} -> #{@state}"
+    enabled_indicator = @enabled ? '+' : '-'
+    "#{enabled_indicator} #{@plan_name} #{@key} -> #{@state}"
   end
 end
 
@@ -53,7 +59,7 @@ class BambooRestClient
       return
     end
 
-    json = JSON.parse(response)
+    json = JSON.parse(response, symbolize_names: true)
     all_branch_results(json, build_outcome_listener)
   end
 
@@ -65,15 +71,16 @@ class BambooRestClient
 
   def all_branch_results(json, build_outcome_listener)
     json_with_build_result_information = []
-    master_branch_json = json['results']['result'][0]
-    master_branch_json['planName'] = 'master'
+    master_branch_json = json[:results][:result][0]
+    master_branch_json[:planName] = 'master'
     json_with_build_result_information << master_branch_json
-    master_branch_json['plan']['branches']['branch'].each { |branch| json_with_build_result_information << branch['latestResult'] }
+    master_branch_json[:plan][:branches][:branch].each { |branch| json_with_build_result_information << branch[:latestResult] }
     build_outcome_listener.branch_build_outcomes(json_with_build_result_information.map { |json| extract_build_outcome_from_json json })
   end
 
   def extract_build_outcome_from_json(json)
-    BuildOutcome.new json['planName'], json['key'], json['buildState']
+    #pretty_print_json json
+    BuildOutcome.new json[:planName], json[:key], json[:buildState], json[:plan][:enabled]
   end
 end
 
@@ -96,8 +103,10 @@ class JsonBuilder
   end
 
   def branch_build_outcomes(build_outcomes)
-    @json_dictionary[:failed_plans] = build_outcomes.select { |build_outcome| build_outcome.failed? }
-                                          .map { |failed| failed_branch failed }
+    #build_outcomes.each{|outcome| print outcome.to_s + "\n"}
+    failed_branches_to_report = build_outcomes.select { |build_outcome| build_outcome.failed? }
+              .map { |failed| failed_branch failed }
+    @json_dictionary[:failed_plans] = failed_branches_to_report
   end
 
   def json
@@ -122,7 +131,7 @@ def status_json
 end
 
 if __FILE__==$0
-  print status_json
+  pretty_print_json status_json
 else
   SCHEDULER.every '1s', allow_overlapping: false do |job|
     send_event('bamboo', status_json)
