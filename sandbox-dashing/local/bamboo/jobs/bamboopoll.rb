@@ -1,10 +1,19 @@
-# :first_in sets how long it takes before the job is first run. In this case, it is run immediately
-
-
 #!/usr/bin/env ruby
+
 require 'rest-client'
 require 'net/https'
 require 'json'
+
+#--------------------------------------------------------------------------------
+# Configuration
+#--------------------------------------------------------------------------------
+configuration = {
+    :bamboo_url => 'http://localhost:6990/bamboo',
+    :rest_endpoint => '/rest/api/latest',
+    :refresh_rate => '10s',
+    :plan_keys => %w[DAS-SAM].uniq
+}
+#--------------------------------------------------------------------------------
 
 def pretty_print_json(json)
   print JSON.pretty_generate(json)
@@ -36,19 +45,33 @@ class BuildOutcome
   end
 end
 
+class BambooUrl
+  def initialize(base, rest_endpoint)
+    @base = base
+    @rest_endpoint = rest_endpoint
+  end
+
+  def build_status_url_for(plan_key)
+    latest_rest_api+"/result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
+  end
+
+  private
+
+  def latest_rest_api
+    @base+@rest_endpoint
+  end
+
+end
+
 class BambooRestClient
-  def initialize(protocol, host, port, path='')
-    @protocol = protocol
-    @host = host
-    @port = port
-    @path = path
+  def initialize(bamboo_url)
+    @bamboo_url = bamboo_url
   end
 
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
-      build_status_url = latest_rest_api+"result/#{plan_key}.json?expand=results[0].result.plan.branches.branch.latestResult"
       #print build_status_url + "\n"
-      response = RestClient.get(build_status_url) { |response, _, _| response }
+      response = RestClient.get(@bamboo_url.build_status_url_for plan_key) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
       return
@@ -65,17 +88,13 @@ class BambooRestClient
 
   private
 
-  def latest_rest_api
-    "#{@protocol}://#{@host}:#{@port}#{@path}/rest/api/latest/"
-  end
-
   def all_branch_results(json, build_outcome_listener)
     json_with_build_result_information = []
     master_branch_json = json[:results][:result][0]
     master_branch_json[:planName] = 'master'
     json_with_build_result_information << master_branch_json
     master_branch_json[:plan][:branches][:branch].each { |branch| json_with_build_result_information << branch[:latestResult] }
-    build_outcome_listener.branch_build_outcomes(json_with_build_result_information.map { |json| extract_build_outcome_from_json json })
+    build_outcome_listener.branch_build_outcomes(json_with_build_result_information.map { |branch_json| extract_build_outcome_from_json branch_json })
   end
 
   def extract_build_outcome_from_json(json)
@@ -124,17 +143,24 @@ class JsonBuilder
   end
 end
 
-def status_json
+def status_json(plan_key, bamboo_url)
   json_builder = JsonBuilder.new
-  bamboo_rest_client = BambooRestClient.new('http', 'localhost', 6990, '/bamboo')
-  bamboo_rest_client.latest_build_outcome_for_all_branches('DAS-SAM', json_builder)
+  bamboo_rest_client = BambooRestClient.new(bamboo_url)
+  bamboo_rest_client.latest_build_outcome_for_all_branches(plan_key, json_builder)
   json_builder.json
 end
 
-if __FILE__==$0
-  pretty_print_json status_json
-else
-  SCHEDULER.every '1s', allow_overlapping: false do |job|
-    send_event('bamboo', status_json)
+run_as_script = __FILE__==$0
+
+configuration[:plan_keys].map { |plan_key| {:plan_key => plan_key, :run_as_script => run_as_script} }.each do |argument|
+  bamboo_url = BambooUrl.new(configuration[:bamboo_url], configuration[:rest_endpoint])
+  plan_key = argument[:plan_key]
+  if argument[:run_as_script]
+    pretty_print_json status_json(plan_key, bamboo_url)
+  else
+    SCHEDULER.every configuration[:refresh_rate], allow_overlapping: false do |job|
+      send_event('bamboo', status_json(plan_key, bamboo_url))
+    end
   end
 end
+
