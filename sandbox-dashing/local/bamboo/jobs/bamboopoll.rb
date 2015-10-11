@@ -11,7 +11,7 @@ configuration = {
     :bamboo_url => 'http://localhost:6990/bamboo',
     :rest_endpoint => '/rest/api/latest',
     :refresh_rate => '10s',
-    :plan_keys => %w[DAS-SAM AP-SUCCEED AP-FAIL].uniq
+    :plan_keys => %w[DAS-SAM].uniq
 }
 #--------------------------------------------------------------------------------
 
@@ -34,6 +34,10 @@ class BuildOutcome
 
   def result_key
     @result_key
+  end
+
+  def successful?
+    'Successful'.eql?(@state)
   end
 
   def failed?
@@ -80,7 +84,7 @@ class BambooRestClient
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
       url = @bamboo_url.build_status_url_for plan_key
-      #print url + "\n"
+      print url + "\n"
       response = RestClient.get(url) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
@@ -134,7 +138,7 @@ class JsonBuilder
 
   def branch_build_outcomes(build_outcomes)
     #build_outcomes.each{|outcome| print outcome.to_s + "\n"}
-    failed_branches_to_report = build_outcomes.select { |build_outcome| build_outcome.failed? }
+    failed_branches_to_report = build_outcomes.select { |build_outcome| not (build_outcome.successful?) }
                                     .select { |build_outcome| build_outcome.enabled? }
                                     .map { |failed| failed_branch failed }
     @json_dictionary[:failed_plans] = failed_branches_to_report
