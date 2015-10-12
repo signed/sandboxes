@@ -11,7 +11,7 @@ configuration = {
     :bamboo_url => 'http://localhost:6990/bamboo',
     :rest_endpoint => '/rest/api/latest',
     :refresh_rate => '10s',
-    :plan_keys => %w[DAS-SAM].uniq
+    :plan_keys => %w[DAS-SAM AP-FAIL AP-SUCCEED].uniq
 }
 #--------------------------------------------------------------------------------
 
@@ -65,7 +65,11 @@ class BambooUrl
   end
 
   def web_url_to_build_result(result_key)
-    @base + '/browse/'+result_key
+    @base + '/browse/' + result_key
+  end
+
+  def web_url_to_plan(plan_key)
+    @base + '/browse/' + plan_key
   end
 
   private
@@ -84,7 +88,7 @@ class BambooRestClient
   def latest_build_outcome_for_all_branches(plan_key, build_outcome_listener)
     begin
       url = @bamboo_url.build_status_url_for plan_key
-      print url + "\n"
+      #print url + "\n"
       response = RestClient.get(url) { |response, _, _| response }
     rescue => e
       build_outcome_listener.could_not_connect_to_bamboo(e)
@@ -119,9 +123,10 @@ end
 
 class JsonBuilder
 
-  def initialize(bamboo_url)
+  def initialize(bamboo_url, plan_key)
     @bamboo_url = bamboo_url
     @json_dictionary = {
+        :plan_url => (bamboo_url.web_url_to_plan plan_key),
         :bamboo_not_reachable => false,
         :plan_does_not_exist => false,
         :failed_plans => []
@@ -159,7 +164,7 @@ class JsonBuilder
 end
 
 def status_json_for(plan_key, bamboo_url)
-  json_builder = JsonBuilder.new(bamboo_url)
+  json_builder = JsonBuilder.new(bamboo_url, plan_key)
   bamboo_rest_client = BambooRestClient.new(bamboo_url)
   bamboo_rest_client.latest_build_outcome_for_all_branches(plan_key, json_builder)
   json_builder.json
