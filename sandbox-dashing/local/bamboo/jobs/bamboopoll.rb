@@ -111,7 +111,7 @@ class BambooRestClient
     json_with_build_result_information = []
     master_branch_json = json[:results][:result][0]
     master_branch_json[:planName] = 'master'
-    json_with_build_result_information << master_branch_json
+    json_with_build_result_information << master_branch_json unless master_branch_json.nil?
     master_branch_json[:plan][:branches][:branch].each do |branch|
       latest_result = branch[:latestResult]
       json_with_build_result_information << latest_result unless latest_result.nil?
