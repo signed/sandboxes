@@ -13,6 +13,7 @@ configuration = {
     :refresh_rate => '10s',
     :plan_keys => %w[DAS-SAM AP-FAIL AP-SUCCEED].uniq
 }
+# trouble plan SRVCS-AUDIOV2MOCKS
 #--------------------------------------------------------------------------------
 
 def pretty_print_json(json)
@@ -111,7 +112,10 @@ class BambooRestClient
     master_branch_json = json[:results][:result][0]
     master_branch_json[:planName] = 'master'
     json_with_build_result_information << master_branch_json
-    master_branch_json[:plan][:branches][:branch].each { |branch| json_with_build_result_information << branch[:latestResult] }
+    master_branch_json[:plan][:branches][:branch].each do |branch|
+      latest_result = branch[:latestResult]
+      json_with_build_result_information << latest_result unless latest_result.nil?
+    end
     build_outcome_listener.branch_build_outcomes(json_with_build_result_information.map { |branch_json| extract_build_outcome_from_json branch_json })
   end
 
