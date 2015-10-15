@@ -16,6 +16,10 @@ rest/api/latest/result/DAS-SAM.json?expand=results[0].result.plan.branches.branc
 https://gist.github.com/gavinbunney/10617832
 https://github.com/kunday/dashing-bamboo
 
+## example on how to bundle your widgets into a gem##
+
+https://github.com/werliefertwas/
+
 # icons in font awesome #
 
 http://fortawesome.github.io/Font-Awesome/3.2.1/icon/bug/
