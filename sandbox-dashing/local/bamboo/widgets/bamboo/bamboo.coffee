@@ -1,4 +1,4 @@
-class Dashing.BambooPlanWithBranches extends Dashing.Widget
+class Dashing.Bamboo extends Dashing.Widget
   ready: ->
     # This is fired when the widget is done being rendered
     @readyvalue = 'set in the ready call'
