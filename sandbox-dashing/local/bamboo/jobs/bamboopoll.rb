@@ -11,7 +11,7 @@ configuration = {
     :bamboo_url => 'http://localhost:6990/bamboo',
     :rest_endpoint => '/rest/api/latest',
     :refresh_rate => '10s',
-    :plan_keys => %w[DAS-SAM AP-FAIL AP-SUCCEED].uniq
+    :plan_keys => %w[AP-FAIL AP-SUCCEED].uniq
 }
 # trouble plan SRVCS-AUDIOV2MOCKS
 #--------------------------------------------------------------------------------
