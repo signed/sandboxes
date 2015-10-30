@@ -15,6 +15,7 @@
         <module>bean-validation</module>
         <module>injectbuildnumber</module>
         <module>external-configuration</module>
+        <module>ioc-container</module>
     </modules>
 
 
