@@ -36,8 +36,9 @@ public class SpringStyleIntegrationTest {
     @Before
     public void setUp() throws Exception {
         parameters.put("port", port);
-
     }
+
+
 
     @Test
     public void ifNameIsMissingRespondWith400() throws Exception {
