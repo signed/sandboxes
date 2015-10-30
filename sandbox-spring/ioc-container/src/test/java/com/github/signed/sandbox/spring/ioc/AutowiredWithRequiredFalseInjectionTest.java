@@ -15,29 +15,31 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SuppressWarnings("ALL")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class BeanWithOptionalDependencyTest {
+public class AutowiredWithRequiredFalseInjectionTest {
 
     @Configuration
-    @ComponentScan(basePackageClasses = {BeanWithOptionalDependency.class}, resourcePattern = "BeanWithOptionalDependency.class" )
+    @ComponentScan(basePackageClasses = {BeanWithOptionalDependency.class}, resourcePattern = "BeanWithOptionalDependency*.class" )
     static class Config {
-
         @Bean
         RequiredDependency requiredDependency() {
             return new RequiredDependency();
         }
-
     }
 
     @Autowired
     BeanWithOptionalDependency bean;
+    @Autowired
+    BeanWithOptionalDependencyJava8 beanJava8;
 
     @Test
     public void beanCanBeInstantiated() throws Exception {
         assertThat(bean, notNullValue());
+        assertThat(beanJava8, notNullValue());
     }
 
     @Test
     public void optionalBeanIsAbsent() throws Exception {
         assertThat("optional bean should not be present with this configuration", ! bean.optionalBeanPresent());
+        assertThat("optional bean should not be present with this configuration", ! beanJava8.optionalBeanPresent());
     }
 }

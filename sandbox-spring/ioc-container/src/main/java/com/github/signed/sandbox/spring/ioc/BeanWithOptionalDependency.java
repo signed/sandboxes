@@ -12,6 +12,9 @@ public class BeanWithOptionalDependency {
     @Autowired(required = false)
     private OptionalDependency optional;
 
+    public RequiredDependency requiredDependency() {
+        return required;
+    }
 
     public boolean optionalBeanPresent() {
         return null != optional;
