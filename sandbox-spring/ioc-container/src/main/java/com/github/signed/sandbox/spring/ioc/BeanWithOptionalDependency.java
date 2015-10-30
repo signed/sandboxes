@@ -11,4 +11,7 @@ public class BeanWithOptionalDependency {
     private OptionalDependency optional;
 
 
+    public boolean optionalBeanPresent() {
+        return null == optional;
+    }
 }

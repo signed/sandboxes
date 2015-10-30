@@ -35,7 +35,12 @@ public class BeanWithOptionalDependencyTest {
     BeanWithOptionalDependency bean;
 
     @Test
-    public void name() throws Exception {
+    public void beanCanBeInstantiated() throws Exception {
         assertThat(bean, notNullValue());
+    }
+
+    @Test
+    public void optionalBeanIsAbsent() throws Exception {
+        assertThat("optional bean should not be present with this configuration", bean.optionalBeanPresent());
     }
 }
