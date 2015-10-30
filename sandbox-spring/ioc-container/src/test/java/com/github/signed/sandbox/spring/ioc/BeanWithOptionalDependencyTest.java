@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,12 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class BeanWithOptionalDependencyTest {
 
     @Configuration
+    @ComponentScan(basePackageClasses = {BeanWithOptionalDependency.class}, resourcePattern = "BeanWithOptionalDependency.class" )
     static class Config {
-
-        @Bean
-        BeanWithOptionalDependency beanWithOptionalDependency() {
-            return new BeanWithOptionalDependency();
-        }
 
         @Bean
         RequiredDependency requiredDependency() {
@@ -41,6 +38,6 @@ public class BeanWithOptionalDependencyTest {
 
     @Test
     public void optionalBeanIsAbsent() throws Exception {
-        assertThat("optional bean should not be present with this configuration", bean.optionalBeanPresent());
+        assertThat("optional bean should not be present with this configuration", ! bean.optionalBeanPresent());
     }
 }

@@ -1,7 +1,9 @@
 package com.github.signed.sandbox.spring.ioc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BeanWithOptionalDependency {
 
     @Autowired
@@ -12,6 +14,6 @@ public class BeanWithOptionalDependency {
 
 
     public boolean optionalBeanPresent() {
-        return null == optional;
+        return null != optional;
     }
 }
