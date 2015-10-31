@@ -1,4 +1,4 @@
-package com.github.signed.sandbox.spring.ioc;
+package com.github.signed.sandbox.spring.ioc.autowire;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,4 @@
-package com.github.signed.sandbox.spring.ioc;
-
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+package com.github.signed.sandbox.spring.ioc.autowire;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ALL")
 @RunWith(SpringJUnit4ClassRunner.class)
