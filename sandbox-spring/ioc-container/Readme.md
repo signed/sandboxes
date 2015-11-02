@@ -10,4 +10,5 @@ http://spring.io/blog/2014/11/04/a-quality-qualifier
 # How can I override properties from property sources in tests #
 
 No solution but provides insight http://blog.jamesdbloom.com/UsingPropertySourceAndEnvironment.html
+Some other blog to try out http://www.javacreed.com/how-to-mock-the-value-properties-during-tests/
 
