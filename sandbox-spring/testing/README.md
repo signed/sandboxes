@@ -4,10 +4,13 @@ No solution but provides insight http://blog.jamesdbloom.com/UsingPropertySource
 Some other blog to try out http://www.javacreed.com/how-to-mock-the-value-properties-during-tests/
 
 # How ot mock all missing dependencies in a spring integration test#
+https://blog.42.nl/articles/unit-testing-spring-beans-with-mocked-dependencies/
 looks promising http://therore.net/injecting-mockito-mocks-into-the-spring-context/
 1. https://github.com/knes1/springmockedtests
 1. https://github.com/hobo05/mockitobeans
 1. https://github.com/alfredodiaz/therore-spring-mockito
+1. https://github.com/sgri/spring-reinject
+
 
 
 # good source for spring testing releated issues #

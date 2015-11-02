@@ -16,6 +16,7 @@
         <module>injectbuildnumber</module>
         <module>external-configuration</module>
         <module>ioc-container</module>
+        <module>testing</module>
     </modules>
 
 
