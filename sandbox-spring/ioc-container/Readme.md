@@ -6,3 +6,8 @@ If you have java 8 in your project, what I have for 1 month now, you can use the
 # What about qualifiers and constructor injection#
 http://spring.io/blog/2014/11/04/a-quality-qualifier
 
+
+# How can I override properties from property sources in tests #
+
+No solution but provides insight http://blog.jamesdbloom.com/UsingPropertySourceAndEnvironment.html
+
