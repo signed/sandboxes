@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AdvisedController {
 
-
     @RequestMapping("/")
     @ResponseBody
     public String someData(){
-        return "Hello World";
+        throw new AnotherBusinessException();
+        //throw new BusinessException();
+        //return "Hello World";
     }
 }
