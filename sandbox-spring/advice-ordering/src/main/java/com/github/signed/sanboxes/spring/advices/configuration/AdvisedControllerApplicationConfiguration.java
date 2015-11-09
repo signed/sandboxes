@@ -1,4 +1,4 @@
-package com.github.signed.sanboxes.spring.advices;
+package com.github.signed.sanboxes.spring.advices.configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+
+import com.github.signed.sanboxes.spring.advices.AdvisedControllerApplication;
 
 @Configuration
 @EnableAutoConfiguration
