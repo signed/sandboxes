@@ -10,8 +10,8 @@ public class AdvisedController {
     @RequestMapping("/")
     @ResponseBody
     public String someData(){
-        throw new AnotherBusinessException();
+        //throw new AnotherBusinessException();
         //throw new BusinessException();
-        //return "Hello World";
+        return "Hello World";
     }
 }
