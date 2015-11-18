@@ -17,6 +17,7 @@
         <module>external-configuration</module>
         <module>ioc-container</module>
         <module>testing</module>
+        <module>advice-ordering</module>
     </modules>
 
 
