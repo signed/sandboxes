@@ -1,6 +1,10 @@
 package com.github.signed.pmd.abstractions;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
 import com.beust.jcommander.internal.Lists;
+
 import net.sourceforge.pmd.lang.java.ast.ASTArguments;
 import net.sourceforge.pmd.lang.java.ast.ASTCompilationUnit;
 import net.sourceforge.pmd.lang.java.ast.ASTImportDeclaration;
@@ -9,9 +13,6 @@ import net.sourceforge.pmd.lang.java.ast.ASTPrimaryExpression;
 import net.sourceforge.pmd.lang.java.ast.ASTPrimaryPrefix;
 import net.sourceforge.pmd.lang.java.ast.ASTPrimarySuffix;
 import net.sourceforge.pmd.lang.java.ast.JavaParserVisitorAdapter;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 public class MethodCallExtractor extends JavaParserVisitorAdapter {
     private final List<MethodCall> methodCalls = Lists.newArrayList();
@@ -29,7 +30,7 @@ public class MethodCallExtractor extends JavaParserVisitorAdapter {
 
     private void addCall(ASTPrimaryExpression node) {
         final ASTPrimarySuffix suffix = node.getFirstChildOfType(ASTPrimarySuffix.class);
-        if (suffix.hasDescendantOfType(ASTArguments.class)) {
+        if (suffix != null && suffix.hasDescendantOfType(ASTArguments.class)) {
             final ASTPrimaryPrefix prefix = node.getFirstChildOfType(ASTPrimaryPrefix.class);
             final ASTName methodName = prefix.getFirstChildOfType(ASTName.class);
 
