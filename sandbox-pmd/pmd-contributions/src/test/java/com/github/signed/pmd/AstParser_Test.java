@@ -1,5 +1,15 @@
 package com.github.signed.pmd;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.util.List;
+
+import org.javacc.parser.JavaCCParser;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.github.signed.pmd.rules.AlwaysComplain;
 import com.google.common.io.Files;
 import com.sun.codemodel.CodeWriter;
@@ -8,6 +18,7 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.writer.SingleStreamCodeWriter;
+
 import joist.sourcegen.GClass;
 import joist.sourcegen.GMethod;
 import net.sourceforge.pmd.PMD;
@@ -15,19 +26,9 @@ import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.ast.ASTPackageDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTPrimaryExpression;
 import net.sourceforge.pmd.lang.java.ast.JavaNode;
-import org.javacc.parser.JavaCCParser;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.util.List;
 
 public class AstParser_Test {
     private String sourceCode;
@@ -88,11 +89,11 @@ public class AstParser_Test {
     public void runIntegrationTestWithPMD() throws Exception {
         Report report = new Report();
         PMD pmd = new PMD();
-        pmd.getConfiguration().setDefaultLanguageVersion(LanguageVersion.JAVA_17);
+        pmd.getConfiguration().setDefaultLanguageVersion(AstParser.JAVA_7);
         RuleContext ctx = new RuleContext();
         ctx.setReport(report);
         ctx.setSourceCodeFilename("n/a");
-        ctx.setLanguageVersion(LanguageVersion.JAVA_17);
+        ctx.setLanguageVersion(AstParser.JAVA_7);
 //        ctx.setIgnoreExceptions(false);
         RuleSet rules = new RuleSet();
         rules.addRule(new AlwaysComplain());
