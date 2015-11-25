@@ -13,5 +13,8 @@ looks promising http://therore.net/injecting-mockito-mocks-into-the-spring-conte
 
 
 
-# good source for spring testing releated issues #
+# good source for spring testing related issues #
 http://stackoverflow.com/questions/2457239/injecting-mockito-mocks-into-a-spring-bean
+
+# good blog post on spring boot testing
+http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
