@@ -2,8 +2,10 @@ package com.github.signed.sanboxes.spring.data;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -12,9 +14,11 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -23,13 +27,31 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestContext;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@TestExecutionListeners(listeners = {RepositoryTest.SchemaInitializer.class}, mergeMode = MERGE_WITH_DEFAULTS)
+@SpringApplicationConfiguration
 public class RepositoryTest {
+
+    public static class SchemaInitializer extends AbstractTestExecutionListener{
+        @Override
+        public void beforeTestClass(TestContext testContext) throws Exception {
+            DataSource dataSource = testContext.getApplicationContext().getBean(DataSource.class);
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+            jdbcTemplate.update("CREATE TABLE Customer(\n" +
+                    "  `id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
+                    "  `firstName` varchar(32),\n" +
+                    "  `lastName` varchar(32),\n" +
+                    "  PRIMARY KEY (`id`)\n" +
+                    ") ");
+        }
+    }
 
     @Configuration
     @EnableJpaRepositories
@@ -52,9 +74,14 @@ public class RepositoryTest {
         @Bean
         public JpaVendorAdapter jpaVendorAdapter() {
             HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-            hibernateJpaVendorAdapter.setShowSql(false);
-            hibernateJpaVendorAdapter.setGenerateDdl(true);
+            hibernateJpaVendorAdapter.setShowSql(true);
+            hibernateJpaVendorAdapter.setGenerateDdl(false);
             hibernateJpaVendorAdapter.setDatabase(Database.H2);
+            Map<String, Object> propertyMap = hibernateJpaVendorAdapter.getJpaPropertyMap();
+            propertyMap.put("hibernate.show_sql", "true");
+            propertyMap.put("hibernate.format_sql", "true");
+            propertyMap.put("hibernate.use_sql_comments", "true");
+
             return hibernateJpaVendorAdapter;
         }
 
