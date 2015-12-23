@@ -29,7 +29,10 @@ public class RibbonMain {
     }
 
     private static void do_20_requests_and_print_status_codes(RestClient client) throws URISyntaxException, com.netflix.client.ClientException {
-        HttpRequest request = HttpRequest.newBuilder().uri(new URI("/")).build();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(new URI("/"))
+            .verb(HttpRequest.Verb.GET)
+            .build();
         for (int i = 0; i < 20; i++) {
             HttpResponse response = client.executeWithLoadBalancer(request);
             System.out.println("Status code for " + response.getRequestedURI() + "  : " + response.getStatus());
