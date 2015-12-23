@@ -3,8 +3,8 @@
   Block post about deploying a highly available eureka server
 
 ## [ribbon][ribbon-doc] ##
-
 [ribbon-doc]: https://github.com/Netflix/ribbon/wiki/Getting-Started
+If a new ribbon client is instantiated and not all configuration properties are provided ribbon will fallback to the defaults in `com.netflix.client.config.DefaultClientConfigImpl`.
 
 ## eureka ##
 
