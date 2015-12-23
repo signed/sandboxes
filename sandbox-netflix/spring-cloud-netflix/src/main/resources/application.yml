@@ -1,0 +1,91 @@
+
+server:
+    port: 8080
+---
+spring:
+  profiles: zuul
+  application:
+    name: "rtc-api-aggregator"
+server:
+    port: 8035
+logging:
+  level:
+    com:
+      netflix: INFO
+
+zuul:
+  routes:
+    apples:
+      path: /apples/**
+      serviceId: apple-application
+    bananas:
+      path: /bananas/**
+      serviceId: banana-application
+    rps-application-types:
+      path: /v1/applicationtypes
+      serviceId: rps
+    rps-applications:
+      path: /v1/applications/*
+      serviceId: rps
+    rps-conferences:
+      path: /v1/applications/*/conferences/*
+      serviceId: rps
+    nrs-phonenumbers:
+      path: /v1/phonenumbers
+      serviceId: nrs
+    nrs-phonenumbers-for-application:
+      path: /v1/applications/*/phonenumbers/*
+      serviceId: nrs
+    nrs-phonenumbers-for-conference:
+      path: /v1/applications/*/conferences/*/phonenumbers/*
+      serviceId: nrs
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    registry-fetch-interval-seconds: 1
+---
+spring:
+  profiles: eureka
+server:
+  port: 8761
+
+eureka:
+  server:
+    enable-self-preservation: false
+
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+---
+spring:
+  profiles: banana
+  application:
+    name: banana-application
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+---
+spring:
+  profiles: apple
+  application:
+    name: apple-application
+server:
+  port: 9999
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
