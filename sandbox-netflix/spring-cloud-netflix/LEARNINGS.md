@@ -2,7 +2,9 @@
 - https://spring.io/blog/2015/01/20/microservice-registration-and-discovery-with-spring-cloud-and-netflix-s-eureka
   Block post about deploying a highly available eureka server
 
+## [ribbon][ribbon-doc] ##
 
+[ribbon-doc]: https://github.com/Netflix/ribbon/wiki/Getting-Started
 
 ## eureka ##
 
