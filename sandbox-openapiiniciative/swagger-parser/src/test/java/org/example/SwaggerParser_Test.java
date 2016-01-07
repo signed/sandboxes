@@ -11,6 +11,7 @@ public class SwaggerParser_Test {
     public void first_attempt() throws Exception {
         SwaggerParser swaggerParser = new SwaggerParser();
         Swagger petstore = swaggerParser.read("src/test/resources/petstore-expanded.json");
-        System.out.println(Json.mapper().writeValueAsString(petstore));
+        petstore.getInfo().setDescription("Its me Mario");
+        System.out.println(Json.pretty(petstore));
     }
 }
