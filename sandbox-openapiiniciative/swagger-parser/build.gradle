@@ -1,1 +1,14 @@
 apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(
+            'io.swagger:swagger-parser:1.0.16'
+    )
+    testCompile(
+            'junit:junit:4.12'
+    )
+}
