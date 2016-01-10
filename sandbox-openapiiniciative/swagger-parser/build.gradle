@@ -10,5 +10,8 @@ dependencies {
     )
     testCompile(
             'junit:junit:4.12'
+            , 'org.hamcrest:java-hamcrest:2.0.0.0'
+            , 'info.cukes:cucumber-java:1.2.4'
+            , 'info.cukes:cucumber-junit:1.2.4'
     )
 }
