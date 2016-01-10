@@ -1,4 +1,4 @@
-package features;
+package com.github.signed.swagger;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;

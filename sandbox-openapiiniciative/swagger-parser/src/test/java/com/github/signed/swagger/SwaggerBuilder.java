@@ -1,4 +1,4 @@
-package features;
+package com.github.signed.swagger;
 
 import java.util.Map;
 

@@ -4,6 +4,9 @@ package features;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.github.signed.swagger.Merger;
+import com.github.signed.swagger.SwaggerBuilder;
+import com.github.signed.swagger.SwaggerMatcher;
+import com.github.signed.swagger.SwaggerMother;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
