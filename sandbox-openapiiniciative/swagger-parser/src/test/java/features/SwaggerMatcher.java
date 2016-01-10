@@ -1,5 +1,8 @@
 package features;
 
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+
 import java.util.Map;
 
 import org.hamcrest.BaseMatcher;
@@ -14,12 +17,8 @@ import io.swagger.models.Swagger;
 
 public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
 
-    public static Matcher<Swagger> hasPath(String one, String two) {
-        return new SwaggerMatcher().hasPaths(one, two);
-    }
-
-    public static Matcher<Swagger> hasPath(String one) {
-        return new SwaggerMatcher().hasPaths(one);
+    public static Matcher<Swagger> hasPathDefinitionsFor(String ... paths) {
+        return new SwaggerMatcher().hasPaths(paths);
     }
 
     private Matcher<Map<String, Path>> pathExistMatcher = new BaseMatcher<Map<String, Path>>() {
@@ -34,13 +33,8 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
         }
     };
 
-    public SwaggerMatcher hasPaths(String one, String two){
-        pathExistMatcher = AllOf.allOf(IsMapContaining.hasKey(one), IsMapContaining.hasKey(two));
-        return this;
-    }
-
-    public Matcher<Swagger> hasPaths(String one) {
-        pathExistMatcher = AllOf.allOf(IsMapContaining.hasKey(one));
+    public Matcher<Swagger> hasPaths(String ... paths) {
+        pathExistMatcher = AllOf.allOf(asList(paths).stream().map(IsMapContaining::hasKey).collect(toList()));
         return this;
     }
 

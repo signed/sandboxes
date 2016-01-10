@@ -32,7 +32,7 @@ public class SwaggerMergeSteps {
 
     @Then("^the path elements of booth are in the resulting swagger api description$")
     public void the_path_elements_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
-        assertThat(mergeAcpiDefinition, SwaggerMatcher.hasPath("/first","/second"));
+        assertThat(mergeAcpiDefinition, SwaggerMatcher.hasPathDefinitionsFor("/first","/second"));
     }
 
     private Swagger merge(Swagger one, Swagger two) {

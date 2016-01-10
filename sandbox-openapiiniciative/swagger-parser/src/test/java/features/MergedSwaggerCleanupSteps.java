@@ -1,6 +1,6 @@
 package features;
 
-import static features.SwaggerMatcher.hasPath;
+import static features.SwaggerMatcher.hasPathDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
@@ -41,12 +41,12 @@ public class MergedSwaggerCleanupSteps {
 
     @Then("^the untagged path definition is removed$")
     public void the_untagged_path_definition_is_removed() throws Throwable {
-        assertThat(cleanedUp, not(hasPath("/nottagged")));
+        assertThat(cleanedUp, not(hasPathDefinitionsFor("/nottagged")));
     }
 
     @Then("^the tagged path definition is still present$")
     public void the_tagged_path_definition_is_still_present() throws Throwable {
-        assertThat(cleanedUp, hasPath("/tagged"));
+        assertThat(cleanedUp, hasPathDefinitionsFor("/tagged"));
     }
 
     @Then("^the tag is removed$")
