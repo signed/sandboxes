@@ -1,23 +1,24 @@
 package features;
 
-import java.util.Optional;
+import java.util.Map;
 
-import io.swagger.models.Path;
+import com.google.common.collect.Maps;
+
 import io.swagger.models.Swagger;
 
 public class SwaggerBuilder {
 
-    private Optional<String> path = Optional.empty();
+    private Map<String, PathBuilder> paths = Maps.newLinkedHashMap();
 
-
-    public SwaggerBuilder withPath(String path) {
-        this.path = Optional.of(path);
-        return this;
+    public PathBuilder withPath(String path){
+        PathBuilder pathBuilder = new PathBuilder();
+        paths.put(path, pathBuilder);
+        return pathBuilder;
     }
 
     public Swagger build() {
         Swagger swagger = new Swagger();
-        path.ifPresent(s -> swagger.path(s, new Path()));
+        paths.forEach((s, pathBuilder) -> swagger.path(s, pathBuilder.build()));
         return swagger;
     }
 }

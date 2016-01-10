@@ -18,6 +18,10 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
         return new SwaggerMatcher().hasPaths(one, two);
     }
 
+    public static Matcher<Swagger> hasPath(String one) {
+        return new SwaggerMatcher().hasPaths(one);
+    }
+
     private Matcher<Map<String, Path>> pathExistMatcher = new BaseMatcher<Map<String, Path>>() {
         @Override
         public boolean matches(Object item) {
@@ -32,6 +36,11 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
 
     public SwaggerMatcher hasPaths(String one, String two){
         pathExistMatcher = AllOf.allOf(IsMapContaining.hasKey(one), IsMapContaining.hasKey(two));
+        return this;
+    }
+
+    public Matcher<Swagger> hasPaths(String one) {
+        pathExistMatcher = AllOf.allOf(IsMapContaining.hasKey(one));
         return this;
     }
 
