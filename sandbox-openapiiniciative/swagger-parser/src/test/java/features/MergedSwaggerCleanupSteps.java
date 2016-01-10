@@ -5,17 +5,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.github.signed.swagger.CleanUp;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 public class MergedSwaggerCleanupSteps {
 
+    private final CleanUp cleanUp = new CleanUp();
     private SwaggerBuilder mergedSwaggerDescription;
     private Swagger cleanedUp;
 
@@ -36,7 +35,7 @@ public class MergedSwaggerCleanupSteps {
 
     @When("^the swagger api description gets cleaned$")
     public void the_swagger_api_description_gets_cleaned() throws Throwable {
-        cleanedUp = cleanup(mergedSwaggerDescription.build());
+        cleanedUp = cleanUp.cleanup(mergedSwaggerDescription.build());
     }
 
     @Then("^the untagged path definition is removed$")
@@ -52,20 +51,6 @@ public class MergedSwaggerCleanupSteps {
     @Then("^the tag is removed$")
     public void the_tag_is_removed() throws Throwable {
         assertThat(cleanedUp.getPath("/tagged").getOptions().getTags(), not(contains("public")));
-    }
-
-    private Swagger cleanup(Swagger merged) {
-        String markerTag = "public";
-
-        Map<String, Path> aPublic = merged.getPaths().entrySet().stream()
-                .filter(stringPathEntry -> stringPathEntry.getValue().getOptions().getTags().contains(markerTag))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-        for (Path path : aPublic.values()) {
-            path.getOptions().getTags().remove(markerTag);
-        }
-        merged.setPaths(aPublic);
-        return merged;
     }
 
 }
