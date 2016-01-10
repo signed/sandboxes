@@ -64,9 +64,8 @@ public class MergedSwaggerCleanupSteps {
         for (Path path : aPublic.values()) {
             path.getOptions().getTags().remove(markerTag);
         }
-        Swagger swagger = new Swagger();
-        swagger.setPaths(aPublic);
-        return swagger;
+        merged.setPaths(aPublic);
+        return merged;
     }
 
 }
