@@ -1,24 +1,52 @@
 package com.github.signed.swagger;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toMap;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import io.swagger.models.HttpMethod;
+import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 public class CleanUp {
+    private final String markerTag = "public";
 
-    public Swagger cleanup(Swagger merged) {
-        String markerTag = "public";
+    public Swagger cleanup(Swagger swagger) {
+        Map<String, Path> pathsWithTaggedOperations = swagger.getPaths().entrySet().stream()
+                .map(removeOperationsWithoutMarkerTag())
+                .filter(pathsThatStillHaveOperations())
+                .map(removeMarkerTagFromOperations())
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        swagger.setPaths(pathsWithTaggedOperations);
+        return swagger;
+    }
 
-        Map<String, Path> aPublic = merged.getPaths().entrySet().stream()
-                .filter(stringPathEntry -> stringPathEntry.getValue().getOptions().getTags().contains(markerTag))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    private Function<Map.Entry<String, Path>, Map.Entry<String, Path>> removeOperationsWithoutMarkerTag() {
+        return pathsEntry -> {
+            removeUntaggedOperationsFrom(pathsEntry.getValue());
+            return pathsEntry;
+        };
+    }
 
-        for (Path path : aPublic.values()) {
-            path.getOptions().getTags().remove(markerTag);
+    private void removeUntaggedOperationsFrom(Path path) {
+        Map<HttpMethod, Operation> taggedOperations = path.getOperationMap().entrySet().stream().filter(operationsEntry -> operationsEntry.getValue().getTags().contains(markerTag)).collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        for (HttpMethod httpMethod : HttpMethod.values()) {
+            path.set(httpMethod.name().toLowerCase(), taggedOperations.getOrDefault(httpMethod, null));
         }
-        merged.setPaths(aPublic);
-        return merged;
+    }
+
+    private Predicate<Map.Entry<String, Path>> pathsThatStillHaveOperations() {
+        return pathsEntry -> !pathsEntry.getValue().isEmpty();
+    }
+
+    private Function<Map.Entry<String, Path>, Map.Entry<String, Path>> removeMarkerTagFromOperations() {
+        return pathsEntry -> {
+            pathsEntry.getValue().getOperations().stream().forEach(operation -> Optional.ofNullable(operation.getTags()).ifPresent(tags -> tags.remove(markerTag)));
+            return pathsEntry;
+        };
     }
 }

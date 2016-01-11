@@ -32,7 +32,7 @@ public class MergedSwaggerCleanupSteps {
 
     @Given("^there is a path definition with the tag$")
     public void there_is_a_path_definition_with_the_tag() throws Throwable {
-        mergedSwaggerDescription.withPath("/tagged").withOption().withTag("public");
+        mergedSwaggerDescription.withPath("/tagged").withPost().withTag("public");
     }
 
     @When("^the swagger api description gets cleaned$")
@@ -52,7 +52,7 @@ public class MergedSwaggerCleanupSteps {
 
     @Then("^the tag is removed$")
     public void the_tag_is_removed() throws Throwable {
-        assertThat(cleanedUp.getPath("/tagged").getOptions().getTags(), not(contains("public")));
+        assertThat(cleanedUp.getPath("/tagged").getPost().getTags(), not(contains("public")));
     }
 
 }
