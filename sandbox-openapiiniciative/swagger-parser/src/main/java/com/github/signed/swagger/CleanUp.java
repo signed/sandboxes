@@ -27,13 +27,16 @@ public class CleanUp {
 
     private Function<Map.Entry<String, Path>, Map.Entry<String, Path>> removeOperationsWithoutMarkerTag() {
         return pathsEntry -> {
-            removeUntaggedOperationsFrom(pathsEntry.getValue());
+            removeOperationsWithoutMarkerTagFrom(pathsEntry.getValue());
             return pathsEntry;
         };
     }
 
-    private void removeUntaggedOperationsFrom(Path path) {
-        Map<HttpMethod, Operation> taggedOperations = path.getOperationMap().entrySet().stream().filter(operationsEntry -> operationsEntry.getValue().getTags().contains(markerTag)).collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+    private void removeOperationsWithoutMarkerTagFrom(Path path) {
+        Map<HttpMethod, Operation> taggedOperations = path.getOperationMap().entrySet().stream()
+                .filter(operationsEntry -> operationsEntry.getValue().getTags().contains(markerTag))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
         for (HttpMethod httpMethod : HttpMethod.values()) {
             path.set(httpMethod.name().toLowerCase(), taggedOperations.getOrDefault(httpMethod, null));
         }
