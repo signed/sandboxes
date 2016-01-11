@@ -3,23 +3,29 @@ package com.github.signed.swagger;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-import io.swagger.models.Operation;
 import io.swagger.models.Path;
 
 public class PathBuilder {
-    private List<String> tags = newArrayList();
 
-    public PathBuilder withTag(String tag){
-        tags.add(tag);
-        return this;
+    private final List<Consumer<Path>> operations = newArrayList();
+
+    public OperationBuilder withOption() {
+        OperationBuilder builder = new OperationBuilder();
+        operations.add(path -> path.set("options", builder.build()));
+        return builder;
     }
 
-    public Path build(){
-        Operation operation = new Operation();
-        operation.setTags(newArrayList(tags));
+    public OperationBuilder withPost() {
+        OperationBuilder builder = new OperationBuilder();
+        operations.add(path -> path.set("post", builder.build()));
+        return builder;
+    }
+
+    public Path build() {
         Path path = new Path();
-        path.setOptions(operation);
+        operations.stream().forEach(operation -> operation.accept(path));
         return path;
     }
 }

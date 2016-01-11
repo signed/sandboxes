@@ -27,12 +27,12 @@ public class MergedSwaggerCleanupSteps {
 
     @Given("^there is a path definition without the tag$")
     public void there_is_a_path_definition_without_the_tag() throws Throwable {
-        mergedSwaggerDescription.withPath("/nottagged");
+        mergedSwaggerDescription.withPath("/nottagged").withOption();
     }
 
     @Given("^there is a path definition with the tag$")
     public void there_is_a_path_definition_with_the_tag() throws Throwable {
-        mergedSwaggerDescription.withPath("/tagged").withTag("public");
+        mergedSwaggerDescription.withPath("/tagged").withOption().withTag("public");
     }
 
     @When("^the swagger api description gets cleaned$")

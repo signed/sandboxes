@@ -23,9 +23,9 @@ public class SwaggerMergeSteps {
     @Given("^two distinct swagger api descriptions$")
     public void two_distinct_swagger_api_descriptions() throws Throwable {
         first = SwaggerMother.emptyApiDefinition();
-        first.withPath("/first");
+        first.withPath("/first").withOption();
         second = SwaggerMother.emptyApiDefinition();
-        second.withPath("/second");
+        second.withPath("/second").withOption();
     }
 
     @When("^the two are merged$")
