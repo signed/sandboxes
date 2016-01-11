@@ -1,4 +1,4 @@
-Feature: Merge to separate swagger files into a single swagger api
+Feature: Merge two separate api definitions into one
 
   Scenario: Merge two distinct api definitions
     Given two distinct swagger api descriptions

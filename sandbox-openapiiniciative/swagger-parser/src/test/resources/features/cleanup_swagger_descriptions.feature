@@ -1,7 +1,8 @@
-Feature: After merging swagger files there are path definitions that should not be part of merged api.
+Feature: Remove operations that are not marked
   The idea is to tag the path definitions that should be retained.
   After the merge all paths that do not have the discriminating tag are removed.
   The tag is removed from the remaining path definitions.
+
 
   Scenario: Remove all path definitions that do not have the tag
     Given a merged swagger api description
