@@ -2,6 +2,7 @@ package com.github.signed.swagger;
 
 import static java.util.stream.Collectors.toMap;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -34,7 +35,7 @@ public class CleanUp {
 
     private void removeOperationsWithoutMarkerTagFrom(Path path) {
         Map<HttpMethod, Operation> taggedOperations = path.getOperationMap().entrySet().stream()
-                .filter(operationsEntry -> operationsEntry.getValue().getTags().contains(markerTag))
+                .filter(operationsEntry -> Optional.ofNullable(operationsEntry.getValue().getTags()).orElse(Collections.emptyList()).contains(markerTag))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         for (HttpMethod httpMethod : HttpMethod.values()) {

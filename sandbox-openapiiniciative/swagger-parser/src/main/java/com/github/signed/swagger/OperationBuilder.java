@@ -18,7 +18,9 @@ public class OperationBuilder {
 
     public Operation build() {
         Operation operation = new Operation();
-        operation.setTags(Lists.newArrayList(tags));
+        if (!tags.isEmpty()) {
+            operation.setTags(Lists.newArrayList(tags));
+        }
         return operation;
     }
 }
