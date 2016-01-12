@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -34,13 +33,14 @@ public class CleanUp {
     }
 
     private void removeOperationsWithoutMarkerTagFrom(Path path) {
-        Map<HttpMethod, Operation> taggedOperations = path.getOperationMap().entrySet().stream()
-                .filter(operationsEntry -> Optional.ofNullable(operationsEntry.getValue().getTags()).orElse(Collections.emptyList()).contains(markerTag))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        path.getOperationMap().entrySet().stream()
+                .filter(operationsEntry -> !hasTag(operationsEntry.getValue()))
+                .map(Map.Entry::getKey)
+                .forEach(httpMethod -> path.set(httpMethod.name().toLowerCase(), null));
+    }
 
-        for (HttpMethod httpMethod : HttpMethod.values()) {
-            path.set(httpMethod.name().toLowerCase(), taggedOperations.getOrDefault(httpMethod, null));
-        }
+    private boolean hasTag(Operation value) {
+        return Optional.ofNullable(value.getTags()).orElse(Collections.emptyList()).contains(markerTag);
     }
 
     private Predicate<Map.Entry<String, Path>> pathsThatStillHaveOperations() {
