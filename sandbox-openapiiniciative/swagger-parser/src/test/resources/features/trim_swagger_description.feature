@@ -7,8 +7,10 @@ Feature: Trim the swagger description by removing unreferenced elements
     Then the referenced tag definition is still present
     But the not referenced tag definition is removed
 
-#  Scenario: Do not print an empty tag block to json if all tag definitions are removed
-#    Given
+  Scenario: Do not print an empty tag block to json if all tag definitions are removed
+    Given a swagger api description with only unreferenced tag definitions
+    When the swagger api description is trimmed
+    Then there is no tag property in the resulting json
 
 #  Scenario: Remove Model definitions that are not referenced in the rest of the document
 #  Scenario: A Model definition can reference another model definition.

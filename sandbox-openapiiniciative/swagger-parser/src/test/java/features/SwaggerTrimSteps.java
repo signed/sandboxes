@@ -3,8 +3,11 @@ package features;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,6 +41,11 @@ public class SwaggerTrimSteps {
         swagger.withPath("/any").withPost().withTag("referenced");
     }
 
+    @Given("^a swagger api description with only unreferenced tag definitions$")
+    public void a_swagger_api_description_with_only_unreferenced_tag_definitions() throws Throwable {
+        a_swagger_api_description_with_a_tag_definition_that_is_not_referenced_in_an_operation();
+    }
+
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
         trimmedSwagger = trim(swagger.build());
@@ -53,11 +61,15 @@ public class SwaggerTrimSteps {
         assertThat(trimmedSwagger.getTags(), not(contains(TagDefinitionBuilder.tagDefinitionFor("not referenced anywhere").build())));
     }
 
-    private Swagger trim(Swagger swagger) {
-        Set<String> tagReferences = swagger.getPaths().values().stream().map(allTagsReferencedIn()).flatMap(Set::stream).collect(Collectors.toSet());
+    @Then("^there is no tag property in the resulting json$")
+    public void there_is_no_tag_property_in_the_resulting_json() throws Throwable {
+        assertThat(trimmedSwagger.getTags(), nullValue());
+    }
 
+    private Swagger trim(Swagger swagger) {
+        Set<String> tagReferences = Optional.ofNullable(swagger.getPaths()).orElse(Collections.emptyMap()).values().stream().map(allTagsReferencedIn()).flatMap(Set::stream).collect(Collectors.toSet());
         List<Tag> referencedTagDefinitions = swagger.getTags().stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
-        swagger.setTags(referencedTagDefinitions);
+        swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
         return swagger;
     }
 
