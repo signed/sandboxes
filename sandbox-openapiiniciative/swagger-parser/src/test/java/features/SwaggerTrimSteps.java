@@ -1,13 +1,13 @@
 package features;
 
+import static java.util.Collections.emptyMap;
+import static java.util.Optional.ofNullable;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -67,13 +67,13 @@ public class SwaggerTrimSteps {
     }
 
     private Swagger trim(Swagger swagger) {
-        Set<String> tagReferences = Optional.ofNullable(swagger.getPaths()).orElse(Collections.emptyMap()).values().stream().map(allTagsReferencedIn()).flatMap(Set::stream).collect(Collectors.toSet());
+        Set<String> tagReferences = ofNullable(swagger.getPaths()).orElse(emptyMap()).values().stream().map(allTagsReferencedInPath()).flatMap(Set::stream).collect(Collectors.toSet());
         List<Tag> referencedTagDefinitions = swagger.getTags().stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
         swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
         return swagger;
     }
 
-    private Function<Path, Set<String>> allTagsReferencedIn() {
+    private Function<Path, Set<String>> allTagsReferencedInPath() {
         return path -> path.getOperations().stream().map(Operation::getTags).flatMap(List::stream).collect(Collectors.toSet());
     }
 }
