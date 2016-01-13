@@ -2,6 +2,7 @@ package features;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 
 import com.github.signed.swagger.Merger;
 import com.github.signed.swagger.SwaggerBuilder;
@@ -32,6 +33,12 @@ public class SwaggerMergeSteps {
         second.withModelDefinition("anotherthing").withTypeObject();
     }
 
+    @Given("^two swagger api descriptions that contain two identical definitions$")
+    public void two_swagger_api_descriptions_that_contain_two_identical_definitions() throws Throwable {
+        first.withModelDefinition("identical identifier");
+        first.withModelDefinition("identical identifier");
+    }
+
     @When("^the two are merged$")
     public void the_two_are_merged() throws Throwable {
         mergedApiDefinition = merger.merge(first.build(), second.build());
@@ -46,4 +53,10 @@ public class SwaggerMergeSteps {
     public void the_model_definitions_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
         assertThat(mergedApiDefinition, SwaggerMatcher.hasDefinitionsFor("something", "anotherthing") );
     }
+
+    @Then("^the definition is contained only once$")
+    public void the_definition_is_contained_only_once() throws Throwable {
+        assertThat(mergedApiDefinition.getDefinitions().values(), hasSize(1));
+    }
+
 }

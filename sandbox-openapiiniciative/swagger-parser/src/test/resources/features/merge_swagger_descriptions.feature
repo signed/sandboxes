@@ -9,3 +9,9 @@ Feature: Merge two separate api definitions into one
     Given two swagger api description with distinct model definitions
     When the two are merged
     Then the model definitions of booth are in the resulting swagger api description
+
+    @debug
+  Scenario: Only include on of the definition if they are defined in booth
+    Given two swagger api descriptions that contain two identical definitions
+    When the two are merged
+    Then the definition is contained only once
