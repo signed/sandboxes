@@ -12,13 +12,18 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 
+import io.swagger.models.Model;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
 
-    public static Matcher<Swagger> hasPathDefinitionsFor(String ... paths) {
+    public static Matcher<? super Swagger> hasPathDefinitionsFor(String ... paths) {
         return new SwaggerMatcher().hasPaths(paths);
+    }
+
+    public static Matcher<? super Swagger> hasDefinitionsFor(String ... definitionIdentifier) {
+        return new SwaggerMatcher().hasDefinitions(definitionIdentifier);
     }
 
     private Matcher<Map<String, Path>> pathExistMatcher = new BaseMatcher<Map<String, Path>>() {
@@ -33,8 +38,26 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
         }
     };
 
+
+    private Matcher<Map<String, Model>> definitionExistsMatcher = new BaseMatcher<Map<String, Model>>() {
+        @Override
+        public boolean matches(Object item) {
+            return true;
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("any definitions");
+        }
+    };
+
     public Matcher<Swagger> hasPaths(String ... paths) {
         pathExistMatcher = AllOf.allOf(asList(paths).stream().map(IsMapContaining::hasKey).collect(toList()));
+        return this;
+    }
+
+    public Matcher<? super Swagger> hasDefinitions(String ... definitionIdentifier) {
+        definitionExistsMatcher = AllOf.allOf(asList(definitionIdentifier).stream().map(IsMapContaining::hasKey).collect(toList()));
         return this;
     }
 
@@ -52,4 +75,6 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     public void describeTo(Description description) {
         pathExistMatcher.describeTo(description);
     }
+
+
 }
