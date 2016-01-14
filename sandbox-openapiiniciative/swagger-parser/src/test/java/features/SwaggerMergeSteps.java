@@ -28,6 +28,18 @@ public class SwaggerMergeSteps {
         second.withPath("/second").withOption();
     }
 
+    @Given("^two swagger api definitions with two identical path definitions$")
+    public void two_swagger_api_definitions_with_two_identical_path_definitions() throws Throwable {
+        first.withPath("/identical").withPost();
+        second.withPath("/identical").withPost();
+    }
+
+    @Given("^two swagger api definitions with conflicting path definitions$")
+    public void two_swagger_api_definitions_with_conflicting_path_definitions() throws Throwable {
+        first.withPath("/identical").withPost();
+        second.withPath("/identical").withOption();
+    }
+
     @Given("^two swagger api description with distinct model definitions$")
     public void two_swagger_api_description_with_distinct_model_definitions() throws Throwable {
         first.withModelDefinition("something").withTypeObject();
@@ -44,12 +56,6 @@ public class SwaggerMergeSteps {
     public void two_swagger_api_descriptions_that_have_conflicting_definitions() throws Throwable {
         first.withModelDefinition("identical identifier").withTypeObject();
         second.withModelDefinition("identical identifier").withTypeString();
-    }
-
-    @Given("^two swagger api definitions with two identical path definitions$")
-    public void two_swagger_api_definitions_with_two_identical_path_definitions() throws Throwable {
-        first.withPath("/identical").withPost();
-        second.withPath("/identical").withPost();
     }
 
     @When("^the two are merged$")

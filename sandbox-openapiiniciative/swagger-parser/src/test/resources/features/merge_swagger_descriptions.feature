@@ -5,11 +5,15 @@ Feature: Merge two separate api definitions into one
     When the two are merged
     Then the path elements of booth are in the resulting swagger api description
 
-  @debug
   Scenario: If booth swagger api definitions contain an identical api definition drop one
     Given two swagger api definitions with two identical path definitions
     When the two are merged
     Then the path definition is contained only once
+
+  Scenario: Report if there are conflicting path definitions
+    Given two swagger api definitions with conflicting path definitions
+    When the two are merged
+    Then the caller is informed about the conflict
 
   Scenario: Include the model definitions from both sagger api descriptions
     Given two swagger api description with distinct model definitions
