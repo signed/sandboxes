@@ -14,7 +14,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 
-public class MergedSwaggerCleanupSteps {
+public class SwaggerCleanupSteps {
 
     private final CleanUp cleanUp = new CleanUp();
     private SwaggerBuilder mergedSwaggerDescription;

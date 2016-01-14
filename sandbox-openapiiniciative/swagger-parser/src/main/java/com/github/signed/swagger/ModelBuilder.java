@@ -11,6 +11,11 @@ public class ModelBuilder {
         return this;
     }
 
+    public ModelBuilder withTypeString() {
+        type = "String";
+        return this;
+    }
+
     public Model build() {
         ModelImpl model = new ModelImpl();
         model.setType(type);
