@@ -1,21 +1,18 @@
 package features;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-
 import com.github.signed.swagger.Merger;
 import com.github.signed.swagger.SwaggerBuilder;
 import com.github.signed.swagger.SwaggerMatcher;
 import com.github.signed.swagger.SwaggerMother;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class SwaggerMergeSteps {
 
@@ -49,6 +46,12 @@ public class SwaggerMergeSteps {
         second.withModelDefinition("identical identifier").withTypeString();
     }
 
+    @Given("^two swagger api definitions with two identical path definitions$")
+    public void two_swagger_api_definitions_with_two_identical_path_definitions() throws Throwable {
+        first.withPath("/identical").withPost();
+        second.withPath("/identical").withPost();
+    }
+
     @When("^the two are merged$")
     public void the_two_are_merged() throws Throwable {
         try {
@@ -66,6 +69,11 @@ public class SwaggerMergeSteps {
     @Then("^the path elements of booth are in the resulting swagger api description$")
     public void the_path_elements_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
         assertThat(mergedApiDefinition, SwaggerMatcher.hasPathDefinitionsFor("/first","/second"));
+    }
+
+    @Then("^the path definition is contained only once$")
+    public void the_path_definition_is_contained_only_once() throws Throwable {
+        assertThat(mergedApiDefinition.getPaths().keySet(), hasSize(1));
     }
 
     @Then("^the model definitions of booth are in the resulting swagger api description$")
