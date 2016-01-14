@@ -1,10 +1,7 @@
 package features;
 
 
-import com.github.signed.swagger.Merger;
-import com.github.signed.swagger.SwaggerBuilder;
-import com.github.signed.swagger.SwaggerMatcher;
-import com.github.signed.swagger.SwaggerMother;
+import com.github.signed.swagger.*;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -20,7 +17,7 @@ public class SwaggerMergeSteps {
     private SwaggerBuilder first = SwaggerMother.emptyApiDefinition();
     private SwaggerBuilder second = SwaggerMother.emptyApiDefinition();
     private Swagger mergedApiDefinition;
-    private RuntimeException mergeException;
+    private SwaggerMergeException mergeException;
 
     @Given("^two distinct swagger api descriptions$")
     public void two_distinct_swagger_api_descriptions() throws Throwable {
@@ -67,7 +64,7 @@ public class SwaggerMergeSteps {
             System.out.println(Json.pretty(second));
             mergedApiDefinition = merger.merge(first, second);
             System.out.println(Json.pretty(mergedApiDefinition));
-        }catch (RuntimeException ex){
+        }catch (SwaggerMergeException ex){
             mergeException = ex;
         }
     }

@@ -15,8 +15,6 @@ public class PathContainedInBooth {
     }
 
     private static String unifyUrlTemplateVariableNames(String url) {
-        String variable_name = url.replaceAll("\\{[^\\}]+\\}", "{variable}");
-        System.out.println(variable_name);
-        return variable_name;
+        return url.replaceAll("\\{[^\\}]+\\}", "{variable}");
     }
 }

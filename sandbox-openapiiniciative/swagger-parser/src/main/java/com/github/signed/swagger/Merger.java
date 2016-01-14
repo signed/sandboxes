@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static com.github.signed.swagger.PathContainedInBooth.pathContainedInBooth;
 import static java.util.Collections.emptyMap;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
@@ -20,13 +21,13 @@ import static java.util.stream.Collectors.toList;
 public class Merger {
     public Swagger merge(Swagger one, Swagger two) {
         List<Pair<String, String>> conflictingPathDefinitions = ofNullable(one.getPaths()).orElse(emptyMap()).keySet().stream().
-                filter(PathContainedInBooth.pathContainedInBooth(two))
+                filter(pathContainedInBooth(two))
                 .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getPaths().get(s)))
                 .filter(thoseWhoAreNotIdentical())
                 .collect(toList());
 
         if (!conflictingPathDefinitions.isEmpty()) {
-            throw new RuntimeException("not matching");
+            throw new SwaggerMergeException("not matching");
         }
 
         LinkedHashMap<String, Path> mergedPaths = new LinkedHashMap<>();
@@ -41,7 +42,7 @@ public class Merger {
                 .collect(toList());
 
         if (!conflictingModelDefinition.isEmpty()) {
-            throw new RuntimeException("not matching");
+            throw new SwaggerMergeException("not matching");
         }
 
         LinkedHashMap<String, Model> mergedDefinitions = new LinkedHashMap<>();
