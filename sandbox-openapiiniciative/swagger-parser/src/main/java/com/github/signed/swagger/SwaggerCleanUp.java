@@ -12,7 +12,7 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
-public class CleanUp {
+public class SwaggerCleanUp {
     private final String markerTag = "public";
 
     public Swagger cleanup(Swagger swagger) {

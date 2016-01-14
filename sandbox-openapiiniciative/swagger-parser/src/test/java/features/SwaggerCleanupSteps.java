@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 
-import com.github.signed.swagger.CleanUp;
+import com.github.signed.swagger.SwaggerCleanUp;
 import com.github.signed.swagger.SwaggerBuilder;
 import com.github.signed.swagger.SwaggerMother;
 
@@ -16,7 +16,7 @@ import io.swagger.models.Swagger;
 
 public class SwaggerCleanupSteps {
 
-    private final CleanUp cleanUp = new CleanUp();
+    private final SwaggerCleanUp cleanUp = new SwaggerCleanUp();
     private SwaggerBuilder mergedSwaggerDescription;
     private Swagger cleanedUp;
 

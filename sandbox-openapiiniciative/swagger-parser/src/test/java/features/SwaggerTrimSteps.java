@@ -1,28 +1,19 @@
 package features;
 
-import static java.util.Collections.emptyMap;
-import static java.util.Optional.ofNullable;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import com.github.signed.swagger.SwaggerBuilder;
 import com.github.signed.swagger.SwaggerMother;
+import com.github.signed.swagger.SwaggerTrim;
 import com.github.signed.swagger.TagDefinitionBuilder;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import io.swagger.models.Tag;
 
 public class SwaggerTrimSteps {
 
@@ -48,7 +39,7 @@ public class SwaggerTrimSteps {
 
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
-        trimmedSwagger = trim(swagger.build());
+        trimmedSwagger = new SwaggerTrim().trim(swagger.build());
     }
 
     @Then("^the referenced tag definition is still present$")
@@ -66,14 +57,4 @@ public class SwaggerTrimSteps {
         assertThat(trimmedSwagger.getTags(), nullValue());
     }
 
-    private Swagger trim(Swagger swagger) {
-        Set<String> tagReferences = ofNullable(swagger.getPaths()).orElse(emptyMap()).values().stream().map(allTagsReferencedInPath()).flatMap(Set::stream).collect(Collectors.toSet());
-        List<Tag> referencedTagDefinitions = swagger.getTags().stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
-        swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
-        return swagger;
-    }
-
-    private Function<Path, Set<String>> allTagsReferencedInPath() {
-        return path -> path.getOperations().stream().map(Operation::getTags).flatMap(List::stream).collect(Collectors.toSet());
-    }
 }

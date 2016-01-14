@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 
 public class SwaggerMergeSteps {
 
-    private final Merger merger = new Merger();
+    private final SwaggerMerger merger = new SwaggerMerger();
     private SwaggerBuilder first = SwaggerMother.emptyApiDefinition();
     private SwaggerBuilder second = SwaggerMother.emptyApiDefinition();
     private Swagger mergedApiDefinition;

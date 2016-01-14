@@ -18,7 +18,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
-public class Merger {
+public class SwaggerMerger {
     public Swagger merge(Swagger one, Swagger two) {
         List<Pair<String, String>> conflictingPathDefinitions = ofNullable(one.getPaths()).orElse(emptyMap()).keySet().stream().
                 filter(pathContainedInBooth(two))
