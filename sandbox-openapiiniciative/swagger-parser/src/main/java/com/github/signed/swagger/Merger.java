@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 public class Merger {
     public Swagger merge(Swagger one, Swagger two) {
         List<Pair<String, String>> conflictingPathDefinitions = ofNullable(one.getPaths()).orElse(emptyMap()).keySet().stream().
-                filter(pathContainedInBooth(two))
+                filter(PathContainedInBooth.pathContainedInBooth(two))
                 .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getPaths().get(s)))
                 .filter(thoseWhoAreNotIdentical())
                 .collect(toList());
@@ -69,10 +69,6 @@ public class Merger {
                 throw new RuntimeException();
             }
         };
-    }
-
-    private Predicate<String> pathContainedInBooth(Swagger two){
-        return exposedPath -> two.getPaths().containsKey(exposedPath);
     }
 
     private Predicate<String> definitionsContainedInBooth(Swagger two) {
