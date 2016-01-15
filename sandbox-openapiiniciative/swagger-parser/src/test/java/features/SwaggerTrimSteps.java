@@ -5,7 +5,10 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
+import org.hamcrest.Matchers;
+
 import com.github.signed.swagger.SwaggerBuilder;
+import com.github.signed.swagger.SwaggerMatcher;
 import com.github.signed.swagger.SwaggerMother;
 import com.github.signed.swagger.SwaggerTrim;
 import com.github.signed.swagger.TagDefinitionBuilder;
@@ -14,6 +17,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
+import io.swagger.util.Json;
+import io.swagger.util.Yaml;
 
 public class SwaggerTrimSteps {
 
@@ -26,20 +31,36 @@ public class SwaggerTrimSteps {
         swagger.defineTag("not referenced anywhere");
     }
 
+    @Given("^a swagger api description with only unreferenced tag definitions$")
+    public void a_swagger_api_description_with_only_unreferenced_tag_definitions() throws Throwable {
+        a_swagger_api_description_with_a_tag_definition_that_is_not_referenced_in_an_operation();
+    }
+
     @Given("^a tag definition that is referenced in a path operation$")
     public void a_tag_definition_that_is_referenced_in_a_path_operation() throws Throwable {
         swagger.defineTag("referenced");
         swagger.withPath("/any").withPost().withTag("referenced");
     }
 
-    @Given("^a swagger api description with only unreferenced tag definitions$")
-    public void a_swagger_api_description_with_only_unreferenced_tag_definitions() throws Throwable {
-        a_swagger_api_description_with_a_tag_definition_that_is_not_referenced_in_an_operation();
+    @Given("^a swagger api description with an unreferenced definition$")
+    public void a_swagger_api_description_with_an_unreferenced_definition() throws Throwable {
+        swagger = SwaggerMother.emptyApiDefinition();
+        swagger.withModelDefinition("some-id").withTypeObject();
+    }
+
+    @Given("^a swagger api description where a path references a model definition$")
+    public void a_swagger_api_description_where_a_path_references_a_model_definition() throws Throwable {
+        swagger = SwaggerMother.emptyApiDefinition();
+        swagger.withModelDefinition("referenced-model-element").withTypeString();
+        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToSchemaDefinition("referenced-model-element");
     }
 
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
-        trimmedSwagger = new SwaggerTrim().trim(swagger.build());
+        Swagger build = swagger.build();
+        Json.prettyPrint(build);
+        trimmedSwagger = new SwaggerTrim().trim(build);
+        Yaml.prettyPrint(trimmedSwagger);
     }
 
     @Then("^the referenced tag definition is still present$")
@@ -57,4 +78,13 @@ public class SwaggerTrimSteps {
         assertThat(trimmedSwagger.getTags(), nullValue());
     }
 
+    @Then("^the unreferenced definition is removed$")
+    public void the_unreferenced_definition_is_removed() throws Throwable {
+        assertThat(trimmedSwagger.getDefinitions(), Matchers.nullValue());
+    }
+
+    @Then("^the referenced model definition is still present$")
+    public void the_referenced_model_definition_is_still_present() throws Throwable {
+        assertThat(trimmedSwagger, SwaggerMatcher.hasDefinitionsFor("referenced-model-element"));
+    }
 }

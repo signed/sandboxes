@@ -26,7 +26,7 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
         return new SwaggerMatcher().hasDefinitions(definitionIdentifier);
     }
 
-    private Matcher<Map<String, Path>> pathExistMatcher = new BaseMatcher<Map<String, Path>>() {
+    private Matcher<Map<String, Path>> pathsMatcher = new BaseMatcher<Map<String, Path>>() {
         @Override
         public boolean matches(Object item) {
             return true;
@@ -39,7 +39,7 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     };
 
 
-    private Matcher<Map<String, Model>> definitionExistsMatcher = new BaseMatcher<Map<String, Model>>() {
+    private Matcher<Map<String, Model>> definitionsMatcher = new BaseMatcher<Map<String, Model>>() {
         @Override
         public boolean matches(Object item) {
             return true;
@@ -52,28 +52,33 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     };
 
     public Matcher<Swagger> hasPaths(String ... paths) {
-        pathExistMatcher = AllOf.allOf(asList(paths).stream().map(IsMapContaining::hasKey).collect(toList()));
+        pathsMatcher = AllOf.allOf(asList(paths).stream().map(IsMapContaining::hasKey).collect(toList()));
         return this;
     }
 
     public Matcher<? super Swagger> hasDefinitions(String ... definitionIdentifier) {
-        definitionExistsMatcher = AllOf.allOf(asList(definitionIdentifier).stream().map(IsMapContaining::hasKey).collect(toList()));
+        definitionsMatcher = AllOf.allOf(asList(definitionIdentifier).stream().map(IsMapContaining::hasKey).collect(toList()));
         return this;
     }
 
     @Override
     protected boolean matchesSafely(Swagger item, Description mismatchDescription) {
-        boolean requiredPathsExist = pathExistMatcher.matches(item.getPaths());
+        boolean requiredPathsExist = pathsMatcher.matches(item.getPaths());
         if (!requiredPathsExist) {
-            pathExistMatcher.describeMismatch(item.getPaths(), mismatchDescription);
+            pathsMatcher.describeMismatch(item.getPaths(), mismatchDescription);
         }
 
-        return requiredPathsExist;
+        boolean definitionsMatch = definitionsMatcher.matches(item.getDefinitions());
+        if (!definitionsMatch) {
+            definitionsMatcher.describeMismatch(item.getDefinitions(), mismatchDescription);
+        }
+
+        return requiredPathsExist && definitionsMatch;
     }
 
     @Override
     public void describeTo(Description description) {
-        pathExistMatcher.describeTo(description);
+        description.appendDescriptionOf(pathsMatcher).appendText(" ").appendDescriptionOf(definitionsMatcher);
     }
 
 

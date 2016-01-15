@@ -6,6 +6,6 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-@CucumberOptions
+@CucumberOptions(tags = {"~@work-in-progress"})
 public class CucumberRunnerTest {
 }

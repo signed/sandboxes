@@ -12,6 +12,19 @@ Feature: Trim the swagger description by removing unreferenced elements
     When the swagger api description is trimmed
     Then there is no tag property in the resulting json
 
-#  Scenario: Remove Model definitions that are not referenced in the rest of the document
-#  Scenario: A Model definition can reference another model definition.
-# Ensure that if a single reference gets removed by trim the than orphaned definition gets removed as well
+  Scenario: Do not remove model definitions that are referenced in a path
+    Given a swagger api description where a path references a model definition
+    When the swagger api description is trimmed
+    Then the referenced model definition is still present
+
+  Scenario: Remove Model definitions that are not referenced in the rest of the document
+    Given a swagger api description with an unreferenced definition
+    When the swagger api description is trimmed
+    Then the unreferenced definition is removed
+
+  @work-in-progress
+  Scenario: Also remove all model definitions that become unreferenced by removing a unreferenced model definition
+    Given a swagger api description with a definition
+    And this definition is only referenced by another nreferenced definition
+    When the swagger api description is trimmed
+    Then booth definitions are removed
