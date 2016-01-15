@@ -12,8 +12,8 @@ import io.swagger.util.Json;
 
 public class Integration_Test {
 
-    private final String first = "src/test/resources/petstore-expanded.json";
-    private final String second = "src/test/resources/petstore-expanded-2.json";
+    private final String first = TestFiles.petstoreExample();
+    private final String second = TestFiles.petstoreExample();
     private final SwaggerParser parser = new SwaggerParser();
     private final SwaggerCleanUp cleanUp = new SwaggerCleanUp();
     private final SwaggerTrim trim = new SwaggerTrim();
