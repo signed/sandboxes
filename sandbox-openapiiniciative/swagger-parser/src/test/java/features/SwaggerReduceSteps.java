@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 
-import com.github.signed.swagger.SwaggerCleanUp;
+import com.github.signed.swagger.SwaggerReduce;
 import com.github.signed.swagger.SwaggerBuilder;
 import com.github.signed.swagger.SwaggerMother;
 
@@ -14,11 +14,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 
-public class SwaggerCleanupSteps {
+public class SwaggerReduceSteps {
 
-    private final SwaggerCleanUp cleanUp = new SwaggerCleanUp();
+    private final SwaggerReduce reduce = new SwaggerReduce();
     private SwaggerBuilder mergedSwaggerDescription;
-    private Swagger cleanedUp;
+    private Swagger reducedSwagger;
 
     @Given("^a merged swagger api description$")
     public void a_merged_swagger_api_description() throws Throwable {
@@ -35,24 +35,24 @@ public class SwaggerCleanupSteps {
         mergedSwaggerDescription.withPath("/tagged").withPost().withTag("public");
     }
 
-    @When("^the swagger api description gets cleaned$")
-    public void the_swagger_api_description_gets_cleaned() throws Throwable {
-        cleanedUp = cleanUp.cleanup(mergedSwaggerDescription.build());
+    @When("^the swagger api description gets reduced$")
+    public void the_swagger_api_description_gets_reduced() throws Throwable {
+        reducedSwagger = reduce.reduce(mergedSwaggerDescription.build());
     }
 
     @Then("^the untagged path definition is removed$")
     public void the_untagged_path_definition_is_removed() throws Throwable {
-        assertThat(cleanedUp, not(hasPathDefinitionsFor("/nottagged")));
+        assertThat(reducedSwagger, not(hasPathDefinitionsFor("/nottagged")));
     }
 
     @Then("^the tagged path definition is still present$")
     public void the_tagged_path_definition_is_still_present() throws Throwable {
-        assertThat(cleanedUp, hasPathDefinitionsFor("/tagged"));
+        assertThat(reducedSwagger, hasPathDefinitionsFor("/tagged"));
     }
 
     @Then("^the tag is removed$")
     public void the_tag_is_removed() throws Throwable {
-        assertThat(cleanedUp.getPath("/tagged").getPost().getTags(), not(contains("public")));
+        assertThat(reducedSwagger.getPath("/tagged").getPost().getTags(), not(contains("public")));
     }
 
 }

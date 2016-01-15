@@ -8,7 +8,7 @@ Feature: Remove operations that are not marked
     Given a merged swagger api description
     And there is a path definition without the tag
     And there is a path definition with the tag
-    When the swagger api description gets cleaned
+    When the swagger api description gets reduced
     Then the untagged path definition is removed
     And the tagged path definition is still present
     But the tag is removed

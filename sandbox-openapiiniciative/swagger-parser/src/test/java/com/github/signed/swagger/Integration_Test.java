@@ -15,7 +15,7 @@ public class Integration_Test {
     private final String first = TestFiles.petstoreExample();
     private final String second = TestFiles.petstoreExample();
     private final SwaggerParser parser = new SwaggerParser();
-    private final SwaggerCleanUp cleanUp = new SwaggerCleanUp();
+    private final SwaggerReduce reduce = new SwaggerReduce();
     private final SwaggerTrim trim = new SwaggerTrim();
     private final SwaggerMerger merge = new SwaggerMerger();
 
@@ -23,7 +23,7 @@ public class Integration_Test {
     public void name() throws Exception {
         Swagger _1st = parser.read(first);
         Swagger _2nd = parser.read(second);
-        List<Swagger> collect = Stream.of(_1st, _2nd).map(cleanUp::cleanup).map(trim::trim).collect(Collectors.toList());
+        List<Swagger> collect = Stream.of(_1st, _2nd).map(reduce::reduce).map(trim::trim).collect(Collectors.toList());
         Swagger result = this.merge.merge(collect.get(0), collect.get(1));
         System.out.println(Json.pretty(result));
     }

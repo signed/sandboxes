@@ -12,10 +12,10 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
-public class SwaggerCleanUp {
+public class SwaggerReduce {
     private final String markerTag = "public";
 
-    public Swagger cleanup(Swagger swagger) {
+    public Swagger reduce(Swagger swagger) {
         Map<String, Path> pathsWithTaggedOperations = swagger.getPaths().entrySet().stream()
                 .map(removeOperationsWithoutMarkerTag())
                 .filter(pathsThatStillHaveOperations())
