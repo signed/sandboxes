@@ -24,7 +24,6 @@ import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 
 public class SwaggerTrim {
@@ -51,12 +50,6 @@ public class SwaggerTrim {
         swagger.setDefinitions(referencedDefinitions.isEmpty() ? null : referencedDefinitions);
 
         return swagger;
-    }
-
-    public static class Models {
-        public static Collection<Property> allProperties(Model model) {
-            return Optional.ofNullable(model.getProperties()).orElse(Collections.emptyMap()).values();
-        }
     }
 
     public static class ParameterDispatch {
