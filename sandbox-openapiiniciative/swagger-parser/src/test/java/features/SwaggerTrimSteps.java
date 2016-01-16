@@ -1,5 +1,6 @@
 package features;
 
+import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
@@ -8,7 +9,6 @@ import static org.hamcrest.Matchers.nullValue;
 import org.hamcrest.Matchers;
 
 import com.github.signed.swagger.SwaggerBuilder;
-import com.github.signed.swagger.SwaggerMatcher;
 import com.github.signed.swagger.SwaggerMother;
 import com.github.signed.swagger.SwaggerTrim;
 import com.github.signed.swagger.TagDefinitionBuilder;
@@ -22,12 +22,11 @@ import io.swagger.util.Yaml;
 
 public class SwaggerTrimSteps {
 
-    private SwaggerBuilder swagger;
+    private SwaggerBuilder swagger = SwaggerMother.emptyApiDefinition();
     private Swagger trimmedSwagger;
 
     @Given("^a swagger api description with a tag definition that is not referenced in an operation$")
     public void a_swagger_api_description_with_a_tag_definition_that_is_not_referenced_in_an_operation() throws Throwable {
-        swagger = SwaggerMother.emptyApiDefinition();
         swagger.defineTag("not referenced anywhere");
     }
 
@@ -53,6 +52,16 @@ public class SwaggerTrimSteps {
         swagger = SwaggerMother.emptyApiDefinition();
         swagger.withModelDefinition("referenced-model-element").withTypeString();
         swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToSchemaDefinition("referenced-model-element");
+    }
+
+    @Given("^a swagger api description with a definition$")
+    public void a_swagger_api_description_with_a_definition() throws Throwable {
+        swagger.withModelDefinition("only-referenced-in-to-be-removed-definition").withTypeObject();
+    }
+
+    @Given("^this definition is only referenced by another unreferenced definition$")
+    public void this_definition_is_only_referenced_by_another_unreferenced_definition() throws Throwable {
+        swagger.withModelDefinition("unreferenced").withTypeObject().withReferencePropertyNamed("something").withReferenceTo("only-referenced-in-to-be-removed-definition");
     }
 
     @When("^the swagger api description is trimmed$")
@@ -85,6 +94,11 @@ public class SwaggerTrimSteps {
 
     @Then("^the referenced model definition is still present$")
     public void the_referenced_model_definition_is_still_present() throws Throwable {
-        assertThat(trimmedSwagger, SwaggerMatcher.hasDefinitionsFor("referenced-model-element"));
+        assertThat(trimmedSwagger, hasDefinitionsFor("referenced-model-element"));
+    }
+
+    @Then("^booth definitions are removed$")
+    public void booth_definitions_are_removed() throws Throwable {
+        assertThat(trimmedSwagger, not(hasDefinitionsFor("only-referenced-in-to-be-removed-definition")));
     }
 }
