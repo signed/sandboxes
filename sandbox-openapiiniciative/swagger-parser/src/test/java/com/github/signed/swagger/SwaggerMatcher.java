@@ -62,15 +62,15 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     }
 
     @Override
-    protected boolean matchesSafely(Swagger item, Description mismatchDescription) {
-        boolean requiredPathsExist = pathsMatcher.matches(item.getPaths());
+    protected boolean matchesSafely(Swagger swagger, Description mismatchDescription) {
+        boolean requiredPathsExist = pathsMatcher.matches(swagger.getPaths());
         if (!requiredPathsExist) {
-            pathsMatcher.describeMismatch(item.getPaths(), mismatchDescription);
+            pathsMatcher.describeMismatch(swagger.getPaths(), mismatchDescription);
         }
 
-        boolean definitionsMatch = definitionsMatcher.matches(item.getDefinitions());
+        boolean definitionsMatch = definitionsMatcher.matches(swagger.getDefinitions());
         if (!definitionsMatch) {
-            definitionsMatcher.describeMismatch(item.getDefinitions(), mismatchDescription);
+            definitionsMatcher.describeMismatch(swagger.getDefinitions(), mismatchDescription);
         }
 
         return requiredPathsExist && definitionsMatch;

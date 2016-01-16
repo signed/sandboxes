@@ -38,16 +38,22 @@ public class SwaggerTrim {
         Set<String> definitionReferencesInPaths = ofNullable(swagger.getPaths()).orElse(emptyMap()).values().stream().map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameterDispatch::getReference).filter(Optional::isPresent).map(Optional::get).map(RefModel::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).values().stream().map(Models::allProperties).flatMap(Collection::stream)
-                .filter(property -> property instanceof RefProperty).map(property1 -> (RefProperty) property1)
-                .map(RefProperty::getSimpleRef).collect(toSet());
 
-        Set<String> allReferenceDefinitions = Stream.concat(definitionReferencesInPaths.stream(), definitionReferencesInDefinitions.stream()).collect(Collectors.toSet());
-        Map<String, Model> referencedDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).entrySet().stream()
-                .filter(stringModelEntry -> allReferenceDefinitions.contains(stringModelEntry.getKey()))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        boolean keepRemoving = true;
+        while (keepRemoving) {
+            Set<String> definitionReferencesInDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).values().stream().map(Models::allProperties).flatMap(Collection::stream)
+                    .filter(property -> property instanceof RefProperty).map(property1 -> (RefProperty) property1)
+                    .map(RefProperty::getSimpleRef).collect(toSet());
 
-        swagger.setDefinitions(referencedDefinitions.isEmpty() ? null : referencedDefinitions);
+            Set<String> allReferenceDefinitions = Stream.concat(definitionReferencesInPaths.stream(), definitionReferencesInDefinitions.stream()).collect(Collectors.toSet());
+
+            Map<String, Model> referencedDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).entrySet().stream()
+                    .filter(stringModelEntry -> allReferenceDefinitions.contains(stringModelEntry.getKey()))
+                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+            keepRemoving = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).size() > referencedDefinitions.size();
+            swagger.setDefinitions(referencedDefinitions.isEmpty() ? null : referencedDefinitions);
+        }
 
         return swagger;
     }

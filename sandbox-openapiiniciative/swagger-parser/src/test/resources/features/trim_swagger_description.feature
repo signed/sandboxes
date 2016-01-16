@@ -22,7 +22,6 @@ Feature: Trim the swagger description by removing unreferenced elements
     When the swagger api description is trimmed
     Then the unreferenced definition is removed
 
-  @work-in-progress
   Scenario: Also remove all model definitions that become unreferenced by removing a unreferenced model definition
     Given a swagger api description with a definition
     And this definition is only referenced by another unreferenced definition
