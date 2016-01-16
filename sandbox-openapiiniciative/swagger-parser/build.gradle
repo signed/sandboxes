@@ -16,3 +16,9 @@ dependencies {
             , 'info.cukes:cucumber-junit:1.2.4'
     )
 }
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
