@@ -10,7 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.EmailProperty;
 import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.PasswordProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
 
@@ -20,9 +24,14 @@ public class Properties_ThatDoNotContainDefinitionReferencesTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {new StringProperty()}
+                {new PasswordProperty()}
+                , {new StringProperty()}
+                , {new EmailProperty()}
+                , {new DateTimeProperty()}
                 , {new IntegerProperty()}
-                ,
+                , {new DateProperty()}
+                , {new DateProperty()}
+
         });
     }
 
