@@ -1,22 +1,26 @@
 package com.github.signed.swagger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.models.Model;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
-import io.swagger.util.Json;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
 import static com.github.signed.swagger.PathContainedInBooth.pathContainedInBooth;
 import static java.util.Collections.emptyMap;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import io.swagger.models.Model;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
+import io.swagger.util.Json;
 
 public class SwaggerMerger {
     public Swagger merge(Swagger one, Swagger two) {
@@ -73,6 +77,6 @@ public class SwaggerMerger {
     }
 
     private Predicate<String> definitionsContainedInBooth(Swagger two) {
-        return modelDefinitionIdentifier -> two.getDefinitions().containsKey(modelDefinitionIdentifier);
+        return modelDefinitionIdentifier -> Optional.ofNullable(two.getDefinitions()).orElse(Collections.emptyMap()).containsKey(modelDefinitionIdentifier);
     }
 }

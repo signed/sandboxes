@@ -35,6 +35,7 @@ public class Properties {
     }
 
     public List<DefinitionReference> definitionReferencesIn(Property property) {
-        return definitionReference.getOrDefault(property.getClass(), containsNoDefinitionReferences()).apply(property);
+        Class<? extends Property> aClass = property.getClass();
+        return definitionReference.getOrDefault(aClass, containsNoDefinitionReferences()).apply(property);
     }
 }

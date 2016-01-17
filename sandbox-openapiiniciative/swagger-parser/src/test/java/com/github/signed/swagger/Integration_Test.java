@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.swagger.models.Path;
@@ -40,6 +39,9 @@ public class Integration_Test {
         Swagger petShop = parser.read(first);
         petShop.getPaths().values().stream().map(Path::getOperations).flatMap(Collection::stream).forEach(a -> a.tag("public"));
         reduce.reduce(petShop);
+
+        Yaml.prettyPrint(petShop);
+
         trim.trim(petShop);
 
         Yaml.prettyPrint(petShop);
@@ -63,7 +65,6 @@ public class Integration_Test {
     }
 
     @Test
-    @Ignore("work in progress")
     public void model_with_composition() throws Exception {
         Swagger swagger = parser.read(TestFiles.Yaml.modelWithComposition());
         Swagger trim = this.trim.trim(swagger);
