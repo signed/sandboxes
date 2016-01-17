@@ -14,13 +14,13 @@ import io.swagger.models.Swagger;
 
 public class SwaggerReduce {
     public static SwaggerReduce publicAsMarkerTag() {
-        return new SwaggerReduce();
+        return new SwaggerReduce("public");
     }
 
     private final String markerTag;
 
-    public SwaggerReduce() {
-        markerTag = "public";
+    public SwaggerReduce(String markerTag) {
+        this.markerTag = markerTag;
     }
 
     public Swagger reduce(Swagger swagger) {
