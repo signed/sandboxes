@@ -1,0 +1,67 @@
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: Localised Thingy demonstration
+
+definitions:
+  translation:
+    required:
+      - default
+    properties:
+      default:
+        type: string
+    additionalProperties:
+      type: string
+
+  thingy:
+    required:
+      - code
+    properties:
+      code:
+        type: string
+      translations:
+        $ref: '#/definitions/translation'
+
+  localisedThingy:
+    required:
+      - code
+      - name
+    properties:
+      code:
+        type: string
+        description: A locale code
+        pattern: '^[a-z]{2}(\|[a-z]+)?$'
+      name:
+        type: string
+        description: The localised name
+paths:
+  /thingies:
+    get:
+      description: |-
+        Gets `Thingy` objects.
+      responses:
+        # Response code
+        200:
+          description: A bunch of `Thingies`
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/thingy'
+  /{locale}/thingies:
+    get:
+      description: |-
+        Gets correctly localised `Thingies`
+      parameters:
+        - name: locale
+          in: path
+          type: string
+          required: true
+          default: default
+      responses:
+        200:
+          description: A bunch of localised `Thingies`
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/localisedThingy'
