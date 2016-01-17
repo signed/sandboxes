@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 
@@ -31,7 +30,6 @@ public class Properties {
         definitionReference.put(RefProperty.class, property -> Collections.singletonList((DefinitionReference) ((RefProperty) property)::getSimpleRef));
         definitionReference.put(ArrayProperty.class, property -> definitionReferencesIn(((ArrayProperty) property).getItems()));
         definitionReference.put(MapProperty.class, NotClearHowToHandle());
-        definitionReference.put(ObjectProperty.class, NotClearHowToHandle());
     }
 
     public List<DefinitionReference> definitionReferencesIn(Property property) {
