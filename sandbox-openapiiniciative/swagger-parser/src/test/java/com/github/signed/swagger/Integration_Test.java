@@ -21,7 +21,7 @@ public class Integration_Test {
     private final String first = TestFiles.Json.petstoreExample();
     private final String second = TestFiles.Json.petstoreExample();
     private final SwaggerParser parser = new SwaggerParser();
-    private final SwaggerReduce reduce = new SwaggerReduce();
+    private final SwaggerReduce reduce = SwaggerReduce.publicAsMarkerTag();
     private final SwaggerTrim trim = new SwaggerTrim();
     private final SwaggerMerger merge = new SwaggerMerger();
 

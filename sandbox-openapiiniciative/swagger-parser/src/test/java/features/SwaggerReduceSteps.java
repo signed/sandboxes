@@ -16,7 +16,7 @@ import io.swagger.models.Swagger;
 
 public class SwaggerReduceSteps {
 
-    private final SwaggerReduce reduce = new SwaggerReduce();
+    private final SwaggerReduce reduce = SwaggerReduce.publicAsMarkerTag();
     private SwaggerBuilder mergedSwaggerDescription;
     private Swagger reducedSwagger;
 

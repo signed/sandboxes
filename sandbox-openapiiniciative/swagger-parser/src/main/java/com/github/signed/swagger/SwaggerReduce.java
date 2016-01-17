@@ -13,7 +13,15 @@ import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 public class SwaggerReduce {
-    private final String markerTag = "public";
+    public static SwaggerReduce publicAsMarkerTag() {
+        return new SwaggerReduce();
+    }
+
+    private final String markerTag;
+
+    public SwaggerReduce() {
+        markerTag = "public";
+    }
 
     public Swagger reduce(Swagger swagger) {
         Map<String, Path> pathsWithTaggedOperations = swagger.getPaths().entrySet().stream()
