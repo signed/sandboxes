@@ -1,5 +1,4 @@
 SwaggerTrim:
-- Remove the tags property from an operation if it is empty
 - Remove unused parameter definitions
 - Remove unused response definitions
 
