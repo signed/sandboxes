@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.collect.Sets;
 
@@ -31,22 +31,33 @@ public class SwaggerTrim {
     private final Models models = new Models();
 
     public Swagger trim(Swagger swagger) {
+        nullEmptyTagLists(swagger);
         removeNotReferencedTagsIn(swagger);
         removeNotReferencedParameterDefinitions(swagger);
         removeNotReferencedModelDefinitionsIn(swagger);
         return swagger;
     }
 
+    private void nullEmptyTagLists(Swagger swagger) {
+        operations(swagger)
+                .filter(operation -> ofNullable(operation.getTags()).orElse(emptyList()).isEmpty())
+                .forEach(operation -> operation.setTags(null));
+    }
+
     private void removeNotReferencedParameterDefinitions(Swagger swagger) {
-        Set<String> parametersReferencedInOperations = pathDefinitionsFrom(swagger).stream().flatMap(path -> path.getOperations().stream())
-                .flatMap(operation -> operation.getParameters().stream())
+        Set<String> parametersReferencedInOperations = operations(swagger)
+                .flatMap(operation -> ofNullable(operation.getParameters()).orElse(emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
                 .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
-        Map<String, Parameter> referencedParameters = Optional.ofNullable(swagger.getParameters()).orElse(Collections.emptyMap()).entrySet().stream()
+        Map<String, Parameter> referencedParameters = ofNullable(swagger.getParameters()).orElse(Collections.emptyMap()).entrySet().stream()
                 .filter(stringParameterEntry -> parametersReferencedInOperations.contains(stringParameterEntry.getKey()))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        swagger.setParameters(referencedParameters.isEmpty()?null:referencedParameters);
+        swagger.setParameters(referencedParameters.isEmpty() ? null : referencedParameters);
+    }
+
+    private Stream<Operation> operations(Swagger swagger) {
+        return pathDefinitionsFrom(swagger).stream().flatMap(path -> path.getOperations().stream());
     }
 
     private void removeNotReferencedTagsIn(Swagger swagger) {
@@ -59,7 +70,7 @@ public class SwaggerTrim {
         Set<String> definitionReferencesInPathsDefaultParameters = pathDefinitionsFrom(swagger).stream().map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameters::definitionReferencesIn).filter(list -> !list.isEmpty()).flatMap(List::stream).map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInPathOperationsDeclaration = pathDefinitionsFrom(swagger).stream().flatMap(path -> path.getOperations().stream())
+        Set<String> definitionReferencesInPathOperationsDeclaration = operations(swagger)
                 .map(operations::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 

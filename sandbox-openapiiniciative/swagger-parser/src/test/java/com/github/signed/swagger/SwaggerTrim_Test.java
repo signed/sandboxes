@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
+import java.util.Collections;
+
 import org.junit.Test;
 
 import io.swagger.models.Swagger;
@@ -37,11 +39,24 @@ public class SwaggerTrim_Test {
         assertThat(trimmed(), SwaggerMatcher.hasDefinitionsFor("not-referenced-in-a-path"));
     }
 
+    @Test
+    public void remove_empty_tag_lists_in_path_operations() throws Exception {
+        swaggerBuilder.withPath("/").withPost();
+        Swagger swagger = swaggerBuilder.build();
+        swagger.getPath("/").getPost().setTags(Collections.emptyList());
+
+        assertThat(trimmed(swagger).getPath("/").getPost().getTags(), nullValue());
+    }
+
     private Swagger trimmed() {
         Swagger build = swaggerBuilder.build();
         Json.prettyPrint(build);
-        Swagger trim = new SwaggerTrim().trim(build);
+        Swagger trim = trimmed(build);
         Yaml.prettyPrint(trim);
         return trim;
+    }
+
+    private Swagger trimmed(Swagger build) {
+        return new SwaggerTrim().trim(build);
     }
 }

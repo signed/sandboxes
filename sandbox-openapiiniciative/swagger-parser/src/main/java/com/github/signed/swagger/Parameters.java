@@ -26,10 +26,6 @@ public class Parameters {
         if (parameter instanceof RefParameter) {
             return Collections.singletonList(new ParameterReference((RefParameter) parameter));
         }
-
-        if (parameter instanceof BodyParameter) {
-            return Collections.emptyList();
-        }
-        throw new RuntimeException("parameter detection still needs some work");
+        return Collections.emptyList();
     }
 }
