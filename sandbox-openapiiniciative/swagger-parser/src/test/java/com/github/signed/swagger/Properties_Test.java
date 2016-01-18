@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.RefProperty;
 
 public class Properties_Test {
@@ -38,10 +37,4 @@ public class Properties_Test {
         assertThat(properties.definitionReferencesIn(arrayProperty), not(empty())) ;
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void for_object_property_I_m_not_sure_what_to_check() throws Exception {
-        ObjectProperty arrayProperty = new ObjectProperty();
-
-        assertThat(properties.definitionReferencesIn(arrayProperty), not(empty())) ;
-    }
 }
