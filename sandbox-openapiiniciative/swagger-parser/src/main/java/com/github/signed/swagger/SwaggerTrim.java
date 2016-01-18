@@ -30,8 +30,13 @@ public class SwaggerTrim {
 
     public Swagger trim(Swagger swagger) {
         removeNotReferencedTagsIn(swagger);
+        removeNotReferencedParameterDefinitions(swagger);
         removeNotReferencedModelDefinitionsIn(swagger);
         return swagger;
+    }
+
+    private void removeNotReferencedParameterDefinitions(Swagger swagger) {
+        swagger.setParameters(null);
     }
 
     private void removeNotReferencedTagsIn(Swagger swagger) {

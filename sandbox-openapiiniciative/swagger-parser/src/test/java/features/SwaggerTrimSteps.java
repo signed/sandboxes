@@ -64,6 +64,11 @@ public class SwaggerTrimSteps {
         swagger.withModelDefinition("unreferenced").withTypeObject().withReferencePropertyNamed("something").withReferenceTo("only-referenced-in-to-be-removed-definition");
     }
 
+    @Given("^a swagger api description with a parameter definition that is not referenced anywhere$")
+    public void a_swagger_api_description_with_a_parameter_definition_that_is_not_referenced_anywhere() throws Throwable {
+        swagger.withParameterDefinition("unreferenced-parameter");
+    }
+
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
         Swagger build = swagger.build();
@@ -101,4 +106,10 @@ public class SwaggerTrimSteps {
     public void booth_definitions_are_removed() throws Throwable {
         assertThat(trimmedSwagger, not(hasDefinitionsFor("only-referenced-in-to-be-removed-definition")));
     }
+
+    @Then("^the unreferenced parameter definition is removed$")
+    public void the_unreferenced_parameter_definition_is_removed() throws Throwable {
+        assertThat(trimmedSwagger.getParameters(), nullValue());
+    }
+
 }

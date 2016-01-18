@@ -3,13 +3,9 @@ package com.github.signed.swagger;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import io.swagger.models.Path;
-import io.swagger.models.RefModel;
-import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.Parameter;
 
 public class PathBuilder {
 
@@ -32,22 +28,6 @@ public class PathBuilder {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
         parameters.add(parameterBuilder);
         return parameterBuilder;
-    }
-
-    public static class ParameterBuilder{
-        private Optional<String> maybeReferenceToADefinition = Optional.empty();
-
-
-        public ParameterBuilder withReferenceToSchemaDefinition(String definitionId){
-            maybeReferenceToADefinition = Optional.of(definitionId);
-            return this;
-        }
-
-        public Parameter build(){
-            BodyParameter bodyParameter = new BodyParameter();
-            maybeReferenceToADefinition.ifPresent(id -> bodyParameter.setSchema(new RefModel(id)));
-            return bodyParameter;
-        }
     }
 
     public Path build() {
