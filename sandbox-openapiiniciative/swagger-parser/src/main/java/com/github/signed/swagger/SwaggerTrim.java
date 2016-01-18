@@ -30,11 +30,18 @@ public class SwaggerTrim {
     private final Models models = new Models();
 
     public Swagger trim(Swagger swagger) {
+        removeNotReferencedTagsIn(swagger);
+        removeNotReferencedModelDefinitionsIn(swagger);
+        return swagger;
+    }
+
+    private void removeNotReferencedTagsIn(Swagger swagger) {
         Set<String> tagReferences = pathDefinitionsFrom(swagger).stream().map(allTagsReferencedInPath()).flatMap(Set::stream).collect(toSet());
         List<Tag> referencedTagDefinitions = ofNullable(swagger.getTags()).orElse(emptyList()).stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
         swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
+    }
 
-
+    private void removeNotReferencedModelDefinitionsIn(Swagger swagger) {
         Set<String> definitionReferencesInPathsDefaultParameters = pathDefinitionsFrom(swagger).stream().map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameters::definitionReferencesIn).filter(list -> !list.isEmpty()).flatMap(List::stream).map(DefinitionReference::getSimpleRef).collect(toSet());
 
@@ -63,11 +70,6 @@ public class SwaggerTrim {
             keepRemoving = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).size() > referencedDefinitions.size();
             swagger.setDefinitions(referencedDefinitions.isEmpty() ? null : referencedDefinitions);
         }
-        return swagger;
-    }
-
-    private Collection<Path> pathDefinitionsFrom(Swagger swagger) {
-        return ofNullable(swagger.getPaths()).orElse(emptyMap()).values();
     }
 
     private Function<Path, Set<String>> allTagsReferencedInPath() {
@@ -76,5 +78,9 @@ public class SwaggerTrim {
                 .map(strings -> (null == strings) ? Collections.<String>emptyList() : strings)
                 .flatMap(List::stream)
                 .collect(toSet());
+    }
+
+    private Collection<Path> pathDefinitionsFrom(Swagger swagger) {
+        return ofNullable(swagger.getPaths()).orElse(emptyMap()).values();
     }
 }
