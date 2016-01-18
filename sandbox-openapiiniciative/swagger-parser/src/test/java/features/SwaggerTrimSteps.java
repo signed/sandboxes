@@ -3,6 +3,7 @@ package features;
 import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
@@ -69,6 +70,16 @@ public class SwaggerTrimSteps {
         swagger.withParameterDefinition("unreferenced-parameter");
     }
 
+    @Given("^a swagger api description with a parameter definition$")
+    public void a_swagger_api_description_with_a_parameter_definition() throws Throwable {
+        swagger.withParameterDefinition("referenced-parameter");
+    }
+
+    @Given("^the parameter definition is referenced in any operation$")
+    public void the_parameter_definition_is_referenced_in_any_operation() throws Throwable {
+        swagger.withPath("/any").withOption().withParameter().referencingParameterDefinition("referenced-parameter");
+    }
+
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
         Swagger build = swagger.build();
@@ -110,6 +121,11 @@ public class SwaggerTrimSteps {
     @Then("^the unreferenced parameter definition is removed$")
     public void the_unreferenced_parameter_definition_is_removed() throws Throwable {
         assertThat(trimmedSwagger.getParameters(), nullValue());
+    }
+
+    @Then("^the referenced parameter definition is still present$")
+    public void the_referenced_parameter_definition_is_still_present() throws Throwable {
+        assertThat(trimmedSwagger.getParameters(), hasKey("referenced-parameter"));
     }
 
 }

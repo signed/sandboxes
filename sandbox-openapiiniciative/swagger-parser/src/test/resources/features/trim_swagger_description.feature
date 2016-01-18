@@ -28,7 +28,13 @@ Feature: Trim the swagger description by removing unreferenced elements
     When the swagger api description is trimmed
     Then booth definitions are removed
 
-  Scenario: Remove Parameter Definitions that are not referenced anywhere
+  Scenario: Remove parameter definitions that are not referenced anywhere
     Given a swagger api description with a parameter definition that is not referenced anywhere
     When the swagger api description is trimmed
     Then the unreferenced parameter definition is removed
+
+  Scenario: Keep parameter definitions that are referenced in any operation
+    Given a swagger api description with a parameter definition
+    And the parameter definition is referenced in any operation
+    When the swagger api description is trimmed
+    Then the referenced parameter definition is still present

@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
+import io.swagger.models.parameters.Parameter;
 
 public class SwaggerTrim {
 
@@ -36,7 +38,15 @@ public class SwaggerTrim {
     }
 
     private void removeNotReferencedParameterDefinitions(Swagger swagger) {
-        swagger.setParameters(null);
+        Set<String> parametersReferencedInOperations = pathDefinitionsFrom(swagger).stream().flatMap(path -> path.getOperations().stream())
+                .flatMap(operation -> operation.getParameters().stream())
+                .map(parameters::parameterReferencesIn)
+                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
+        Map<String, Parameter> referencedParameters = Optional.ofNullable(swagger.getParameters()).orElse(Collections.emptyMap()).entrySet().stream()
+                .filter(stringParameterEntry -> parametersReferencedInOperations.contains(stringParameterEntry.getKey()))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        swagger.setParameters(referencedParameters.isEmpty()?null:referencedParameters);
     }
 
     private void removeNotReferencedTagsIn(Swagger swagger) {

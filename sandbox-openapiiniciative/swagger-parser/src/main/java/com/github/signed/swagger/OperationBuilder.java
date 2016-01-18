@@ -10,10 +10,17 @@ import io.swagger.models.Operation;
 
 public class OperationBuilder {
     private final List<String> tags = newArrayList();
+    private final List<ParameterBuilder> parameters = Lists.newArrayList();
 
     public OperationBuilder withTag(String tag) {
         tags.add(tag);
         return this;
+    }
+
+    public ParameterBuilder withParameter() {
+        ParameterBuilder parameterBuilder = new ParameterBuilder();
+        parameters.add(parameterBuilder);
+        return parameterBuilder;
     }
 
     public Operation build() {
@@ -21,6 +28,7 @@ public class OperationBuilder {
         if (!tags.isEmpty()) {
             operation.setTags(Lists.newArrayList(tags));
         }
+        parameters.forEach(parameterBuilder -> operation.addParameter(parameterBuilder.build()));
         return operation;
     }
 }
