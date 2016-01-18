@@ -24,7 +24,6 @@ import io.swagger.models.Tag;
 
 public class SwaggerTrim {
 
-    private final Properties properties = new Properties();
     private final Parameters parameters = new Parameters();
     private final Operations operations = new Operations();
     private final Models models = new Models();
