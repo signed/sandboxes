@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
+import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
@@ -28,6 +29,9 @@ public class Models {
         } else if (model instanceof ModelImpl) {
             ModelImpl modelImpl = (ModelImpl) model;
             return allPropertiesIn(modelImpl).stream().map(properties::definitionReferencesIn).flatMap(List::stream).collect(toList());
+        } else if (model instanceof ArrayModel) {
+            ArrayModel arrayModel = (ArrayModel) model;
+            return properties.definitionReferencesIn(arrayModel.getItems());
         } else {
             throw new RuntimeException("still work to do");
         }
