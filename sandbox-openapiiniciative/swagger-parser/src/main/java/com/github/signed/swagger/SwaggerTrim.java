@@ -86,6 +86,10 @@ public class SwaggerTrim {
                 .map(operations::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
+        Set<String> definitionReferencesInParameterDefinitions = ofNullable(swagger.getParameters()).orElse(emptyMap()).values().stream()
+                .map(parameters::definitionReferencesIn).flatMap(List::stream)
+                .map(DefinitionReference::getSimpleRef).collect(toSet());
+
         boolean keepRemoving = true;
         while (keepRemoving) {
             Set<String> definitionReferencesInDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).values().stream()
@@ -99,6 +103,7 @@ public class SwaggerTrim {
             allReferenceDefinitions.addAll(definitionReferencesInPathsDefaultParameters);
             allReferenceDefinitions.addAll(definitionReferencesInPathOperationsDeclaration);
             allReferenceDefinitions.addAll(definitionReferencesInDefinitions);
+            allReferenceDefinitions.addAll(definitionReferencesInParameterDefinitions);
 
             Map<String, Model> referencedDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).entrySet().stream()
                     .filter(stringModelEntry -> allReferenceDefinitions.contains(stringModelEntry.getKey()))

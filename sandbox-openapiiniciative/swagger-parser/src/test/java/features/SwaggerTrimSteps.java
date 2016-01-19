@@ -18,11 +18,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
-import io.swagger.util.Json;
 import io.swagger.util.Yaml;
 
 public class SwaggerTrimSteps {
 
+    public static final String REFERENCED_MODEL_ELEMENT = "referenced-model-element";
     private SwaggerBuilder swagger = SwaggerMother.emptyApiDefinition();
     private Swagger trimmedSwagger;
 
@@ -51,13 +51,20 @@ public class SwaggerTrimSteps {
     @Given("^a swagger api description where a path references a model definition$")
     public void a_swagger_api_description_where_a_path_references_a_model_definition() throws Throwable {
         swagger = SwaggerMother.emptyApiDefinition();
-        swagger.withModelDefinition("referenced-model-element").withTypeString();
-        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToSchemaDefinition("referenced-model-element");
+        swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
+        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToSchemaDefinition(REFERENCED_MODEL_ELEMENT);
     }
 
     @Given("^a swagger api description with a definition$")
     public void a_swagger_api_description_with_a_definition() throws Throwable {
         swagger.withModelDefinition("only-referenced-in-to-be-removed-definition").withTypeObject();
+    }
+
+    @Given("^a swagger api description where only a parameter definition references a model definition$")
+    public void a_swagger_api_description_where_only_a_parameter_definition_references_a_model_definition() throws Throwable {
+        swagger.withPath("/any").withParameterForAllOperations().referencingParameterDefinition("any-parameter-name").referencingParameterDefinition("referenced-parameter");
+        swagger.withParameterDefinition("referenced-parameter").withReferenceToSchemaDefinition(REFERENCED_MODEL_ELEMENT);
+        swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
     }
 
     @Given("^this definition is only referenced by another unreferenced definition$")
@@ -88,7 +95,7 @@ public class SwaggerTrimSteps {
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
         Swagger build = swagger.build();
-        Json.prettyPrint(build);
+        Yaml.prettyPrint(build);
         trimmedSwagger = new SwaggerTrim().trim(build);
         Yaml.prettyPrint(trimmedSwagger);
     }
@@ -115,7 +122,7 @@ public class SwaggerTrimSteps {
 
     @Then("^the referenced model definition is still present$")
     public void the_referenced_model_definition_is_still_present() throws Throwable {
-        assertThat(trimmedSwagger, hasDefinitionsFor("referenced-model-element"));
+        assertThat(trimmedSwagger, hasDefinitionsFor(REFERENCED_MODEL_ELEMENT));
     }
 
     @Then("^booth definitions are removed$")
