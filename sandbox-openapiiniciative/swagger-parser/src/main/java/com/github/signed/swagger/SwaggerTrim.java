@@ -49,25 +49,37 @@ public class SwaggerTrim {
                 .flatMap(operation -> ofNullable(operation.getParameters()).orElse(emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
                 .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
+        Set<String> parametersReferencedInPath = paths(swagger)
+                .flatMap(path -> ofNullable(path.getParameters()).orElse(Collections.emptyList()).stream())
+                .map(parameters::parameterReferencesIn)
+                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
+
+        Set<String> allParameterReferences = Sets.newHashSet();
+        allParameterReferences.addAll(parametersReferencedInOperations);
+        allParameterReferences.addAll(parametersReferencedInPath);
         Map<String, Parameter> referencedParameters = ofNullable(swagger.getParameters()).orElse(Collections.emptyMap()).entrySet().stream()
-                .filter(stringParameterEntry -> parametersReferencedInOperations.contains(stringParameterEntry.getKey()))
+                .filter(stringParameterEntry -> allParameterReferences.contains(stringParameterEntry.getKey()))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         swagger.setParameters(referencedParameters.isEmpty() ? null : referencedParameters);
     }
 
+    private Stream<Path> paths(Swagger swagger) {
+        return ofNullable(swagger.getPaths()).orElse(emptyMap()).values().stream();
+    }
+
     private Stream<Operation> operations(Swagger swagger) {
-        return pathDefinitionsFrom(swagger).stream().flatMap(path -> path.getOperations().stream());
+        return paths(swagger).flatMap(path -> path.getOperations().stream());
     }
 
     private void removeNotReferencedTagsIn(Swagger swagger) {
-        Set<String> tagReferences = pathDefinitionsFrom(swagger).stream().map(allTagsReferencedInPath()).flatMap(Set::stream).collect(toSet());
+        Set<String> tagReferences = paths(swagger).map(allTagsReferencedInPath()).flatMap(Set::stream).collect(toSet());
         List<Tag> referencedTagDefinitions = ofNullable(swagger.getTags()).orElse(emptyList()).stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
         swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
     }
 
     private void removeNotReferencedModelDefinitionsIn(Swagger swagger) {
-        Set<String> definitionReferencesInPathsDefaultParameters = pathDefinitionsFrom(swagger).stream().map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
+        Set<String> definitionReferencesInPathsDefaultParameters = paths(swagger).map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameters::definitionReferencesIn).filter(list -> !list.isEmpty()).flatMap(List::stream).map(DefinitionReference::getSimpleRef).collect(toSet());
 
         Set<String> definitionReferencesInPathOperationsDeclaration = operations(swagger)

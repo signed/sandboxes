@@ -38,3 +38,9 @@ Feature: Trim the swagger description by removing unreferenced elements
     And the parameter definition is referenced in any operation
     When the swagger api description is trimmed
     Then the referenced parameter definition is still present
+
+  Scenario: Keep parameter definitions that are referenced in any path
+    Given a swagger api description with a parameter definition
+    And the parameter definition is referenced in any path
+    When the swagger api description is trimmed
+    Then the referenced parameter definition is still present

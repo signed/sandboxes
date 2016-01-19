@@ -80,6 +80,11 @@ public class SwaggerTrimSteps {
         swagger.withPath("/any").withOption().withParameter().referencingParameterDefinition("referenced-parameter");
     }
 
+    @Given("^the parameter definition is referenced in any path$")
+    public void the_parameter_definition_is_referenced_in_any_path() throws Throwable {
+        swagger.withPath("/any").withParameterForAllOperations().referencingParameterDefinition("referenced-parameter");
+    }
+
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
         Swagger build = swagger.build();
