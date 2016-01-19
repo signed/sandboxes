@@ -25,7 +25,7 @@ import io.swagger.util.Yaml;
 public class SwaggerTrimSteps {
 
     public static final String REFERENCED_MODEL_ELEMENT = "referenced-model-element";
-    private SwaggerBuilder swagger = SwaggerMother.emptyApiDefinition();
+    private final SwaggerBuilder swagger = SwaggerMother.emptyApiDefinition();
     private Swagger trimmedSwagger;
 
     @Given("^a swagger api description with a tag definition that is not referenced in an operation$")
@@ -46,13 +46,11 @@ public class SwaggerTrimSteps {
 
     @Given("^a swagger api description with an unreferenced definition$")
     public void a_swagger_api_description_with_an_unreferenced_definition() throws Throwable {
-        swagger = SwaggerMother.emptyApiDefinition();
         swagger.withModelDefinition("some-id").withTypeObject();
     }
 
     @Given("^a swagger api description where a path references a model definition$")
     public void a_swagger_api_description_where_a_path_references_a_model_definition() throws Throwable {
-        swagger = SwaggerMother.emptyApiDefinition();
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
         swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToModelDefinition(REFERENCED_MODEL_ELEMENT);
     }
