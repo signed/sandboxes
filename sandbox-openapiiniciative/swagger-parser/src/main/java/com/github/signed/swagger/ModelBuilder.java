@@ -20,10 +20,9 @@ public class ModelBuilder {
     }
 
     public ModelBuilder withTypeString() {
-        type = "String";
+        type = "string";
         return this;
     }
-
 
     public RefPropertyBuilder withReferencePropertyNamed(String propertyName){
         RefPropertyBuilder builder = new RefPropertyBuilder();

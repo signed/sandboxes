@@ -1,6 +1,7 @@
 package features;
 
 import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
+import static features.ParameterMother.anyParameterName;
 import static features.ParameterMother.anyParameterReferencingParameterDefinition;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -64,7 +65,7 @@ public class SwaggerTrimSteps {
     @Given("^a swagger api description where only a parameter definition references a model definition$")
     public void a_swagger_api_description_where_only_a_parameter_definition_references_a_model_definition() throws Throwable {
         swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingParameterDefinition("referenced-parameter"));
-        swagger.withParameterDefinition("referenced-parameter").withReferenceToModelDefinition(REFERENCED_MODEL_ELEMENT);
+        swagger.withParameterDefinition("referenced-parameter").withReferenceToModelDefinition(REFERENCED_MODEL_ELEMENT).withName(anyParameterName());
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
     }
 
