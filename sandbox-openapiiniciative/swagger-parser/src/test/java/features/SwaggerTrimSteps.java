@@ -62,7 +62,7 @@ public class SwaggerTrimSteps {
 
     @Given("^a swagger api description where only a parameter definition references a model definition$")
     public void a_swagger_api_description_where_only_a_parameter_definition_references_a_model_definition() throws Throwable {
-        swagger.withPath("/any").withParameterForAllOperations().referencingParameterDefinition("any-parameter-name").referencingParameterDefinition("referenced-parameter");
+        swagger.withPath("/any").withParameterForAllOperations().referencingParameterDefinition("referenced-parameter");
         swagger.withParameterDefinition("referenced-parameter").withReferenceToSchemaDefinition(REFERENCED_MODEL_ELEMENT);
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
     }
