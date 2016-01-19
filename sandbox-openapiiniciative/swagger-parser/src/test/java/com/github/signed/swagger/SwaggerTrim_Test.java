@@ -1,5 +1,6 @@
 package com.github.signed.swagger;
 
+import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -8,6 +9,7 @@ import java.util.Collections;
 
 import org.junit.Test;
 
+import features.ParameterMother;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
 import io.swagger.util.Yaml;
@@ -31,12 +33,12 @@ public class SwaggerTrim_Test {
     public void do_not_remove_a_model_that_is_referenced_in_another_model_that_is_actually_referenced() throws Exception {
         PathBuilder path = swaggerBuilder.withPath("/");
         path.withPost();
-        path.withParameterForAllOperations().withReferenceToSchemaDefinition("referenced-in-path");
+        path.withParameterForAllOperations(ParameterMother.anyParameterReferencingModelDefinition("referenced-in-path"));
         ModelBuilder referencedInPath = swaggerBuilder.withModelDefinition("referenced-in-path").withTypeObject();
         referencedInPath.withReferencePropertyNamed("some-property").withReferenceTo("not-referenced-in-a-path");
         swaggerBuilder.withModelDefinition("not-referenced-in-a-path").withTypeObject();
 
-        assertThat(trimmed(), SwaggerMatcher.hasDefinitionsFor("not-referenced-in-a-path"));
+        assertThat(trimmed(), hasDefinitionsFor("not-referenced-in-a-path"));
     }
 
     @Test

@@ -19,8 +19,13 @@ public class OperationBuilder {
 
     public ParameterBuilder withParameter() {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        parameters.add(parameterBuilder);
+        withParameter(parameterBuilder);
         return parameterBuilder;
+    }
+
+    public OperationBuilder withParameter(ParameterBuilder parameterBuilder) {
+        parameters.add(parameterBuilder);
+        return this;
     }
 
     public Operation build() {

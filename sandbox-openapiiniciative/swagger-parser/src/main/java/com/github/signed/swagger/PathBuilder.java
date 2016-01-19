@@ -26,8 +26,13 @@ public class PathBuilder {
 
     public ParameterBuilder withParameterForAllOperations() {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        parameters.add(parameterBuilder);
+        withParameterForAllOperations(parameterBuilder);
         return parameterBuilder;
+    }
+
+    public PathBuilder withParameterForAllOperations(ParameterBuilder parameterBuilder) {
+        parameters.add(parameterBuilder);
+        return this;
     }
 
     public Path build() {
