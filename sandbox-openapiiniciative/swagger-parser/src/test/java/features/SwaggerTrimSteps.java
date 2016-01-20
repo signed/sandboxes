@@ -124,8 +124,8 @@ public class SwaggerTrimSteps {
         swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), ResponseMother.anyResponseBuilderReferencingResponseDefinition(referencedResponseDefinitionIdentifier()));
     }
 
-    @When("^the swagger api description is trimmed$")
-    public void the_swagger_api_description_is_trimmed() throws Throwable {
+    @When("^trimmed$")
+    public void trimmed() throws Throwable {
         Swagger build = swagger.build();
         Yaml.prettyPrint(build);
         trimmedSwagger = new SwaggerTrim().trim(build);
