@@ -13,7 +13,7 @@ public class ParameterBuilder {
     private Optional<String> maybeReferenceToAParameterDefinition = Optional.empty();
     private Optional<String> maybeAName = Optional.empty();
 
-    public ParameterBuilder withReferenceToModelDefinition(String definitionId) {
+    public ParameterBuilder withReferenceToAModelDefinition(String definitionId) {
         maybeReferenceToADefinition = Optional.of(definitionId);
         return this;
     }

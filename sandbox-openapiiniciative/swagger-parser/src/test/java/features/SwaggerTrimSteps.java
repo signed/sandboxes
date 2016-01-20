@@ -2,7 +2,8 @@ package features;
 
 import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
 import static features.ParameterMother.anyParameterName;
-import static features.ParameterMother.anyParameterReferencingParameterDefinition;
+import static features.ParameterMother.anyParameterReferencingAParameterDefinition;
+import static features.ParameterMother.referencedParameterIdentifier;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasKey;
@@ -52,7 +53,7 @@ public class SwaggerTrimSteps {
     @Given("^a swagger api description where a path references a model definition$")
     public void a_swagger_api_description_where_a_path_references_a_model_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
-        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToModelDefinition(REFERENCED_MODEL_ELEMENT);
+        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT);
     }
 
     @Given("^a swagger api description with a definition$")
@@ -62,9 +63,13 @@ public class SwaggerTrimSteps {
 
     @Given("^a swagger api description where only a parameter definition references a model definition$")
     public void a_swagger_api_description_where_only_a_parameter_definition_references_a_model_definition() throws Throwable {
-        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingParameterDefinition("referenced-parameter"));
-        swagger.withParameterDefinition("referenced-parameter").withReferenceToModelDefinition(REFERENCED_MODEL_ELEMENT).withName(anyParameterName());
+        swagger.withParameterDefinition(referencedParameterIdentifier()).withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT).withName(anyParameterName());
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
+    }
+
+    @Given("^the parameter definition is referenced anywhere$")
+    public void the_parameter_definition_is_referenced_anywhere() throws Throwable {
+        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^this definition is only referenced by another unreferenced definition$")
@@ -79,17 +84,17 @@ public class SwaggerTrimSteps {
 
     @Given("^a swagger api description with a parameter definition$")
     public void a_swagger_api_description_with_a_parameter_definition() throws Throwable {
-        swagger.withParameterDefinition("referenced-parameter");
+        swagger.withParameterDefinition(referencedParameterIdentifier());
     }
 
     @Given("^the parameter definition is referenced in any operation$")
     public void the_parameter_definition_is_referenced_in_any_operation() throws Throwable {
-        swagger.withPath("/any").withOption().withParameter(anyParameterReferencingParameterDefinition("referenced-parameter"));
+        swagger.withPath("/any").withOption().withParameter(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^the parameter definition is referenced in any path$")
     public void the_parameter_definition_is_referenced_in_any_path() throws Throwable {
-        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingParameterDefinition("referenced-parameter"));
+        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @When("^the swagger api description is trimmed$")
@@ -137,7 +142,7 @@ public class SwaggerTrimSteps {
 
     @Then("^the referenced parameter definition is still present$")
     public void the_referenced_parameter_definition_is_still_present() throws Throwable {
-        assertThat(trimmedSwagger.getParameters(), hasKey("referenced-parameter"));
+        assertThat(trimmedSwagger.getParameters(), hasKey(referencedParameterIdentifier()));
     }
 
 }

@@ -17,8 +17,9 @@ Feature: Trim the swagger description by removing unreferenced elements
     When the swagger api description is trimmed
     Then the referenced model definition is still present
 
-  Scenario: Do not remove model definitions that are referenced in a parameter definition
+  Scenario: Do not remove model definitions that are referenced in a parameter definition that is referenced
     Given a swagger api description where only a parameter definition references a model definition
+    And the parameter definition is referenced anywhere
     When the swagger api description is trimmed
     Then the referenced model definition is still present
 

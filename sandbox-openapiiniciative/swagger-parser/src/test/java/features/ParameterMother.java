@@ -8,7 +8,7 @@ public class ParameterMother {
         return "any-parameter-name";
     }
 
-    public static ParameterBuilder anyParameterReferencingParameterDefinition(String modelDefinition){
+    public static ParameterBuilder anyParameterReferencingAParameterDefinition(String modelDefinition){
         ParameterBuilder parameterBuilder = new ParameterBuilder();
         parameterBuilder.withName(anyParameterName());
         parameterBuilder.referencingParameterDefinition(modelDefinition);
@@ -17,7 +17,11 @@ public class ParameterMother {
 
     public static ParameterBuilder anyParameterReferencingModelDefinition(String s) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        parameterBuilder.withReferenceToModelDefinition(s);
+        parameterBuilder.withReferenceToAModelDefinition(s);
         return parameterBuilder;
+    }
+
+    public static String referencedParameterIdentifier() {
+        return "referenced-parameter";
     }
 }
