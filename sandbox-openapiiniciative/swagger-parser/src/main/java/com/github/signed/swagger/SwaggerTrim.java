@@ -27,7 +27,7 @@ import io.swagger.models.parameters.Parameter;
 public class SwaggerTrim {
 
     private final Parameters parameters = new Parameters();
-    private final Operations operations = new Operations();
+    private final Responses responses = new Responses();
     private final Models models = new Models();
 
     public Swagger trim(Swagger swagger) {
@@ -57,7 +57,7 @@ public class SwaggerTrim {
         Set<String> allParameterReferences = Sets.newHashSet();
         allParameterReferences.addAll(parametersReferencedInOperations);
         allParameterReferences.addAll(parametersReferencedInPath);
-        Map<String, Parameter> referencedParameters = ofNullable(swagger.getParameters()).orElse(Collections.emptyMap()).entrySet().stream()
+        Map<String, Parameter> referencedParameters = ofNullable(swagger.getParameters()).orElse(emptyMap()).entrySet().stream()
                 .filter(stringParameterEntry -> allParameterReferences.contains(stringParameterEntry.getKey()))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -82,12 +82,12 @@ public class SwaggerTrim {
         Set<String> definitionReferencesInPathsDefaultParameters = paths(swagger).map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameters::definitionReferencesIn).filter(list -> !list.isEmpty()).flatMap(List::stream).map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInPathOperationsDeclaration = operations(swagger)
-                .map(operations::definitionReferencesIn).flatMap(List::stream)
-                .map(DefinitionReference::getSimpleRef).collect(toSet());
-
         Set<String> definitionReferencesInParameterDefinitions = ofNullable(swagger.getParameters()).orElse(emptyMap()).values().stream()
                 .map(parameters::definitionReferencesIn).flatMap(List::stream)
+                .map(DefinitionReference::getSimpleRef).collect(toSet());
+
+        Set<String> definitionReferencesInPathOperationsDeclaration = operations(swagger).flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
+                .map(responses::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
         Set<String> definitionsReferencedInParameters = operations(swagger).flatMap(operation -> operation.getParameters().stream())

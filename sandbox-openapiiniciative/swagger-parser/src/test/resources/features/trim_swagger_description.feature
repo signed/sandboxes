@@ -28,11 +28,17 @@ Feature: Trim the swagger description by removing unreferenced elements
     When the swagger api description is trimmed
     Then the referenced model definition is still present
 
-  @work-in-progress
-  Scenario: Do not remove model definitions that are referenced in a response definition
+  Scenario: Do not remove model definitions that are referenced in a response
+    Given a swagger api description where a response references a model definition
+    When the swagger api description is trimmed
+    Then the referenced model definition is still present
 
   @work-in-progress
-  Scenario: Do not remove model definitions that are referenced in a response
+  Scenario: Do not remove model definitions that are referenced in a response definition
+    Given a swagger api description where a response definition references a model definition
+    And the response definition is referenced anywhere
+    When the swagger api description is trimmed
+    Then the referenced model definition is still present
 
   Scenario: Remove Model definitions that are not referenced in the rest of the document
     Given a swagger api description with an unreferenced definition
