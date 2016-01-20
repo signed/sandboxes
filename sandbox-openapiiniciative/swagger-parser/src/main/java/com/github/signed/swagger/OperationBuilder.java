@@ -17,13 +17,14 @@ public class OperationBuilder {
         return this;
     }
 
-    public ParameterBuilder withParameter() {
+    public ParameterBuilder withParameter(String name) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        withParameter(parameterBuilder);
+        withParameter(name, parameterBuilder);
         return parameterBuilder;
     }
 
-    public OperationBuilder withParameter(ParameterBuilder parameterBuilder) {
+    public OperationBuilder withParameter(String name, ParameterBuilder parameterBuilder) {
+        parameterBuilder.withName(name);
         parameters.add(parameterBuilder);
         return this;
     }
