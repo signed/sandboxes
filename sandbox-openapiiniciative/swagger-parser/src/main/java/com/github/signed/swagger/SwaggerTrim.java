@@ -20,6 +20,7 @@ import com.google.common.collect.Sets;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
+import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
 import io.swagger.models.parameters.Parameter;
@@ -34,6 +35,7 @@ public class SwaggerTrim {
         nullEmptyTagLists(swagger);
         removeNotReferencedTagsIn(swagger);
         removeNotReferencedParameterDefinitions(swagger);
+        removeNotReferencedResponseDefinitions(swagger);
         removeNotReferencedModelDefinitionsIn(swagger);
         return swagger;
     }
@@ -62,6 +64,18 @@ public class SwaggerTrim {
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         swagger.setParameters(referencedParameters.isEmpty() ? null : referencedParameters);
+    }
+
+    private void removeNotReferencedResponseDefinitions(Swagger swagger) {
+        Set<String> responseReferencesInOperations = operations(swagger)
+                .flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
+                .map(responses::responseReferencesIn)
+                .flatMap(List::stream).map(ResponseReference::responseIdentifier).collect(toSet());
+        Map<String, Response> referencedResponses = ofNullable(swagger.getResponses()).orElse(emptyMap()).entrySet().stream()
+                .filter(stringResponseEntry -> responseReferencesInOperations.contains(stringResponseEntry.getKey()))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        swagger.setResponses(responseReferencesInOperations.isEmpty() ? null : referencedResponses);
     }
 
     private Stream<Path> paths(Swagger swagger) {

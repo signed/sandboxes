@@ -1,5 +1,4 @@
 SwaggerTrim:
-- Remove unused response definitions
 - OperationMother to ensure all the necessary fields are set for validation
 
 Validate the inputs generated for test

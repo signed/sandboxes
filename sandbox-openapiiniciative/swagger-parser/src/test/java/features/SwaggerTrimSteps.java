@@ -6,8 +6,10 @@ import static features.ParameterMother.anyParameterReferencingAParameterDefiniti
 import static features.ParameterMother.anyParameterReferencingModelDefinition;
 import static features.ParameterMother.referencedParameterIdentifier;
 import static features.ResponseMother.anyHttpStatusCode;
-import static features.ResponseMother.anyResponseBuilderReferencingModelElement;
-import static features.ResponseMother.referencedResponseDefinitionIdentifier;
+import static features.ResponseMother.anyResponseDefinition;
+import static features.ResponseMother.anyResponseReferencingModelElement;
+import static features.ResponseMother.anyResponseReferencingResponseDefinition;
+import static features.ResponseMother.referencedResponseIdentifier;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasKey;
@@ -110,18 +112,33 @@ public class SwaggerTrimSteps {
     @Given("^a swagger api description where a response references a model definition$")
     public void a_swagger_api_description_where_a_response_references_a_model_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), anyResponseBuilderReferencingModelElement(REFERENCED_MODEL_ELEMENT));
+        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^a swagger api description where a response definition references a model definition$")
     public void a_swagger_api_description_where_a_response_definition_references_a_model_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withResponseDefinition(referencedResponseDefinitionIdentifier(), ResponseMother.anyResponseBuilderReferencingModelElement(REFERENCED_MODEL_ELEMENT));
+        swagger.withResponseDefinition(referencedResponseIdentifier(), ResponseMother.anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^the response definition is referenced anywhere$")
     public void the_response_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), ResponseMother.anyResponseBuilderReferencingResponseDefinition(referencedResponseDefinitionIdentifier()));
+        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
+    }
+
+    @Given("^a swagger api description with a response definition that is not referenced anywhere$")
+    public void a_swagger_api_description_with_a_response_definition_that_is_not_referenced_anywhere() throws Throwable {
+        swagger.withResponseDefinition("not-referenced-response", anyResponseDefinition());
+    }
+
+    @Given("^a swagger api description with a response definition$")
+    public void a_swagger_api_description_with_a_response_definition() throws Throwable {
+        swagger.withResponseDefinition(referencedResponseIdentifier(), anyResponseDefinition());
+    }
+
+    @Given("^the response definition is referenced in any operation$")
+    public void the_response_definition_is_referenced_in_any_operation() throws Throwable {
+        swagger.withPath("/any").withPost().withResponse(ResponseMother.anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
     }
 
     @When("^trimmed$")
@@ -170,6 +187,17 @@ public class SwaggerTrimSteps {
     @Then("^the referenced parameter definition is still present$")
     public void the_referenced_parameter_definition_is_still_present() throws Throwable {
         assertThat(trimmedSwagger.getParameters(), hasKey(referencedParameterIdentifier()));
+    }
+
+
+    @Then("^the unreferenced response definition is removed$")
+    public void the_unreferenced_response_definition_is_removed() throws Throwable {
+        assertThat(trimmedSwagger.getResponses(), nullValue());
+    }
+
+    @Then("^the referenced response definition is still present$")
+    public void the_referenced_response_definition_is_still_present() throws Throwable {
+        assertThat(trimmedSwagger.getResponses(), hasKey(referencedResponseIdentifier()));
     }
 
 }
