@@ -9,7 +9,6 @@ import java.util.Collections;
 
 import org.junit.Test;
 
-import features.ParameterMother;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
 import io.swagger.util.Yaml;

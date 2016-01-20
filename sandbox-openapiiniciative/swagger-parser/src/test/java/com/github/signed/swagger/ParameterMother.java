@@ -1,6 +1,4 @@
-package features;
-
-import com.github.signed.swagger.ParameterBuilder;
+package com.github.signed.swagger;
 
 public class ParameterMother {
 

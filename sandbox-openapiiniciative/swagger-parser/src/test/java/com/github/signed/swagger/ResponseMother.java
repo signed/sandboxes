@@ -1,9 +1,6 @@
-package features;
+package com.github.signed.swagger;
 
-import static features.PropertyMother.propertyReferencingModdelDefinitionModelDefinition;
-
-import com.github.signed.swagger.ResponseBuilder;
-import com.github.signed.swagger.StringPropertyBuilder;
+import static com.github.signed.swagger.PropertyMother.propertyReferencingModdelDefinitionModelDefinition;
 
 public class ResponseMother {
     public static String referencedResponseIdentifier() {

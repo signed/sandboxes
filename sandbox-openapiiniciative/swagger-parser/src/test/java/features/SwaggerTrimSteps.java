@@ -1,15 +1,15 @@
 package features;
 
 import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
-import static features.ParameterMother.anyParameterName;
-import static features.ParameterMother.anyParameterReferencingAParameterDefinition;
-import static features.ParameterMother.anyParameterReferencingModelDefinition;
-import static features.ParameterMother.referencedParameterIdentifier;
-import static features.ResponseMother.anyHttpStatusCode;
-import static features.ResponseMother.anyResponseDefinition;
-import static features.ResponseMother.anyResponseReferencingModelElement;
-import static features.ResponseMother.anyResponseReferencingResponseDefinition;
-import static features.ResponseMother.referencedResponseIdentifier;
+import static com.github.signed.swagger.ParameterMother.anyParameterName;
+import static com.github.signed.swagger.ParameterMother.anyParameterReferencingAParameterDefinition;
+import static com.github.signed.swagger.ParameterMother.anyParameterReferencingModelDefinition;
+import static com.github.signed.swagger.ParameterMother.referencedParameterIdentifier;
+import static com.github.signed.swagger.ResponseMother.anyHttpStatusCode;
+import static com.github.signed.swagger.ResponseMother.anyResponseDefinition;
+import static com.github.signed.swagger.ResponseMother.anyResponseReferencingModelElement;
+import static com.github.signed.swagger.ResponseMother.anyResponseReferencingResponseDefinition;
+import static com.github.signed.swagger.ResponseMother.referencedResponseIdentifier;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasKey;
@@ -18,6 +18,8 @@ import static org.hamcrest.Matchers.nullValue;
 
 import org.hamcrest.Matchers;
 
+import com.github.signed.swagger.PathMother;
+import com.github.signed.swagger.ResponseMother;
 import com.github.signed.swagger.SwaggerBuilder;
 import com.github.signed.swagger.SwaggerMother;
 import com.github.signed.swagger.SwaggerTrim;
@@ -48,7 +50,7 @@ public class SwaggerTrimSteps {
     @Given("^a tag definition that is referenced in a path operation$")
     public void a_tag_definition_that_is_referenced_in_a_path_operation() throws Throwable {
         swagger.defineTag("referenced");
-        swagger.withPath("/any").withPost().withTag("referenced");
+        swagger.withPath(PathMother.anyPath()).withPost().withTag("referenced");
     }
 
     @Given("^a swagger api description with an unreferenced definition$")
@@ -75,7 +77,7 @@ public class SwaggerTrimSteps {
 
     @Given("^the parameter definition is referenced anywhere$")
     public void the_parameter_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(PathMother.anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^this definition is only referenced by another unreferenced definition$")
@@ -95,24 +97,24 @@ public class SwaggerTrimSteps {
 
     @Given("^the parameter definition is referenced in any operation$")
     public void the_parameter_definition_is_referenced_in_any_operation() throws Throwable {
-        swagger.withPath("/any").withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(PathMother.anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^the parameter definition is referenced in any path$")
     public void the_parameter_definition_is_referenced_in_any_path() throws Throwable {
-        swagger.withPath("/any").withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(PathMother.anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a swagger api description where a parameter references a model definition$")
     public void a_swagger_api_description_where_a_parameter_references_a_model_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withPath("/any").withOption().withParameter(anyParameterName(), anyParameterReferencingModelDefinition(REFERENCED_MODEL_ELEMENT));
+        swagger.withPath(PathMother.anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingModelDefinition(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^a swagger api description where a response references a model definition$")
     public void a_swagger_api_description_where_a_response_references_a_model_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
+        swagger.withPath(PathMother.anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^a swagger api description where a response definition references a model definition$")
@@ -123,7 +125,7 @@ public class SwaggerTrimSteps {
 
     @Given("^the response definition is referenced anywhere$")
     public void the_response_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
+        swagger.withPath(PathMother.anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
     }
 
     @Given("^a swagger api description with a response definition that is not referenced anywhere$")
@@ -138,7 +140,7 @@ public class SwaggerTrimSteps {
 
     @Given("^the response definition is referenced in any operation$")
     public void the_response_definition_is_referenced_in_any_operation() throws Throwable {
-        swagger.withPath("/any").withPost().withResponse(ResponseMother.anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
+        swagger.withPath(PathMother.anyPath()).withPost().withResponse(ResponseMother.anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
     }
 
     @When("^trimmed$")
