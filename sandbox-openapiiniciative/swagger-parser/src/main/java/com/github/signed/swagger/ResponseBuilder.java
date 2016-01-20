@@ -15,6 +15,11 @@ public class ResponseBuilder {
         return this;
     }
 
+    public ResponseBuilder referencingResponseDefinition(String responseDefinitionIdentifier){
+        maybeResponseDefinitionIdentifier = Optional.ofNullable(responseDefinitionIdentifier);
+        return this;
+    }
+
     public ResponseBuilder withSchema(PropertyBuilder propertyBuilder){
         this.maybePropertyBuilder = Optional.of(propertyBuilder);
         return this;

@@ -48,11 +48,11 @@ public class SwaggerTrim {
         Set<String> parametersReferencedInOperations = operations(swagger)
                 .flatMap(operation -> ofNullable(operation.getParameters()).orElse(emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
-                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
+                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(toSet());
         Set<String> parametersReferencedInPath = paths(swagger)
                 .flatMap(path -> ofNullable(path.getParameters()).orElse(Collections.emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
-                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(Collectors.toSet());
+                .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(toSet());
 
         Set<String> allParameterReferences = Sets.newHashSet();
         allParameterReferences.addAll(parametersReferencedInOperations);
@@ -79,19 +79,24 @@ public class SwaggerTrim {
     }
 
     private void removeNotReferencedModelDefinitionsIn(Swagger swagger) {
+        Set<String> definitionsReferencedInParameters = operations(swagger).flatMap(operation -> operation.getParameters().stream())
+                .map(parameters::definitionReferencesIn).flatMap(List::stream)
+                .map(DefinitionReference::getSimpleRef).collect(toSet());
+
         Set<String> definitionReferencesInPathsDefaultParameters = paths(swagger).map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
-                .map(parameters::definitionReferencesIn).filter(list -> !list.isEmpty()).flatMap(List::stream).map(DefinitionReference::getSimpleRef).collect(toSet());
+                .map(parameters::definitionReferencesIn).flatMap(List::stream)
+                .map(DefinitionReference::getSimpleRef).collect(toSet());
 
         Set<String> definitionReferencesInParameterDefinitions = ofNullable(swagger.getParameters()).orElse(emptyMap()).values().stream()
                 .map(parameters::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInPathOperationsDeclaration = operations(swagger).flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
+        Set<String> definitionReferencesInResponses = operations(swagger).flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
                 .map(responses::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionsReferencedInParameters = operations(swagger).flatMap(operation -> operation.getParameters().stream())
-                .map(parameters::definitionReferencesIn).flatMap(List::stream)
+        Set<String> definitionReferencesInResponseDefinitions = ofNullable(swagger.getResponses()).orElse(emptyMap()).values().stream()
+                .map(responses::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(Collectors.toSet());
 
         boolean keepRemoving = true;
@@ -100,15 +105,16 @@ public class SwaggerTrim {
                     .map(models::definitionReferencesIn)
                     .flatMap(List::stream)
                     .map(DefinitionReference::getSimpleRef)
-                    .collect(Collectors.toSet());
+                    .collect(toSet());
 
 
             Set<String> allReferenceDefinitions = Sets.newHashSet();
-            allReferenceDefinitions.addAll(definitionReferencesInPathsDefaultParameters);
-            allReferenceDefinitions.addAll(definitionReferencesInPathOperationsDeclaration);
             allReferenceDefinitions.addAll(definitionReferencesInDefinitions);
+            allReferenceDefinitions.addAll(definitionReferencesInPathsDefaultParameters);
             allReferenceDefinitions.addAll(definitionReferencesInParameterDefinitions);
             allReferenceDefinitions.addAll(definitionsReferencedInParameters);
+            allReferenceDefinitions.addAll(definitionReferencesInResponses);
+            allReferenceDefinitions.addAll(definitionReferencesInResponseDefinitions);
 
             Map<String, Model> referencedDefinitions = ofNullable(swagger.getDefinitions()).orElse(emptyMap()).entrySet().stream()
                     .filter(stringModelEntry -> allReferenceDefinitions.contains(stringModelEntry.getKey()))

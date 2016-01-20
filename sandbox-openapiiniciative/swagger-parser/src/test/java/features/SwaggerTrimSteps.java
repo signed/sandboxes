@@ -7,6 +7,7 @@ import static features.ParameterMother.anyParameterReferencingModelDefinition;
 import static features.ParameterMother.referencedParameterIdentifier;
 import static features.ResponseMother.anyHttpStatusCode;
 import static features.ResponseMother.anyResponseBuilderReferencingModelElement;
+import static features.ResponseMother.referencedResponseDefinitionIdentifier;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasKey;
@@ -20,7 +21,6 @@ import com.github.signed.swagger.SwaggerMother;
 import com.github.signed.swagger.SwaggerTrim;
 import com.github.signed.swagger.TagDefinitionBuilder;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -115,15 +115,14 @@ public class SwaggerTrimSteps {
 
     @Given("^a swagger api description where a response definition references a model definition$")
     public void a_swagger_api_description_where_a_response_definition_references_a_model_definition() throws Throwable {
-        throw new PendingException();
+        swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
+        swagger.withResponseDefinition(referencedResponseDefinitionIdentifier(), ResponseMother.anyResponseBuilderReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^the response definition is referenced anywhere$")
     public void the_response_definition_is_referenced_anywhere() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        swagger.withPath("/any").withOption().withResponse(anyHttpStatusCode(), ResponseMother.anyResponseBuilderReferencingResponseDefinition(referencedResponseDefinitionIdentifier()));
     }
-
 
     @When("^the swagger api description is trimmed$")
     public void the_swagger_api_description_is_trimmed() throws Throwable {
