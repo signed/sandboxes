@@ -1,5 +1,13 @@
+Tools
+- TagsBuilder
+   Produces the complete map so that it can be set on the swagger object
+
 SwaggerTrim:
 - OperationMother to ensure all the necessary fields are set for validation
+
+SwaggerCompare
+- Decide if two api definitions are the same and report differences
+- define what 'the same' means
 
 Validate the inputs generated for test
 - goal is to avoid unnecessary null and empty checks
