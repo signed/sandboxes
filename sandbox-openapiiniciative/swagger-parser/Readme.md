@@ -1,7 +1,4 @@
 Tools
-- TagsBuilder
-   Produces the complete map so that it can be set on the swagger object
-
 SwaggerTrim:
 - OperationMother to ensure all the necessary fields are set for validation
 
