@@ -7,6 +7,7 @@ repositories {
 dependencies {
     compile(
             'io.swagger:swagger-parser:1.0.16'
+            , 'com.github.fge:json-schema-validator:2.2.6'
     )
     testCompile(
             'junit:junit:4.12'

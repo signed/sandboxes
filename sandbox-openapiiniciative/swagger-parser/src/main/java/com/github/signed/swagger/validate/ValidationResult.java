@@ -1,18 +1,18 @@
-package com.github.signed.swagger;
+package com.github.signed.swagger.validate;
 
 import java.io.PrintStream;
 import java.util.List;
 
 public class ValidationResult {
 
-    private final List<String> messages;
+    private final List<ValidationMessage> messages;
 
-    public ValidationResult(List<String> messages) {
+    public ValidationResult(List<ValidationMessage> messages) {
         this.messages = messages;
     }
 
     public void writeTo(PrintStream out) {
-        messages.forEach(out::println);
+        messages.forEach(message -> message.writeTo(out));
     }
 
     public boolean hasPassed() {
