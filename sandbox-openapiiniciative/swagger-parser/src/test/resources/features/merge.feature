@@ -1,9 +1,10 @@
 Feature: Merge two separate api definitions into one
-
+@work-in-progress
   Scenario: Merge two distinct api definitions
     Given two distinct swagger api descriptions
     When the two are merged
     Then the path elements of booth are in the resulting swagger api description
+    And the tag definitions of booth are in the resulting swagger api description
 
   Scenario: If booth swagger api definitions contain an identical api definition drop one
     Given two swagger api definitions with two identical path definitions
@@ -20,7 +21,7 @@ Feature: Merge two separate api definitions into one
     When the two are merged
     Then the model definitions of booth are in the resulting swagger api description
 
-  Scenario: Only include on of the definition if they are defined in booth
+  Scenario: Only include one of the definition if they are defined in booth
     Given two swagger api descriptions that contain two identical definitions
     When the two are merged
     Then the definition is contained only once

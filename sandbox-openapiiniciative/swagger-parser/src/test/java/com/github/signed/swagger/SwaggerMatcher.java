@@ -1,20 +1,17 @@
 package com.github.signed.swagger;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-
-import java.util.Map;
-
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.hamcrest.collection.IsMapContaining;
-import org.hamcrest.core.AllOf;
-
 import io.swagger.models.Model;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.Tag;
+import org.hamcrest.*;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.AllOf;
+
+import java.util.Map;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
 
@@ -22,8 +19,12 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
         return new SwaggerMatcher().hasPaths(paths);
     }
 
-    public static Matcher<? super Swagger> hasDefinitionsFor(String ... definitionIdentifier) {
+    public static Matcher<? super Swagger> hasModelDefinitionsFor(String ... definitionIdentifier) {
         return new SwaggerMatcher().hasDefinitions(definitionIdentifier);
+    }
+
+    public static Matcher<? super Swagger> hasTagDefinitionsFor(String ... tagDefinitions) {
+        return new SwaggerMatcher().hasTagDefinitions(tagDefinitions);
     }
 
     private Matcher<Map<String, Path>> pathsMatcher = new BaseMatcher<Map<String, Path>>() {
@@ -39,7 +40,7 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     };
 
 
-    private Matcher<Map<String, Model>> definitionsMatcher = new BaseMatcher<Map<String, Model>>() {
+    private Matcher<Map<String, Model>> modelDefinitionsMatcher = new BaseMatcher<Map<String, Model>>() {
         @Override
         public boolean matches(Object item) {
             return true;
@@ -47,9 +48,22 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
 
         @Override
         public void describeTo(Description description) {
-            description.appendText("any definitions");
+            description.appendText("any model definitions");
         }
     };
+
+    private Matcher<Iterable<?super Tag>> tagDefinitionsMatcher = new BaseMatcher<Iterable<? super Tag>>() {
+        @Override
+        public boolean matches(Object item) {
+            return true;
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("any tag definition");
+        }
+    };
+
 
     public Matcher<Swagger> hasPaths(String ... paths) {
         pathsMatcher = AllOf.allOf(asList(paths).stream().map(IsMapContaining::hasKey).collect(toList()));
@@ -57,7 +71,14 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
     }
 
     public Matcher<? super Swagger> hasDefinitions(String ... definitionIdentifier) {
-        definitionsMatcher = AllOf.allOf(asList(definitionIdentifier).stream().map(IsMapContaining::hasKey).collect(toList()));
+        modelDefinitionsMatcher = AllOf.allOf(asList(definitionIdentifier).stream().map(IsMapContaining::hasKey).collect(toList()));
+        return this;
+    }
+
+    private Matcher<? super Swagger> hasTagDefinitions(String ... tagDefinitions) {
+        Matcher<Iterable<? super Tag>> one = Matchers.hasItem(TagMatcher.tagNamed(tagDefinitions[0]));
+        Matcher<Iterable<? super Tag>> two = Matchers.hasItem(TagMatcher.tagNamed(tagDefinitions[1]));
+        tagDefinitionsMatcher = Matchers.allOf(one, two);
         return this;
     }
 
@@ -68,18 +89,21 @@ public class SwaggerMatcher extends TypeSafeDiagnosingMatcher<Swagger> {
             pathsMatcher.describeMismatch(swagger.getPaths(), mismatchDescription);
         }
 
-        boolean definitionsMatch = definitionsMatcher.matches(swagger.getDefinitions());
+        boolean definitionsMatch = modelDefinitionsMatcher.matches(swagger.getDefinitions());
         if (!definitionsMatch) {
-            definitionsMatcher.describeMismatch(swagger.getDefinitions(), mismatchDescription);
+            modelDefinitionsMatcher.describeMismatch(swagger.getDefinitions(), mismatchDescription);
         }
 
-        return requiredPathsExist && definitionsMatch;
+        boolean tagDefinitionsMatch = tagDefinitionsMatcher.matches(swagger.getTags());
+        if(!tagDefinitionsMatch){
+            tagDefinitionsMatcher.describeMismatch(swagger.getTags(), mismatchDescription);
+        }
+
+        return requiredPathsExist && definitionsMatch && tagDefinitionsMatch;
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendDescriptionOf(pathsMatcher).appendText(" ").appendDescriptionOf(definitionsMatcher);
+        description.appendDescriptionOf(pathsMatcher).appendText(" ").appendDescriptionOf(modelDefinitionsMatcher).appendText(" ").appendDescriptionOf(tagDefinitionsMatcher);
     }
-
-
 }

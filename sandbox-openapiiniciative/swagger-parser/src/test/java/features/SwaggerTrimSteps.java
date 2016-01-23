@@ -11,7 +11,7 @@ import org.hamcrest.Matchers;
 import static com.github.signed.swagger.ParameterMother.*;
 import static com.github.signed.swagger.PathMother.anyPath;
 import static com.github.signed.swagger.ResponseMother.*;
-import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
+import static com.github.signed.swagger.SwaggerMatcher.hasModelDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -146,12 +146,12 @@ public class SwaggerTrimSteps {
 
     @Then("^the model definition is still present$")
     public void the_model_definition_is_still_present() throws Throwable {
-        assertThat(trimmedSwagger, hasDefinitionsFor(REFERENCED_MODEL_ELEMENT));
+        assertThat(trimmedSwagger, hasModelDefinitionsFor(REFERENCED_MODEL_ELEMENT));
     }
 
     @Then("^booth definitions are removed$")
     public void booth_definitions_are_removed() throws Throwable {
-        assertThat(trimmedSwagger, not(hasDefinitionsFor("only-referenced-in-to-be-removed-definition")));
+        assertThat(trimmedSwagger, not(hasModelDefinitionsFor("only-referenced-in-to-be-removed-definition")));
     }
 
     @Then("^the unreferenced parameter definition is removed$")

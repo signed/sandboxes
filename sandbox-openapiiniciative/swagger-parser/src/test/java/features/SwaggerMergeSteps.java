@@ -8,6 +8,7 @@ import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
 
+import static com.github.signed.swagger.SwaggerMatcher.hasPathDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -23,6 +24,9 @@ public class SwaggerMergeSteps {
     public void two_distinct_swagger_api_descriptions() throws Throwable {
         first.withPath("/first").withOption();
         second.withPath("/second").withOption();
+
+        first.defineTag("first tag").withDescription("bsbbd");
+        second.defineTag("second tag");
     }
 
     @Given("^two swagger api definitions with two identical path definitions$")
@@ -71,7 +75,12 @@ public class SwaggerMergeSteps {
 
     @Then("^the path elements of booth are in the resulting swagger api description$")
     public void the_path_elements_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
-        assertThat(mergedApiDefinition, SwaggerMatcher.hasPathDefinitionsFor("/first","/second"));
+        assertThat(mergedApiDefinition, hasPathDefinitionsFor("/first","/second"));
+    }
+
+    @Then("^the tag definitions of booth are in the resulting swagger api description$")
+    public void the_tag_definitions_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
+        assertThat(mergedApiDefinition, SwaggerMatcher.hasTagDefinitionsFor("first tag", "second tag"));
     }
 
     @Then("^the path definition is contained only once$")
@@ -81,7 +90,7 @@ public class SwaggerMergeSteps {
 
     @Then("^the model definitions of booth are in the resulting swagger api description$")
     public void the_model_definitions_of_booth_are_in_the_resulting_swagger_api_description() throws Throwable {
-        assertThat(mergedApiDefinition, SwaggerMatcher.hasDefinitionsFor("something", "anotherthing") );
+        assertThat(mergedApiDefinition, SwaggerMatcher.hasModelDefinitionsFor("something", "anotherthing") );
     }
 
     @Then("^the definition is contained only once$")

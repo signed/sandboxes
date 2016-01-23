@@ -1,6 +1,6 @@
 package com.github.signed.swagger;
 
-import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
+import static com.github.signed.swagger.SwaggerMatcher.hasModelDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -37,7 +37,7 @@ public class SwaggerTrim_Test {
         referencedInPath.withReferencePropertyNamed("some-property").withReferenceTo("not-referenced-in-a-path");
         swaggerBuilder.withModelDefinition("not-referenced-in-a-path").withTypeObject();
 
-        assertThat(trimmed(), hasDefinitionsFor("not-referenced-in-a-path"));
+        assertThat(trimmed(), hasModelDefinitionsFor("not-referenced-in-a-path"));
     }
 
     @Test

@@ -1,26 +1,23 @@
 package com.github.signed.swagger;
 
-import static com.github.signed.swagger.PathContainedInBooth.pathContainedInBooth;
-import static java.util.Collections.emptyMap;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.models.Model;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
+import io.swagger.models.Tag;
+import io.swagger.util.Json;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import io.swagger.models.Model;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
-import io.swagger.util.Json;
+import static com.github.signed.swagger.PathContainedInBooth.pathContainedInBooth;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
 
 public class SwaggerMerger {
     public Swagger merge(Swagger one, Swagger two) {
@@ -53,9 +50,13 @@ public class SwaggerMerger {
         mergedDefinitions.putAll(ofNullable(one.getDefinitions()).orElse(emptyMap()));
         mergedDefinitions.putAll(ofNullable(two.getDefinitions()).orElse(emptyMap()));
 
+        List<Tag> mergedTagDefinitions = new ArrayList<>();
+        mergedTagDefinitions.addAll(ofNullable(one.getTags()).orElse(emptyList()));
+        mergedTagDefinitions.addAll(ofNullable(two.getTags()).orElse(emptyList()));
         Swagger swagger = new Swagger();
         swagger.setPaths(mergedPaths.isEmpty() ? null : mergedPaths);
         swagger.setDefinitions(mergedDefinitions.isEmpty() ? null : mergedDefinitions);
+        swagger.setTags(mergedTagDefinitions.isEmpty()?null:mergedTagDefinitions);
 
         return swagger;
     }
