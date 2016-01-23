@@ -1,6 +1,11 @@
 package features;
 
-import com.github.signed.swagger.*;
+import com.github.signed.swagger.essentials.ResponseMother;
+import com.github.signed.swagger.essentials.SwaggerBuilder;
+import com.github.signed.swagger.essentials.SwaggerMother;
+import com.github.signed.swagger.essentials.TagDefinitionBuilder;
+import com.github.signed.swagger.trim.SwaggerTrim;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -8,10 +13,10 @@ import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
 import org.hamcrest.Matchers;
 
-import static com.github.signed.swagger.ParameterMother.*;
-import static com.github.signed.swagger.PathMother.anyPath;
-import static com.github.signed.swagger.ResponseMother.*;
-import static com.github.signed.swagger.SwaggerMatcher.hasModelDefinitionsFor;
+import static com.github.signed.swagger.essentials.ParameterMother.*;
+import static com.github.signed.swagger.essentials.PathMother.anyPath;
+import static com.github.signed.swagger.essentials.ResponseMother.*;
+import static com.github.signed.swagger.essentials.SwaggerMatcher.hasModelDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 

@@ -1,14 +1,14 @@
 package features;
 
-import static com.github.signed.swagger.SwaggerMatcher.hasPathDefinitionsFor;
+import static com.github.signed.swagger.essentials.SwaggerMatcher.hasPathDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 
-import com.github.signed.swagger.PathMother;
-import com.github.signed.swagger.SwaggerReduce;
-import com.github.signed.swagger.SwaggerBuilder;
-import com.github.signed.swagger.SwaggerMother;
+import com.github.signed.swagger.essentials.PathMother;
+import com.github.signed.swagger.essentials.SwaggerBuilder;
+import com.github.signed.swagger.essentials.SwaggerMother;
+import com.github.signed.swagger.reduce.SwaggerReduce;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

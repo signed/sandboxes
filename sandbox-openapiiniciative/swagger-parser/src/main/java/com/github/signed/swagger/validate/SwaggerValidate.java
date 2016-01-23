@@ -10,7 +10,6 @@ import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
-import com.github.signed.swagger.JsonBlob;
 
 import io.swagger.parser.SwaggerParser;
 import io.swagger.parser.util.SwaggerDeserializationResult;
@@ -24,10 +23,10 @@ public class SwaggerValidate {
         this.schemaSupplier = schemaSupplier;
     }
 
-    public ValidationResult validate(JsonBlob swagger) {
+    public ValidationResult validate(JsonBlob swaggerDefinition) {
         ValidationResultBuilder validationResultBuilder = new ValidationResultBuilder();
-        getBasicMessagesFromSwaggerParser(swagger, validationResultBuilder);
-        validateAgainstJsonSchema(swagger, validationResultBuilder);
+        getBasicMessagesFromSwaggerParser(swaggerDefinition, validationResultBuilder);
+        validateAgainstJsonSchema(swaggerDefinition, validationResultBuilder);
         return validationResultBuilder.build();
     }
 

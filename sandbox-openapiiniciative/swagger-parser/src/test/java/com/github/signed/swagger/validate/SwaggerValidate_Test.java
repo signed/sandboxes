@@ -6,9 +6,8 @@ import java.util.function.Supplier;
 
 import org.junit.Test;
 
-import com.github.signed.swagger.JsonBlob;
-import com.github.signed.swagger.SwaggerBuilder;
-import com.github.signed.swagger.SwaggerMother;
+import com.github.signed.swagger.essentials.SwaggerBuilder;
+import com.github.signed.swagger.essentials.SwaggerMother;
 
 import io.swagger.util.Json;
 

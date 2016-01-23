@@ -10,6 +10,10 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
+import com.github.signed.swagger.merge.SwaggerMerger;
+import com.github.signed.swagger.reduce.SwaggerReduce;
+import com.github.signed.swagger.trim.SwaggerTrim;
+
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
