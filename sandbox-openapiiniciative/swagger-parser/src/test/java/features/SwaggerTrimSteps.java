@@ -9,6 +9,7 @@ import io.swagger.util.Yaml;
 import org.hamcrest.Matchers;
 
 import static com.github.signed.swagger.ParameterMother.*;
+import static com.github.signed.swagger.PathMother.anyPath;
 import static com.github.signed.swagger.ResponseMother.*;
 import static com.github.signed.swagger.SwaggerMatcher.hasDefinitionsFor;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,11 +34,11 @@ public class SwaggerTrimSteps {
     @Given("^a tag definition that is referenced in a path operation$")
     public void a_tag_definition_that_is_referenced_in_a_path_operation() throws Throwable {
         swagger.defineTag("referenced");
-        swagger.withPath(PathMother.anyPath()).withPost().withTag("referenced");
+        swagger.withPath(anyPath()).withPost().withTag("referenced");
     }
 
-    @Given("^an unreferenced definition$")
-    public void an_unreferenced_definition() throws Throwable {
+    @Given("^an unreferenced model definition$")
+    public void an_unreferenced_model_definition() throws Throwable {
         swagger.withModelDefinition("some-id").withTypeObject();
     }
 
@@ -47,25 +48,21 @@ public class SwaggerTrimSteps {
         swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT);
     }
 
-    @Given("^a definition$")
-    public void a_definition() throws Throwable {
+    @Given("^a model definition that is only referenced by another model definition that is not referenced anywhere$")
+    public void a_model_definition_that_is_only_referenced_by_another_model_definition_that_is_not_referenced_anywhere() throws Throwable {
         swagger.withModelDefinition("only-referenced-in-to-be-removed-definition").withTypeObject();
+        swagger.withModelDefinition("unreferenced").withTypeObject().withReferencePropertyNamed("something").withReferenceTo("only-referenced-in-to-be-removed-definition");
     }
 
-    @Given("^only a parameter definition references a model definition$")
-    public void only_a_parameter_definition_references_a_model_definition() throws Throwable {
+    @Given("^a model definition that is only referenced in a parameter definition$")
+    public void a_model_definition_that_is_only_referenced_in_a_parameter_definition() throws Throwable {
         swagger.withParameterDefinition(referencedParameterIdentifier()).withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT).withName(anyParameterName());
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
     }
 
     @Given("^the parameter definition is referenced anywhere$")
     public void the_parameter_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath(PathMother.anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
-    }
-
-    @Given("^this definition is only referenced by another unreferenced definition$")
-    public void this_definition_is_only_referenced_by_another_unreferenced_definition() throws Throwable {
-        swagger.withModelDefinition("unreferenced").withTypeObject().withReferencePropertyNamed("something").withReferenceTo("only-referenced-in-to-be-removed-definition");
+        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a parameter definition that is not referenced anywhere$")
@@ -73,57 +70,50 @@ public class SwaggerTrimSteps {
         swagger.withParameterDefinition("unreferenced-parameter");
     }
 
-    @Given("^a parameter definition$")
-    public void a_swagger_api_description_with_a_parameter_definition() throws Throwable {
+    @Given("^a parameter definition that is referenced in any path$")
+    public void a_parameter_definition_that_is_referenced_in_any_path() throws Throwable {
         swagger.withParameterDefinition(referencedParameterIdentifier());
+        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
-    @Given("^the parameter definition is referenced in any operation$")
-    public void the_parameter_definition_is_referenced_in_any_operation() throws Throwable {
-        swagger.withPath(PathMother.anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+    @Given("^a parameter definition that is referenced in any operation$")
+    public void a_parameter_definition_that_is_referenced_in_any_operation() throws Throwable {
+        swagger.withParameterDefinition(referencedParameterIdentifier());
+        swagger.withPath(anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
-    @Given("^the parameter definition is referenced in any path$")
-    public void the_parameter_definition_is_referenced_in_any_path() throws Throwable {
-        swagger.withPath(PathMother.anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
-    }
-
-    @Given("^a parameter references a model definition$")
-    public void a_swagger_api_description_where_a_parameter_references_a_model_definition() throws Throwable {
+    @Given("^a model definition referenced by a parameter$")
+    public void a_model_definition_referenced_by_a_parameter() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withPath(PathMother.anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingModelDefinition(REFERENCED_MODEL_ELEMENT));
+        swagger.withPath(anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingModelDefinition(REFERENCED_MODEL_ELEMENT));
     }
 
-    @Given("^a response references a model definition$")
-    public void a_swagger_api_description_where_a_response_references_a_model_definition() throws Throwable {
+    @Given("^a model definition that is referenced in a response$")
+    public void a_model_definition_that_is_referenced_in_a_response() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
-        swagger.withPath(PathMother.anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
+        swagger.withPath(anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
-    @Given("^a response definition references a model definition$")
-    public void a_swagger_api_description_where_a_response_definition_references_a_model_definition() throws Throwable {
+    @Given("^a model definition that is referenced in a response definition$")
+    public void a_model_definition_that_is_referenced_in_response_definition() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT);
         swagger.withResponseDefinition(referencedResponseIdentifier(), ResponseMother.anyResponseReferencingModelElement(REFERENCED_MODEL_ELEMENT));
     }
 
     @Given("^the response definition is referenced anywhere$")
     public void the_response_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath(PathMother.anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
+        swagger.withPath(anyPath()).withOption().withResponse(anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
     }
 
     @Given("^a response definition that is not referenced anywhere$")
-    public void a_swagger_api_description_with_a_response_definition_that_is_not_referenced_anywhere() throws Throwable {
+    public void a_response_definition_that_is_not_referenced_anywhere() throws Throwable {
         swagger.withResponseDefinition("not-referenced-response", anyResponseDefinition());
     }
 
-    @Given("^a response definition$")
-    public void a_swagger_api_description_with_a_response_definition() throws Throwable {
+    @Given("^a response definition that is referenced in any operation$")
+    public void a_response_definition_that_is_not_referenced_in_any_operation() throws Throwable {
         swagger.withResponseDefinition(referencedResponseIdentifier(), anyResponseDefinition());
-    }
-
-    @Given("^the response definition is referenced in any operation$")
-    public void the_response_definition_is_referenced_in_any_operation() throws Throwable {
-        swagger.withPath(PathMother.anyPath()).withPost().withResponse(ResponseMother.anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
+        swagger.withPath(anyPath()).withPost().withResponse(ResponseMother.anyHttpStatusCode(), anyResponseReferencingResponseDefinition(referencedResponseIdentifier()));
     }
 
     @When("^trimmed$")
@@ -149,13 +139,13 @@ public class SwaggerTrimSteps {
         assertThat(trimmedSwagger.getTags(), nullValue());
     }
 
-    @Then("^the unreferenced definition is removed$")
-    public void the_unreferenced_definition_is_removed() throws Throwable {
+    @Then("^the model definition is removed$")
+    public void the_model_definition_is_removed() throws Throwable {
         assertThat(trimmedSwagger.getDefinitions(), Matchers.nullValue());
     }
 
-    @Then("^the referenced model definition is still present$")
-    public void the_referenced_model_definition_is_still_present() throws Throwable {
+    @Then("^the model definition is still present$")
+    public void the_model_definition_is_still_present() throws Throwable {
         assertThat(trimmedSwagger, hasDefinitionsFor(REFERENCED_MODEL_ELEMENT));
     }
 

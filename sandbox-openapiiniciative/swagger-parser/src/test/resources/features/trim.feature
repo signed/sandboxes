@@ -15,38 +15,37 @@ Feature: Trim the swagger description by removing unreferenced elements
   Scenario: Do not remove model definitions that are referenced in a path
     Given a model definition that is referenced in a path
     When trimmed
-    Then the referenced model definition is still present
+    Then the model definition is still present
 
   Scenario: Do not remove model definitions that are referenced in a parameter definition that is referenced
-    Given only a parameter definition references a model definition
+    Given a model definition that is only referenced in a parameter definition
     And the parameter definition is referenced anywhere
     When trimmed
-    Then the referenced model definition is still present
+    Then the model definition is still present
 
-  Scenario: Do not remove model definitions that is referenced in a parameter
-    Given a parameter references a model definition
+  Scenario: Do not remove a model definition that is referenced in a parameter
+    Given a model definition referenced by a parameter
     When trimmed
-    Then the referenced model definition is still present
+    Then the model definition is still present
 
   Scenario: Do not remove model definitions that are referenced in a response
-    Given a response references a model definition
+    Given a model definition that is referenced in a response
     When trimmed
-    Then the referenced model definition is still present
+    Then the model definition is still present
 
   Scenario: Do not remove model definitions that are referenced in a response definition
-    Given a response definition references a model definition
+    Given a model definition that is referenced in a response definition
     And the response definition is referenced anywhere
     When trimmed
-    Then the referenced model definition is still present
+    Then the model definition is still present
 
   Scenario: Remove Model definitions that are not referenced in the rest of the document
-    Given an unreferenced definition
+    Given an unreferenced model definition
     When trimmed
-    Then the unreferenced definition is removed
+    Then the model definition is removed
 
   Scenario: Also remove all model definitions that become unreferenced by removing a unreferenced model definition
-    Given a definition
-    And this definition is only referenced by another unreferenced definition
+    Given a model definition that is only referenced by another model definition that is not referenced anywhere
     When trimmed
     Then booth definitions are removed
 
@@ -56,14 +55,12 @@ Feature: Trim the swagger description by removing unreferenced elements
     Then the unreferenced parameter definition is removed
 
   Scenario: Keep parameter definitions that are referenced in any operation
-    Given a parameter definition
-    And the parameter definition is referenced in any operation
+    Given a parameter definition that is referenced in any operation
     When trimmed
     Then the referenced parameter definition is still present
 
   Scenario: Keep parameter definitions that are referenced in any path
-    Given a parameter definition
-    And the parameter definition is referenced in any path
+    Given a parameter definition that is referenced in any path
     When trimmed
     Then the referenced parameter definition is still present
 
@@ -73,7 +70,6 @@ Feature: Trim the swagger description by removing unreferenced elements
     Then the unreferenced response definition is removed
 
   Scenario: Keep response definitions that are referenced in any operation
-    Given a response definition
-    And the response definition is referenced in any operation
+    Given a response definition that is referenced in any operation
     When trimmed
     Then the referenced response definition is still present
