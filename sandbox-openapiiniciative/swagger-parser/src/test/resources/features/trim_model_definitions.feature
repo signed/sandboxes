@@ -1,4 +1,4 @@
-Feature: Trim the swagger description by removing unreferenced elements
+Feature: Trim the swagger description by removing unreferenced model definitions
 
   Scenario: Do not remove model definitions that are referenced in a path
     Given a model definition that is referenced in a path
@@ -36,18 +36,3 @@ Feature: Trim the swagger description by removing unreferenced elements
     Given a model definition that is only referenced by another model definition that is not referenced anywhere
     When trimmed
     Then booth definitions are removed
-
-  Scenario: Remove parameter definitions that are not referenced anywhere
-    Given a parameter definition that is not referenced anywhere
-    When trimmed
-    Then the unreferenced parameter definition is removed
-
-  Scenario: Keep parameter definitions that are referenced in any operation
-    Given a parameter definition that is referenced in any operation
-    When trimmed
-    Then the referenced parameter definition is still present
-
-  Scenario: Keep parameter definitions that are referenced in any path
-    Given a parameter definition that is referenced in any path
-    When trimmed
-    Then the referenced parameter definition is still present
