@@ -1,9 +1,12 @@
 package com.github.signed.swagger.essentials;
 
+import static java.lang.Boolean.TRUE;
+
 import java.util.Optional;
 
 import io.swagger.models.RefModel;
 import io.swagger.models.parameters.BodyParameter;
+import io.swagger.models.parameters.HeaderParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.PathParameter;
 import io.swagger.models.parameters.RefParameter;
@@ -12,6 +15,10 @@ public class ParameterBuilder {
     private Optional<String> maybeReferenceToADefinition = Optional.empty();
     private Optional<String> maybeReferenceToAParameterDefinition = Optional.empty();
     private Optional<String> maybeAName = Optional.empty();
+    private Optional<String> maybeType = Optional.empty();
+    private Optional<String> maybeDescription = Optional.empty();
+    private Optional<Boolean> maybeRequired = Optional.empty();
+    private boolean headerParameter = false;
 
     public ParameterBuilder withReferenceToAModelDefinition(String definitionId) {
         maybeReferenceToADefinition = Optional.of(definitionId);
@@ -28,6 +35,25 @@ public class ParameterBuilder {
         return this;
     }
 
+    public ParameterBuilder inHeader() {
+        this.headerParameter = true;
+        return this;
+    }
+
+    public ParameterBuilder ofTypeString() {
+        maybeType = Optional.of("string");
+        return this;
+    }
+
+    public ParameterBuilder withDescription(String description) {
+        maybeDescription = Optional.of(description);
+        return this;
+    }
+    public ParameterBuilder required() {
+        maybeRequired = Optional.of(TRUE);
+        return this;
+    }
+
     public Parameter build() {
         if (maybeReferenceToADefinition.isPresent()) {
             BodyParameter bodyParameter = new BodyParameter();
@@ -39,6 +65,16 @@ public class ParameterBuilder {
         if (maybeReferenceToAParameterDefinition.isPresent()) {
             return new RefParameter(maybeReferenceToAParameterDefinition.get());
         }
+
+        if(headerParameter){
+            HeaderParameter headerParameter = new HeaderParameter();
+            maybeAName.ifPresent(headerParameter::setName);
+            maybeType.ifPresent(headerParameter::setType);
+            maybeDescription.ifPresent(headerParameter::setDescription);
+            maybeRequired.ifPresent(headerParameter::setRequired);
+            return headerParameter;
+        }
+
         return new PathParameter();
     }
 }
