@@ -1,6 +1,12 @@
 package features;
 
 
+import static com.github.signed.swagger.essentials.SwaggerMatcher.hasPathDefinitionsFor;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
 import com.github.signed.swagger.essentials.SwaggerBuilder;
 import com.github.signed.swagger.essentials.SwaggerMatcher;
 import com.github.signed.swagger.essentials.SwaggerMother;
@@ -12,10 +18,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
-
-import static com.github.signed.swagger.essentials.SwaggerMatcher.hasPathDefinitionsFor;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 public class SwaggerMergeSteps {
 
@@ -64,6 +66,12 @@ public class SwaggerMergeSteps {
         second.withModelDefinition("identical identifier").withTypeString();
     }
 
+    @Given("^two swagger api descriptions that contain two identical tag definitions$")
+    public void two_swagger_api_descriptions_that_contain_two_identical_tag_definitions() throws Throwable {
+        first.defineTag("identical tag");
+        second.defineTag("identical tag");
+    }
+
     @When("^the two are merged$")
     public void the_two_are_merged() throws Throwable {
         try {
@@ -106,5 +114,10 @@ public class SwaggerMergeSteps {
     @Then("^the caller is informed about the conflict$")
     public void the_caller_is_informed_about_the_conflict() throws Throwable {
         assertThat("The caller should have been notified",mergeException, not(nullValue()));
+    }
+
+    @Then("^there is only a single tag definition$")
+    public void there_is_only_a_single_tag_definition() throws Throwable {
+        assertThat(mergedApiDefinition.getTags(), hasSize(1));
     }
 }

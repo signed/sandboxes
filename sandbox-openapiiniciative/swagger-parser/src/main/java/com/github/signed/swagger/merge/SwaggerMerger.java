@@ -1,13 +1,10 @@
 package com.github.signed.swagger.merge;
 
 import static com.github.signed.swagger.trim.PathContainedInBooth.pathContainedInBooth;
-import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,16 +17,33 @@ import java.util.function.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.signed.swagger.essentials.SwaggerStreams;
+import com.google.common.collect.Maps;
 
 import io.swagger.models.Model;
-import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
 import io.swagger.util.Json;
 
 public class SwaggerMerger {
+
+    private final SwaggerStreams swaggerStreams = new SwaggerStreams();
+
     public Swagger merge(Swagger one, Swagger two) {
+        LinkedHashMap<String, Path> mergedPaths = mergePathDefinitions(one, two);
+        LinkedHashMap<String, Model> mergedDefinitions = mergedModelDefinitions(one, two);
+        List<Tag> mergedTagDefinitions = mergedTagDefinitions(one, two);
+
+        Swagger swagger = new Swagger();
+        swagger.setPaths(mergedPaths.isEmpty() ? null : mergedPaths);
+        swagger.setDefinitions(mergedDefinitions.isEmpty() ? null : mergedDefinitions);
+        swagger.setTags(mergedTagDefinitions.isEmpty()?null:mergedTagDefinitions);
+
+        return swagger;
+    }
+
+    private LinkedHashMap<String, Path> mergePathDefinitions(Swagger one, Swagger two) {
         List<Pair<String, String>> conflictingPathDefinitions = ofNullable(one.getPaths()).orElse(emptyMap()).keySet().stream().
                 filter(pathContainedInBooth(two))
                 .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getPaths().get(s)))
@@ -43,8 +57,10 @@ public class SwaggerMerger {
         LinkedHashMap<String, Path> mergedPaths = new LinkedHashMap<>();
         mergedPaths.putAll(ofNullable(one.getPaths()).orElse(emptyMap()));
         mergedPaths.putAll(ofNullable(two.getPaths()).orElse(emptyMap()));
+        return mergedPaths;
+    }
 
-
+    private LinkedHashMap<String, Model> mergedModelDefinitions(Swagger one, Swagger two) {
         List<Pair<String, String>> conflictingModelDefinition = ofNullable(one.getDefinitions()).orElse(emptyMap()).keySet().stream().
                 filter(definitionsContainedInBooth(two))
                 .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getDefinitions().get(s)))
@@ -58,16 +74,15 @@ public class SwaggerMerger {
         LinkedHashMap<String, Model> mergedDefinitions = new LinkedHashMap<>();
         mergedDefinitions.putAll(ofNullable(one.getDefinitions()).orElse(emptyMap()));
         mergedDefinitions.putAll(ofNullable(two.getDefinitions()).orElse(emptyMap()));
+        return mergedDefinitions;
+    }
 
-        List<Tag> mergedTagDefinitions = new ArrayList<>();
-        mergedTagDefinitions.addAll(ofNullable(one.getTags()).orElse(emptyList()));
-        mergedTagDefinitions.addAll(ofNullable(two.getTags()).orElse(emptyList()));
-        Swagger swagger = new Swagger();
-        swagger.setPaths(mergedPaths.isEmpty() ? null : mergedPaths);
-        swagger.setDefinitions(mergedDefinitions.isEmpty() ? null : mergedDefinitions);
-        swagger.setTags(mergedTagDefinitions.isEmpty()?null:mergedTagDefinitions);
+    private List<Tag> mergedTagDefinitions(Swagger one, Swagger two) {
+        Map<String, Tag> mergedTagDefinitions = Maps.newLinkedHashMap();
+        swaggerStreams.tagsStream(one).forEach(tag -> mergedTagDefinitions.put(tag.getName(), tag));
+        swaggerStreams.tagsStream(two).forEach(tag -> mergedTagDefinitions.put(tag.getName(), tag));
 
-        return swagger;
+        return mergedTagDefinitions.values().stream().collect(toList());
     }
 
     private Predicate<Pair<String, String>> thoseWhoAreNotIdentical() {

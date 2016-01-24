@@ -44,17 +44,17 @@ public class SwaggerTrim {
     }
 
     private void nullEmptyTagLists(Swagger swagger) {
-        swaggerStreams.operations(swagger)
+        swaggerStreams.operationsStream(swagger)
                 .filter(operation -> ofNullable(operation.getTags()).orElse(emptyList()).isEmpty())
                 .forEach(operation -> operation.setTags(null));
     }
 
     private void removeNotReferencedParameterDefinitions(Swagger swagger) {
-        Set<String> parametersReferencedInOperations = swaggerStreams.operations(swagger)
+        Set<String> parametersReferencedInOperations = swaggerStreams.operationsStream(swagger)
                 .flatMap(operation -> ofNullable(operation.getParameters()).orElse(emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
                 .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(toSet());
-        Set<String> parametersReferencedInPath = swaggerStreams.paths(swagger)
+        Set<String> parametersReferencedInPath = swaggerStreams.pathsStream(swagger)
                 .flatMap(path -> ofNullable(path.getParameters()).orElse(emptyList()).stream())
                 .map(parameters::parameterReferencesIn)
                 .flatMap(List::stream).map(ParameterReference::parameterIdentifier).collect(toSet());
@@ -70,7 +70,7 @@ public class SwaggerTrim {
     }
 
     private void removeNotReferencedResponseDefinitions(Swagger swagger) {
-        Set<String> responseReferencesInOperations = swaggerStreams.operations(swagger)
+        Set<String> responseReferencesInOperations = swaggerStreams.operationsStream(swagger)
                 .flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
                 .map(responses::responseReferencesIn)
                 .flatMap(List::stream).map(ResponseReference::responseIdentifier).collect(toSet());
@@ -82,17 +82,17 @@ public class SwaggerTrim {
     }
 
     private void removeNotReferencedTagsIn(Swagger swagger) {
-        Set<String> tagReferences = swaggerStreams.paths(swagger).map(allTagsReferencedInPath()).flatMap(Set::stream).collect(toSet());
+        Set<String> tagReferences = swaggerStreams.pathsStream(swagger).map(allTagsReferencedInPath()).flatMap(Set::stream).collect(toSet());
         List<Tag> referencedTagDefinitions = ofNullable(swagger.getTags()).orElse(emptyList()).stream().filter(tag -> tagReferences.contains(tag.getName())).collect(Collectors.toList());
         swagger.setTags((referencedTagDefinitions.isEmpty()) ? null : referencedTagDefinitions);
     }
 
     private void removeNotReferencedModelDefinitionsIn(Swagger swagger) {
-        Set<String> definitionsReferencedInParameters = swaggerStreams.operations(swagger).flatMap(operation -> operation.getParameters().stream())
+        Set<String> definitionsReferencedInParameters = swaggerStreams.operationsStream(swagger).flatMap(operation -> operation.getParameters().stream())
                 .map(parameters::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInPathsDefaultParameters = swaggerStreams.paths(swagger).map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
+        Set<String> definitionReferencesInPathsDefaultParameters = swaggerStreams.pathsStream(swagger).map(path -> ofNullable(path.getParameters()).orElse(emptyList())).flatMap(List::stream)
                 .map(parameters::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
@@ -100,7 +100,7 @@ public class SwaggerTrim {
                 .map(parameters::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
-        Set<String> definitionReferencesInResponses = swaggerStreams.operations(swagger).flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
+        Set<String> definitionReferencesInResponses = swaggerStreams.operationsStream(swagger).flatMap(operation -> ofNullable(operation.getResponses()).orElse(emptyMap()).values().stream())
                 .map(responses::definitionReferencesIn).flatMap(List::stream)
                 .map(DefinitionReference::getSimpleRef).collect(toSet());
 
