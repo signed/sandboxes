@@ -32,7 +32,7 @@ public class SwaggerStreams {
         return ofNullable(swagger.getResponses()).orElse(emptyMap());
     }
 
-    public Map<String, Model> definitions(Swagger one) {
-        return ofNullable(one.getDefinitions()).orElse(emptyMap());
+    public Map<String, Model> definitions(Swagger swagger) {
+        return ofNullable(swagger.getDefinitions()).orElse(emptyMap());
     }
 }
