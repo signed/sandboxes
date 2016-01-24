@@ -72,8 +72,8 @@ public class SwaggerMergeSteps {
         second.defineTag("identical tag");
     }
 
-    @When("^the two are merged$")
-    public void the_two_are_merged() throws Throwable {
+    @When("^merged$")
+    public void merged() throws Throwable {
         try {
             Swagger first = this.first.build();
             Swagger second = this.second.build();
