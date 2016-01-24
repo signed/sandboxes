@@ -1,6 +1,13 @@
 SwaggerTrim:
 - OperationMother to ensure all the necessary fields are set for validation
 
+SwaggerSort:
+- Sort elements in a reproducible manor if there are not
+  - paths
+  - definitions
+  - parameters
+  - ...
+
 SwaggerCompare
 - Decide if two api definitions are the same and report differences
 - define what 'the same' means
