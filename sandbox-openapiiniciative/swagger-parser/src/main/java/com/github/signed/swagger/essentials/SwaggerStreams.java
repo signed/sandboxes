@@ -7,6 +7,7 @@ import static java.util.Optional.ofNullable;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Response;
@@ -23,11 +24,15 @@ public class SwaggerStreams {
         return ofNullable(swagger.getPaths()).orElse(emptyMap()).values().stream();
     }
 
-    public Stream<Tag> tagsStream(Swagger one) {
-        return ofNullable(one.getTags()).orElse(emptyList()).stream();
+    public Stream<Tag> tagsStream(Swagger swagger) {
+        return ofNullable(swagger.getTags()).orElse(emptyList()).stream();
     }
 
     public Map<String, Response> responses(Swagger swagger) {
         return ofNullable(swagger.getResponses()).orElse(emptyMap());
+    }
+
+    public Map<String, Model> definitions(Swagger one) {
+        return ofNullable(one.getDefinitions()).orElse(emptyMap());
     }
 }

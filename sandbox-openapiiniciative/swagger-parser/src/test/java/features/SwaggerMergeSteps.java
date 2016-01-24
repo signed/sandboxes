@@ -72,6 +72,12 @@ public class SwaggerMergeSteps {
         second.defineTag("identical tag");
     }
 
+    @Given("^two swagger api descriptions with conflicting tag definitions$")
+    public void two_swagger_api_descriptions_with_conflicting_tag_definitions() throws Throwable {
+        first.defineTag("same tag name").withDescription("but different description");
+        second.defineTag("same tag name").withDescription("another descriptions");
+    }
+
     @When("^merged$")
     public void merged() throws Throwable {
         try {

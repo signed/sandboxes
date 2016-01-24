@@ -35,3 +35,8 @@ Feature: Merge two separate api definitions into one
     Given two swagger api descriptions that contain two identical tag definitions
     When merged
     Then there is only a single tag definition
+
+  Scenario: Detect if there are conflicting tag definitions
+    Given two swagger api descriptions with conflicting tag definitions
+    When  merged
+    Then the caller is informed about the conflict

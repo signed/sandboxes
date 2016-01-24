@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -38,7 +39,7 @@ public class SwaggerMerger {
         Swagger swagger = new Swagger();
         swagger.setPaths(mergedPaths.isEmpty() ? null : mergedPaths);
         swagger.setDefinitions(mergedDefinitions.isEmpty() ? null : mergedDefinitions);
-        swagger.setTags(mergedTagDefinitions.isEmpty()?null:mergedTagDefinitions);
+        swagger.setTags(mergedTagDefinitions.isEmpty() ? null : mergedTagDefinitions);
 
         return swagger;
     }
@@ -61,7 +62,7 @@ public class SwaggerMerger {
     }
 
     private LinkedHashMap<String, Model> mergedModelDefinitions(Swagger one, Swagger two) {
-        List<Pair<String, String>> conflictingModelDefinition = ofNullable(one.getDefinitions()).orElse(emptyMap()).keySet().stream().
+        List<Pair<String, String>> conflictingModelDefinition = swaggerStreams.definitions(one).keySet().stream().
                 filter(definitionsContainedInBooth(two))
                 .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getDefinitions().get(s)))
                 .filter(thoseWhoAreNotIdentical())
@@ -72,12 +73,26 @@ public class SwaggerMerger {
         }
 
         LinkedHashMap<String, Model> mergedDefinitions = new LinkedHashMap<>();
-        mergedDefinitions.putAll(ofNullable(one.getDefinitions()).orElse(emptyMap()));
-        mergedDefinitions.putAll(ofNullable(two.getDefinitions()).orElse(emptyMap()));
+        mergedDefinitions.putAll(swaggerStreams.definitions(one));
+        mergedDefinitions.putAll(swaggerStreams.definitions(two));
         return mergedDefinitions;
     }
 
     private List<Tag> mergedTagDefinitions(Swagger one, Swagger two) {
+        Map<String, Tag> firstTagByName = swaggerStreams.tagsStream(one).collect(Collectors.toMap(Tag::getName, tag -> tag));
+        Map<String, Tag> secondTagByName = swaggerStreams.tagsStream(two).collect(Collectors.toMap(Tag::getName, tag -> tag));
+        List<Pair<String, String>> conflictingTagDefinitions = firstTagByName.keySet().stream().filter(secondTagByName::containsKey)
+                .map(serializeBothModelElementsToJson(one, two, (swagger, s) -> swagger.getTags().stream()
+                        .filter(tag -> s.equals(tag.getName()))
+                        .findFirst().get()
+                ))
+                .filter(thoseWhoAreNotIdentical())
+                .collect(toList());
+
+        if(!conflictingTagDefinitions.isEmpty()){
+            throw new SwaggerMergeException("conflicting tag definitions");
+        }
+
         Map<String, Tag> mergedTagDefinitions = Maps.newLinkedHashMap();
         swaggerStreams.tagsStream(one).forEach(tag -> mergedTagDefinitions.put(tag.getName(), tag));
         swaggerStreams.tagsStream(two).forEach(tag -> mergedTagDefinitions.put(tag.getName(), tag));
