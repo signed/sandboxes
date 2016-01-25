@@ -19,7 +19,7 @@ public class TagMatcher extends TypeSafeDiagnosingMatcher<Tag> {
     protected boolean matchesSafely(Tag item, Description mismatchDescription) {
         boolean nameMatches = nameMatcher.matches(item.getName());
         if(!nameMatches){
-            mismatchDescription.appendDescriptionOf(nameMatcher);
+            mismatchDescription.appendText("tag name ").appendValue(item.getName());
         }
         return nameMatches;
     }
