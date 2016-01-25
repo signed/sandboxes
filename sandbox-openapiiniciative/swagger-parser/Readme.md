@@ -2,7 +2,7 @@ SwaggerTrim:
 - OperationMother to ensure all the necessary fields are set for validation
 
 SwaggerSort:
-- Sort elements in a reproducible manor if there are not
+- Sort elements in a reproducible manor if they are not already sorted by json annotations
   - paths
   - definitions
   - parameters
