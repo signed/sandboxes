@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import io.swagger.models.Model;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
+import io.swagger.models.parameters.Parameter;
 
 public class SwaggerSort {
 
@@ -19,8 +20,16 @@ public class SwaggerSort {
 
     public Swagger sort(Swagger swagger){
         swagger.setTags(sortedTags(swagger));
+        swagger.setParameters(sortedParameters(swagger));
         swagger.setDefinitions(sortDefinitions(swagger));
         return swagger;
+    }
+
+    private Map<String, Parameter> sortedParameters(Swagger swagger) {
+        if( null == swagger.getParameters()){
+            return null;
+        }
+        return swagger.getParameters().entrySet().stream().sorted((o1, o2) -> comparator.compare(o1.getKey(), o2.getKey())).collect(toLinkedMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private Map<String, Model> sortDefinitions(Swagger swagger) {

@@ -4,7 +4,9 @@ import static com.github.signed.swagger.essentials.TagMatcher.tagNamed;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -15,6 +17,10 @@ import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
 
 public class SwaggerSort_Test {
+
+    private final List<String> unordered = Arrays.asList("zebra", "ape", "Ant", "aaa");
+    private final List<String> ordered = Arrays.asList("aaa", "Ant", "ape", "zebra");
+
     private final SwaggerBuilder builder = SwaggerMother.emptyApiDefinition();
 
     @Test
@@ -44,6 +50,14 @@ public class SwaggerSort_Test {
         assertThat(definitions.next(), is("Ant"));
         assertThat(definitions.next(), is("ape"));
         assertThat(definitions.next(), is("zebra"));
+    }
+
+    @Test
+    public void sort_parameter_definitions_by_case_insensitive_identifier() throws Exception {
+        unordered.forEach(builder::withParameterDefinition);
+
+        Iterator<String> parameterDefinitions = sort().getParameters().keySet().iterator();
+        ordered.stream().forEachOrdered(identifier -> assertThat(parameterDefinitions.next(), is(identifier)));
     }
 
     private Swagger sort() {
