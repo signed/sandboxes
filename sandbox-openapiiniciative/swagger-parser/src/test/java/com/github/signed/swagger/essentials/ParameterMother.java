@@ -16,7 +16,7 @@ public class ParameterMother {
     public static ParameterBuilder anyParameterReferencingModelDefinition(String parameterIdentifier) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
         parameterBuilder.withName(anyParameterName());
-        parameterBuilder.withReferenceToAModelDefinition(parameterIdentifier);
+        parameterBuilder.referencingModelDefinition(parameterIdentifier);
         return parameterBuilder;
     }
 

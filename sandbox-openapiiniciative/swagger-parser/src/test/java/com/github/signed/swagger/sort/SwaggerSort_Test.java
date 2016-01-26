@@ -11,11 +11,14 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.github.signed.swagger.essentials.PathBuilder;
+import com.github.signed.swagger.essentials.PathMother;
 import com.github.signed.swagger.essentials.SwaggerBuilder;
 import com.github.signed.swagger.essentials.SwaggerMother;
 
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
+import io.swagger.util.Yaml;
 
 public class SwaggerSort_Test {
 

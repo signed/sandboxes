@@ -32,7 +32,7 @@ public class ParameterBuilder {
         return this;
     }
 
-    public ParameterBuilder withReferenceToAModelDefinition(String definitionId) {
+    public ParameterBuilder referencingModelDefinition(String definitionId) {
         bodyParameter = true;
         maybeReferenceToADefinition = Optional.of(definitionId);
         return this;

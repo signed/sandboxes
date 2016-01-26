@@ -62,7 +62,7 @@ public class SwaggerTrimSteps {
     @Given("^a model definition that is referenced in a path$")
     public void a_model_definition_that_is_referenced_in_a_path() throws Throwable {
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
-        swagger.withPath("/some/path").withParameterForAllOperations().withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT);
+        swagger.withPath("/some/path").withParameterForAllOperations().referencingModelDefinition(REFERENCED_MODEL_ELEMENT);
     }
 
     @Given("^a model definition that is only referenced by another model definition that is not referenced anywhere$")
