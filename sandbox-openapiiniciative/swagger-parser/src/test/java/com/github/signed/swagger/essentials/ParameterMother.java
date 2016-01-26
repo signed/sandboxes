@@ -21,7 +21,7 @@ public class ParameterMother {
     }
 
     public static ParameterBuilder anyParameter() {
-        return new ParameterBuilder().withName(anyParameterName()).inPath();
+        return new ParameterBuilder().withName(anyParameterName()).inPath().ofTypeString();
     }
 
     public static String referencedParameterIdentifier() {

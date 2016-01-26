@@ -72,9 +72,7 @@ public class ParameterBuilder {
         }
 
         if (maybeReferenceToAParameterDefinition.isPresent()) {
-            Parameter refParameter = new RefParameter(maybeReferenceToAParameterDefinition.get());
-            refParameter.setName(maybeAName.get());
-            return refParameter;
+            return new RefParameter(maybeReferenceToAParameterDefinition.get());
         }
 
         if (headerParameter) {
@@ -89,6 +87,7 @@ public class ParameterBuilder {
         if (pathParameter) {
             PathParameter pathParameter = new PathParameter();
             pathParameter.setName(maybeAName.get());
+            pathParameter.setType(maybeType.get());
             return pathParameter;
         }
         throw new RuntimeException("Where do you want this parameter to be?");
