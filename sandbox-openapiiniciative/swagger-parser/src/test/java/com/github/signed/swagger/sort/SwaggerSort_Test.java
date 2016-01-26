@@ -20,44 +20,30 @@ public class SwaggerSort_Test {
 
     private final List<String> unordered = Arrays.asList("zebra", "ape", "Ant", "aaa");
     private final List<String> ordered = Arrays.asList("aaa", "Ant", "ape", "zebra");
-
     private final SwaggerBuilder builder = SwaggerMother.emptyApiDefinition();
 
     @Test
     public void sort_tags_by_case_insensitive_name() throws Exception {
-        builder.defineTag("zebra");
-        builder.defineTag("ape");
-        builder.defineTag("Ant");
-        builder.defineTag("aaa");
-
+        unordered.forEach(builder::defineTag);
         Iterator<Tag> tags = sort().getTags().iterator();
-        assertThat(tags.next(), tagNamed("aaa"));
-        assertThat(tags.next(), tagNamed("Ant"));
-        assertThat(tags.next(), tagNamed("ape"));
-        assertThat(tags.next(), tagNamed("zebra"));
+
+        ordered.forEach(tag -> assertThat(tags.next(), is(tagNamed(tag))));
     }
 
     @Test
     public void sort_model_definitions_by_case_insensitive_identifier() throws Exception {
-        builder.withModelDefinition("zebra");
-        builder.withModelDefinition("ape");
-        builder.withModelDefinition("Ant");
-        builder.withModelDefinition("aaa");
-
+        unordered.forEach(builder::withModelDefinition);
         Iterator<String> definitions = sort().getDefinitions().keySet().iterator();
 
-        assertThat(definitions.next(), is("aaa"));
-        assertThat(definitions.next(), is("Ant"));
-        assertThat(definitions.next(), is("ape"));
-        assertThat(definitions.next(), is("zebra"));
+        ordered.forEach(identifier -> assertThat(definitions.next(), is(identifier)));
     }
 
     @Test
     public void sort_parameter_definitions_by_case_insensitive_identifier() throws Exception {
         unordered.forEach(builder::withParameterDefinition);
-
         Iterator<String> parameterDefinitions = sort().getParameters().keySet().iterator();
-        ordered.stream().forEachOrdered(identifier -> assertThat(parameterDefinitions.next(), is(identifier)));
+
+        ordered.forEach(identifier -> assertThat(parameterDefinitions.next(), is(identifier)));
     }
 
     private Swagger sort() {
