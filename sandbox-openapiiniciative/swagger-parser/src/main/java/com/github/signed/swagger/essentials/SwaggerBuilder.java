@@ -41,8 +41,13 @@ public class SwaggerBuilder {
 
     public ParameterBuilder withParameterDefinition(String parameterIdentifier) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        parameters.put(parameterIdentifier, parameterBuilder);
+        withParameterDefinition(parameterIdentifier, parameterBuilder);
         return parameterBuilder;
+    }
+
+    public SwaggerBuilder withParameterDefinition(String parameterIdentifier, ParameterBuilder parameterBuilder) {
+        parameters.put(parameterIdentifier, parameterBuilder);
+        return this;
     }
 
     public SwaggerBuilder withResponseDefinition(String responseIdentifier, ResponseBuilder responseBuilder) {
@@ -57,7 +62,7 @@ public class SwaggerBuilder {
         paths.forEach((s, pathBuilder) -> swagger.path(s, pathBuilder.build()));
         definitions.forEach((s, modelBuilder) -> swagger.addDefinition(s, modelBuilder.build()));
         parameters.forEach((s, parameterBuilder) -> swagger.addParameter(s, parameterBuilder.build()));
-        responses.forEach((s, responseBuilder)-> swagger.response(s, responseBuilder.build()));
+        responses.forEach((s, responseBuilder) -> swagger.response(s, responseBuilder.build()));
         return swagger;
     }
 }

@@ -18,9 +18,22 @@ public class ParameterBuilder {
     private Optional<String> maybeType = Optional.empty();
     private Optional<String> maybeDescription = Optional.empty();
     private Optional<Boolean> maybeRequired = Optional.empty();
-    private boolean headerParameter = false;
+    private boolean headerParameter;
+    private boolean pathParameter;
+    private boolean bodyParameter;
+
+    public ParameterBuilder inHeader() {
+        this.headerParameter = true;
+        return this;
+    }
+
+    public ParameterBuilder inPath() {
+        this.pathParameter = true;
+        return this;
+    }
 
     public ParameterBuilder withReferenceToAModelDefinition(String definitionId) {
+        bodyParameter = true;
         maybeReferenceToADefinition = Optional.of(definitionId);
         return this;
     }
@@ -30,13 +43,8 @@ public class ParameterBuilder {
         return this;
     }
 
-    public ParameterBuilder withName(String name){
+    public ParameterBuilder withName(String name) {
         maybeAName = Optional.ofNullable(name);
-        return this;
-    }
-
-    public ParameterBuilder inHeader() {
-        this.headerParameter = true;
         return this;
     }
 
@@ -49,13 +57,14 @@ public class ParameterBuilder {
         maybeDescription = Optional.of(description);
         return this;
     }
+
     public ParameterBuilder required() {
         maybeRequired = Optional.of(TRUE);
         return this;
     }
 
     public Parameter build() {
-        if (maybeReferenceToADefinition.isPresent()) {
+        if (bodyParameter) {
             BodyParameter bodyParameter = new BodyParameter();
             maybeReferenceToADefinition.ifPresent(id -> bodyParameter.setSchema(new RefModel(id)));
             maybeAName.ifPresent(bodyParameter::setName);
@@ -63,10 +72,12 @@ public class ParameterBuilder {
         }
 
         if (maybeReferenceToAParameterDefinition.isPresent()) {
-            return new RefParameter(maybeReferenceToAParameterDefinition.get());
+            Parameter refParameter = new RefParameter(maybeReferenceToAParameterDefinition.get());
+            refParameter.setName(maybeAName.get());
+            return refParameter;
         }
 
-        if(headerParameter){
+        if (headerParameter) {
             HeaderParameter headerParameter = new HeaderParameter();
             maybeAName.ifPresent(headerParameter::setName);
             maybeType.ifPresent(headerParameter::setType);
@@ -75,6 +86,11 @@ public class ParameterBuilder {
             return headerParameter;
         }
 
-        return new PathParameter();
+        if (pathParameter) {
+            PathParameter pathParameter = new PathParameter();
+            pathParameter.setName(maybeAName.get());
+            return pathParameter;
+        }
+        throw new RuntimeException("Where do you want this parameter to be?");
     }
 }

@@ -1,5 +1,6 @@
 package com.github.signed.swagger.sort;
 
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameter;
 import static com.github.signed.swagger.essentials.TagMatcher.tagNamed;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -40,7 +41,7 @@ public class SwaggerSort_Test {
 
     @Test
     public void sort_parameter_definitions_by_case_insensitive_identifier() throws Exception {
-        unordered.forEach(builder::withParameterDefinition);
+        unordered.forEach((parameterIdentifier) -> builder.withParameterDefinition(parameterIdentifier, anyParameter()));
         Iterator<String> parameterDefinitions = sort().getParameters().keySet().iterator();
 
         ordered.forEach(identifier -> assertThat(parameterDefinitions.next(), is(identifier)));

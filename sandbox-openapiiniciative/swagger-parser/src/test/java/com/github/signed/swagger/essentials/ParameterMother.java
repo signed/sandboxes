@@ -13,10 +13,15 @@ public class ParameterMother {
         return parameterBuilder;
     }
 
-    public static ParameterBuilder anyParameterReferencingModelDefinition(String s) {
+    public static ParameterBuilder anyParameterReferencingModelDefinition(String parameterIdentifier) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
-        parameterBuilder.withReferenceToAModelDefinition(s);
+        parameterBuilder.withName(anyParameterName());
+        parameterBuilder.withReferenceToAModelDefinition(parameterIdentifier);
         return parameterBuilder;
+    }
+
+    public static ParameterBuilder anyParameter() {
+        return new ParameterBuilder().withName(anyParameterName()).inPath();
     }
 
     public static String referencedParameterIdentifier() {

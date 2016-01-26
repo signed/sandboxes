@@ -1,5 +1,25 @@
 package features;
 
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameter;
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameterName;
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameterReferencingAParameterDefinition;
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameterReferencingModelDefinition;
+import static com.github.signed.swagger.essentials.ParameterMother.referencedParameterIdentifier;
+import static com.github.signed.swagger.essentials.PathMother.anyPath;
+import static com.github.signed.swagger.essentials.ResponseMother.anyHttpStatusCode;
+import static com.github.signed.swagger.essentials.ResponseMother.anyResponseDefinition;
+import static com.github.signed.swagger.essentials.ResponseMother.anyResponseReferencingModelElement;
+import static com.github.signed.swagger.essentials.ResponseMother.anyResponseReferencingResponseDefinition;
+import static com.github.signed.swagger.essentials.ResponseMother.referencedResponseIdentifier;
+import static com.github.signed.swagger.essentials.SwaggerMatcher.hasModelDefinitionsFor;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
+import org.hamcrest.Matchers;
+
 import com.github.signed.swagger.essentials.ResponseMother;
 import com.github.signed.swagger.essentials.SwaggerBuilder;
 import com.github.signed.swagger.essentials.SwaggerMother;
@@ -11,14 +31,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
-import org.hamcrest.Matchers;
-
-import static com.github.signed.swagger.essentials.ParameterMother.*;
-import static com.github.signed.swagger.essentials.PathMother.anyPath;
-import static com.github.signed.swagger.essentials.ResponseMother.*;
-import static com.github.signed.swagger.essentials.SwaggerMatcher.hasModelDefinitionsFor;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 public class SwaggerTrimSteps {
 
@@ -61,7 +73,7 @@ public class SwaggerTrimSteps {
 
     @Given("^a model definition that is only referenced in a parameter definition$")
     public void a_model_definition_that_is_only_referenced_in_a_parameter_definition() throws Throwable {
-        swagger.withParameterDefinition(referencedParameterIdentifier()).withReferenceToAModelDefinition(REFERENCED_MODEL_ELEMENT).withName(anyParameterName());
+        swagger.withParameterDefinition(referencedParameterIdentifier(), anyParameterReferencingModelDefinition(REFERENCED_MODEL_ELEMENT));
         swagger.withModelDefinition(REFERENCED_MODEL_ELEMENT).withTypeString();
     }
 
@@ -72,18 +84,18 @@ public class SwaggerTrimSteps {
 
     @Given("^a parameter definition that is not referenced anywhere$")
     public void a_swagger_api_description_with_a_parameter_definition_that_is_not_referenced_anywhere() throws Throwable {
-        swagger.withParameterDefinition("unreferenced-parameter");
+        swagger.withParameterDefinition("unreferenced-parameter", anyParameter());
     }
 
     @Given("^a parameter definition that is referenced in any path$")
     public void a_parameter_definition_that_is_referenced_in_any_path() throws Throwable {
-        swagger.withParameterDefinition(referencedParameterIdentifier());
+        swagger.withParameterDefinition(referencedParameterIdentifier(), anyParameter());
         swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a parameter definition that is referenced in any operation$")
     public void a_parameter_definition_that_is_referenced_in_any_operation() throws Throwable {
-        swagger.withParameterDefinition(referencedParameterIdentifier());
+        swagger.withParameterDefinition(referencedParameterIdentifier(), anyParameter());
         swagger.withPath(anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
     }
 
