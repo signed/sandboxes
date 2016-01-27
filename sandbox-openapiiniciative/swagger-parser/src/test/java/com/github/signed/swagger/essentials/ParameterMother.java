@@ -20,8 +20,8 @@ public class ParameterMother {
         return parameterBuilder;
     }
 
-    public static ParameterBuilder anyParameterThatCanOccurMultipleTimesInASingleOperation(String parameterName) {
-        return pathParameter().withName(parameterName);
+    public static ParameterBuilder anyParameterThatCanOccurMultipleTimesInASingleOperation() {
+        return pathParameter();
     }
 
     public static ParameterBuilder anyParameter() {

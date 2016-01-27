@@ -23,12 +23,17 @@ public class SwaggerSort {
     public Swagger sort(Swagger swagger) {
         swagger.setTags(sortedTags(swagger));
         swagger.setParameters(sortedParameterDefinitions(swagger));
-        sortDefaultParametersInPath(swagger);
+        sortDefaultParametersInPathDefinitions(swagger);
+        sortParametersInOperations(swagger);
         swagger.setDefinitions(sortedDefinitions(swagger));
         return swagger;
     }
 
-    private void sortDefaultParametersInPath(Swagger swagger) {
+    private void sortParametersInOperations(Swagger swagger) {
+        swaggerStreams.operationsStream(swagger).forEach(operation -> operation.setParameters(sortedParameters(operation.getParameters())));
+    }
+
+    private void sortDefaultParametersInPathDefinitions(Swagger swagger) {
         swaggerStreams.pathsStream(swagger).forEach(path -> path.setParameters(sortedParameters(path.getParameters())));
     }
 

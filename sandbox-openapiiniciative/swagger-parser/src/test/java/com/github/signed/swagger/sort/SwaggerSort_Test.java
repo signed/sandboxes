@@ -2,6 +2,7 @@ package com.github.signed.swagger.sort;
 
 import static com.github.signed.swagger.essentials.ParameterMatcher.parameterNamed;
 import static com.github.signed.swagger.essentials.ParameterMother.anyParameter;
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameterThatCanOccurMultipleTimesInASingleOperation;
 import static com.github.signed.swagger.essentials.PathMother.anyPath;
 import static com.github.signed.swagger.essentials.TagMatcher.tagNamed;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.github.signed.swagger.essentials.ParameterMother;
+import com.github.signed.swagger.essentials.OperationBuilder;
 import com.github.signed.swagger.essentials.PathBuilder;
 import com.github.signed.swagger.essentials.SwaggerBuilder;
 import com.github.signed.swagger.essentials.SwaggerMother;
@@ -56,8 +57,18 @@ public class SwaggerSort_Test {
     public void sort_shared_parameters_in_path_definitions_by_case_insensitive_name() throws Exception {
         String path = anyPath();
         PathBuilder pathBuilder = builder.withPath(path);
-        unordered.forEach(parameterName -> pathBuilder.withParameterForAllOperations(ParameterMother.anyParameterThatCanOccurMultipleTimesInASingleOperation(parameterName)));
+        unordered.forEach(parameterName -> pathBuilder.withParameterForAllOperations(parameterName, anyParameterThatCanOccurMultipleTimesInASingleOperation()));
         Iterator<Parameter> parameters = sort().getPath(path).getParameters().iterator();
+
+        ordered.forEach(parameterName -> assertThat(parameters.next(), parameterNamed(parameterName)));
+    }
+
+    @Test
+    public void sort_parameters_in_operations_by_case_insensitive_name() throws Exception {
+        String path = anyPath();
+        OperationBuilder operationBuilder = builder.withPath(path).withPost();
+        unordered.forEach(parameterName -> operationBuilder.withParameter(parameterName, anyParameterThatCanOccurMultipleTimesInASingleOperation()));
+        Iterator<Parameter> parameters = sort().getPath(path).getPost().getParameters().iterator();
 
         ordered.forEach(parameterName -> assertThat(parameters.next(), parameterNamed(parameterName)));
     }

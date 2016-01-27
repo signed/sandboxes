@@ -30,6 +30,11 @@ public class PathBuilder {
         return parameterBuilder;
     }
 
+    public PathBuilder withParameterForAllOperations(String parameterName, ParameterBuilder parameterBuilder) {
+        parameterBuilder.withName(parameterName);
+        return withParameterForAllOperations(parameterBuilder);
+    }
+
     public PathBuilder withParameterForAllOperations(ParameterBuilder parameterBuilder) {
         parameters.add(parameterBuilder);
         return this;
