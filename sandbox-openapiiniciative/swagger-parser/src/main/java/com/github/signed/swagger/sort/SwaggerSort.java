@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import com.github.signed.swagger.essentials.SwaggerStreams;
 
@@ -32,10 +33,11 @@ public class SwaggerSort {
     }
 
     private List<Parameter> sortedParameters(List<Parameter> parameters) {
-        if(null == parameters){
-            return null;
-        }
-        return parameters.stream().sorted(((o1, o2) -> comparator.compare(o1.getName(), o2.getName()))).collect(toList());
+        return sortByStringProperty(parameters, Parameter::getName);
+    }
+
+    private List<Tag> sortedTags(Swagger swagger) {
+        return sortByStringProperty(swagger.getTags(), Tag::getName);
     }
 
     private Map<String, Parameter> sortedParameterDefinitions(Swagger swagger) {
@@ -53,10 +55,10 @@ public class SwaggerSort {
         return map.entrySet().stream().sorted((o1, o2) -> comparator.compare(o1.getKey(), o2.getKey())).collect(toLinkedMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private List<Tag> sortedTags(Swagger swagger) {
-        if (null == swagger.getTags()) {
+    private <T> List<T> sortByStringProperty(List<T> list, Function<T, String> stringProperty) {
+        if (null == list) {
             return null;
         }
-        return swagger.getTags().stream().sorted((o1, o2) -> comparator.compare(o1.getName(), o2.getName())).collect(toList());
+        return list.stream().sorted((o1, o2) -> comparator.compare(stringProperty.apply(o1), stringProperty.apply(o2))).collect(toList());
     }
 }
