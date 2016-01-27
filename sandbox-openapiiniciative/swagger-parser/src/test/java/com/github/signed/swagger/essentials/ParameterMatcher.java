@@ -5,33 +5,33 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-import io.swagger.models.Tag;
+import io.swagger.models.parameters.Parameter;
 
-public class TagMatcher extends TypeSafeDiagnosingMatcher<Tag> {
+public class ParameterMatcher extends TypeSafeDiagnosingMatcher<Parameter> {
 
-    public static Matcher<? super Tag> tagNamed(String tagName){
-        return new TagMatcher().withName(tagName);
+    public static Matcher<? super Parameter> parameterNamed(String parameterName){
+        return new ParameterMatcher().withName(parameterName);
     }
 
     private Matcher<String> nameMatcher = Matchers.any(String.class);
 
     @Override
-    protected boolean matchesSafely(Tag item, Description mismatchDescription) {
+    protected boolean matchesSafely(Parameter item, Description mismatchDescription) {
         boolean nameMatches = nameMatcher.matches(item.getName());
         if(!nameMatches){
-            mismatchDescription.appendText("tag name ").appendValue(item.getName());
+            mismatchDescription.appendText("parameter name ").appendValue(item.getName());
         }
         return nameMatches;
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("tag ");
+        description.appendText("parameter ");
         description.appendText("name ").appendDescriptionOf(nameMatcher);
 
     }
 
-    private TagMatcher withName(String tagName) {
+    private ParameterMatcher withName(String tagName) {
         nameMatcher = Matchers.equalTo(tagName);
         return this;
     }
