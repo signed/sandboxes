@@ -72,16 +72,16 @@ public class SwaggerSort {
         return list.stream().map(stringProperty).sorted((o1, o2) -> comparator.compare(o1.sortKey, o2.sortKey)).map(sortContainer -> sortContainer.item).collect(toList());
     }
 
-    private static class SortContainer<T> {
+    private static class SortContainer<Item> {
 
-        public static <G> SortContainer<G> sortKeyFromProperty(G item, Function<G, String> extract) {
+        public static <T> SortContainer<T> sortKeyFromProperty(T item, Function<T, String> extract) {
             return new SortContainer<>(item, extract.apply(item));
         }
 
-        public final T item;
+        public final Item item;
         public final String sortKey;
 
-        private SortContainer(T item, String sortKey) {
+        private SortContainer(Item item, String sortKey) {
             this.item = item;
             this.sortKey = sortKey;
         }
