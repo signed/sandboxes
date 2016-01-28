@@ -40,18 +40,14 @@ public class SwaggerSort {
     }
 
     private List<Parameter> sortedParameters(Swagger swagger, List<Parameter> parameters) {
-        if (null == parameters) {
-            return null;
-        }
-        List<SortContainer<Parameter>> resolvedParameters = parameters.stream().map(parameter -> {
+        return sortByStringProperty(parameters, parameter -> {
             Parameter resolvedParameter = this.parameters.resolveRefParametersWithDefinitions(swagger, parameter);
             return new SortContainer<>(parameter, resolvedParameter.getName());
-        }).collect(toList());
-        return sortByStringProperty(resolvedParameters).stream().map(sortContainer -> sortContainer.item).collect(toList());
+        });
     }
 
     private List<Tag> sortedTags(Swagger swagger) {
-        return sortByStringProperty(swagger.getTags(), Tag::getName);
+        return sortByStringProperty(swagger.getTags(), tag -> SortContainer.sortKeyFromProperty(tag, Tag::getName));
     }
 
     private Map<String, Parameter> sortedParameterDefinitions(Swagger swagger) {
@@ -69,18 +65,19 @@ public class SwaggerSort {
         return map.entrySet().stream().sorted((o1, o2) -> comparator.compare(o1.getKey(), o2.getKey())).collect(toLinkedMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private <T> List<SortContainer<T>> sortByStringProperty(List<SortContainer<T>> list) {
-        return list.stream().sorted((o1, o2) -> comparator.compare(o1.sortKey, o2.sortKey)).collect(toList());
-    }
-
-    private <T> List<T> sortByStringProperty(List<T> list, Function<T, String> stringProperty) {
+    private <T> List<T> sortByStringProperty(List<T> list, Function<T, SortContainer<T>> stringProperty) {
         if (null == list) {
             return null;
         }
-        return list.stream().sorted((o1, o2) -> comparator.compare(stringProperty.apply(o1), stringProperty.apply(o2))).collect(toList());
+        return list.stream().map(stringProperty).sorted((o1, o2) -> comparator.compare(o1.sortKey, o2.sortKey)).map(sortContainer -> sortContainer.item).collect(toList());
     }
 
     private static class SortContainer<T> {
+
+        public static <G> SortContainer<G> sortKeyFromProperty(G item, Function<G, String> extract) {
+            return new SortContainer<>(item, extract.apply(item));
+        }
+
         public final T item;
         public final String sortKey;
 
