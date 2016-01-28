@@ -7,6 +7,7 @@ import com.github.signed.swagger.trim.DefinitionReference;
 import com.github.signed.swagger.trim.ParameterReference;
 
 import io.swagger.models.Model;
+import io.swagger.models.Swagger;
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.RefParameter;
@@ -30,5 +31,13 @@ public class Parameters {
             return Collections.singletonList(new ParameterReference((RefParameter) parameter));
         }
         return Collections.emptyList();
+    }
+
+    public Parameter resolveRefParametersWithDefinitions(Swagger swagger, Parameter parameter) {
+        if (parameter instanceof RefParameter) {
+            RefParameter refParameter = (RefParameter) parameter;
+            return swagger.getParameter(refParameter.getSimpleRef());
+        }
+        return parameter;
     }
 }

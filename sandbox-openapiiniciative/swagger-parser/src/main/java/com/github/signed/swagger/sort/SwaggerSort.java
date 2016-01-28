@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.github.signed.swagger.essentials.Parameters;
 import com.github.signed.swagger.essentials.SwaggerStreams;
 
 import io.swagger.models.Model;
@@ -17,6 +18,7 @@ import io.swagger.models.parameters.Parameter;
 
 public class SwaggerSort {
 
+    private final Parameters parameters = new Parameters();
     private final SwaggerStreams swaggerStreams = new SwaggerStreams();
     private final Comparator<String> comparator = (o1, o2) -> o1.toLowerCase().compareTo(o2.toLowerCase());
 
@@ -30,15 +32,22 @@ public class SwaggerSort {
     }
 
     private void sortParametersInOperations(Swagger swagger) {
-        swaggerStreams.operationsStream(swagger).forEach(operation -> operation.setParameters(sortedParameters(operation.getParameters())));
+        swaggerStreams.operationsStream(swagger).forEach(operation -> operation.setParameters(sortedParameters(swagger, operation.getParameters())));
     }
 
     private void sortDefaultParametersInPathDefinitions(Swagger swagger) {
-        swaggerStreams.pathsStream(swagger).forEach(path -> path.setParameters(sortedParameters(path.getParameters())));
+        swaggerStreams.pathsStream(swagger).forEach(path -> path.setParameters(sortedParameters(swagger, path.getParameters())));
     }
 
-    private List<Parameter> sortedParameters(List<Parameter> parameters) {
-        return sortByStringProperty(parameters, Parameter::getName);
+    private List<Parameter> sortedParameters(Swagger swagger, List<Parameter> parameters) {
+        if (null == parameters) {
+            return null;
+        }
+        List<SortContainer<Parameter>> resolvedParameters = parameters.stream().map(parameter -> {
+            Parameter resolvedParameter = this.parameters.resolveRefParametersWithDefinitions(swagger, parameter);
+            return new SortContainer<>(parameter, resolvedParameter.getName());
+        }).collect(toList());
+        return sortByStringProperty(resolvedParameters).stream().map(sortContainer -> sortContainer.item).collect(toList());
     }
 
     private List<Tag> sortedTags(Swagger swagger) {
@@ -60,10 +69,24 @@ public class SwaggerSort {
         return map.entrySet().stream().sorted((o1, o2) -> comparator.compare(o1.getKey(), o2.getKey())).collect(toLinkedMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    private <T> List<SortContainer<T>> sortByStringProperty(List<SortContainer<T>> list) {
+        return list.stream().sorted((o1, o2) -> comparator.compare(o1.sortKey, o2.sortKey)).collect(toList());
+    }
+
     private <T> List<T> sortByStringProperty(List<T> list, Function<T, String> stringProperty) {
         if (null == list) {
             return null;
         }
         return list.stream().sorted((o1, o2) -> comparator.compare(stringProperty.apply(o1), stringProperty.apply(o2))).collect(toList());
+    }
+
+    private static class SortContainer<T> {
+        public final T item;
+        public final String sortKey;
+
+        private SortContainer(T item, String sortKey) {
+            this.item = item;
+            this.sortKey = sortKey;
+        }
     }
 }

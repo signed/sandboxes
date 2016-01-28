@@ -2,7 +2,7 @@ package features;
 
 import static com.github.signed.swagger.essentials.ParameterMother.anyParameter;
 import static com.github.signed.swagger.essentials.ParameterMother.anyParameterName;
-import static com.github.signed.swagger.essentials.ParameterMother.anyParameterReferencingAParameterDefinition;
+import static com.github.signed.swagger.essentials.ParameterMother.anyParameterReferencingParameterDefinition;
 import static com.github.signed.swagger.essentials.ParameterMother.anyParameterReferencingModelDefinition;
 import static com.github.signed.swagger.essentials.ParameterMother.referencedParameterIdentifier;
 import static com.github.signed.swagger.essentials.PathMother.anyPath;
@@ -79,7 +79,7 @@ public class SwaggerTrimSteps {
 
     @Given("^the parameter definition is referenced anywhere$")
     public void the_parameter_definition_is_referenced_anywhere() throws Throwable {
-        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a parameter definition that is not referenced anywhere$")
@@ -90,13 +90,13 @@ public class SwaggerTrimSteps {
     @Given("^a parameter definition that is referenced in any path$")
     public void a_parameter_definition_that_is_referenced_in_any_path() throws Throwable {
         swagger.withParameterDefinition(referencedParameterIdentifier(), anyParameter());
-        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(anyPath()).withParameterForAllOperations(anyParameterReferencingParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a parameter definition that is referenced in any operation$")
     public void a_parameter_definition_that_is_referenced_in_any_operation() throws Throwable {
         swagger.withParameterDefinition(referencedParameterIdentifier(), anyParameter());
-        swagger.withPath(anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingAParameterDefinition(referencedParameterIdentifier()));
+        swagger.withPath(anyPath()).withOption().withParameter(anyParameterName(), anyParameterReferencingParameterDefinition(referencedParameterIdentifier()));
     }
 
     @Given("^a model definition referenced by a parameter$")
