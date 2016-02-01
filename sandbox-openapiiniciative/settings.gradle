@@ -1,1 +1,1 @@
-include "swagger-parser", "swagger-code-gen"
+include "swagger-code-gen"
