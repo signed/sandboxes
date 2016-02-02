@@ -50,7 +50,7 @@
                     <sourceEncoding>UTF-8</sourceEncoding>
                     <verbose>true</verbose>
                     <printFailingErrors>true</printFailingErrors>
-                    <failOnViolation>false</failOnViolation>
+                    <failOnViolation>true</failOnViolation>
                     <rulesets>
                         <ruleset>/pmd/ruleset.xml</ruleset> <!-- It is vital to append .xml -->
                     </rulesets>
