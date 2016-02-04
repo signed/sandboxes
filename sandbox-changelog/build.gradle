@@ -1,0 +1,15 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
+apply plugin: 'java'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.10'
+}
