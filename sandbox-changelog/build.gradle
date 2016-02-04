@@ -10,6 +10,38 @@ buildscript {
 
 apply plugin: 'java'
 
+if (project.hasProperty('release')) {
+    apply from: "$rootDir/gradle/buildscript/central.gradle"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile(
+            'junit:junit:4.12'
+            , 'org.hamcrest:java-hamcrest:2.0.0.0'
+            , 'org.mockito:mockito-core:2.0.36-beta'
+            , 'info.cukes:cucumber-java:1.2.4'
+            , 'info.cukes:cucumber-junit:1.2.4'
+    )
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = ['-Xlint', '-Xlint:-serial', '-Xlint:-path']
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
 }

@@ -1,4 +1,4 @@
 package com.github.signed.changelog;
 
-public class Changelog {
+public class Link {
 }

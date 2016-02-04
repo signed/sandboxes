@@ -1,4 +1,4 @@
 package com.github.signed.changelog;
 
-public class IssueTrackerLink {
+public class ReleaseDate {
 }
