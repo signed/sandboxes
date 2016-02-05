@@ -1,9 +1,14 @@
 package com.github.signed.changelog;
 
-import java.util.Optional;
-
 public class Item {
-    public Optional<Link> link() {
-        return Optional.empty();
+    private final String text;
+
+    public Item(String text) {
+        this.text = text;
     }
+
+    public final String text(){
+        return text;
+    }
+
 }

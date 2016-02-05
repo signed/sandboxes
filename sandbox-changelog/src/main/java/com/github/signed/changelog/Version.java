@@ -1,24 +1,32 @@
 package com.github.signed.changelog;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class Version implements Iterable<Item> {
-    private final List<Item> items = new ArrayList<>();
+public class Version implements Iterable<Category> {
 
+    private final Optional<LocalDate> releaseDate;
+    private final Optional<VersionNumber> versionNumber;
+    private final List<Category> categories;
 
-    public Optional<Link> link() {
-        return Optional.of(new Link());
+    public Version(Optional<LocalDate> releaseDate, Optional<VersionNumber> versionNumber, List<Category> categories) {
+        this.releaseDate = releaseDate;
+        this.versionNumber = versionNumber;
+        this.categories = categories;
     }
 
     @Override
-    public Iterator<Item> iterator() {
-        return items.iterator();
+    public Iterator<Category> iterator() {
+        return categories.iterator();
     }
 
-    public Optional<ReleaseDate> releaseDate() {
-        return Optional.empty();
+    public Optional<LocalDate> releaseDate() {
+        return releaseDate;
+    }
+
+    public Optional<VersionNumber> versionNumber(){
+        return versionNumber;
     }
 }

@@ -2,7 +2,6 @@ package com.github.signed.changelog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MarkdownSerializer implements ChangelogVisitor {
@@ -18,26 +17,18 @@ public class MarkdownSerializer implements ChangelogVisitor {
 
     @Override
     public void visit(Version version) {
-
-        List<Optional<Link>> links = new ArrayList<>();
-
-        links.add(version.link());
-        Optional<ReleaseDate> maybeReleaseDate = version.releaseDate();
-
-        lines.add("## ");
-
-        for(Item item: version){
-            Optional<Link> maybeLink = item.link();
-            links.add(maybeLink);
+        String versionAsText = version.versionNumber().map(VersionNumber::asString).orElse("[Unreleased]");
+        lines.add("## " + versionAsText);
+        for (Category category : version) {
+            lines.add("### " + category.name());
+            for (Item item : category) {
+                lines.add("- " + item.text());
+            }
         }
-
-
-
-
     }
 
 
-    public String markdown(){
+    public String markdown() {
         return lines.stream().collect(Collectors.joining("\n"));
     }
 }

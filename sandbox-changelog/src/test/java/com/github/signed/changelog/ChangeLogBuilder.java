@@ -14,6 +14,13 @@ public class ChangeLogBuilder {
         return header;
     }
 
+    public VersionBuilder version() {
+        VersionBuilder versionBuilder = new VersionBuilder();
+        versions.add(versionBuilder);
+        return versionBuilder;
+
+    }
+
     public ChangeLog build() {
         return new ChangeLog(header.build(), versions.stream().map(VersionBuilder::build).collect(toList()));
     }

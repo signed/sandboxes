@@ -19,6 +19,10 @@ public class GoldMaster_Test {
     public void name() throws Exception {
         changeLogBuilder.header().withDescription("All notable changes to this project will be documented in this file.\n" +
                 "This project adheres to [Semantic Versioning](http://semver.org/).");
+        VersionBuilder versionBuilder = changeLogBuilder.version().unreleased();
+        CategoryBuilder added = versionBuilder.added();
+        added.item().text("zh-CN and zh-TW translations from @tianshuo.");
+        added.item().text("de translation from @mpbzh.");
         ChangeLog changeLog = changeLogBuilder.build();
 
         MarkdownSerializer markdownSerializer = new MarkdownSerializer();
@@ -28,6 +32,8 @@ public class GoldMaster_Test {
         Stream<String> stream = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("changelog.md"))).lines();
         String goldMaster = stream.reduce("", (s, s2) -> s + "\n" + s2);
 
-        assertThat(markdownSerializer.markdown(), Matchers.equalTo(goldMaster));
+        String markdown = markdownSerializer.markdown();
+        System.out.println(markdown);
+        assertThat(markdown, Matchers.equalTo(goldMaster));
     }
 }
