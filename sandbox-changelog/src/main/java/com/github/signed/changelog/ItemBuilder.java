@@ -1,5 +1,8 @@
 package com.github.signed.changelog;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ItemBuilder {
 
     public static ItemBuilder forText(String text){
@@ -14,6 +17,9 @@ public class ItemBuilder {
     }
 
     public Item build() {
-        return new Item(text);
+        String[] split = text.split("\n");
+
+        List<String> lines = Arrays.asList(split);
+        return new Item(lines);
     }
 }

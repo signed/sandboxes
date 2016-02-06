@@ -1,14 +1,16 @@
 package com.github.signed.changelog;
 
-public class Item {
-    private final String text;
+import java.util.List;
 
-    public Item(String text) {
-        this.text = text;
+public class Item {
+    private final List<String> lines;
+
+    public Item(List<String> lines) {
+        this.lines = lines;
     }
 
-    public final String text(){
-        return text;
+    public List<String> lines(){
+        return lines;
     }
 
 }

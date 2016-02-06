@@ -46,7 +46,7 @@ public class MarkdownSerializer implements ChangelogVisitor {
         for (Category category : version) {
             lines.add("### " + category.name());
             for (Item item : category) {
-                lines.add("- " + item.text());
+                lines.add("- " +String.join("\n  ",item.lines()));
             }
             lines.add("");
             remove = true;

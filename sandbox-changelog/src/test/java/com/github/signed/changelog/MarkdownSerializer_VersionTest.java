@@ -103,6 +103,13 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
         assertThat(markdownLines(), hasSize(4));
     }
 
+    @Test
+    public void indent_multiple_lines_in_an_item_text_correctly() throws Exception {
+        version.deprecated().item().text("first\nsecond");
+
+        assertThat(line(4), startsWith("  second"));
+    }
+
     @Override
     public MarkdownSerializer markdownSerializer() {
         MarkdownSerializer serializer = new MarkdownSerializer();

@@ -53,8 +53,7 @@ public class ReproduceSample_Test {
     private VersionBuilder _0_2_0() {
         VersionBuilder versionBuilder = VersionBuilder.For(SemVer(0, 2, 0));
         versionBuilder.releasedAt(Date(2015, 10, 6)).link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0"));
-        versionBuilder.changed().item().text("Remove exclusionary mentions of \"open source\" since this project can benefit\n" +
-                "both \"open\" and \"closed\" source projects equally.");
+        versionBuilder.changed().item().text("Remove exclusionary mentions of \"open source\" since this project can benefit\nboth \"open\" and \"closed\" source projects equally.");
         return versionBuilder;
     }
 
@@ -76,8 +75,7 @@ public class ReproduceSample_Test {
 
         version.category(changed()
                 .item(ItemBuilder.forText("Update year to match in every README example."))
-                .item(ItemBuilder.forText("Reluctantly stop making fun of Brits only, since most of the world\n" +
-                        "  writes dates in a strange way."))
+                .item(ItemBuilder.forText("Reluctantly stop making fun of Brits only, since most of the world\nwrites dates in a strange way."))
         );
         version.category(CategoryBuilder.fixed()
                 .item(forText("Fix typos in recent README changes."))
