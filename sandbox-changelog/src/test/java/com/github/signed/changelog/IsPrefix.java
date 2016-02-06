@@ -31,15 +31,20 @@ public class IsPrefix extends TypeSafeDiagnosingMatcher<String> {
         boolean isPrefix = longer.startsWith(item);
         if (!isPrefix) {
             String sharedPrefix = greatestCommonPrefix(item, longer);
-            String startOfMismatchLine = sharedPrefix.substring(sharedPrefix.lastIndexOf('\n')+1);
+            int blub = sharedPrefix.lastIndexOf('\n') + 1;
+            String startOfMismatchLine = sharedPrefix.substring(blub);
 
             int start = sharedPrefix.length();
             int numberOfCharactersAfter = 30;
-            description.appendText(replaceNewLine(sharedPrefix.substring(start - 30)));
+
+
+            String before = sharedPrefix.substring(blub - 30, blub);
+
+            description.appendText(replaceNewLine(before));
             description.appendText("\n");
-            description.appendText(replaceNewLine(startOfMismatchLine + "|" + nextIfThere(start, numberOfCharactersAfter, longer)));
+            description.appendText(replaceNewLine(startOfMismatchLine + "|> " + nextIfThere(start, numberOfCharactersAfter, longer)));
             description.appendText("\n");
-            description.appendText(replaceNewLine(startOfMismatchLine + "|" + nextIfThere(start, numberOfCharactersAfter, item)));
+            description.appendText(replaceNewLine(startOfMismatchLine + "|> " + nextIfThere(start, numberOfCharactersAfter, item)));
         }
         return isPrefix;
     }

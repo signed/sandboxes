@@ -15,8 +15,7 @@ public class ReproduceSample_Test {
     private final ChangeLogBuilder changeLogBuilder = new ChangeLogBuilder();
 
     @Test
-    //@Ignore("that is the short term goal to work towards")
-    public void name() throws Exception {
+    public void serialized_changelog_matches_with_sample_from_homepage() throws Exception {
         changeLogBuilder.header()
                 .withDescription("All notable changes to this project will be documented in this file.\nThis project adheres to [Semantic Versioning](http://semver.org/).");
         changeLogBuilder.version(unreleased()::build);

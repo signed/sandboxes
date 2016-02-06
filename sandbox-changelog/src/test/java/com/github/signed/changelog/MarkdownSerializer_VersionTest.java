@@ -1,5 +1,6 @@
 package com.github.signed.changelog;
 
+import static java.time.LocalDate.of;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
@@ -74,6 +75,13 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
         version.unreleased();
 
         assertThat(secondToLastLine(), not(equalTo("")));
+    }
+
+    @Test
+    public void append_the_release_date_to_the_version_heading() throws Exception {
+        version.releasedAt(new ReleaseDate(of(2015, 12, 3)));
+
+        assertThat(line(1), endsWith(" - 2015-12-03"));
     }
 
     @Override
