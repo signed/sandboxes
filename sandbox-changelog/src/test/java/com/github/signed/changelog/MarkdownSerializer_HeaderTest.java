@@ -1,36 +1,33 @@
 package com.github.signed.changelog;
 
-import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
-import java.util.List;
-
 import org.junit.Test;
 
-public class MarkdownSerializer_HeaderTest {
-    private final MarkdownSerializer markdownSerializer = new MarkdownSerializer();
+public class MarkdownSerializer_HeaderTest implements MarkdownSerializerFixture {
     private final Header header = new Header("hello world");
+    private final MarkdownSerializer markdownSerializer = new MarkdownSerializer();
 
     @Test
     public void write_heading_stating_the_purpose_of_the_document() throws Exception {
-        assertThat(markdownLines().get(0), startsWith("# Change Log"));
+        assertThat(line(1), startsWith("# Change Log"));
     }
 
     @Test
     public void write_write_header_description_in_next_line() throws Exception {
-        assertThat(markdownLines().get(1), equalTo("hello world"));
+        assertThat(line(2), equalTo("hello world"));
     }
 
     @Test
     public void write_newline_after_description() throws Exception {
-        assertThat(markdownLines().get(2), equalTo(""));
+        assertThat(lastLine(), equalTo(""));
     }
 
-    private List<String> markdownLines() {
+    @Override
+    public MarkdownSerializer markdownSerializer() {
         markdownSerializer.visit(header);
-        return asList(markdownSerializer.markdown().split("\n", -1));
+        return markdownSerializer;
     }
-
 }
