@@ -9,7 +9,7 @@ public class VersionNumber_Test {
 
     @Test
     public void format_properly() throws Exception {
-        VersionNumber versionNumber = new VersionNumber(14, 8, 33);
+        VersionNumber versionNumber = VersionNumber.SemVer(14, 8, 33);
         assertThat(versionNumber.asString(), is("14.8.33"));
     }
 }

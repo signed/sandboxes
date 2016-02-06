@@ -1,6 +1,8 @@
 package com.github.signed.changelog;
 
-import static java.time.LocalDate.of;
+import static com.github.signed.changelog.Link.To;
+import static com.github.signed.changelog.ReleaseDate.Date;
+import static com.github.signed.changelog.VersionNumber.SemVer;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
@@ -31,7 +33,7 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
     @Test
     public void render_link_to_release() throws Exception {
         version.unreleased();
-        version.link(new Link("https://example.org"));
+        version.link(To("https://example.org"));
 
         assertThat(line(1), endsWith("[Unreleased]"));
         assertThat(line(2), is(""));
@@ -41,14 +43,14 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
     @Test
     public void add_newline_after_links() throws Exception {
         version.unreleased();
-        version.link(new Link("https://example.org"));
+        version.link(To("https://example.org"));
 
         assertThat(lastLine(), is(""));
     }
 
     @Test
     public void if_present_render_the_version() throws Exception {
-        version.version(new VersionNumber(4, 2, 1));
+        version.version(SemVer(4, 2, 1));
 
         assertThat(line(1), endsWith("4.2.1"));
     }
@@ -79,7 +81,7 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
 
     @Test
     public void append_the_release_date_to_the_version_heading() throws Exception {
-        version.releasedAt(new ReleaseDate(of(2015, 12, 3)));
+        version.releasedAt(Date(2015, 12, 3));
 
         assertThat(line(1), endsWith(" - 2015-12-03"));
     }

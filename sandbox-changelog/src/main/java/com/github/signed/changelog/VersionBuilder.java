@@ -6,9 +6,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class VersionBuilder {
+
+    public static VersionBuilder For(VersionNumber versionNumber) {
+        return new VersionBuilder().version(versionNumber);
+    }
+
     private final List<CategoryBuilder> categories = new ArrayList<>();
     private Optional<ReleaseDate> maybeReleaseDate = Optional.empty();
     private Optional<VersionNumber> maybeVersionNumber = Optional.empty();
+
     private Optional<Link> maybeLink = Optional.empty();
 
     public VersionBuilder unreleased() {

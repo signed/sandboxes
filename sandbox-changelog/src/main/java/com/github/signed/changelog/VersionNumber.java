@@ -3,6 +3,11 @@ package com.github.signed.changelog;
 import static java.lang.String.format;
 
 public class VersionNumber {
+
+    public static VersionNumber SemVer(int major, int minor, int micro) {
+        return new VersionNumber(major, minor, micro);
+    }
+
     private final int major;
     private final int minor;
     private final int micro;

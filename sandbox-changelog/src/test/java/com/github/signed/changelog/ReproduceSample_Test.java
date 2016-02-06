@@ -1,13 +1,14 @@
 package com.github.signed.changelog;
 
 import static com.github.signed.changelog.IsPrefix.isAPrefixIn;
+import static com.github.signed.changelog.Link.To;
+import static com.github.signed.changelog.ReleaseDate.Date;
 import static com.github.signed.changelog.Resources.readAsString;
+import static com.github.signed.changelog.VersionNumber.SemVer;
 import static java.nio.charset.Charset.forName;
-import static java.time.LocalDate.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import org.junit.Test;
 
@@ -35,9 +36,8 @@ public class ReproduceSample_Test {
     }
 
     private VersionBuilder _0_2_0() {
-        VersionBuilder versionBuilder = new VersionBuilder();
-        versionBuilder.version(new VersionNumber(0, 2, 0))
-                .releasedAt(new ReleaseDate(LocalDate.of(2015, 10, 6))).link(new Link("https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0"));
+        VersionBuilder versionBuilder = VersionBuilder.For(SemVer(0, 2, 0));
+        versionBuilder.releasedAt(Date(2015, 10, 6)).link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0"));
         versionBuilder.changed().item().text("Remove exclusionary mentions of \"open source\" since this project can benefit\n" +
                 "both \"open\" and \"closed\" source projects equally.");
         return versionBuilder;
@@ -49,7 +49,7 @@ public class ReproduceSample_Test {
 
     private VersionBuilder unreleased() {
         VersionBuilder unreleased = new VersionBuilder().unreleased();
-        unreleased.link(new Link("https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...HEAD"));
+        unreleased.link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...HEAD"));
         CategoryBuilder added = unreleased.added();
         added.item().text("zh-CN and zh-TW translations from @tianshuo.");
         added.item().text("de translation from @mpbzh.");
@@ -57,11 +57,10 @@ public class ReproduceSample_Test {
     }
 
     private VersionBuilder _0_3_0() {
-        VersionBuilder _0_3_0 = new VersionBuilder();
-
-        _0_3_0.version(new VersionNumber(0, 3, 0))
-                .releasedAt(new ReleaseDate(of(2015, 12, 3)))
-                .link(new Link("https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0"));
+        VersionBuilder _0_3_0 = VersionBuilder.For(SemVer(0, 3, 0));
+        _0_3_0.version(SemVer(0, 3, 0))
+                .releasedAt(Date(2015, 12, 3))
+                .link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0"));
         CategoryBuilder added = _0_3_0.added();
         added.item().text("RU translation from @aishek.");
         added.item().text("pt-BR translation from @tallesl.");
