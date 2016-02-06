@@ -54,7 +54,8 @@ public class IsPrefix extends TypeSafeDiagnosingMatcher<String> {
     }
 
     private String nextIfThere(int start, int numberOfCharactersAfter, String string) {
-        return string.substring(start, start + numberOfCharactersAfter);
+        int endIndex = Math.min(string.length(), start + numberOfCharactersAfter);
+        return string.substring(start, endIndex);
     }
 
     @Override

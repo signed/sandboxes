@@ -1,6 +1,8 @@
 package com.github.signed.changelog;
 
+import static com.github.signed.changelog.CategoryBuilder.changed;
 import static com.github.signed.changelog.IsPrefix.isAPrefixIn;
+import static com.github.signed.changelog.ItemBuilder.forText;
 import static com.github.signed.changelog.Link.To;
 import static com.github.signed.changelog.ReleaseDate.Date;
 import static com.github.signed.changelog.Resources.readAsString;
@@ -23,6 +25,7 @@ public class ReproduceSample_Test {
         changeLogBuilder.version(unreleased()::build);
         changeLogBuilder.version(_0_3_0()::build);
         changeLogBuilder.version(_0_2_0()::build);
+        changeLogBuilder.version(_0_1_0()::build);
 
         ChangeLog changeLog = changeLogBuilder.build();
 
@@ -31,8 +34,19 @@ public class ReproduceSample_Test {
 
         String markdown = markdownSerializer.markdown();
         System.out.println(markdown);
-
         assertThat(markdown, isAPrefixIn(sample()));
+    }
+
+    private VersionBuilder _0_3_0() {
+        VersionBuilder _0_3_0 = VersionBuilder.For(SemVer(0, 3, 0));
+        _0_3_0.version(SemVer(0, 3, 0))
+                .releasedAt(Date(2015, 12, 3))
+                .link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0"));
+        CategoryBuilder added = _0_3_0.added();
+        added.item().text("RU translation from @aishek.");
+        added.item().text("pt-BR translation from @tallesl.");
+        added.item().text("es-ES translation from @ZeliosAriex.");
+        return _0_3_0;
     }
 
     private VersionBuilder _0_2_0() {
@@ -41,6 +55,17 @@ public class ReproduceSample_Test {
         versionBuilder.changed().item().text("Remove exclusionary mentions of \"open source\" since this project can benefit\n" +
                 "both \"open\" and \"closed\" source projects equally.");
         return versionBuilder;
+    }
+
+    private VersionBuilder _0_1_0() {
+        VersionBuilder version = VersionBuilder.For(SemVer(0, 1, 0));
+        version.link(Link.To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.8...v0.1.0"));
+        version.releasedAt(ReleaseDate.Date(2015, 10, 6));
+        version.added().item().text("Answer \"Should you ever rewrite a change log?\".");
+        version.category(changed()
+                .item(forText("Improve argument against commit logs."))
+                .item(forText("Start following [SemVer](http://semver.org) properly.")));
+        return version;
     }
 
     public String sample() throws IOException {
@@ -54,18 +79,6 @@ public class ReproduceSample_Test {
         added.item().text("zh-CN and zh-TW translations from @tianshuo.");
         added.item().text("de translation from @mpbzh.");
         return unreleased;
-    }
-
-    private VersionBuilder _0_3_0() {
-        VersionBuilder _0_3_0 = VersionBuilder.For(SemVer(0, 3, 0));
-        _0_3_0.version(SemVer(0, 3, 0))
-                .releasedAt(Date(2015, 12, 3))
-                .link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0"));
-        CategoryBuilder added = _0_3_0.added();
-        added.item().text("RU translation from @aishek.");
-        added.item().text("pt-BR translation from @tallesl.");
-        added.item().text("es-ES translation from @ZeliosAriex.");
-        return _0_3_0;
     }
 
 }

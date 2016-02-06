@@ -7,9 +7,11 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture {
@@ -84,6 +86,21 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
         version.releasedAt(Date(2015, 12, 3));
 
         assertThat(line(1), endsWith(" - 2015-12-03"));
+    }
+
+    @Test
+    public void put_an_empty_line_between_two_categories() throws Exception {
+        version.security().item().text("security");
+        version.removed().item().text("removed");
+
+        assertThat(line(4), CoreMatchers.is(""));
+    }
+
+    @Test
+    public void do_no_add_an_empty_line_after_a_single_time() throws Exception {
+        version.security().item().text("text");
+
+        assertThat(markdownLines(), hasSize(4));
     }
 
     @Override

@@ -42,12 +42,20 @@ public class MarkdownSerializer implements ChangelogVisitor {
         }
         lines.add(format("## %s%s", versionPartOfHeadline, releaseDatePartOfHeadlineString));
 
+        boolean remove = false;
         for (Category category : version) {
             lines.add("### " + category.name());
             for (Item item : category) {
                 lines.add("- " + item.text());
             }
+            lines.add("");
+            remove = true;
         }
+
+        if (remove) {
+            lines.remove(lines.size() - 1);
+        }
+
         if (!renderedLinks.isEmpty()) {
             lines.add("");
             renderedLinks.stream()

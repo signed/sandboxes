@@ -24,34 +24,44 @@ public class VersionBuilder {
     }
 
     public CategoryBuilder added() {
-        return category("Added");
+        CategoryBuilder added = CategoryBuilder.added();
+        category(added);
+        return added;
     }
 
     public CategoryBuilder changed() {
-        return category("Changed");
+        CategoryBuilder changed = CategoryBuilder.changed();
+        category(changed);
+        return changed;
     }
 
     public CategoryBuilder deprecated() {
-        return category("Deprecated");
+        CategoryBuilder deprecated = CategoryBuilder.deprecated();
+        category(deprecated);
+        return deprecated;
     }
 
     public CategoryBuilder removed() {
-        return category("Removed");
+        CategoryBuilder removed = CategoryBuilder.removed();
+        category(removed);
+        return removed;
     }
 
     public CategoryBuilder fixed() {
-        return category("Fixed");
+        CategoryBuilder fixed = CategoryBuilder.fixed();
+        category(fixed);
+        return fixed;
     }
 
     public CategoryBuilder security() {
-        return category("Security");
+        CategoryBuilder security = CategoryBuilder.security();
+        category(security);
+        return security;
     }
 
-    public CategoryBuilder category(String name) {
-        CategoryBuilder categoryBuilder = new CategoryBuilder();
-        categoryBuilder.name(name);
+    public VersionBuilder category(CategoryBuilder categoryBuilder){
         categories.add(categoryBuilder);
-        return categoryBuilder;
+        return this;
     }
 
     public VersionBuilder releasedAt(ReleaseDate releaseDate) {
