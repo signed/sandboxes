@@ -1,6 +1,8 @@
 package com.github.signed.changelog;
 
+import static com.github.signed.changelog.CategoryBuilder.added;
 import static com.github.signed.changelog.CategoryBuilder.changed;
+import static com.github.signed.changelog.CategoryBuilder.fixed;
 import static com.github.signed.changelog.IsPrefix.isAPrefixIn;
 import static com.github.signed.changelog.ItemBuilder.forText;
 import static com.github.signed.changelog.Link.To;
@@ -27,6 +29,7 @@ public class ReproduceSample_Test {
         changeLogBuilder.version(_0_2_0()::build);
         changeLogBuilder.version(_0_1_0()::build);
         changeLogBuilder.version(_0_0_8()::build);
+        changeLogBuilder.version(_0_0_7()::build);
 
         ChangeLog changeLog = changeLogBuilder.build();
 
@@ -68,22 +71,41 @@ public class ReproduceSample_Test {
         return version;
     }
 
-    private VersionBuilder _0_0_8(){
+    private VersionBuilder _0_0_8() {
         VersionBuilder version = VersionBuilder.For(SemVer(0, 0, 8));
         version.link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.7...v0.0.8"));
         version.releasedAt(Date(2015, 2, 17));
 
         version.category(changed()
-                .item(ItemBuilder.forText("Update year to match in every README example."))
-                .item(ItemBuilder.forText("Reluctantly stop making fun of Brits only, since most of the world\nwrites dates in a strange way."))
+                .item(forText("Update year to match in every README example."))
+                .item(forText("Reluctantly stop making fun of Brits only, since most of the world\nwrites dates in a strange way."))
         );
-        version.category(CategoryBuilder.fixed()
+        version.category(fixed()
                 .item(forText("Fix typos in recent README changes."))
                 .item(forText("Update outdated unreleased diff link."))
         );
 
         return version;
     }
+
+    private VersionBuilder _0_0_7() {
+        VersionBuilder version = VersionBuilder.For(SemVer(0, 0, 7));
+        version.link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.6...v0.0.7"));
+        version.releasedAt(Date(2015, 2, 16));
+
+        version.category(added()
+                .item(forText("Link, and make it obvious that date format is ISO 8601."))
+        );
+        version.category(changed()
+                .item(forText("Clarified the section on \"Is there a standard change log format?\"."))
+        );
+        version.category(fixed()
+                .item(forText("Fix Markdown links to tag comparison URL with footnote-style links."))
+        );
+
+        return version;
+    }
+
 
     public String sample() throws IOException {
         return readAsString("changelog.md", forName("UTF-8"));
