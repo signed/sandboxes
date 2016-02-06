@@ -1,0 +1,9 @@
+# some markdown parsers for java
+
+# sources
+- http://stackoverflow.com/questions/15123543/any-java-markdown-library-favor-github-syntax
+- http://stackoverflow.com/questions/19784525/markdown-to-html-with-java-scala
+
+# projects
+- https://github.com/rjeschke/txtmark
+- https://github.com/sirthias/pegdown
