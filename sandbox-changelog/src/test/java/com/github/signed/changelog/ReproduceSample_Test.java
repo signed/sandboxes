@@ -26,6 +26,7 @@ public class ReproduceSample_Test {
         changeLogBuilder.version(_0_3_0()::build);
         changeLogBuilder.version(_0_2_0()::build);
         changeLogBuilder.version(_0_1_0()::build);
+        changeLogBuilder.version(_0_0_8()::build);
 
         ChangeLog changeLog = changeLogBuilder.build();
 
@@ -65,6 +66,24 @@ public class ReproduceSample_Test {
         version.category(changed()
                 .item(forText("Improve argument against commit logs."))
                 .item(forText("Start following [SemVer](http://semver.org) properly.")));
+        return version;
+    }
+
+    private VersionBuilder _0_0_8(){
+        VersionBuilder version = VersionBuilder.For(SemVer(0, 0, 8));
+        version.link(To("https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.7...v0.0.8"));
+        version.releasedAt(Date(2015, 2, 17));
+
+        version.category(changed()
+                .item(ItemBuilder.forText("Update year to match in every README example."))
+                .item(ItemBuilder.forText("Reluctantly stop making fun of Brits only, since most of the world\n" +
+                        "  writes dates in a strange way."))
+        );
+        version.category(CategoryBuilder.fixed()
+                .item(forText("Fix typos in recent README changes."))
+                .item(forText("Update outdated unreleased diff link."))
+        );
+
         return version;
     }
 
