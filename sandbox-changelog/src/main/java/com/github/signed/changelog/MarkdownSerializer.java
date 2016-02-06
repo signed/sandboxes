@@ -42,14 +42,16 @@ public class MarkdownSerializer implements ChangelogVisitor {
         for (Category category : version) {
             lines.add("### " + category.name());
             for (Item item : category) {
-                lines.add("- "+ item.text());
+                lines.add("- " + item.text());
             }
         }
+        if (!renderedLinks.isEmpty()) {
+            lines.add("");
+            renderedLinks.stream()
+                    .map(renderedLink -> format("[%s]: %s", renderedLink.name, renderedLink.link.asString()))
+                    .forEachOrdered(lines::add);
+        }
         lines.add("");
-
-        renderedLinks.stream()
-                .map(renderedLink -> format("[%s]: %s", renderedLink.name, renderedLink.link.asString()))
-                .forEachOrdered(lines::add);
     }
 
     public String markdown() {

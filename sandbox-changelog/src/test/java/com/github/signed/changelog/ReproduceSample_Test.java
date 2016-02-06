@@ -1,10 +1,13 @@
 package com.github.signed.changelog;
 
+import static com.github.signed.changelog.IsPrefix.isAPrefixIn;
+import static com.github.signed.changelog.Resources.readAsString;
 import static java.nio.charset.Charset.forName;
 import static java.time.LocalDate.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Ignore;
+import java.io.IOException;
+
 import org.junit.Test;
 
 public class ReproduceSample_Test {
@@ -12,11 +15,10 @@ public class ReproduceSample_Test {
     private final ChangeLogBuilder changeLogBuilder = new ChangeLogBuilder();
 
     @Test
-    @Ignore("that is the short term goal to work towards")
+    //@Ignore("that is the short term goal to work towards")
     public void name() throws Exception {
-        changeLogBuilder.header().withDescription("All notable changes to this project will be documented in this file.\n" +
-                "This project adheres to [Semantic Versioning](http://semver.org/).");
-
+        changeLogBuilder.header()
+                .withDescription("All notable changes to this project will be documented in this file.\nThis project adheres to [Semantic Versioning](http://semver.org/).");
         changeLogBuilder.version(unreleased()::build);
         changeLogBuilder.version(version_0_3_0()::build);
 
@@ -25,12 +27,14 @@ public class ReproduceSample_Test {
         MarkdownSerializer markdownSerializer = new MarkdownSerializer();
         changeLog.accept(markdownSerializer);
 
-        String goldMaster = Resources.readAsString("changelog.md", forName("UTF-8"));
-
         String markdown = markdownSerializer.markdown();
         System.out.println(markdown);
 
-        assertThat(markdown, new IsPrefix(goldMaster));
+        assertThat(markdown, isAPrefixIn(sample()));
+    }
+
+    public String sample() throws IOException {
+        return readAsString("changelog.md", forName("UTF-8"));
     }
 
     private VersionBuilder unreleased() {

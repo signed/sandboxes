@@ -8,8 +8,17 @@ import java.util.List;
 public interface MarkdownSerializerFixture {
 
     default String lastLine() {
+        return lineFromEnd(1);
+    }
+
+    default String secondToLastLine() {
+        int lineNumberFromEnd = 2;
+        return lineFromEnd(lineNumberFromEnd);
+    }
+
+    default String lineFromEnd(int lineNumberFromEnd) {
         List<String> lines = markdownLines();
-        return lines.get(lines.size() - 1);
+        return lines.get(lines.size() - lineNumberFromEnd);
     }
 
     default String line(int lineNumber) {

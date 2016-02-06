@@ -1,9 +1,14 @@
 package com.github.signed.changelog;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 public class IsPrefix extends TypeSafeDiagnosingMatcher<String> {
+
+    public static Matcher<String> isAPrefixIn(String goldMaster) {
+        return new IsPrefix(goldMaster);
+    }
 
     private final String longer;
 
@@ -26,12 +31,11 @@ public class IsPrefix extends TypeSafeDiagnosingMatcher<String> {
         boolean isPrefix = longer.startsWith(item);
         if (!isPrefix) {
             String sharedPrefix = greatestCommonPrefix(item, longer);
-            //description.appendText("only shared " + sharedPrefix + "\n");
-
             String startOfMismatchLine = sharedPrefix.substring(sharedPrefix.lastIndexOf('\n')+1);
 
             int start = sharedPrefix.length();
             int numberOfCharactersAfter = 30;
+            description.appendText(replaceNewLine(sharedPrefix.substring(start - 30)));
             description.appendText("\n");
             description.appendText(replaceNewLine(startOfMismatchLine + "|" + nextIfThere(start, numberOfCharactersAfter, longer)));
             description.appendText("\n");

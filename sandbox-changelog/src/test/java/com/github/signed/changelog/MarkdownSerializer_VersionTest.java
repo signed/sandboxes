@@ -1,7 +1,9 @@
 package com.github.signed.changelog;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
 
@@ -32,7 +34,15 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
 
         assertThat(line(1), endsWith("[Unreleased]"));
         assertThat(line(2), is(""));
-        assertThat(lastLine(), is("[Unreleased]: https://example.org"));
+        assertThat(secondToLastLine(), is("[Unreleased]: https://example.org"));
+    }
+
+    @Test
+    public void add_newline_after_links() throws Exception {
+        version.unreleased();
+        version.link(new Link("https://example.org"));
+
+        assertThat(lastLine(), is(""));
     }
 
     @Test
@@ -57,6 +67,13 @@ public class MarkdownSerializer_VersionTest implements MarkdownSerializerFixture
 
         assertThat(line(3), is("- one"));
         assertThat(line(4), is("- two"));
+    }
+
+    @Test
+    public void only_a_single_empty_line_at_the_end() throws Exception {
+        version.unreleased();
+
+        assertThat(secondToLastLine(), not(equalTo("")));
     }
 
     @Override
