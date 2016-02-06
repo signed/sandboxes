@@ -7,6 +7,7 @@ import static java.time.LocalDate.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import org.junit.Test;
 
@@ -19,7 +20,8 @@ public class ReproduceSample_Test {
         changeLogBuilder.header()
                 .withDescription("All notable changes to this project will be documented in this file.\nThis project adheres to [Semantic Versioning](http://semver.org/).");
         changeLogBuilder.version(unreleased()::build);
-        changeLogBuilder.version(version_0_3_0()::build);
+        changeLogBuilder.version(_0_3_0()::build);
+        changeLogBuilder.version(_0_2_0()::build);
 
         ChangeLog changeLog = changeLogBuilder.build();
 
@@ -30,6 +32,15 @@ public class ReproduceSample_Test {
         System.out.println(markdown);
 
         assertThat(markdown, isAPrefixIn(sample()));
+    }
+
+    private VersionBuilder _0_2_0() {
+        VersionBuilder versionBuilder = new VersionBuilder();
+        versionBuilder.version(new VersionNumber(0, 2, 0))
+                .releasedAt(new ReleaseDate(LocalDate.of(2015, 10, 6))).link(new Link("https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0"));
+        versionBuilder.changed().item().text("Remove exclusionary mentions of \"open source\" since this project can benefit\n" +
+                "both \"open\" and \"closed\" source projects equally.");
+        return versionBuilder;
     }
 
     public String sample() throws IOException {
@@ -45,7 +56,7 @@ public class ReproduceSample_Test {
         return unreleased;
     }
 
-    private VersionBuilder version_0_3_0() {
+    private VersionBuilder _0_3_0() {
         VersionBuilder _0_3_0 = new VersionBuilder();
 
         _0_3_0.version(new VersionNumber(0, 3, 0))
