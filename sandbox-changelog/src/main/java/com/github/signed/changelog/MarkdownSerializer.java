@@ -31,14 +31,16 @@ public class MarkdownSerializer implements ChangelogVisitor {
     public void visit(Version version) {
         List<RenderedLink> renderedLinks = new ArrayList<>();
 
-        String versionString = version.versionNumber().map(VersionNumber::asString).orElse("Unreleased");
+        String versionAsPlainString = version.versionNumber().map(VersionNumber::asString).orElse("Unreleased");
         String releaseDateString = version.releaseDate().map((releaseDate) -> " - " + releaseDate.asString()).orElse("");
+        String versionString;
         if (version.link().isPresent()) {
-            lines.add(format("## [%s]%s", versionString, releaseDateString));
-            renderedLinks.add(new RenderedLink(versionString, version.link().get()));
+            versionString = format("[%s]", versionAsPlainString);
+            renderedLinks.add(new RenderedLink(versionAsPlainString, version.link().get()));
         } else {
-            lines.add(format("## %s%s", versionString, releaseDateString));
+            versionString = versionAsPlainString;
         }
+        lines.add(format("## %s%s", versionString, releaseDateString));
 
         for (Category category : version) {
             lines.add("### " + category.name());
