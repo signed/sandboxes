@@ -1,0 +1,10 @@
+{
+  "name": "gulp-markdown-example",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-markdown": "^1.2.0"
+  }
+}
