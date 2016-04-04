@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+apply plugin:'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile(
+    )
+    testCompile(
+    )
+}
+
+task wrapper(type: Wrapper) {
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-2.12-all.zip'
+}
