@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>reports</module>
         <module>extract-method-with-array-return-type</module>
         <module>move-static-variables</module>
         <module>extract-field-dialog</module>
