@@ -1,9 +1,12 @@
 package refactor;
 
+import reference.Youtrack;
+
 import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
+@Youtrack("https://youtrack.jetbrains.com/issue/IDEA-155147")
 public class MoveMethdBreaksReference {
 
     private static class Destination{
