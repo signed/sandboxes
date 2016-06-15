@@ -8,5 +8,5 @@ info:
     branch: @git.branch@
     commit:
       id: @git.commit.id@
-      description: @git.commit.id.describe@
       username: @git.commit.user.name@
+      message: @git.commit.message.short@
