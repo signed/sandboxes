@@ -1,0 +1,12 @@
+info:
+  project:
+    version: @project.version@
+  build:
+    number: 42
+    time: @git.build.time@
+    host: @git.build.host@
+    branch: @git.branch@
+    commit:
+      id: @git.commit.id@
+      description: @git.commit.id.describe@
+      username: @git.commit.user.name@
