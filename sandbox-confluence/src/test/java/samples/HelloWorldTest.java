@@ -22,7 +22,26 @@ public class HelloWorldTest {
 
     @Test
     public void fetchFromServer() throws Exception {
+        Call<ObjectNode> demo = client().getPage("DEMO", "First Page", "body.storage");
 
+        Response<ObjectNode> response = demo.execute();
+        System.out.println(response.code());
+        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response.body()));
+    }
+
+    @Test
+    public void createNewPage() throws Exception {
+        Call<Void> call = client().createPage(new CreatePageTO.Builder()
+                .space("DEMO")
+                .title("Automation for the win")
+                .content("<p>I like the storage format.</p>").build());
+
+        Response response = call.execute();
+        System.out.println(response.code());
+
+    }
+
+    private ConfluenceClient client() {
         final String basic = "Basic " + Base64.getEncoder().encodeToString(credentials.getBytes());
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addInterceptor(new Interceptor() {
@@ -48,12 +67,7 @@ public class HelloWorldTest {
                 .baseUrl(baseUrl)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
-        ConfluenceClient confluenceClient = confluence.create(ConfluenceClient.class);
-        Call<ObjectNode> demo = confluenceClient.getPage("DEMO", "First Page", "body.storage");
-
-        Response<ObjectNode> response = demo.execute();
-        System.out.println(response.code());
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response.body()));
+        return confluence.create(ConfluenceClient.class);
     }
 
 }
