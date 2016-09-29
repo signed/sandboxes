@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+repositories{
+    mavenCentral()
+    jcenter()
+}
+dependencies {
+    testCompile("com.github.javaparser:javaparser-core:3.0.0-alpha.2")
+    testCompile("junit:junit:4.12")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
