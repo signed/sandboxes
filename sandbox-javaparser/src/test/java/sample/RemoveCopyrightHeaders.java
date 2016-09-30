@@ -66,12 +66,16 @@ public class RemoveCopyrightHeaders {
             int endLineZeroBased = location.end.line - 1;
             List<String> allLines = readAllLinesIn(javaSourceFile);
 
-            String javaSourceWithoutCopyrightNotice = IntStream.range(0, allLines.size())
+            List<String> sourceLinesWithoutCopyrightNotice = IntStream.range(0, allLines.size())
                     .filter(line -> line < beginLineZeroBased | line > endLineZeroBased)
                     .mapToObj(line -> allLines.get(line))
-                    .collect(Collectors.joining("\n"));
+                    .collect(Collectors.toList());
 
-            byte[] bytes = javaSourceWithoutCopyrightNotice.getBytes(utf_8);
+            while (sourceLinesWithoutCopyrightNotice.get(0).trim().isEmpty()) {
+                sourceLinesWithoutCopyrightNotice.remove(0);
+            }
+
+            byte[] bytes = sourceLinesWithoutCopyrightNotice.stream().collect(Collectors.joining("\n")).getBytes(utf_8);
             write(javaSourceFile, bytes);
         });
     }
