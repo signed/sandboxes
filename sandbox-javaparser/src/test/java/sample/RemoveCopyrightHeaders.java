@@ -65,7 +65,7 @@ public class RemoveCopyrightHeaders {
             int endLineZeroBased = location.end.line - 1;
             List<String> allLines = readAllLinesIn(javaSourceFile);
 
-            String javaSourceWithoutCopyrightNotice = IntStream.range(0, allLines.size() - 1)
+            String javaSourceWithoutCopyrightNotice = IntStream.range(0, allLines.size())
                     .filter(line -> line < beginLineZeroBased | line > endLineZeroBased)
                     .mapToObj(line -> allLines.get(line))
                     .collect(Collectors.joining("\n"));
