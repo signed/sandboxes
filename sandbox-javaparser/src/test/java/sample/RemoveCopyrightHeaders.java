@@ -9,6 +9,7 @@ import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -18,6 +19,9 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 
 public class RemoveCopyrightHeaders {
     Path pathToSample = Paths.get("src/main/java/sample/JavaDocOnClass.java");
@@ -29,7 +33,10 @@ public class RemoveCopyrightHeaders {
 
             @Override
             public Node visit(BlockComment n, Void arg) {
-                return null;
+                if (n.getContent().toLowerCase().contains("Copyright".toLowerCase())) {
+                    return null;
+                }
+                return n;
             }
 
             @Override
@@ -41,7 +48,8 @@ public class RemoveCopyrightHeaders {
             }
         };
         modifier.visit(cu, null);
-        System.out.println(cu.toString());
+        byte[] bytes = cu.toString().getBytes(Charset.forName("UTF-8"));
+        Files.write(pathToSample, bytes, WRITE, TRUNCATE_EXISTING);
     }
 
     @Test
@@ -51,6 +59,7 @@ public class RemoveCopyrightHeaders {
         Files.walkFileTree(Paths.get(""), javaFiles);
 
         System.out.println(javaFiles.foundPaths);
+        Files.readAllLines(javaFiles.foundPaths.get(0));
     }
 
 

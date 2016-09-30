@@ -14,7 +14,10 @@ package sample;
  * lets see if this is dumped twice
  */
 public class JavaDocOnClass {
+
+    /*
+     * Another block comment
+     */
     public void foo(int e) {
-        int a = 20;
     }
 }
