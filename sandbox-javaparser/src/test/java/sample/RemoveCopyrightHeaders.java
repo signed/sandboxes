@@ -35,13 +35,13 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void remove() throws Exception {
+        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get(""));
+    }
 
+    private void removeCopyrightNoticeInJavaFilesForProjectAt(Path projectDirectory) throws IOException {
         FileFinder javaFiles = new FileFinder("*.java");
-        Files.walkFileTree(Paths.get(""), javaFiles);
-
-        System.out.println(javaFiles.foundPaths);
+        Files.walkFileTree(projectDirectory, javaFiles);
         javaFiles.foundPaths.parallelStream().forEach(pathToJavaFile -> removeCopyrightNoticeFrom(pathToSampleJavaFile));
-        Files.readAllLines(javaFiles.foundPaths.get(0));
     }
 
     private void removeCopyrightNoticeFrom(Path javaSourceFile) {
