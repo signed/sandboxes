@@ -8,6 +8,7 @@ import com.github.javaparser.ast.comments.BlockComment;
 import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -19,47 +20,52 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 
 public class RemoveCopyrightHeaders {
-    Path pathToSample = Paths.get("src/main/java/sample/JavaDocOnClass.java");
+    private final Path pathToSampleJavaFile = Paths.get("src/main/java/sample/JavaDocOnClass.java");
 
     @Test
     public void javaParser() throws Exception {
-        CompilationUnit cu = JavaParser.parse(pathToSample.toFile().getAbsoluteFile());
-        ModifierVisitorAdapter<Void> modifier = new ModifierVisitorAdapter<Void>() {
-
-            @Override
-            public Node visit(BlockComment n, Void arg) {
-                if (n.getContent().toLowerCase().contains("Copyright".toLowerCase())) {
-                    return null;
-                }
-                return n;
-            }
-
-            @Override
-            public Node visit(VariableDeclarator declarator, Void arg) {
-                if (declarator.getId().getName().equals("a") && declarator.getInit().toString().equals("20")) {
-                    return null;
-                }
-                return declarator;
-            }
-        };
-        modifier.visit(cu, null);
-        byte[] bytes = cu.toString().getBytes(Charset.forName("UTF-8"));
-        Files.write(pathToSample, bytes, WRITE, TRUNCATE_EXISTING);
+        removeCopyrightNoticeFrom(pathToSampleJavaFile);
     }
 
     @Test
-    public void spoon() throws Exception {
+    public void remove() throws Exception {
 
         FileFinder javaFiles = new FileFinder("*.java");
         Files.walkFileTree(Paths.get(""), javaFiles);
 
         System.out.println(javaFiles.foundPaths);
+        javaFiles.foundPaths.parallelStream().forEach(pathToJavaFile -> removeCopyrightNoticeFrom(pathToSampleJavaFile));
         Files.readAllLines(javaFiles.foundPaths.get(0));
+    }
+
+    private void removeCopyrightNoticeFrom(Path javaSourceFile) {
+        CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
+        CopyrightNoticeRemover remover = new CopyrightNoticeRemover();
+        remover.visit(cu, null);
+        byte[] bytes = cu.toString().getBytes(Charset.forName("UTF-8"));
+        remover.removedCopyrightNotice.ifPresent(ignored -> write(javaSourceFile, bytes));
+    }
+
+    private CompilationUnit parseAsCompilationUnit(Path javaSourceFile) {
+        try {
+            return JavaParser.parse(javaSourceFile.toAbsolutePath().toFile());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("should never happen", e);
+        }
+    }
+
+    private Path write(Path javaSourceFile, byte[] bytes) {
+        try {
+            return Files.write(javaSourceFile, bytes, WRITE, TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("should never happen", e);
+        }
     }
 
 
@@ -83,4 +89,24 @@ public class RemoveCopyrightHeaders {
         }
     }
 
+    private static class CopyrightNoticeRemover extends ModifierVisitorAdapter<Void> {
+        public Optional<Boolean> removedCopyrightNotice = Optional.empty();
+
+        @Override
+        public Node visit(BlockComment n, Void arg) {
+            if (n.getContent().toLowerCase().contains("Copyright".toLowerCase())) {
+                removedCopyrightNotice = Optional.of(Boolean.TRUE);
+                return null;
+            }
+            return n;
+        }
+
+        @Override
+        public Node visit(VariableDeclarator declarator, Void arg) {
+            if (declarator.getId().getName().equals("a") && declarator.getInit().toString().equals("20")) {
+                return null;
+            }
+            return declarator;
+        }
+    }
 }
