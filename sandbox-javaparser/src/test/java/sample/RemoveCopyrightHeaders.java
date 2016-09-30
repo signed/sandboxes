@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -79,7 +80,9 @@ public class RemoveCopyrightHeaders {
 
     private List<String> readAllLinesIn(Path javaSourceFile) {
         try {
-            return Files.readAllLines(javaSourceFile, utf_8);
+            byte[] bytes = Files.readAllBytes(javaSourceFile);
+            String javaSource = new String(bytes, utf_8);
+            return Arrays.asList(javaSource.split("\n", -1));
         } catch (IOException e) {
             throw new RuntimeException("should never happen", e);
         }
