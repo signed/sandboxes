@@ -35,13 +35,19 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void remove() throws Exception {
-        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get(""));
+        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get("/Users/signed/dev/arbeitskopie/junit5"));
     }
 
     private void removeCopyrightNoticeInJavaFilesForProjectAt(Path projectDirectory) throws IOException {
+        log("searching for java files under "+ projectDirectory);
         FileFinder javaFiles = new FileFinder("*.java");
         Files.walkFileTree(projectDirectory, javaFiles);
-        javaFiles.foundPaths.parallelStream().forEach(pathToJavaFile -> removeCopyrightNoticeFrom(pathToSampleJavaFile));
+        log("found " + javaFiles.found.size() + " java file");
+        javaFiles.found.parallelStream().forEach(pathToJavaFile -> removeCopyrightNoticeFrom(pathToSampleJavaFile));
+    }
+
+    private void log(String message) {
+        System.out.println(message);
     }
 
     private void removeCopyrightNoticeFrom(Path javaSourceFile) {
@@ -71,7 +77,7 @@ public class RemoveCopyrightHeaders {
 
     public static class FileFinder extends SimpleFileVisitor<Path> {
         private PathMatcher matcher;
-        public ArrayList<Path> foundPaths = new ArrayList<>();
+        public ArrayList<Path> found = new ArrayList<>();
 
         public FileFinder(String pattern) {
             matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
@@ -82,7 +88,7 @@ public class RemoveCopyrightHeaders {
             Path name = file.getFileName();
 
             if (matcher.matches(name)) {
-                foundPaths.add(file);
+                found.add(file);
             }
 
             return FileVisitResult.CONTINUE;
