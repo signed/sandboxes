@@ -35,7 +35,7 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void remove() throws Exception {
-        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get("/Users/signed/dev/arbeitskopie/junit5"));
+        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get(""));
     }
 
     private void removeCopyrightNoticeInJavaFilesForProjectAt(Path projectDirectory) throws IOException {
@@ -43,7 +43,7 @@ public class RemoveCopyrightHeaders {
         FileFinder javaFiles = new FileFinder("*.java");
         Files.walkFileTree(projectDirectory, javaFiles);
         log("found " + javaFiles.found.size() + " java file");
-        javaFiles.found.parallelStream().forEach(pathToJavaFile -> removeCopyrightNoticeFrom(pathToSampleJavaFile));
+        javaFiles.found.parallelStream().forEach(this::removeCopyrightNoticeFrom);
     }
 
     private void log(String message) {
