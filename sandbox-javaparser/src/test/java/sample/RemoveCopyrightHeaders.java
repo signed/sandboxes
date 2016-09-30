@@ -54,8 +54,10 @@ public class RemoveCopyrightHeaders {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
         CopyrightNoticeRemover remover = new CopyrightNoticeRemover();
         remover.visit(cu, null);
-        byte[] bytes = cu.toString().getBytes(Charset.forName("UTF-8"));
-        remover.removedCopyrightNotice.ifPresent(ignored -> write(javaSourceFile, bytes));
+        remover.removedCopyrightNotice.ifPresent(ignored -> {
+            byte[] bytes = cu.toString().getBytes(Charset.forName("UTF-8"));
+            write(javaSourceFile, bytes);
+        });
     }
 
     private CompilationUnit parseAsCompilationUnit(Path javaSourceFile) {
