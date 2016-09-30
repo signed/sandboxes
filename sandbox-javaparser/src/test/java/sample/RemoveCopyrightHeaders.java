@@ -57,27 +57,36 @@ public class RemoveCopyrightHeaders {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
         CopyrightNoticeScanner scanner = new CopyrightNoticeScanner();
         scanner.visit(cu, null);
-        if (scanner.copyrightNoticesLocations.size() > 1) {
-            log("Skipping odd file. Has multiple copy right notices: " + javaSourceFile);
+        if (scanner.copyrightNoticesLocations.isEmpty()) {
             return;
         }
-        scanner.copyrightNoticesLocations.forEach(location -> {
-            int beginLineZeroBased = location.begin.line - 1;
-            int endLineZeroBased = location.end.line - 1;
-            List<String> allLines = readAllLinesIn(javaSourceFile);
+        if (scanner.copyrightNoticesLocations.size() > 1) {
+            log("Skipping file with multiple copy right notices. Has multiple copy right notices: " + javaSourceFile);
+            return;
+        }
 
-            List<String> sourceLinesWithoutCopyrightNotice = IntStream.range(0, allLines.size())
-                    .filter(line -> line < beginLineZeroBased | line > endLineZeroBased)
-                    .mapToObj(line -> allLines.get(line))
-                    .collect(Collectors.toList());
+        Range location = scanner.copyrightNoticesLocations.get(0);
 
-            while (sourceLinesWithoutCopyrightNotice.get(0).trim().isEmpty()) {
-                sourceLinesWithoutCopyrightNotice.remove(0);
-            }
+        if (location.begin.line != 1 | location.begin.column != 1) {
+            log("Skipping file where copyright notice is not at the start of the file: " + javaSourceFile);
+            return;
+        }
 
-            byte[] bytes = sourceLinesWithoutCopyrightNotice.stream().collect(Collectors.joining("\n")).getBytes(utf_8);
-            write(javaSourceFile, bytes);
-        });
+        int beginLineZeroBased = location.begin.line - 1;
+        int endLineZeroBased = location.end.line - 1;
+        List<String> allLines = readAllLinesIn(javaSourceFile);
+
+        List<String> sourceLinesWithoutCopyrightNotice = IntStream.range(0, allLines.size())
+                .filter(line -> line < beginLineZeroBased | line > endLineZeroBased)
+                .mapToObj(allLines::get)
+                .collect(Collectors.toList());
+
+        while (sourceLinesWithoutCopyrightNotice.get(0).trim().isEmpty()) {
+            sourceLinesWithoutCopyrightNotice.remove(0);
+        }
+
+        byte[] bytes = sourceLinesWithoutCopyrightNotice.stream().collect(Collectors.joining("\n")).getBytes(utf_8);
+        write(javaSourceFile, bytes);
     }
 
     private final Charset utf_8 = Charset.forName("UTF-8");
