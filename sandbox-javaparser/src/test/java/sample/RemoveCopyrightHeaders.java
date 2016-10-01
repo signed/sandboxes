@@ -3,23 +3,16 @@ package sample;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.comments.BlockComment;
-import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
 import org.junit.Test;
+import strip.copyright.CopyrightNoticeScanner;
+import strip.copyright.FileFinder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.IntPredicate;
@@ -138,36 +131,4 @@ public class RemoveCopyrightHeaders {
     }
 
 
-    public static class FileFinder extends SimpleFileVisitor<Path> {
-        private PathMatcher matcher;
-        public ArrayList<Path> found = new ArrayList<>();
-
-        public FileFinder(String pattern) {
-            matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-        }
-
-        @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            Path name = file.getFileName();
-
-            if (matcher.matches(name)) {
-                found.add(file);
-            }
-
-            return FileVisitResult.CONTINUE;
-        }
-    }
-
-    private static class CopyrightNoticeScanner extends ModifierVisitorAdapter<Void> {
-        public final List<Range> copyrightNoticesLocations = new ArrayList<>();
-
-        @Override
-        public Node visit(BlockComment n, Void arg) {
-            if (n.getContent().toLowerCase().contains("Copyright".toLowerCase())) {
-                copyrightNoticesLocations.add(n.getRange());
-                return null;
-            }
-            return n;
-        }
-    }
 }
