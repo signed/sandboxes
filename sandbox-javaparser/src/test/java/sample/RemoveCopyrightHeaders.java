@@ -22,6 +22,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -72,12 +73,10 @@ public class RemoveCopyrightHeaders {
             return;
         }
 
-        int beginLineZeroBased = location.begin.line - 1;
-        int endLineZeroBased = location.end.line - 1;
         List<String> allLines = readAllLinesIn(javaSourceFile);
 
         List<String> sourceLinesWithoutCopyrightNotice = IntStream.range(0, allLines.size())
-                .filter(line -> line < beginLineZeroBased | line > endLineZeroBased)
+                .filter(copyrightNotice(location).negate())
                 .mapToObj(allLines::get)
                 .collect(Collectors.toList());
 
@@ -87,6 +86,14 @@ public class RemoveCopyrightHeaders {
 
         byte[] bytes = sourceLinesWithoutCopyrightNotice.stream().collect(Collectors.joining("\n")).getBytes(utf_8);
         write(javaSourceFile, bytes);
+    }
+
+    private IntPredicate copyrightNotice(Range location) {
+        return line -> {
+            int beginLineZeroBased = location.begin.line - 1;
+            int endLineZeroBased = location.end.line - 1;
+            return !(line < beginLineZeroBased | line > endLineZeroBased);
+        };
     }
 
     private final Charset utf_8 = Charset.forName("UTF-8");
