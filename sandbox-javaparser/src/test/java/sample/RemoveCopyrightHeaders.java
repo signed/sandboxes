@@ -74,11 +74,17 @@ public class RemoveCopyrightHeaders {
         }
 
         List<String> allLines = readAllLinesIn(javaSourceFile);
+        List<String> copyrightNotice = extractLines(allLines, copyrightNotice(location));
 
-        List<String> sourceLinesWithoutCopyrightNotice = IntStream.range(0, allLines.size())
-                .filter(copyrightNotice(location).negate())
-                .mapToObj(allLines::get)
-                .collect(Collectors.toList());
+        String lastCopyrightLine = copyrightNotice.get(copyrightNotice.size() - 1);
+
+        if (lastCopyrightLine.length() != location.end.column -1) {
+            log("Skipping file where last line of copyright notice seems not to span the entire line: " + javaSourceFile);
+            return;
+        }
+
+
+        List<String> sourceLinesWithoutCopyrightNotice = extractLines(allLines, copyrightNotice(location).negate());
 
         while (sourceLinesWithoutCopyrightNotice.get(0).trim().isEmpty()) {
             sourceLinesWithoutCopyrightNotice.remove(0);
@@ -86,6 +92,13 @@ public class RemoveCopyrightHeaders {
 
         byte[] bytes = sourceLinesWithoutCopyrightNotice.stream().collect(Collectors.joining("\n")).getBytes(utf_8);
         write(javaSourceFile, bytes);
+    }
+
+    private List<String> extractLines(List<String> allLines, IntPredicate lineSelector) {
+        return IntStream.range(0, allLines.size())
+                .filter(lineSelector)
+                .mapToObj(allLines::get)
+                .collect(Collectors.toList());
     }
 
     private IntPredicate copyrightNotice(Range location) {
