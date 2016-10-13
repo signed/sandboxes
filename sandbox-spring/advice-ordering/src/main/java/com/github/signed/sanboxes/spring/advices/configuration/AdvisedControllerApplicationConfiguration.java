@@ -1,22 +1,21 @@
 package com.github.signed.sanboxes.spring.advices.configuration;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.github.signed.sanboxes.spring.advices.AdvisedControllerApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.github.signed.sanboxes.spring.advices.AdvisedControllerApplication;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackageClasses = {AdvisedControllerApplication.class})
-public class AdvisedControllerApplicationConfiguration extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter{
+public class AdvisedControllerApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
