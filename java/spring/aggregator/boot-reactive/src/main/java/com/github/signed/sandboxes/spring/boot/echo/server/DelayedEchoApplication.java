@@ -4,6 +4,8 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import static org.springframework.boot.Banner.Mode.OFF;
+
 @SpringBootApplication
 public class DelayedEchoApplication {
     public static void main(String[] args) throws Exception {

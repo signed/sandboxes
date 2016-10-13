@@ -1,7 +1,5 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import java.util.Optional;
-
 import org.junit.rules.ExternalResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -13,13 +11,16 @@ import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
 import retrofit.RestAdapter;
+
+import java.util.Optional;
+
+import static org.springframework.boot.Banner.Mode.OFF;
 
 public class SpringApplicationRule extends ExternalResource {
 
     private final SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder()
-            .showBanner(false)
+            .bannerMode(OFF)
             .sources(BootApplication.class, ChooseAnAvailablePort.class);
 
     private final RuleConfiguration ruleConfiguration = new RuleConfiguration();

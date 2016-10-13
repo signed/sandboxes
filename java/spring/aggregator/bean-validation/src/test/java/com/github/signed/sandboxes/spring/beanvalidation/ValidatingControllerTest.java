@@ -11,6 +11,7 @@ import retrofit.http.PUT;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.boot.Banner.Mode.OFF;
 
 public class ValidatingControllerTest {
 
@@ -22,7 +23,7 @@ public class ValidatingControllerTest {
     @Test(expected = RuntimeException.class)
     public void testName() throws Exception {
         SpringApplication springApplication = new SpringApplicationBuilder()
-                .showBanner(false)
+                .bannerMode(OFF)
                 .sources(BootWithBeanValidationApplication.class)
                 .build();
         ConfigurableApplicationContext context = springApplication.run();
