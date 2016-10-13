@@ -1,15 +1,5 @@
 package com.github.signed.sanboxes.spring.data;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +16,6 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,12 +23,21 @@ import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners(listeners = {RepositoryTest.SchemaInitializer.class}, mergeMode = MERGE_WITH_DEFAULTS)
 @SpringApplicationConfiguration
 public class RepositoryTest {
 
-    public static class SchemaInitializer extends AbstractTestExecutionListener{
+    public static class SchemaInitializer extends AbstractTestExecutionListener {
         @Override
         public void beforeTestClass(TestContext testContext) throws Exception {
             DataSource dataSource = testContext.getApplicationContext().getBean(DataSource.class);
