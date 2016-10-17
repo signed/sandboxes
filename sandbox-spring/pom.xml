@@ -9,17 +9,18 @@
 
 
     <modules>
-        <module>resttemplate</module>
+        <module>application-events</module>
+        <module>advice-ordering</module>
         <module>boot</module>
         <module>boot-actuator</module>
         <module>boot-reactive</module>
         <module>bean-validation</module>
-        <module>injectbuildnumber</module>
-        <module>external-configuration</module>
-        <module>ioc-container</module>
-        <module>testing</module>
-        <module>advice-ordering</module>
         <module>data</module>
+        <module>external-configuration</module>
+        <module>injectbuildnumber</module>
+        <module>ioc-container</module>
+        <module>resttemplate</module>
+        <module>testing</module>
     </modules>
 
 
