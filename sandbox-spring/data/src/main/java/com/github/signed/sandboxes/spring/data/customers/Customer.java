@@ -1,4 +1,4 @@
-package com.github.signed.sandboxes.spring.data;
+package com.github.signed.sandboxes.spring.data.customers;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
