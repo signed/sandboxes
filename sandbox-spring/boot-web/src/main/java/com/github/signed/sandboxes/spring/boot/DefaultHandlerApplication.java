@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Import;
 @EnableAutoConfiguration
 @ComponentScan
 @Import(value = {ControllerConfiguration.class})
-public class BootApplication {
+public class DefaultHandlerApplication {
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder()
-                .sources(BootApplication.class)
+                .sources(DefaultHandlerApplication.class)
                 .run(args);
 
     }
