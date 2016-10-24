@@ -14,6 +14,7 @@
         <module>boot</module>
         <module>boot-actuator</module>
         <module>boot-reactive</module>
+        <module>boot-web</module>
         <module>bean-validation</module>
         <module>data</module>
         <module>external-configuration</module>
