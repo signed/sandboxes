@@ -58,7 +58,7 @@ public class JobScheduler {
                         set(pendingJob, InProgress);
                         return;
                     }
-                    if(CancelAction.equals(precedingJob)){
+                    if(CancelAction.equals(precedingJob.type())){
                         set(pendingJob, Done);
                         return;
                     }
