@@ -11,6 +11,10 @@ public class JobInContext {
         this.jobHistory = jobHistory;
     }
 
+    public boolean isOfType(JobType type) {
+        return type.equals(job().type);
+    }
+
     public JobType type() {
         return job().type;
     }

@@ -35,11 +35,11 @@ public class JobScheduler {
                     break;
                 }
                 maybePrecedingJob.ifPresent(precedingJob -> {
-                    if (ExecuteAction.equals(precedingJob.type())) {
+                    if (precedingJob.isOfType(ExecuteAction)) {
                         set(pendingJob, Done);
                         return;
                     }
-                    if (CancelAction.equals(precedingJob.type())) {
+                    if (precedingJob.isOfType(CancelAction)) {
                         if (precedingJob.isInTerminalState()) {
                             set(pendingJob, InProgress);
                             return;
@@ -53,12 +53,12 @@ public class JobScheduler {
                     break;
                 }
                 maybePrecedingJob.ifPresent(precedingJob -> {
-                    if (ExecuteAction.equals(precedingJob.type())) {
+                    if (precedingJob.isOfType(ExecuteAction)) {
                         set(precedingJob, Cancelled);
                         set(pendingJob, InProgress);
                         return;
                     }
-                    if(CancelAction.equals(precedingJob.type())){
+                    if(precedingJob.isOfType(CancelAction)){
                         set(pendingJob, Done);
                         return;
                     }
