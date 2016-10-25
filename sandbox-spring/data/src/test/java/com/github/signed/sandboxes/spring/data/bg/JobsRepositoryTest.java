@@ -7,14 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +38,7 @@ public class JobsRepositoryTest {
         thereIsAJobForThird().withType(CancelAction).withState(InProgress);
 
         storeExistingJobs();
-        List<Job> jobs = repository.letsSeeAllJobsForAReferenceKeyWhereAtLeasOneIs(Pending);
+        List<Job> jobs = repository.letsSeeAllJobsForAReferenceKeyWhereAtLeastOneJobIsIn(Pending);
         System.out.println(jobs);
     }
 

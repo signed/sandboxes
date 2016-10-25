@@ -12,5 +12,5 @@ public interface JobsRepository extends JpaRepository<Job, Long>, JpaSpecificati
     @Query("SELECT j " +
             "FROM Job j " +
             "WHERE j.referenceKey IN (SELECT DISTINCT js.referenceKey FROM Job js WHERE js.state=:state)")
-    List<Job> letsSeeAllJobsForAReferenceKeyWhereAtLeasOneIs(@Param("state") JobState state);
+    List<Job> letsSeeAllJobsForAReferenceKeyWhereAtLeastOneJobIsIn(@Param("state") JobState state);
 }

@@ -19,7 +19,7 @@ public class JobScheduler {
     }
 
     public void schedule() {
-        List<Job> jobs = jobsRepository.letsSeeAllJobsForAReferenceKeyWhereAtLeasOneIs(JobState.Pending);
+        List<Job> jobs = jobsRepository.letsSeeAllJobsForAReferenceKeyWhereAtLeastOneJobIsIn(JobState.Pending);
         List<JobHistory> jobHistories = jobs.stream().collect(groupingBy(job -> job.referenceKey))
                 .values().stream().map(JobHistory::createFromUnsorted).collect(Collectors.toList());
         jobHistories.parallelStream().forEach(this::update);
