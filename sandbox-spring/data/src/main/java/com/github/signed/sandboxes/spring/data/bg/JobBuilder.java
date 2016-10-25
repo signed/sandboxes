@@ -1,15 +1,21 @@
 package com.github.signed.sandboxes.spring.data.bg;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Optional;
+
 public final class JobBuilder {
 
     public static JobBuilder aJob() {
         return new JobBuilder();
     }
 
-    public Long jobKey;
+    private Long jobKey;
     private JobType type;
     private JobState state;
     private Long referenceKey;
+    private LocalDateTime created;
 
     private JobBuilder() {
     }
@@ -34,12 +40,18 @@ public final class JobBuilder {
         return this;
     }
 
+    public JobBuilder created(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
     public Job build() {
         Job job = new Job();
         job.jobKey = jobKey;
         job.type = type;
         job.state = state;
         job.referenceKey = referenceKey;
+        job.created = Date.from(Optional.ofNullable(created).orElse(LocalDateTime.now()).toInstant(ZoneOffset.UTC));
         return job;
     }
 }
