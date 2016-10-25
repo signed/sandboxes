@@ -2,6 +2,7 @@ package com.github.signed.sandboxes.spring.data.bg;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class JobHistory {
@@ -24,5 +25,15 @@ public class JobHistory {
 
     public Job jobAt(int index) {
         return jobs.get(index);
+    }
+
+    public Optional<JobInContext> earliestPendingJob() {
+        for (int i = 0; i < jobs.size(); ++i) {
+            Job job = jobs.get(i);
+            if (JobState.Pending.equals(job.state)) {
+                return Optional.of(new JobInContext(i, this));
+            }
+        }
+        return Optional.empty();
     }
 }
