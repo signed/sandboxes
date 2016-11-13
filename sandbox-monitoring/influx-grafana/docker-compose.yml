@@ -7,3 +7,12 @@ services:
     ports:
       - '8083:8083'
       - '8086:8086'
+    command: -config /etc/influxdb/influxdb.conf
+  grafana:
+    image: grafana/grafana:3.1.1-1470047149
+    ports:
+      - '3000:3000'
+    depends_on:
+      - influx
+    links:
+      - influx
