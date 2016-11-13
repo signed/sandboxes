@@ -1,0 +1,9 @@
+version: '2'
+services:
+  influx:
+    image: influxdb:alpine
+    volumes:
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf:ro
+    ports:
+      - '8083:8083'
+      - '8086:8086'
