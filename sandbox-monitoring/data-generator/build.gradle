@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter();
+}
+
+dependencies {
+    compile 'org.influxdb:influxdb-java:2.4'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2'
+}
