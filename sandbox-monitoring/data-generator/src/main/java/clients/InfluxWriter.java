@@ -1,23 +1,24 @@
 package clients;
 
-import org.influxdb.InfluxDB;
-import org.influxdb.InfluxDB.ConsistencyLevel;
-import org.influxdb.InfluxDBFactory;
-import org.influxdb.dto.BatchPoints;
-import org.influxdb.dto.Point;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDB.ConsistencyLevel;
+import org.influxdb.InfluxDBFactory;
+import org.influxdb.dto.BatchPoints;
+import org.influxdb.dto.Point;
+
 public class InfluxWriter {
 
     private static Random random = new Random(42L);
 
     public static void main(String[] args) {
-        InfluxDB influxDB = InfluxDBFactory.connect("http://192.168.99.100:8086", "root", "root");
+        String dockerIp = new Docker().dockerIp();
+        InfluxDB influxDB = InfluxDBFactory.connect("http://" + dockerIp + ":8086", "root", "root");
         String dbName = "aTimeSeries";
         influxDB.createDatabase(dbName);
 

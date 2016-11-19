@@ -1,6 +1,11 @@
 #!/bin/bash
 
-DOCKER_IP=`docker-machine ip docker-vm`
+DOCKER_IP=localhost
+
+if $(which docker-machine) != "" ;  then
+  DOCKER_IP=$(docker-machine ip docker-vm)
+fi
+
 INFLUX_HOST=http://${DOCKER_IP}:8086
 GRAFANA_HOST=http://admin:admin@${DOCKER_IP}:3000
 
