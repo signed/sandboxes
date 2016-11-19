@@ -5,7 +5,10 @@ repositories {
 }
 
 dependencies {
-    compile 'org.influxdb:influxdb-java:2.4'
+    compile('org.influxdb:influxdb-java:2.4') {
+        exclude group: 'junit', module: 'junit'
+    }
+    testCompile('junit:junit:4.12')
 }
 
 task wrapper(type: Wrapper) {
