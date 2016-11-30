@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile(
+            'com.fasterxml.jackson.core:jackson-core:2.5.3'
+            , 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
+            , 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+            , 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.5'
+    )
+    testCompile(
+            'junit:junit:4.12'
+    )
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
+}

@@ -1,10 +1,26 @@
+buildscript {
+    repositories{
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 
 repositories {
     jcenter();
 }
 
+springBoot {
+    mainClass = 'spring.Application'
+}
+
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
     compile('org.influxdb:influxdb-java:2.4') {
         exclude group: 'junit', module: 'junit'
     }
