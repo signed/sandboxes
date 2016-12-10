@@ -1,0 +1,90 @@
+= The title of the document at the start of the document header
+Author <me@example.org>
+v0.1, 2016-12-10
+:toc:
+//unset an existing identifier
+//:toc!:
+:imagesdir: ./images
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
+//define your own variables
+:identifier: content
+:numbered:
+
+= There can be only one heading 1 unless you are rendering a *book*
+Fetch {identifier} from *reference*
+
+== Blocks
+=== private comments
+////
+The content will not be rendered into the document
+////
+
+=== literal
+....
+This will keep all the line breaks
+regardless of normal rules
+
+
+As you can see
+....
+
+=== listing,  source
+----
+This is an example of a _listing block_.
+The content inside is rendered as <pre> text.
+----
+
+[source,ruby]
+----
+require 'asciidoctor'
+
+puts Asciidoctor.convert_file 'mysample.adoc', to_file: false
+----
+
+[source,ruby]
+----
+include::ruby/sample.rb[]
+----
+<1> Imports the library
+<2> Reads, parses and renders the file
+
+=== pass
+++++
+Raw text that will be ne interpreted by ascii doc
+++++
+
+=== example
+====
+This is an example
+====
+
+=== sidebar
+****
+flup asfuasfuasf
+****
+
+=== table
+[cols="2*"]
+|===
+|Firefox
+|Web Browser
+
+|Ruby
+|Programming Language
+
+|TorqueBox
+|Application Server
+|===
+
+Write some text to see how a side bare works
+[sidebar]
+.Related information
+--
+This is aside text.
+
+It is used to present information related to the main content.
+--
+
+some texg after the side bar
