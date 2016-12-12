@@ -4,8 +4,8 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
+import strip.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
-import strip.copyright.FileFinder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 public class RemoveCopyrightHeaders {
 
     private final CopyrightBlockDetector copyrightBlockDetector = new CopyrightBlockDetector(this::log);
+    private final SourceFileFinder sourceFileFinder = new SourceFileFinder(this::log);
     private final Path pathToSampleJavaFile = Paths.get("src/main/java/sample/JavaDocOnClass.java");
 
     @Test
@@ -35,15 +36,7 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void remove() throws Exception {
-        removeCopyrightNoticeInJavaFilesForProjectAt(Paths.get(""));
-    }
-
-    private void removeCopyrightNoticeInJavaFilesForProjectAt(Path projectDirectory) throws IOException {
-        log("searching for java files under " + projectDirectory);
-        FileFinder javaFiles = new FileFinder("*.java");
-        Files.walkFileTree(projectDirectory, javaFiles);
-        log("found " + javaFiles.found.size() + " java file");
-        javaFiles.found.parallelStream().forEach(this::removeCopyrightNoticeFrom);
+        sourceFileFinder.javaFilesInProjectAt(Paths.get("")).parallelStream().forEach(this::removeCopyrightNoticeFrom);
     }
 
     private void removeCopyrightNoticeFrom(Path javaSourceFile) {
