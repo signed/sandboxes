@@ -36,7 +36,7 @@ public class RemoveCopyrightHeaders {
     }
 
     @Test
-    public void remove() throws Exception {
+    public void removeCopyRightHeader() throws Exception {
         sourceFileFinder.javaFilesInProjectAt(Paths.get(""))
                 .parallelStream()
                 .forEach((javaSourceFile) -> removeCopyrightNoticeFrom(javaSourceFile, copyrightBlockDetector));
