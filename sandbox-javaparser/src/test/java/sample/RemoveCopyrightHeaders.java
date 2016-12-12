@@ -4,7 +4,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
-import strip.SourceFileFinder;
+import strip.finder.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
 
 import java.io.FileNotFoundException;

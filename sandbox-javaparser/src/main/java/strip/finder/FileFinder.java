@@ -1,4 +1,4 @@
-package strip.copyright;
+package strip.finder;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;

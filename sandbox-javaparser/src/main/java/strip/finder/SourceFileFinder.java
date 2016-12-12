@@ -1,6 +1,4 @@
-package strip;
-
-import strip.copyright.FileFinder;
+package strip.finder;
 
 import java.io.IOException;
 import java.nio.file.Files;
