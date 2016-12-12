@@ -4,7 +4,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
-import strip.copyright.CopyrightNoticeScanner;
+import strip.copyright.CopyrightBlockDetector;
 import strip.copyright.FileFinder;
 
 import java.io.FileNotFoundException;
@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -23,6 +24,8 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 
 public class RemoveCopyrightHeaders {
+
+    private final CopyrightBlockDetector copyrightBlockDetector = new CopyrightBlockDetector(this::log);
     private final Path pathToSampleJavaFile = Paths.get("src/main/java/sample/JavaDocOnClass.java");
 
     @Test
@@ -49,35 +52,26 @@ public class RemoveCopyrightHeaders {
 
     private void removeCopyrightNoticeFrom(Path javaSourceFile) {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
-        CopyrightNoticeScanner scanner = new CopyrightNoticeScanner();
-        scanner.visit(cu, null);
-        if (scanner.copyrightNoticesLocations.isEmpty()) {
-            return;
-        }
-        if (scanner.copyrightNoticesLocations.size() > 1) {
-            log("Skipping file with multiple copy right notices. Has multiple copy right notices: " + javaSourceFile);
+        Optional<Range> maybeToRemove = copyrightBlockDetector.findCodeToRemoveIn(cu, javaSourceFile);
+
+        if (!maybeToRemove.isPresent()) {
             return;
         }
 
-        Range location = scanner.copyrightNoticesLocations.get(0);
-
-        if (location.begin.line != 1 | location.begin.column != 1) {
-            log("Skipping file where copyright notice is not at the start of the file: " + javaSourceFile);
-            return;
-        }
+        Range locationToRemove = maybeToRemove.get();
 
         List<String> allLines = readAllLinesIn(javaSourceFile);
-        List<String> copyrightNotice = extractLines(allLines, copyrightNotice(location));
+        List<String> copyrightNotice = extractLines(allLines, copyrightNotice(locationToRemove));
 
         String lastCopyrightLine = copyrightNotice.get(copyrightNotice.size() - 1);
 
-        if (lastCopyrightLine.length() != location.end.column -1) {
+        if (lastCopyrightLine.length() != locationToRemove.end.column - 1) {
             log("Skipping file where last line of copyright notice seems not to span the entire line: " + javaSourceFile);
             return;
         }
 
 
-        List<String> sourceLinesWithoutCopyrightNotice = extractLines(allLines, copyrightNotice(location).negate());
+        List<String> sourceLinesWithoutCopyrightNotice = extractLines(allLines, copyrightNotice(locationToRemove).negate());
 
         while (sourceLinesWithoutCopyrightNotice.get(0).trim().isEmpty()) {
             sourceLinesWithoutCopyrightNotice.remove(0);
