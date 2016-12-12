@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class CopyrightBlockDetector {
+public class CopyrightBlockDetector implements strip.Detector {
 
     private Consumer<String> logger;
 
@@ -16,6 +16,7 @@ public class CopyrightBlockDetector {
         this.logger = logger;
     }
 
+    @Override
     public Optional<Range> findCodeToRemoveIn(CompilationUnit compilationUnit, Path javaSourceFile) {
         CopyrightNoticeScanner scanner = new CopyrightNoticeScanner();
         scanner.visit(compilationUnit, null);
