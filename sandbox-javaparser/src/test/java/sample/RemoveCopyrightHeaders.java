@@ -4,6 +4,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
+import strip.Detector;
 import strip.finder.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
 
@@ -31,17 +32,19 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void javaParser() throws Exception {
-        removeCopyrightNoticeFrom(pathToSampleJavaFile);
+        removeCopyrightNoticeFrom(pathToSampleJavaFile, copyrightBlockDetector);
     }
 
     @Test
     public void remove() throws Exception {
-        sourceFileFinder.javaFilesInProjectAt(Paths.get("")).parallelStream().forEach(this::removeCopyrightNoticeFrom);
+        sourceFileFinder.javaFilesInProjectAt(Paths.get(""))
+                .parallelStream()
+                .forEach((javaSourceFile) -> removeCopyrightNoticeFrom(javaSourceFile, copyrightBlockDetector));
     }
 
-    private void removeCopyrightNoticeFrom(Path javaSourceFile) {
+    private void removeCopyrightNoticeFrom(Path javaSourceFile, Detector detector) {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
-        Optional<Range> maybeToRemove = copyrightBlockDetector.findCodeToRemoveIn(cu, javaSourceFile);
+        Optional<Range> maybeToRemove = detector.findCodeToRemoveIn(cu, javaSourceFile);
         if (!maybeToRemove.isPresent()) {
             return;
         }
