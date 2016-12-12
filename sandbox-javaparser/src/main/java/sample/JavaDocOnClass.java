@@ -12,6 +12,9 @@ package sample;
 
 /**
  * lets see if this is dumped twice
+ *
+ * @author blub
+ * @since 2012/07/15
  */
 public class JavaDocOnClass {
 
