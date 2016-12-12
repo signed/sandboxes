@@ -7,6 +7,7 @@ import org.junit.Test;
 import strip.Detector;
 import strip.finder.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
+import strip.javadoctag.UnwantedJavaDocTagDetector;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,6 +34,11 @@ public class RemoveCopyrightHeaders {
     @Test
     public void javaParser() throws Exception {
         removeCopyrightNoticeFrom(pathToSampleJavaFile, copyrightBlockDetector);
+    }
+
+    @Test
+    public void removeAuthorTagInJavaDoc() throws Exception {
+        removeCopyrightNoticeFrom(pathToSampleJavaFile, new UnwantedJavaDocTagDetector("author", this::log));
     }
 
     @Test
@@ -119,6 +125,5 @@ public class RemoveCopyrightHeaders {
     private void log(String message) {
         System.out.println(message);
     }
-
 
 }
