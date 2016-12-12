@@ -46,20 +46,16 @@ public class RemoveCopyrightHeaders {
         javaFiles.found.parallelStream().forEach(this::removeCopyrightNoticeFrom);
     }
 
-    private void log(String message) {
-        System.out.println(message);
-    }
-
     private void removeCopyrightNoticeFrom(Path javaSourceFile) {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
         Optional<Range> maybeToRemove = copyrightBlockDetector.findCodeToRemoveIn(cu, javaSourceFile);
-
         if (!maybeToRemove.isPresent()) {
             return;
         }
+        removeRangeIn(maybeToRemove.get(), javaSourceFile);
+    }
 
-        Range locationToRemove = maybeToRemove.get();
-
+    private void removeRangeIn(Range locationToRemove, Path javaSourceFile) {
         List<String> allLines = readAllLinesIn(javaSourceFile);
         List<String> copyrightNotice = extractLines(allLines, copyrightNotice(locationToRemove));
 
@@ -122,6 +118,10 @@ public class RemoveCopyrightHeaders {
         } catch (IOException e) {
             throw new RuntimeException("should never happen", e);
         }
+    }
+
+    private void log(String message) {
+        System.out.println(message);
     }
 
 
