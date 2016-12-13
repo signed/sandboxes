@@ -10,9 +10,11 @@ import one.util.streamex.StreamEx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
 
@@ -32,14 +34,32 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
             return n;
         }
 
-        int emptyLinesAtStartOfJavaDoc = (int) StreamEx.of(cleanedUpLines).map(String::isEmpty).takeWhile(isEmpty -> isEmpty).count();
+        int emptyLinesAtStartOfJavaDoc = numberOfEmptyLineAtStart(cleanedUpLines.stream());
         if (emptyLinesAtStartOfJavaDoc > 1) {
             int startLine = n.getRange().begin.line + 1; //keep the first line
-            int endLine = n.getRange().begin.line + emptyLinesAtStartOfJavaDoc -1;
+            int endLine = n.getRange().begin.line + emptyLinesAtStartOfJavaDoc - 1;
             int lastLineLengthIncludingNewLine = javadocLines[emptyLinesAtStartOfJavaDoc - 1].length() + 1;
             ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
         }
+
+        int emptyLinesAtEndOfJavaDoc = numberOfEmptyLineAtStart(copyAndReverse(cleanedUpLines).stream());
+        if (emptyLinesAtEndOfJavaDoc > 1) {
+            int startLine = n.getRange().end.line - emptyLinesAtEndOfJavaDoc + 1;
+            int endLine = n.getRange().end.line - 1;
+            int lastLineLengthIncludingNewLine = javadocLines[javadocLines.length - emptyLinesAtEndOfJavaDoc].length() + 1;
+            ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
+        }
         return n;
+    }
+
+    private List<String> copyAndReverse(List<String> cleanedUpLines) {
+        List<String> reveresed = new ArrayList<>(cleanedUpLines);
+        Collections.reverse(reveresed);
+        return reveresed;
+    }
+
+    private int numberOfEmptyLineAtStart(Stream<String> lines) {
+        return (int) StreamEx.of(lines).map(String::isEmpty).takeWhile(isEmpty -> isEmpty).count();
     }
 
     private Boolean allLinesEmpty(List<String> cleanedUpLines) {
