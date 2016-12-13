@@ -4,8 +4,11 @@ repositories{
     mavenCentral()
     jcenter()
 }
+
 dependencies {
-    compile("com.github.javaparser:javaparser-core:3.0.0-alpha.2")
+    compile 'com.github.javaparser:javaparser-core:3.0.0-alpha.2'
+    compile 'one.util:streamex:0.6.4'
+
     testCompile("junit:junit:4.12")
 }
 

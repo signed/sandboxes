@@ -1,9 +1,12 @@
 package strip.emptyjavadoc;
 
+import com.github.javaparser.Position;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
+import one.util.streamex.IntStreamEx;
+import one.util.streamex.StreamEx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +30,14 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
         if (allLinesEmpty(cleanedUpLines)) {
             ranges.add(n.getRange());
             return n;
+        }
+
+        int emptyLinesAtStartOfJavaDoc = (int) StreamEx.of(cleanedUpLines).map(String::isEmpty).takeWhile(isEmpty -> isEmpty).count();
+        if (emptyLinesAtStartOfJavaDoc > 1) {
+            int startLine = n.getRange().begin.line + 1; //keep the first line
+            int endLine = n.getRange().begin.line + emptyLinesAtStartOfJavaDoc -1;
+            int lastLineLengthIncludingNewLine = javadocLines[emptyLinesAtStartOfJavaDoc - 1].length() + 1;
+            ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
         }
         return n;
     }
