@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.IntPredicate;
@@ -77,11 +79,10 @@ public class RemoveCopyrightHeaders {
 
     private void remove(Detector detector, Path javaSourceFile) {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
-        Optional<Range> maybeToRemove = detector.findCodeToRemoveIn(cu, javaSourceFile);
-        if (!maybeToRemove.isPresent()) {
-            return;
-        }
-        removeRangeIn(maybeToRemove.get(), javaSourceFile);
+        List<Range> maybeToRemove = detector.findCodeToRemoveIn(cu, javaSourceFile);
+        List<Range> sortedByLine = maybeToRemove.stream().sorted((o1, o2) -> o1.end.compareTo(o2.begin)).collect(Collectors.toList());
+        Collections.reverse(sortedByLine);
+        sortedByLine.forEach(rangeToRemove -> removeRangeIn(rangeToRemove, javaSourceFile));
     }
 
     private void removeRangeIn(Range locationToRemove, Path javaSourceFile) {
