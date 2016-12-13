@@ -5,6 +5,7 @@ import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
 import strip.Detector;
+import strip.emptyjavadoc.EmptyJavadocDetector;
 import strip.finder.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
 import strip.javadoctag.UnwantedJavaDocTagDetector;
@@ -47,6 +48,13 @@ public class RemoveCopyrightHeaders {
     }
 
     @Test
+    public void name() throws Exception {
+        remove(javadocTag("author"), pathToSampleJavaFile);
+        remove(javadocTag("since"), pathToSampleJavaFile);
+        remove(new EmptyJavadocDetector(this::log), pathToSampleJavaFile);
+    }
+
+    @Test
     public void removeAuthorTagInProject() throws Exception {
         Path projectDirectory = Paths.get("");
         removeInProject(javadocTag("author"), projectDirectory);
@@ -64,9 +72,7 @@ public class RemoveCopyrightHeaders {
     private void removeInProject(Detector detector, Path projectDirectory) throws IOException {
         sourceFileFinder.javaFilesInProjectAt(projectDirectory)
                 .parallelStream()
-                .forEach((javaSourceFile) -> {
-                    remove(detector, javaSourceFile);
-                });
+                .forEach(javaSourceFile -> remove(detector, javaSourceFile));
     }
 
     private void remove(Detector detector, Path javaSourceFile) {
