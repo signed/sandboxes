@@ -32,26 +32,28 @@ public class RemoveCopyrightHeaders {
 
     @Test
     public void removeCopyrightHeaderInSampleFile() throws Exception {
-        removeCopyrightNoticeFrom(pathToSampleJavaFile, copyrightBlockDetector());
+        remove(copyrightBlock(), pathToSampleJavaFile);
     }
 
     @Test
     public void removeCopyRightHeadersInProject() throws Exception {
-        removeInProject(Paths.get(""), copyrightBlockDetector());
+        removeInProject(copyrightBlock(), Paths.get(""));
     }
 
     @Test
     public void removeAuthorTagInSampleFile() throws Exception {
-        removeCopyrightNoticeFrom(pathToSampleJavaFile, javadocTag("author"));
-        removeCopyrightNoticeFrom(pathToSampleJavaFile, javadocTag("since"));
+        remove(javadocTag("author"), pathToSampleJavaFile);
+        remove(javadocTag("since"), pathToSampleJavaFile);
     }
 
     @Test
     public void removeAuthorTagInProject() throws Exception {
-        removeInProject(Paths.get(""), copyrightBlockDetector());
+        Path projectDirectory = Paths.get("");
+        removeInProject(javadocTag("author"), projectDirectory);
+        removeInProject(javadocTag("since"), projectDirectory);
     }
 
-    private CopyrightBlockDetector copyrightBlockDetector() {
+    private CopyrightBlockDetector copyrightBlock() {
         return new CopyrightBlockDetector(this::log);
     }
 
@@ -59,15 +61,15 @@ public class RemoveCopyrightHeaders {
         return new UnwantedJavaDocTagDetector(author, this::log);
     }
 
-    private void removeInProject(Path projectDirectory, CopyrightBlockDetector detector) throws IOException {
+    private void removeInProject(Detector detector, Path projectDirectory) throws IOException {
         sourceFileFinder.javaFilesInProjectAt(projectDirectory)
                 .parallelStream()
                 .forEach((javaSourceFile) -> {
-                    removeCopyrightNoticeFrom(javaSourceFile, detector);
+                    remove(detector, javaSourceFile);
                 });
     }
 
-    private void removeCopyrightNoticeFrom(Path javaSourceFile, Detector detector) {
+    private void remove(Detector detector, Path javaSourceFile) {
         CompilationUnit cu = parseAsCompilationUnit(javaSourceFile);
         Optional<Range> maybeToRemove = detector.findCodeToRemoveIn(cu, javaSourceFile);
         if (!maybeToRemove.isPresent()) {
