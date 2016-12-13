@@ -11,10 +11,15 @@
 package sample;
 
 /**
+ *
+ *
  * lets see if this is dumped twice
+ *
  *
  * @author blub
  * @since 2012/07/15
+ *
+ *
  */
 public class JavaDocOnClass {
 
@@ -22,5 +27,12 @@ public class JavaDocOnClass {
      * Another block comment
      */
     public void foo(int e) {
+    }
+
+    /**
+     * @since 2014/07/15
+     */
+    public void bar(){
+
     }
 }
