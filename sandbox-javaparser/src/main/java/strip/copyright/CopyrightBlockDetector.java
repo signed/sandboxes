@@ -2,7 +2,6 @@ package strip.copyright;
 
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
-import strip.copyright.CopyrightNoticeScanner;
 
 import java.nio.file.Path;
 import java.util.Optional;
