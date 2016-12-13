@@ -27,25 +27,44 @@ import static java.nio.file.StandardOpenOption.WRITE;
 
 public class RemoveCopyrightHeaders {
 
-    private final CopyrightBlockDetector copyrightBlockDetector = new CopyrightBlockDetector(this::log);
     private final SourceFileFinder sourceFileFinder = new SourceFileFinder(this::log);
     private final Path pathToSampleJavaFile = Paths.get("src/main/java/sample/JavaDocOnClass.java");
 
     @Test
-    public void javaParser() throws Exception {
-        removeCopyrightNoticeFrom(pathToSampleJavaFile, copyrightBlockDetector);
-    }
-
-    @Test
-    public void removeAuthorTagInJavaDoc() throws Exception {
-        removeCopyrightNoticeFrom(pathToSampleJavaFile, new UnwantedJavaDocTagDetector("author", this::log));
+    public void removeCopyrightHeaderInSampleFile() throws Exception {
+        removeCopyrightNoticeFrom(pathToSampleJavaFile, copyrightBlockDetector());
     }
 
     @Test
     public void removeCopyRightHeadersInProject() throws Exception {
-        sourceFileFinder.javaFilesInProjectAt(Paths.get(""))
+        removeInProject(Paths.get(""), copyrightBlockDetector());
+    }
+
+    @Test
+    public void removeAuthorTagInSampleFile() throws Exception {
+        removeCopyrightNoticeFrom(pathToSampleJavaFile, javadocTag("author"));
+        removeCopyrightNoticeFrom(pathToSampleJavaFile, javadocTag("since"));
+    }
+
+    @Test
+    public void removeAuthorTagInProject() throws Exception {
+        removeInProject(Paths.get(""), copyrightBlockDetector());
+    }
+
+    private CopyrightBlockDetector copyrightBlockDetector() {
+        return new CopyrightBlockDetector(this::log);
+    }
+
+    private UnwantedJavaDocTagDetector javadocTag(String author) {
+        return new UnwantedJavaDocTagDetector(author, this::log);
+    }
+
+    private void removeInProject(Path projectDirectory, CopyrightBlockDetector detector) throws IOException {
+        sourceFileFinder.javaFilesInProjectAt(projectDirectory)
                 .parallelStream()
-                .forEach((javaSourceFile) -> removeCopyrightNoticeFrom(javaSourceFile, copyrightBlockDetector));
+                .forEach((javaSourceFile) -> {
+                    removeCopyrightNoticeFrom(javaSourceFile, detector);
+                });
     }
 
     private void removeCopyrightNoticeFrom(Path javaSourceFile, Detector detector) {
