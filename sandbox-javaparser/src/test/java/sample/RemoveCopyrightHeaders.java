@@ -48,7 +48,8 @@ public class RemoveCopyrightHeaders {
     }
 
     @Test
-    public void name() throws Exception {
+    public void runAllDetectors() throws Exception {
+        remove(copyrightBlock(), pathToSampleJavaFile);
         remove(javadocTag("author"), pathToSampleJavaFile);
         remove(javadocTag("since"), pathToSampleJavaFile);
         remove(new JavadocToTrimDetector(this::log), pathToSampleJavaFile);
