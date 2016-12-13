@@ -1,11 +1,10 @@
-package strip.emptyjavadoc;
+package strip.javadoctrim;
 
 import com.github.javaparser.Position;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
-import one.util.streamex.IntStreamEx;
 import one.util.streamex.StreamEx;
 
 import java.util.ArrayList;

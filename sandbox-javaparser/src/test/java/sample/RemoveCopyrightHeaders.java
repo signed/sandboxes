@@ -5,7 +5,7 @@ import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.Test;
 import strip.Detector;
-import strip.emptyjavadoc.EmptyJavadocDetector;
+import strip.javadoctrim.JavadocToTrimDetector;
 import strip.finder.SourceFileFinder;
 import strip.copyright.CopyrightBlockDetector;
 import strip.javadoctag.UnwantedJavaDocTagDetector;
@@ -18,9 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -53,7 +51,7 @@ public class RemoveCopyrightHeaders {
     public void name() throws Exception {
         remove(javadocTag("author"), pathToSampleJavaFile);
         remove(javadocTag("since"), pathToSampleJavaFile);
-        remove(new EmptyJavadocDetector(this::log), pathToSampleJavaFile);
+        remove(new JavadocToTrimDetector(this::log), pathToSampleJavaFile);
     }
 
     @Test

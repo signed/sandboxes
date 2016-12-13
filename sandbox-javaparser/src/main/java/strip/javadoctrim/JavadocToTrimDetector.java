@@ -1,4 +1,4 @@
-package strip.emptyjavadoc;
+package strip.javadoctrim;
 
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EmptyJavadocDetector implements Detector {
+public class JavadocToTrimDetector implements Detector {
     private final Consumer<String> logger;
 
-    public EmptyJavadocDetector(Consumer<String> logger) {
+    public JavadocToTrimDetector(Consumer<String> logger) {
         this.logger = logger;
     }
 
