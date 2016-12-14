@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,6 +42,16 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
             ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
         }
 
+        ConsecutiveEmptyLineBuilder builder = new ConsecutiveEmptyLineBuilder(javadocLines, n.getRange().begin.line);
+        for (int currentLine = 0; currentLine < cleanedUpLines.size(); currentLine++) {
+            if (cleanedUpLines.get(currentLine).isEmpty()) {
+                builder.emptyLineAt(currentLine);
+            } else {
+                builder.maybeCompressableRange().ifPresent(ranges::add);
+                builder.reset();
+            }
+        }
+
         int emptyLinesAtEndOfJavaDoc = numberOfEmptyLineAtStart(copyAndReverse(cleanedUpLines).stream());
         if (emptyLinesAtEndOfJavaDoc > 1) {
             int startLine = n.getRange().end.line - emptyLinesAtEndOfJavaDoc + 1;
@@ -51,10 +62,49 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
         return n;
     }
 
+    public static class ConsecutiveEmptyLineBuilder {
+        private final String[] javadocLines;
+        private int offset;
+        private int firstEmptyLine;
+        private int lastEmptyLine;
+
+        public ConsecutiveEmptyLineBuilder(String[] javadocLines, int offset) {
+            this.javadocLines = javadocLines;
+            this.offset = offset;
+            reset();
+        }
+
+        public ConsecutiveEmptyLineBuilder emptyLineAt(int line) {
+            if (firstEmptyLine == -1) {
+                firstEmptyLine = line;
+            }
+            lastEmptyLine = line;
+            return this;
+        }
+
+        public void reset() {
+            firstEmptyLine = -1;
+            lastEmptyLine = javadocLines.length;
+        }
+
+        public Optional<Range> maybeCompressableRange() {
+            if (firstEmptyLine == -1 || firstEmptyLine == 0 || lastEmptyLine == javadocLines.length) {
+                return Optional.empty();
+            }
+            if (lastEmptyLine - firstEmptyLine < 2) {
+                return Optional.empty();
+            }
+            Position begin = new Position(offset + firstEmptyLine, 0);
+            int keepLastEmptyLine = lastEmptyLine - 1;
+            Position end = new Position(offset + keepLastEmptyLine, javadocLines[keepLastEmptyLine].length() + 1);
+            return Optional.of(new Range(begin, end));
+        }
+    }
+
     private List<String> copyAndReverse(List<String> cleanedUpLines) {
-        List<String> reveresed = new ArrayList<>(cleanedUpLines);
-        Collections.reverse(reveresed);
-        return reveresed;
+        List<String> reversed = new ArrayList<>(cleanedUpLines);
+        Collections.reverse(reversed);
+        return reversed;
     }
 
     private int numberOfEmptyLineAtStart(Stream<String> lines) {
