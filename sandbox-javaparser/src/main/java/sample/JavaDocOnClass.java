@@ -16,6 +16,9 @@ package sample;
  * lets see if this is dumped twice
  *
  *
+ *
+ * Should trim the empty lines between text
+ *
  * @author blub
  * @since 2012/07/15
  *
