@@ -22,6 +22,8 @@ package sample;
  * @author blub
  * @since 2012/07/15
  *
+ * @apiNote just to generate some tow line empty space in the middle of the doc
+ *
  *
  */
 public class JavaDocOnClass {
