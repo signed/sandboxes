@@ -91,7 +91,7 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
             if (firstEmptyLine == -1 || firstEmptyLine == 0 || lastEmptyLine == javadocLines.length) {
                 return Optional.empty();
             }
-            if (lastEmptyLine - firstEmptyLine < 2) {
+            if (lastEmptyLine - firstEmptyLine < 1) {
                 return Optional.empty();
             }
             Position begin = new Position(offset + firstEmptyLine, 0);
