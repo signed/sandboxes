@@ -1,12 +1,12 @@
 package strip.copyright;
 
-import com.github.javaparser.Range;
-import com.github.javaparser.ast.CompilationUnit;
-
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
+import com.github.javaparser.Range;
+import com.github.javaparser.ast.CompilationUnit;
 
 public class CopyrightBlockDetector implements strip.Detector {
 
@@ -22,6 +22,10 @@ public class CopyrightBlockDetector implements strip.Detector {
         scanner.visit(compilationUnit, null);
         if (scanner.copyrightNoticesLocations.size() > 1) {
             logger.accept("Skipping file with multiple copy right notices. Has multiple copy right notices: " + javaSourceFile);
+            return Collections.emptyList();
+        }
+
+        if(scanner.copyrightNoticesLocations.size() < 1){
             return Collections.emptyList();
         }
 
