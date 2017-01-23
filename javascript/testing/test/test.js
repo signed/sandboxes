@@ -1,28 +1,28 @@
 import {assert} from "chai";
 
-describe('Array', () => {
-  describe('#indexOf()', () => {
-    before(function() {
+describe('Array', function () {
+  describe('#indexOf()', function () {
+    before(function () {
       console.log('before')
     });
 
-    after(function() {
+    after(function () {
       console.log('after')
     });
 
-    beforeEach(function() {
+    beforeEach(function () {
       console.log('before each')
     });
 
-    afterEach(function() {
+    afterEach(function () {
       console.log('after each')
     });
 
-    it('should return -1 when the value is not present', () => {
+    it('should return -1 when the value is not present', function () {
       assert.equal(-1, [1, 2, 3].indexOf(4));
     });
 
-    it('should return the index when the value is not present', () => {
+    it('should return the index when the value is not present', function () {
       assert.equal(1, [1, 2, 3].indexOf(2));
     });
   });
