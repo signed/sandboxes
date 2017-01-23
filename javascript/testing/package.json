@@ -1,0 +1,14 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "exploring existing test frameworks",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require babel-polyfill --compilers js:babel-register"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "mocha": "^3.2.0"
+  }
+}
