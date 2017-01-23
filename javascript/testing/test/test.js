@@ -1,28 +1,29 @@
-import {assert} from "chai";
+import {assert} from 'chai';
+import {suite, test, setup, teardown, suiteSetup, suiteTeardown } from 'mocha'
 
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    before(function () {
-      console.log('before')
+suite('Array', function () {
+  suite('#indexOf()', function () {
+    suiteSetup(function () {
+      console.log('suiteSetup')
     });
 
-    after(function () {
-      console.log('after')
+    suiteTeardown(function () {
+      console.log('suiteTeardown')
     });
 
-    beforeEach(function () {
-      console.log('before each')
+    setup(function () {
+      console.log('setup')
     });
 
-    afterEach(function () {
-      console.log('after each')
+    teardown(function () {
+      console.log('teardown')
     });
 
-    it('should return -1 when the value is not present', function () {
+    test('should return -1 when the value is not present', function () {
       assert.equal(-1, [1, 2, 3].indexOf(4));
     });
 
-    it('should return the index when the value is not present', function () {
+    test('should return the index when the value is present', function () {
       assert.equal(1, [1, 2, 3].indexOf(2));
     });
   });
