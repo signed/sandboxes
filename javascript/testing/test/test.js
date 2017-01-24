@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {suite, test, setup, teardown, suiteSetup, suiteTeardown } from 'mocha'
+import {suite, test, setup, teardown, suiteSetup, suiteTeardown } from 'mocha';
 
 suite('Array', function () {
 
@@ -30,6 +30,6 @@ suite('Array', function () {
   });
 
   function doLog(message) {
-    console.log(message)
+    //console.log(message)
   }
 });
