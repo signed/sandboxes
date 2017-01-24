@@ -1,0 +1,4 @@
+ --ui tdd
+ --recursive
+ --require babel-polyfill
+ --compilers js:babel-register
