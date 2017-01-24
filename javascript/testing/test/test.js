@@ -2,21 +2,22 @@ import {assert} from 'chai';
 import {suite, test, setup, teardown, suiteSetup, suiteTeardown } from 'mocha'
 
 suite('Array', function () {
+
   suite('#indexOf()', function () {
     suiteSetup(function () {
-      console.log('suiteSetup')
+      doLog('suiteSetup');
     });
 
     suiteTeardown(function () {
-      console.log('suiteTeardown')
+      doLog('suiteTeardown')
     });
 
     setup(function () {
-      console.log('setup')
+      doLog('setup')
     });
 
     teardown(function () {
-      console.log('teardown')
+      doLog('teardown')
     });
 
     test('should return -1 when the value is not present', function () {
@@ -27,4 +28,8 @@ suite('Array', function () {
       assert.equal(1, [1, 2, 3].indexOf(2));
     });
   });
+
+  function doLog(message) {
+    console.log(message)
+  }
 });
