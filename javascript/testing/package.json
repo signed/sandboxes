@@ -18,6 +18,7 @@
   },
   "scripts": {
     "compile": "babel -d work/ src/",
-    "test": "mocha",
+    "test": "npm run compile && mocha",
     "prepublish": "npm run compile"
-  }}
+  }
+}
