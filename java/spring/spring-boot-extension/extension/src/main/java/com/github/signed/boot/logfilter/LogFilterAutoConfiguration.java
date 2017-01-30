@@ -18,14 +18,18 @@ public class LogFilterAutoConfiguration {
     @Bean
     public FilterRegistrationBean requestLoggingFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setName("number two");
         filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        filterRegistrationBean.setFilter(new OncePerRequestFilter() {
-            @Override
-            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-                filterChain.doFilter(request, response);
-                System.out.println("ran through the filter");
-            }
-        });
+        filterRegistrationBean.setFilter(new RequestLogFilter());
         return filterRegistrationBean;
+    }
+
+    private static class RequestLogFilter extends OncePerRequestFilter {
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            System.out.println("enter " + getFilterName());
+            filterChain.doFilter(request, response);
+            System.out.println("exit " + getFilterName());
+        }
     }
 }
