@@ -12,14 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+
 @Configuration
 public class LogFilterAutoConfiguration {
 
     @Bean
     public FilterRegistrationBean requestLoggingFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setName("number two");
-        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        filterRegistrationBean.setName("RequestLogFilter");
+        filterRegistrationBean.setOrder(HIGHEST_PRECEDENCE);
         filterRegistrationBean.setFilter(new RequestLogFilter());
         return filterRegistrationBean;
     }
