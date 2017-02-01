@@ -3,7 +3,6 @@ package com.github.signed.boot.logfilter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,7 +16,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @Configuration
 public class LogFilterAutoConfiguration {
 
-    @Bean
+    @Bean(name = "requestLogFilter")
     public FilterRegistrationBean requestLoggingFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setName("RequestLogFilter");
