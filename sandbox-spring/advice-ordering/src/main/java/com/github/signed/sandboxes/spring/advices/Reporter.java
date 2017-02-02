@@ -5,10 +5,14 @@ public interface Reporter {
     void filterEnter();
     void filterExit();
 
-    void controllerAdvice();
+    void earlierAdvise();
+    void laterAdvise();
 
     void aspectEnter();
+
     void aspectExit();
 
     void controller();
+
+    void webMvcConfigurationAdapter(String methodName);
 }

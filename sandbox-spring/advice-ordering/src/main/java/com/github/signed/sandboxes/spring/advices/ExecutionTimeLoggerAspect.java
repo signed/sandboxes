@@ -12,14 +12,14 @@ import org.springframework.util.StopWatch;
 
 @Aspect
 @Component
-public class ExecutionTimeLogger {
+public class ExecutionTimeLoggerAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExecutionTimeLogger.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExecutionTimeLoggerAspect.class);
 
     private final Reporter reporter;
 
     @Autowired
-    public ExecutionTimeLogger(Reporter reporter) {
+    public ExecutionTimeLoggerAspect(Reporter reporter) {
         this.reporter = reporter;
     }
 
@@ -36,7 +36,7 @@ public class ExecutionTimeLogger {
             sw.start();
             return pjp.proceed();
         } catch (Exception ex) {
-            logger.error("an error occurred", ex);
+            //logger.error("an error occurred", ex);
             throw ex;
         } finally {
             sw.stop();

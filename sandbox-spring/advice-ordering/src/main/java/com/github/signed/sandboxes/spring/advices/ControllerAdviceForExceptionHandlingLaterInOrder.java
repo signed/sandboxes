@@ -1,23 +1,36 @@
 package com.github.signed.sandboxes.spring.advices;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
 @ControllerAdvice
 @Order(Integer.MAX_VALUE)
 public class ControllerAdviceForExceptionHandlingLaterInOrder {
 
+    private final Reporter reporter;
+
+    @Autowired
+    public ControllerAdviceForExceptionHandlingLaterInOrder(Reporter reporter) {
+        this.reporter = reporter;
+    }
+
     @ExceptionHandler(BusinessException.class)
-    public void handleBusinessException(){
-        System.out.println("the later one");
+    @ResponseBody
+    public ResponseEntity<String> handleBusinessException(){
+        reporter.laterAdvise();
+        return new ResponseEntity<>("MAX_VALUE", MOVED_PERMANENTLY);
     }
 
     @ExceptionHandler(AnotherBusinessException.class)
-    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="No such Order")
-    public void handleAnotherBusinessException(){
-        System.out.println("the only one handling another business exception");
+    @ResponseBody
+    public ResponseEntity<String> handleAnotherBusinessException(){
+        reporter.laterAdvise();
+        return new ResponseEntity<>("MAX_VALUE", MOVED_PERMANENTLY);
     }
 }

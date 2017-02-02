@@ -18,6 +18,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class AdvisedControllerApplication {
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(AdvisedControllerApplicationConfiguration.class, args);
     }
@@ -65,8 +66,13 @@ public class AdvisedControllerApplication {
         }
 
         @Override
-        public void controllerAdvice() {
-            logger.info("controllerAdvice");
+        public void earlierAdvise() {
+            logger.info("earlierAdvice");
+        }
+
+        @Override
+        public void laterAdvise() {
+            logger.info("laterAdvise");
         }
 
         @Override
@@ -82,6 +88,11 @@ public class AdvisedControllerApplication {
         @Override
         public void controller() {
             logger.info("controller");
+        }
+
+        @Override
+        public void webMvcConfigurationAdapter(String methodName) {
+            logger.info("webMvcConfigurationAdapter."+methodName);
         }
     }
 
