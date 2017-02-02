@@ -66,13 +66,13 @@ public class AdvisedControllerApplication {
         }
 
         @Override
-        public void earlierAdvise() {
-            logger.info("earlierAdvice");
+        public void earlierAdvise(String exceptionClassName) {
+            logger.info("earlierAdvice("+exceptionClassName+")");
         }
 
         @Override
-        public void laterAdvise() {
-            logger.info("laterAdvise");
+        public void laterAdvise(String exceptionClassName) {
+            logger.info("laterAdvise("+exceptionClassName+")");
         }
 
         @Override

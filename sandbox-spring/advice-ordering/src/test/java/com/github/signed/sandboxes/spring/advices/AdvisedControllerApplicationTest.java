@@ -82,7 +82,7 @@ public class AdvisedControllerApplicationTest {
         order.verify(reporter).aspectEnter();
         order.verify(reporter).controller();
         order.verify(reporter).aspectExit();
-        order.verify(reporter).earlierAdvise();
+        order.verify(reporter).earlierAdvise("BusinessException");
         order.verify(reporter).filterExit();
     }
 
@@ -96,7 +96,7 @@ public class AdvisedControllerApplicationTest {
         order.verify(reporter).aspectEnter();
         order.verify(reporter).controller();
         order.verify(reporter).aspectExit();
-        order.verify(reporter).laterAdvise();
+        order.verify(reporter).laterAdvise("AnotherBusinessException");
         order.verify(reporter).filterExit();
     }
 

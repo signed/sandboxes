@@ -23,7 +23,7 @@ public class ControllerAdviceForExceptionHandling{
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public ResponseEntity<?> handleBusinessException() {
-        reporter.earlierAdvise();
+        reporter.earlierAdvise("BusinessException");
         return new ResponseEntity<>("MIN_VALUE", BAD_REQUEST);
     }
 }

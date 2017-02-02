@@ -23,14 +23,14 @@ public class ControllerAdviceForExceptionHandlingLaterInOrder {
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public ResponseEntity<String> handleBusinessException(){
-        reporter.laterAdvise();
+        reporter.laterAdvise("BusinessException");
         return new ResponseEntity<>("MAX_VALUE", MOVED_PERMANENTLY);
     }
 
     @ExceptionHandler(AnotherBusinessException.class)
     @ResponseBody
     public ResponseEntity<String> handleAnotherBusinessException(){
-        reporter.laterAdvise();
+        reporter.laterAdvise("AnotherBusinessException");
         return new ResponseEntity<>("MAX_VALUE", MOVED_PERMANENTLY);
     }
 }

@@ -5,8 +5,8 @@ public interface Reporter {
     void filterEnter();
     void filterExit();
 
-    void earlierAdvise();
-    void laterAdvise();
+    void earlierAdvise(String exceptionClassName);
+    void laterAdvise(String exceptionClassName);
 
     void aspectEnter();
 
