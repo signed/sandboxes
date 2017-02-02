@@ -1,8 +1,5 @@
 package com.github.signed.sandboxes.spring.advices.configuration;
 
-import com.github.signed.sandboxes.spring.advices.AdvisedControllerApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan(basePackageClasses = {AdvisedControllerApplication.class})
 public class AdvisedControllerApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Override

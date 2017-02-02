@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -15,12 +16,20 @@ public class ExecutionTimeLogger {
 
     private static final Logger logger = LoggerFactory.getLogger(ExecutionTimeLogger.class);
 
+    private final Reporter reporter;
+
+    @Autowired
+    public ExecutionTimeLogger(Reporter reporter) {
+        this.reporter = reporter;
+    }
+
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void requestMapping() {
     }
 
     @Around("requestMapping()")
     public Object profile(ProceedingJoinPoint pjp) throws Throwable {
+        reporter.aspectEnter();
         StopWatch sw = new StopWatch();
         String name = pjp.getSignature().getName();
         try {
@@ -32,6 +41,7 @@ public class ExecutionTimeLogger {
         } finally {
             sw.stop();
             logger.info("STOPWATCH: " + sw.getLastTaskTimeMillis() + " - " + name);
+            reporter.aspectExit();
         }
     }
 }
