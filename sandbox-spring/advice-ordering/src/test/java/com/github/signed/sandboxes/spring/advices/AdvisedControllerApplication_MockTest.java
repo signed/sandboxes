@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,10 +26,10 @@ import static org.springframework.http.HttpMethod.POST;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {AdvisedControllerApplication.class, AdvisedControllerApplicationTest.Config.class})
+@SpringApplicationConfiguration(classes = {AdvisedControllerApplication.class, AdvisedControllerApplication_MockTest.Config.class})
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-public class AdvisedControllerApplicationTest {
+public class AdvisedControllerApplication_MockTest {
 
     @Configuration
     static class Config {
@@ -91,6 +90,7 @@ public class AdvisedControllerApplicationTest {
         doThrow(new AnotherBusinessException()).when(businessLogic).executeLogic();
         assertThat(response().getStatusCode(), equalTo(HttpStatus.MOVED_PERMANENTLY));
 
+
         InOrder order = Mockito.inOrder(reporter);
         order.verify(reporter).filterEnter();
         order.verify(reporter).aspectEnter();
@@ -99,7 +99,6 @@ public class AdvisedControllerApplicationTest {
         order.verify(reporter).laterAdvise("AnotherBusinessException");
         order.verify(reporter).filterExit();
     }
-
 
     private String responseBody() {
         ResponseEntity<String> responseTextResponseEntity = response();
