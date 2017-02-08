@@ -27,8 +27,12 @@ public class BootApplicationTest {
 
     @Test
     public void callEndpoint() throws Exception {
-        ResponseEntity<ResponseText> responseTextResponseEntity = new RestTemplate().exchange(url(), POST, new HttpEntity<>(requestTextIs("meat")), ResponseText.class);
-        assertThat(responseTextResponseEntity.getBody().responseText, equalTo("processed(meat)"));
+        assertThat(process("meat").getBody().responseText, equalTo("processed(meat)"));
+        assertThat(process("water").getBody().responseText, equalTo("processed(water)"));
+    }
+
+    private ResponseEntity<ResponseText> process(String toProcess) {
+        return new RestTemplate().exchange(url(), POST, new HttpEntity<>(requestTextIs(toProcess)), ResponseText.class);
     }
 
     private BootApplication.RequestText requestTextIs(String text) {

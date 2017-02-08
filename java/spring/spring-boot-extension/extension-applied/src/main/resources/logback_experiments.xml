@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
     <conversionRule conversionWord="mdcs"
                     converterClass="com.github.signed.boot.logfilter.MDCStructuralConverter"/>
 
-    <property name="PATTERN" value="%mdcs{requestId:-renamed} %msg %n"/>
-
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${PATTERN}</pattern>
+            <pattern>%date{yyyy-MM-ddHH:mm:ss.SSSX, UTC} ${LOG_LEVEL_PATTERN:-%5p} %mdcs{requestId:-RequestId} %msg %n</pattern>
             <charset>utf8</charset>
         </encoder>
     </appender>
@@ -15,5 +13,4 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
-
 </configuration>
