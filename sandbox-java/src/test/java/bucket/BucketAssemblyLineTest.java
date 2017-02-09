@@ -57,7 +57,7 @@ public class BucketAssemblyLineTest {
     }
 
     private BucketTest.Bucket fourthBucket(String s) {
-        return allBuckets().get(4);
+        return allBuckets().get(3);
     }
 
     private BucketTest.Bucket thirdBucket(String s) {

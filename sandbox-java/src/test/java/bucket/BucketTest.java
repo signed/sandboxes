@@ -90,8 +90,6 @@ public class BucketTest {
         }
 
         public void putIntoBucket(Event event) {
-            assemblyLine.forEach(bucket -> bucket.put(event));
-
             if (!event.timestamp.isBefore(assemblyLine.peek().latest())) {
                 assemblyLine.remove();
                 lastCreatedBucketLatest = lastCreatedBucketLatest.plus(samplingRate);
@@ -99,6 +97,8 @@ public class BucketTest {
                 assemblyLine.add(newBucket);
                 allBuckets.add(newBucket);
             }
+
+            assemblyLine.forEach(bucket -> bucket.put(event));
         }
 
         public List<Bucket> allBuckets() {
