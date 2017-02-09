@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 public class BucketTest {
@@ -82,7 +81,7 @@ public class BucketTest {
 
             while (current.isBefore(stop)) {
                 lastCreatedBucketLatest = current.plus(inspectionRange);
-                allBuckets.add(new Bucket(lastCreatedBucketLatest, inspectionRange));
+                allBuckets.add(Bucket.createBucket(lastCreatedBucketLatest, inspectionRange));
 
                 current = current.plus(samplingRate);
             }
@@ -93,7 +92,7 @@ public class BucketTest {
             if (!event.timestamp.isBefore(assemblyLine.peek().latest())) {
                 assemblyLine.remove();
                 lastCreatedBucketLatest = lastCreatedBucketLatest.plus(samplingRate);
-                Bucket newBucket = new Bucket(lastCreatedBucketLatest, inspectionRange);
+                Bucket newBucket = Bucket.createBucket(lastCreatedBucketLatest, inspectionRange);
                 assemblyLine.add(newBucket);
                 allBuckets.add(newBucket);
             }
@@ -108,18 +107,21 @@ public class BucketTest {
 
     public static class Bucket {
 
-        private final Instant latest;
-        private final Duration inspectionRange;
+        public static Bucket createBucket(Instant latest, Duration inspectionRange) {
+            return new Bucket(latest.minus(inspectionRange), latest);
+        }
 
         private final List<Event> events = new LinkedList<>();
+        private final Instant earliest;
+        private final Instant latest;
 
-        public Bucket(Instant latest, Duration inspectionRange) {
+        private Bucket(Instant earliest, Instant latest) {
             this.latest = latest;
-            this.inspectionRange = inspectionRange;
+            this.earliest = earliest;
         }
 
         public Instant earliest() {
-            return latest.minus(inspectionRange);
+            return earliest;
         }
 
         public Instant latest() {
