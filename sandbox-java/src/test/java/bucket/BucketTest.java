@@ -66,8 +66,8 @@ public class BucketTest {
     }
 
     public static class BucketAssemblyLine {
-        private final List<Bucket> allBuckets = new LinkedList<>();
-        private final ArrayBlockingQueue<Bucket> assemblyLine;
+        private final LinkedList<Bucket> allBuckets = new LinkedList<>();
+        private final LinkedList<Bucket> assemblyLine = new LinkedList<>();
         private final Duration samplingRate;
         private final Duration inspectionRange;
         private Instant lastCreatedBucketLatest;
@@ -85,7 +85,7 @@ public class BucketTest {
 
                 current = current.plus(samplingRate);
             }
-            assemblyLine = new ArrayBlockingQueue<>(allBuckets.size(), false, allBuckets);
+            assemblyLine.addAll(allBuckets);
         }
 
         public void putIntoBucket(Event event) {
@@ -115,7 +115,7 @@ public class BucketTest {
         private final Instant earliest;
         private final Instant latest;
 
-        private Bucket(Instant earliest, Instant latest) {
+        public Bucket(Instant earliest, Instant latest) {
             this.latest = latest;
             this.earliest = earliest;
         }
