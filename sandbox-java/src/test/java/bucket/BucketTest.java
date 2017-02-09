@@ -89,14 +89,17 @@ public class BucketTest {
         }
 
         public void putIntoBucket(Event event) {
-            if (!event.timestamp.isBefore(assemblyLine.peek().latest())) {
-                assemblyLine.remove();
-                lastCreatedBucketLatest = lastCreatedBucketLatest.plus(samplingRate);
-                Bucket newBucket = Bucket.createBucket(lastCreatedBucketLatest, inspectionRange);
-                assemblyLine.add(newBucket);
-                allBuckets.add(newBucket);
-            }
+            //assemblyLine.removeIf(bucket -> bucket.latest().isBefore(event.timestamp));
 
+            Instant nextNewBucketStart = allBuckets.peekLast().earliest().plus(samplingRate);
+            boolean needToAddMoreBuckets = !nextNewBucketStart.isAfter(event.timestamp);
+            if (needToAddMoreBuckets) {
+                for (;!nextNewBucketStart.isAfter(event.timestamp); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
+                    Bucket newBucket = new Bucket(nextNewBucketStart, nextNewBucketStart.plus(inspectionRange));
+                    assemblyLine.add(newBucket);
+                    allBuckets.add(newBucket);
+                }
+            }
             assemblyLine.forEach(bucket -> bucket.put(event));
         }
 
