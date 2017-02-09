@@ -6,6 +6,8 @@ repositories{
 }
 
 dependencies {
-    compile 'ch.qos.logback:logback-classic:1.1.10'
-    compile("org.springframework.boot:spring-boot-starter-web:1.3.8.RELEASE")
+    compileOnly 'ch.qos.logback:logback-classic:1.1.10'
+    compileOnly 'org.springframework.boot:spring-boot-configuration-processor:1.3.8.RELEASE'
+    compileOnly 'org.springframework.boot:spring-boot-starter-web:1.3.8.RELEASE'
+    compile 'org.springframework.boot:spring-boot-autoconfigure:1.3.8.RELEASE'
 }
