@@ -70,22 +70,12 @@ public class BucketTest {
         private final LinkedList<Bucket> assemblyLine = new LinkedList<>();
         private final Duration samplingRate;
         private final Duration inspectionRange;
-        private Instant lastCreatedBucketLatest;
 
         public BucketAssemblyLine(Duration samplingRate, Duration inspectionRange, Instant earliest) {
             this.samplingRate = samplingRate;
             this.inspectionRange = inspectionRange;
 
-            Instant stop = earliest.plus(inspectionRange);
-            Instant current = earliest;
-
-            while (current.isBefore(stop)) {
-                lastCreatedBucketLatest = current.plus(inspectionRange);
-                allBuckets.add(Bucket.createBucket(lastCreatedBucketLatest, inspectionRange));
-
-                current = current.plus(samplingRate);
-            }
-            assemblyLine.addAll(allBuckets);
+            addBucket(new Bucket(earliest, earliest.plus(inspectionRange)));
         }
 
         public void putIntoBucket(Event event) {
@@ -96,8 +86,7 @@ public class BucketTest {
             if (needToAddMoreBuckets) {
                 for (;!nextNewBucketStart.isAfter(event.timestamp); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
                     Bucket newBucket = new Bucket(nextNewBucketStart, nextNewBucketStart.plus(inspectionRange));
-                    assemblyLine.add(newBucket);
-                    allBuckets.add(newBucket);
+                    addBucket(newBucket);
                 }
             }
             assemblyLine.forEach(bucket -> bucket.put(event));
@@ -106,6 +95,12 @@ public class BucketTest {
         public List<Bucket> allBuckets() {
             return allBuckets;
         }
+
+        private void addBucket(Bucket bucket) {
+            allBuckets.add(bucket);
+            assemblyLine.addAll(allBuckets);
+        }
+
     }
 
     public static class Bucket {

@@ -21,8 +21,8 @@ public class BucketAssemblyLineTest {
     private final BucketTest.BucketAssemblyLine bucketAssemblyLine = new BucketTest.BucketAssemblyLine(samplingRate, inspectionRange, earliest);
 
     @Test
-    public void initiallyThereAreThreeBuckets() throws Exception {
-        assertThat(allBuckets(), hasSize(3));
+    public void initiallyThereIsASingleBucket() throws Exception {
+        assertThat(allBuckets(), hasSize(1));
 
         assertThat(firstBucket("[24 27[").earliest(), equalTo(ofEpochSecond(24)));
         assertThat(firstBucket("[24 27[").latest(), equalTo(ofEpochSecond(27)));
@@ -49,8 +49,6 @@ public class BucketAssemblyLineTest {
         BucketTest.Event event = putEventIntoBuckets(24);
 
         assertThat(firstBucket("[24 27[").items().get(0), equalTo(event));
-        assertThat(secondBucket("[25 28[").items(), empty());
-        assertThat(thirdBucket("[26 29[").items(), empty());
     }
 
     @Test
