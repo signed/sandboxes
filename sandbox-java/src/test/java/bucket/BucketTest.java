@@ -5,12 +5,10 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 public class BucketTest {
@@ -30,20 +28,6 @@ public class BucketTest {
         BucketAssemblyLine bucketAssemblyLine = new BucketAssemblyLine(samplingRate, inspectionRange, earlier);
 
 
-    }
-
-    @Test
-    public void tinker() throws Exception {
-        ArrayBlockingQueue<String> strings = new ArrayBlockingQueue<String>(2, false, new ArrayList<>());
-
-        strings.add("one");
-        strings.add("two");
-        if (0 == strings.remainingCapacity()) {
-            strings.remove();
-        }
-        strings.add("three");
-
-        System.out.println(strings);
     }
 
     private Comparator<Event> byTimeStamp() {
@@ -72,9 +56,8 @@ public class BucketTest {
             assemblyLine.removeIf(bucket -> !event.timestamp.isBefore(bucket.latest));
 
             Instant nextNewBucketStart = allBuckets.peekLast().earliest().plus(samplingRate);
-            boolean needToAddMoreBuckets = !nextNewBucketStart.isAfter(event.timestamp);
-            if (needToAddMoreBuckets) {
-                for (; !nextNewBucketStart.isAfter(event.timestamp); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
+            if (needToAddMoreBucketsFor(event, nextNewBucketStart)) {
+                for (; needToAddMoreBucketsFor(event, nextNewBucketStart); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
                     Bucket newBucket = new Bucket(nextNewBucketStart, nextNewBucketStart.plus(inspectionRange));
                     addBucket(newBucket);
                 }
@@ -84,6 +67,10 @@ public class BucketTest {
             if (!addedToAtLeastOneBucket) {
                 throw new IllegalStateException("There was no bucket to take the event");
             }
+        }
+
+        private boolean needToAddMoreBucketsFor(Event event, Instant nextNewBucketStart) {
+            return !nextNewBucketStart.isAfter(event.timestamp);
         }
 
         public List<Bucket> allBuckets() {
