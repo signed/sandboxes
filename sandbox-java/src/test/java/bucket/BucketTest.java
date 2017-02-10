@@ -55,16 +55,6 @@ public class BucketTest {
         };
     }
 
-    public static class Interval {
-        public final Instant start;
-        public final Instant end;
-
-        public Interval(Instant start, Instant end) {
-            this.start = start;
-            this.end = end;
-        }
-    }
-
     public static class BucketAssemblyLine {
         private final LinkedList<Bucket> allBuckets = new LinkedList<>();
         private final LinkedList<Bucket> assemblyLine = new LinkedList<>();
