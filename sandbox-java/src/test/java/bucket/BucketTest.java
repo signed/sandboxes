@@ -84,12 +84,16 @@ public class BucketTest {
             Instant nextNewBucketStart = allBuckets.peekLast().earliest().plus(samplingRate);
             boolean needToAddMoreBuckets = !nextNewBucketStart.isAfter(event.timestamp);
             if (needToAddMoreBuckets) {
-                for (;!nextNewBucketStart.isAfter(event.timestamp); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
+                for (; !nextNewBucketStart.isAfter(event.timestamp); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
                     Bucket newBucket = new Bucket(nextNewBucketStart, nextNewBucketStart.plus(inspectionRange));
                     addBucket(newBucket);
                 }
             }
-            assemblyLine.forEach(bucket -> bucket.put(event));
+            Boolean addedToAtLeastOneBucket = assemblyLine.stream().reduce(Boolean.FALSE, (aBoolean, aBucket) -> aBucket.put(event), (a, b) -> a || b);
+
+            if (!addedToAtLeastOneBucket) {
+                throw new IllegalStateException("");
+            }
         }
 
         public List<Bucket> allBuckets() {
