@@ -79,7 +79,7 @@ public class BucketTest {
         }
 
         public void putIntoBucket(Event event) {
-            //assemblyLine.removeIf(bucket -> bucket.latest().isBefore(event.timestamp));
+            assemblyLine.removeIf(bucket -> !event.timestamp.isBefore(bucket.latest));
 
             Instant nextNewBucketStart = allBuckets.peekLast().earliest().plus(samplingRate);
             boolean needToAddMoreBuckets = !nextNewBucketStart.isAfter(event.timestamp);
@@ -98,7 +98,7 @@ public class BucketTest {
 
         private void addBucket(Bucket bucket) {
             allBuckets.add(bucket);
-            assemblyLine.addAll(allBuckets);
+            assemblyLine.add(bucket);
         }
 
     }
