@@ -82,7 +82,7 @@ public class BucketTest {
             Boolean addedToAtLeastOneBucket = assemblyLine.stream().reduce(Boolean.FALSE, (aBoolean, aBucket) -> aBucket.put(event), (a, b) -> a || b);
 
             if (!addedToAtLeastOneBucket) {
-                throw new IllegalStateException("");
+                throw new IllegalStateException("There was no bucket to take the event");
             }
         }
 
