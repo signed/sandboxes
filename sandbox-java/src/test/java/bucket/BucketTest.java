@@ -104,11 +104,6 @@ public class BucketTest {
     }
 
     public static class Bucket {
-
-        public static Bucket createBucket(Instant latest, Duration inspectionRange) {
-            return new Bucket(latest.minus(inspectionRange), latest);
-        }
-
         private final List<Event> events = new LinkedList<>();
         private final Instant earliest;
         private final Instant latest;
