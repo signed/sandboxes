@@ -56,8 +56,8 @@ public class BucketTest {
             assemblyLine.removeIf(bucket -> !event.timestamp.isBefore(bucket.latest));
 
             Instant nextNewBucketStart = allBuckets.peekLast().earliest().plus(samplingRate);
-            if (needToAddMoreBucketsFor(event, nextNewBucketStart)) {
-                for (; needToAddMoreBucketsFor(event, nextNewBucketStart); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
+            if (wouldAlreadyBeAddedToTheNextBucket(event, nextNewBucketStart)) {
+                for (; wouldAlreadyBeAddedToTheNextBucket(event, nextNewBucketStart); nextNewBucketStart = nextNewBucketStart.plus(samplingRate)) {
                     Bucket newBucket = new Bucket(nextNewBucketStart, nextNewBucketStart.plus(inspectionRange));
                     addBucket(newBucket);
                 }
@@ -69,7 +69,7 @@ public class BucketTest {
             }
         }
 
-        private boolean needToAddMoreBucketsFor(Event event, Instant nextNewBucketStart) {
+        private boolean wouldAlreadyBeAddedToTheNextBucket(Event event, Instant nextNewBucketStart) {
             return !nextNewBucketStart.isAfter(event.timestamp);
         }
 
