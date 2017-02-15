@@ -53,10 +53,14 @@
         return "translate(" + x + "," + y + ")"
     }
 
+    function svgGroup() {
+        return "g";
+    }
+
     const svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+        .append(svgGroup())
         .attr("transform", translate(margin.left, margin.top));
 
     data.then((data) => {
@@ -73,12 +77,12 @@
             .attr("width", (d) => Math.abs(x(d.value) - x(0)))
             .attr("height", y.bandwidth());
 
-        svg.append("g")
+        svg.append(svgGroup())
             .attr("class", "x axis")
             .attr("transform", translate(0, height))
             .call(xAxis);
 
-        svg.append("g")
+        svg.append(svgGroup())
             .attr("class", "y axis")
             .attr("transform", translate(x(0), 0))
             .call(yAxis);
