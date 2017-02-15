@@ -26,21 +26,31 @@
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+    "use strict";
+    let data = new Promise((resolve, reject) => {
+        d3.tsv("data.tsv", type, function (error, data) {
+            if (error) {
+                reject(error);
+            }
+            resolve(data);
+        });
+    }).catch((error) => alert(error));
 
-    var margin = {top: 20, right: 30, bottom: 40, left: 30},
+
+    const margin = {top: 20, right: 30, bottom: 40, left: 30},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    var x = d3.scaleLinear()
+    const x = d3.scaleLinear()
         .range([0, width]);
 
-    var y = d3.scaleBand()
+    const y = d3.scaleBand()
         .rangeRound([0, height])
         .padding(0.1);
 
-    var xAxis = d3.axisBottom(x);
+    const xAxis = d3.axisBottom(x);
 
-    var yAxis = d3.axisLeft(y)
+    const yAxis = d3.axisLeft(y)
         .tickSize(0)
         .tickPadding(6);
 
@@ -48,36 +58,37 @@
         return "translate(" + x + "," + y + ")"
     }
 
-    var svg = d3.select("body").append("svg")
+    const svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", translate(margin.left, margin.top));
 
-    d3.tsv("data.tsv", type, function (error, data) {
-        x.domain(d3.extent(data, (d) => d.value))
-            .nice();
-        y.domain(data.map((d) => d.name));
 
-        svg.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", (d) => "bar bar--" + (d.value < 0 ? "negative" : "positive"))
-            .attr("x", (d) => x(Math.min(0, d.value)))
-            .attr("y", (d) => y(d.name))
-            .attr("width", (d) => Math.abs(x(d.value) - x(0)))
-            .attr("height", y.bandwidth());
+    data.then((data) => {
+            x.domain(d3.extent(data, (d) => d.value))
+                .nice();
+            y.domain(data.map((d) => d.name));
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", translate(0, height))
-            .call(xAxis);
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", (d) => "bar bar--" + (d.value < 0 ? "negative" : "positive"))
+                .attr("x", (d) => x(Math.min(0, d.value)))
+                .attr("y", (d) => y(d.name))
+                .attr("width", (d) => Math.abs(x(d.value) - x(0)))
+                .attr("height", y.bandwidth());
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .attr("transform", translate(x(0), 0))
-            .call(yAxis);
-    });
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", translate(0, height))
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", translate(x(0), 0))
+                .call(yAxis);
+        });
 
     function type(d) {
         d.value = +d.value;
