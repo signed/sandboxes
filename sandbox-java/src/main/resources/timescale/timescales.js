@@ -10,10 +10,10 @@ const svg = d3.select('body')
 
 // #1: tideline's current implementation
 const tidelineScale = d3.scaleUtc()
-    .domain([new Date('2014-03-08T12:00:00.000Z'), new Date('2014-03-10T00:00:00.000Z')])
+    .domain([new Date('2017-02-16T00:00:00.000Z'), new Date('2017-02-17T00:00:00.000Z')])
     .range([0, width]);
 
-const axis = d3.axisLeft(tidelineScale);
+const axis = d3.axisLeft(tidelineScale).ticks(d3.utcMinute.every(30));
 svg.append('g')
     .attr('class', 'x axis')
     .attr('transform', 'translate(0,' + 0 + ')')
