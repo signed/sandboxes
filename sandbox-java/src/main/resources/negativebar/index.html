@@ -27,6 +27,11 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
     "use strict";
+
+    function translate(x, y) {
+        return "translate(" + x + "," + y + ")"
+    }
+
     let data = new Promise((resolve, reject) => {
         d3.tsv("data.tsv", type, function (error, data) {
             if (error) {
@@ -36,28 +41,17 @@
         });
     }).catch((error) => alert(error));
 
-    const margin = {top: 20, right: 30, bottom: 40, left: 30},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-    const x = d3.scaleLinear()
-        .range([0, width]);
-    const y = d3.scaleBand()
-        .rangeRound([0, height])
-        .padding(0.1);
-    const xAxis = d3.axisBottom(x);
-    const yAxis = d3.axisLeft(y)
-        .tickSize(0)
-        .tickPadding(6);
-
-    function translate(x, y) {
-        return "translate(" + x + "," + y + ")"
-    }
-
     const svgTag = {
         "group": "g",
         "rectangle": "rect"
     };
-
+    const margin = {top: 20, right: 30, bottom: 40, left: 30};
+    const width = 960 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+    const x = d3.scaleLinear().range([0, width]);
+    const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
+    const xAxis = d3.axisBottom(x);
+    const yAxis = d3.axisLeft(y).tickSize(0).tickPadding(6);
     const svgWidth = width + margin.left + margin.right;
     const svgHeight = height + margin.top + margin.bottom;
     const svg = d3.select("body").append("svg")
