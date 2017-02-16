@@ -1,46 +1,4 @@
 (function() {
-    var explainer = function(scaleGroup, title, code, dateAssumptions, dateProduction, alert) {
-        var titleNum = '<tspan>' + '#' + (i + 1) + '</tspan> ';
-        var divisor = 5;
-        if (alert) {
-            divisor = 6;
-            scaleGroup.append('text')
-                .attrs({
-                    'x': 60,
-                    'y': (eachScale * 5/divisor),
-                    'class': 'alert-text'
-                })
-                .text(alert);
-        }
-        scaleGroup.append('text')
-            .attrs({
-                'x': 0,
-                'y': eachScale/divisor,
-                'class': 'title-text'
-            })
-            .html(titleNum + title);
-        scaleGroup.append('text')
-            .attrs({
-                'x': 30,
-                'y': (eachScale * 2/divisor),
-                'class': 'code-text'
-            })
-            .text(code);
-        scaleGroup.append('text')
-            .attrs({
-                'x': 30,
-                'y': (eachScale * 3/divisor),
-                'class': 'date-text'
-            })
-            .text(dateAssumptions);
-        scaleGroup.append('text')
-            .attrs({
-                'x': 30,
-                'y': (eachScale * 4/divisor),
-                'class': 'date-text'
-            })
-            .text(dateProduction);
-    };
     var drawScale = function(scale, dst) {
         var axis = d3.axisTop(scale);
         var scaleGroup = svg.append('g')
@@ -104,12 +62,11 @@
     var tidelineScale = d3.scaleUtc()
         .domain([new Date('2014-03-08T12:00:00.000Z'), new Date('2014-03-10T00:00:00.000Z')])
         .range([0, width]);
-    explainer(drawScale(tidelineScale,
+
+    drawScale(tidelineScale,
         [ new Date('2014-03-09T00:00:00.000Z'), new Date('2014-03-10T00:00:00.000Z'),
             new Date('2014-03-09T03:00:00.000Z'), new Date('2014-03-09T02:30:00.000Z'),
             new Date('2014-03-09T01:30:00.000Z')
-        ]), 'Current Tideline Implementation',
-        'd3.time.scale.utc()',
-        'assumes application of Watson',
-        'uses JavaScript Date constructor');
+        ]);
+
 }());
