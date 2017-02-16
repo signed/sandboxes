@@ -58,11 +58,14 @@
         "rectangle": "rect"
     };
 
+    const svgWidth = width + margin.left + margin.right;
+    const svgHeight = height + margin.top + margin.bottom;
     const svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
         .append(svgTag.group)
         .attr("transform", translate(margin.left, margin.top));
+
     data.then((data) => {
         x.domain(d3.extent(data, (d) => d.value))
             .nice();
