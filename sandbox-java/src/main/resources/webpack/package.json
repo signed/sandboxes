@@ -1,0 +1,23 @@
+{
+  "name": "webpack-d3-sample",
+  "version": "1.0.0",
+  "description": "d3 sample based on node",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --config webpack.config.js",
+    "dist": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "blank"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "2.2.1"
+  },
+  "dependencies": {
+    "lodash": "4.17.4",
+    "moment": "2.17.1"
+  }
+}
