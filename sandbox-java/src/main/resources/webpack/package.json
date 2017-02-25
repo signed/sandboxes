@@ -4,8 +4,7 @@
   "description": "d3 sample based on node",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js",
-    "dist": "webpack --config webpack.config.js"
+    "dist": "webpack"
   },
   "repository": {
     "type": "git",
@@ -14,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "html-webpack-plugin": "2.28.0",
     "webpack": "2.2.1"
   },
   "dependencies": {
