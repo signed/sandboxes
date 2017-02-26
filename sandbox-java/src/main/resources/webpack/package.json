@@ -3,21 +3,27 @@
   "version": "1.0.0",
   "description": "d3 sample based on node",
   "main": "index.js",
-  "scripts": {
-    "dist": "webpack"
-  },
   "repository": {
     "type": "git",
     "url": "blank"
   },
-  "author": "",
+  "author": "me",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "0.26.2",
+    "file-loader": "0.10.1",
     "html-webpack-plugin": "2.28.0",
+    "rimraf": "2.6.1",
+    "style-loader": "0.13.2",
     "webpack": "2.2.1"
   },
   "dependencies": {
+    "d3": "4.6.0",
     "lodash": "4.17.4",
     "moment": "2.17.1"
+  },
+  "scripts": {
+    "dist": "webpack",
+    "clean": "rimraf dist"
   }
 }

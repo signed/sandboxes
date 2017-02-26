@@ -1,0 +1,25 @@
+svg {
+    display: block;
+    margin: 0 auto;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #575757;
+    shape-rendering: crispEdges;
+}
+
+.tick text {
+    fill: #575757;
+    font-size: 10px;
+}
+
+text, tspan {
+    font-family: sans-serif;
+    font-size: 14px;
+    dominant-baseline: central;
+}
+
+tspan {
+    font-weight: bold;
+}
