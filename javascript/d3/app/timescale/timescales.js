@@ -1,18 +1,28 @@
 'use strict';
 import * as d3 from 'd3';
+import moment from 'moment';
 import css from 'style-loader!css-loader!./timescales.css';
 
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
 }
 
-function getRandomArbitrary(min, max) {
+function getRandomArbitrary(min, max, data) {
     return Math.random() * (max - min) + min;
 }
 
-function printDataForDate(parent, offset) {
+function generateDateFor(start, end) {
+    const data = [];
+    let cu = start;
+    while (cu < end) {
+        const value = getRandomArbitrary(-10, 10);
+        data.push({'date': cu, 'deviation': value});
+        cu = addMinutes(cu, 5);
+    }
+    return data;
+}
 
-    const xScale = d3.scaleLinear()
+function printDataForDate(parent, offset, data) {const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
 
@@ -33,14 +43,6 @@ function printDataForDate(parent, offset) {
         .attr('class', 'y axis')
         .attr('transform', 'translate(' + (xScale(0) + offset) + ',' + 0 + ')')
         .call(yAxisCenter);
-
-    const data = [];
-    let cu = startOfDay;
-    while (cu < startOfNextDay) {
-        const value = getRandomArbitrary(-10, 10);
-        data.push({'date': cu, 'deviation': value});
-        cu = addMinutes(cu, 5);
-    }
 
     const bandwidth = yScale(data[1].date) - yScale(data[0].date);
 
@@ -81,5 +83,14 @@ svg.append('g')
 const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
-    printDataForDate(svg, it, it)
+    const data = generateDateFor(startOfDay, startOfNextDay);
+    printDataForDate(svg, it, data, it)
 });
+
+
+const dateFormat = 'YYYY-MM-DD HH:mm:ss,SSSZ';
+let start = moment.utc('2017-02-16 00:00:00.000Z', dateFormat);
+start = moment.utc('2017-02-16', 'YYYY-MM-DD');
+console.log(start.format(dateFormat));
+console.log(start.add(1, 'day').format(dateFormat));
+console.log(start.toDate());
