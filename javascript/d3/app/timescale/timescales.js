@@ -1,4 +1,5 @@
 'use strict';
+
 import * as d3 from 'd3';
 import moment from 'moment';
 import css from 'style-loader!css-loader!./timescales.css';
@@ -22,7 +23,7 @@ function generateDataFor(start) {
 
 function timeScaleFor(day, height) {
     return d3.scaleUtc()
-        .domain([startDay.toDate(), startDay.clone().add(1, 'day').toDate()])
+        .domain([day.toDate(), day.clone().add(1, 'day').toDate()])
         .range([0, height]);
 }
 
