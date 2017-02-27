@@ -27,7 +27,7 @@ function timeScaleFor(day, height) {
         .range([0, height]);
 }
 
-function printDataForDate(parent, offset, data) {
+function printDataForDate(parent, offset, data, yScale) {
     const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
@@ -74,9 +74,9 @@ const svg = d3.select('body')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
 const startDay = moment.utc('2017-02-16', 'YYYY-MM-DD');
-const yScale = timeScaleFor(startDay, height);
+const yScaleForHoursOfTheDay = timeScaleFor(startDay, height);
 
-const yAxis = d3.axisLeft(yScale).ticks(d3.utcMinute.every(30));
+const yAxis = d3.axisLeft(yScaleForHoursOfTheDay).ticks(d3.utcMinute.every(30));
 
 svg.append('g')
     .attr('class', 'x axis')
@@ -87,5 +87,6 @@ const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
     const data = generateDataFor(startDay);
-    printDataForDate(svg, it, data, it)
+    const yScale = timeScaleFor(startDay, height);
+    printDataForDate(svg, it, data, yScale)
 });
