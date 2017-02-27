@@ -79,7 +79,7 @@ const svg = d3.select('body')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-const startDay = moment.utc('2017-02-16', 'YYYY-MM-DD');
+const startDay = moment.utc('2017-02-20', 'YYYY-MM-DD');
 const yScaleForHoursOfTheDay = timeScaleFor(startDay, height);
 
 const yAxis = d3.axisLeft(yScaleForHoursOfTheDay).ticks(d3.utcMinute.every(30));
