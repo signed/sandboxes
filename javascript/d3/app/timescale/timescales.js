@@ -9,7 +9,7 @@ function getRandomArbitrary(min, max) {
 }
 
 function generateDataFor(start) {
-    const end = start.clone().add(1, 'day')
+    const end = start.clone().add(1, 'day');
     const data = [];
     let cu = start.clone();
     const delta = 5;
@@ -27,7 +27,7 @@ function timeScaleFor(day, height) {
         .range([0, height]);
 }
 
-function printDataForDate(parent, offset, data, yScale) {
+function printDataForDate(parent, offset, height,  data, yScale) {
     const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
@@ -88,5 +88,5 @@ const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
     const data = generateDataFor(startDay);
     const yScale = timeScaleFor(startDay, height);
-    printDataForDate(svg, it, data, yScale)
+    printDataForDate(svg, it, height, data, yScale)
 });
