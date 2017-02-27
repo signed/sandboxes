@@ -85,6 +85,6 @@ svg.append('g')
 const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
-    const data = generateDataFor(startDay, startDay.clone().add(1, 'day'));
+    const data = generateDataFor(startDay);
     printDataForDate(svg, it, data, it)
 });
