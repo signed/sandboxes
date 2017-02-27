@@ -12,11 +12,17 @@ function generateDataFor(start, end) {
     let cu = start.clone();
     const delta = 5;
     while (cu.isBefore(end)) {
-        const value = getRandomArbitrary(- delta, delta);
+        const value = getRandomArbitrary(-delta, delta);
         data.push({'date': cu.toDate(), 'deviation': value});
         cu.add(5, 'minutes');
     }
     return data;
+}
+
+function timeScaleFor(day, height) {
+    return d3.scaleUtc()
+        .domain([startDay.toDate(), startDay.clone().add(1, 'day').toDate()])
+        .range([0, height]);
 }
 
 function printDataForDate(parent, offset, data) {
@@ -65,11 +71,8 @@ const svg = d3.select('body')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-const startOfDay = moment.utc('2017-02-16', 'YYYY-MM-DD');
-const startOfNextDay = startOfDay.clone().add(1, 'day');
-const yScale = d3.scaleUtc()
-    .domain([startOfDay.toDate(), startOfNextDay.toDate()])
-    .range([0, height]);
+const startDay = moment.utc('2017-02-16', 'YYYY-MM-DD');
+const yScale = timeScaleFor(startDay, height);
 
 const yAxis = d3.axisLeft(yScale).ticks(d3.utcMinute.every(30));
 
@@ -81,14 +84,6 @@ svg.append('g')
 const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
-    const data = generateDataFor(startOfDay, startOfNextDay);
+    const data = generateDataFor(startDay, startDay.clone().add(1, 'day'));
     printDataForDate(svg, it, data, it)
 });
-
-
-const dateFormat = 'YYYY-MM-DD HH:mm:ss,SSSZ';
-let start = moment.utc('2017-02-16 00:00:00.000Z', dateFormat);
-start = moment.utc('2017-02-16', 'YYYY-MM-DD');
-console.log(start.format(dateFormat));
-console.log(start.add(1, 'day').format(dateFormat));
-console.log(start.toDate());
