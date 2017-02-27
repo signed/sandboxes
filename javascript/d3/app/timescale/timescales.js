@@ -3,26 +3,24 @@ import * as d3 from 'd3';
 import moment from 'moment';
 import css from 'style-loader!css-loader!./timescales.css';
 
-function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes * 60000);
-}
-
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
 function generateDataFor(start, end) {
     const data = [];
-    let cu = start.toDate();
-    while (cu < end.toDate()) {
-        const value = getRandomArbitrary(-10, 10);
-        data.push({'date': cu, 'deviation': value});
-        cu = addMinutes(cu, 5);
+    let cu = start.clone();
+    const delta = 5;
+    while (cu.isBefore(end)) {
+        const value = getRandomArbitrary(- delta, delta);
+        data.push({'date': cu.toDate(), 'deviation': value});
+        cu.add(5, 'minutes');
     }
     return data;
 }
 
-function printDataForDate(parent, offset, data) {const xScale = d3.scaleLinear()
+function printDataForDate(parent, offset, data) {
+    const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
 
