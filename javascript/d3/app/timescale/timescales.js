@@ -7,7 +7,8 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function generateDataFor(start, end) {
+function generateDataFor(start) {
+    const end = start.clone().add(1, 'day')
     const data = [];
     let cu = start.clone();
     const delta = 5;
