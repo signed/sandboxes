@@ -11,10 +11,10 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function generateDateFor(start, end) {
+function generateDataFor(start, end) {
     const data = [];
-    let cu = start;
-    while (cu < end) {
+    let cu = start.toDate();
+    while (cu < end.toDate()) {
         const value = getRandomArbitrary(-10, 10);
         data.push({'date': cu, 'deviation': value});
         cu = addMinutes(cu, 5);
@@ -67,10 +67,10 @@ const svg = d3.select('body')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-const startOfDay = new Date('2017-02-16T00:00:00.000Z');
-const startOfNextDay = new Date('2017-02-17T00:00:00.000Z');
+const startOfDay = moment.utc('2017-02-16', 'YYYY-MM-DD');
+const startOfNextDay = startOfDay.clone().add(1, 'day');
 const yScale = d3.scaleUtc()
-    .domain([startOfDay, startOfNextDay])
+    .domain([startOfDay.toDate(), startOfNextDay.toDate()])
     .range([0, height]);
 
 const yAxis = d3.axisLeft(yScale).ticks(d3.utcMinute.every(30));
@@ -83,7 +83,7 @@ svg.append('g')
 const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
 dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
-    const data = generateDateFor(startOfDay, startOfNextDay);
+    const data = generateDataFor(startOfDay, startOfNextDay);
     printDataForDate(svg, it, data, it)
 });
 
