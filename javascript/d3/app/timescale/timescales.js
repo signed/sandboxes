@@ -27,10 +27,16 @@ function timeScaleFor(day, height) {
         .range([0, height]);
 }
 
-function printDataForDate(parent, offset, height, data, yScale) {
+function printDataForDate(parent, offset, height, data, yScale, day) {
     const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
+    const centerOfTheDayGraph = (xScale(0) + offset);
+
+    parent.append('text')
+        .text(day.format('dddd'))
+        .style("text-anchor", "middle")
+        .attr('transform', 'translate(' + centerOfTheDayGraph + ', ' + -25 + ')')
 
     const xAxisTop = d3.axisTop(xScale).ticks(4);
     parent.append('g')
@@ -47,7 +53,7 @@ function printDataForDate(parent, offset, height, data, yScale) {
     const yAxisCenter = d3.axisLeft(yScale).ticks(0);
     parent.append('g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate(' + (xScale(0) + offset) + ',' + 0 + ')')
+        .attr('transform', 'translate(' + centerOfTheDayGraph + ',' + 0 + ')')
         .call(yAxisCenter);
 
     const bandwidth = yScale(data[1].date) - yScale(data[0].date);
@@ -63,7 +69,7 @@ function printDataForDate(parent, offset, height, data, yScale) {
         .attr("height", bandwidth);
 }
 
-const margin = {top: 25, right: 30, bottom: 30, left: 40};
+const margin = {top: 50, right: 30, bottom: 30, left: 40};
 const width = 1200 - margin.left - margin.right;
 const height = 800 - margin.top - margin.bottom;
 const svg = d3.select('body')
@@ -93,5 +99,5 @@ dayGraphOffsets.map((it) => {
 }).forEach((it) => {
     const data = generateDataFor(it.day);
     const yScale = timeScaleFor(it.day, height);
-    printDataForDate(svg, it.offset, height, data, yScale)
+    printDataForDate(svg, it.offset, height, data, yScale, it.day)
 });
