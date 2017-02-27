@@ -27,7 +27,7 @@ function timeScaleFor(day, height) {
         .range([0, height]);
 }
 
-function printDataForDate(parent, offset, height,  data, yScale) {
+function printDataForDate(parent, offset, height, data, yScale) {
     const xScale = d3.scaleLinear()
         .domain([-10, 10])
         .range([0, 100]);
@@ -85,8 +85,13 @@ svg.append('g')
 
 const dayGraphOffsets = [0, 1, 2, 3, 4, 5, 6];
 
-dayGraphOffsets.map((it) => it * 120).map((it) => 20 + it).forEach((it) => {
-    const data = generateDataFor(startDay);
-    const yScale = timeScaleFor(startDay, height);
-    printDataForDate(svg, it, height, data, yScale)
+dayGraphOffsets.map((it) => {
+    return {
+        offset: (it * 120) + 20,
+        day: startDay.clone().add(it, 'day')
+    }
+}).forEach((it) => {
+    const data = generateDataFor(it.day);
+    const yScale = timeScaleFor(it.day, height);
+    printDataForDate(svg, it.offset, height, data, yScale)
 });
