@@ -7,7 +7,7 @@ function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
 }
 
-function getRandomArbitrary(min, max, data) {
+function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
