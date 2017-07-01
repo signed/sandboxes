@@ -36,8 +36,7 @@ public class SampleTest {
         DemoRequestLog.requestContext("information", "{ \"dafsdf\": null}");
 
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-        restTemplate.getInterceptors().add(new DemoRequestLog.LoggingRequestInterceptor());
-        return restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class);
+        return DemoRequestLog.logExchangeWith(restTemplate, () -> restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class));
     }
 
     public static class TransferObject {

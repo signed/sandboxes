@@ -14,20 +14,33 @@ import org.junit.runner.Description;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DemoRequestLog extends TestWatcher {
 
     private static final Logger logger = Logger.getLogger("demo-output");
+
+    public static <T> ResponseEntity<T> logExchangeWith(RestTemplate restTemplate, Supplier<ResponseEntity<T>> call) {
+        LoggingRequestInterceptor trace = new LoggingRequestInterceptor();
+        restTemplate.getInterceptors().add(trace);
+        try {
+            return call.get();
+        } finally {
+            restTemplate.getInterceptors().remove(trace);
+        }
+    }
 
     public static class RequestContext {
         public String name;
@@ -87,11 +100,11 @@ public class DemoRequestLog extends TestWatcher {
     @Override
     protected void finished(Description description) {
         logger.info("Scenario: " + CaseFormat.LOWER_CAMEL.to(CaseFormat.SENTENCE, description.getMethodName()));
-        logger.info("");
         requests.forEach(this::logRequest);
     }
 
     private void logRequest(Request request) {
+        logger.info("");
         logger.info(request.method + " " + request.uri + " --> " + request.statusCode + " " + request.statusCode.getReasonPhrase());
         logger.info("");
         logger.info(jsonTable(request));
