@@ -1,26 +1,24 @@
 package com.github.signed.sanbox.junit;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.CharStreams;
 import org.apache.log4j.Logger;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.InterceptingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 public class SampleTest {
@@ -44,19 +42,33 @@ public class SampleTest {
         transferObject.two = new Deep();
         transferObject.two.acme = "RoadRunner";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(transferObject);
-        logger.info(json);
-
-        String url = "http://localhost:8000/test";
-
 
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-        ResponseEntity<TransferObject> response = restTemplate.exchange(url, POST, new HttpEntity<>(transferObject), TransferObject.class);
-        //ResponseEntity<TransferObject> response = restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(json), TransferObject.class);
-
+        restTemplate.getInterceptors().add(new LoggingRequestInterceptor());
+        ResponseEntity<TransferObject> response = restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class);
 
         assertThat(response.getBody().three, equalTo("three"));
+    }
+
+    public static class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
+
+        private static final Logger logger = Logger.getLogger(DEMO_OUTPUT);
+
+        @Override
+        public ClientHttpResponse intercept(final HttpRequest request, final byte[] body, final ClientHttpRequestExecution execution) throws IOException {
+            ClientHttpResponse response = execution.execute(request, body);
+
+            return log(request, body, response);
+        }
+
+        private ClientHttpResponse log(final HttpRequest request, final byte[] body, final ClientHttpResponse response) throws IOException {
+            logger.debug("Method: " + request.getMethod().toString());
+            logger.debug("URI: " + request.getURI().toString());
+            logger.debug("Request Body: " + new String(body));
+            logger.debug("Response body: " + CharStreams.toString(new InputStreamReader(response.getBody(), "UTF-8")));
+            return response;
+        }
+
     }
 
     public static class TransferObject {
