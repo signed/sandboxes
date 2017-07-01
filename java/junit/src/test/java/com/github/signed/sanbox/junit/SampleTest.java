@@ -32,11 +32,12 @@ public class SampleTest {
     }
 
     private ResponseEntity<TransferObject> issueDomainSpecificRequest(TransferObject transferObject) {
-        DemoRequestLog.newRequest("issue domain specific request");
-        DemoRequestLog.requestContext("information", "{ \"dafsdf\": null}");
-
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-        return DemoRequestLog.logExchangeWith(restTemplate, () -> restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class));
+        return DemoRequestLog.logExchangeWith(restTemplate, () -> {
+            DemoRequestLog.newRequest("issue domain specific request");
+            DemoRequestLog.requestContext("information", "{ \"dafsdf\": null}");
+            return restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class);
+        });
     }
 
     public static class TransferObject {
