@@ -92,7 +92,7 @@ public class DemoRequestLog extends TestWatcher {
     }
 
     private void logRequest(Request request) {
-        logger.info(request.method + " " + request.uri + "\t\t" + request.statusCode + " " + request.statusCode.getReasonPhrase());
+        logger.info(request.method + " " + request.uri + " --> " + request.statusCode + " " + request.statusCode.getReasonPhrase());
         logger.info("");
         logger.info(jsonTable(request));
     }
