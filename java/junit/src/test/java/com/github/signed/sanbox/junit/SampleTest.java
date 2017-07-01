@@ -1,6 +1,12 @@
 package com.github.signed.sanbox.junit;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Splitter;
 import com.google.common.io.CharStreams;
+import io.bretty.console.table.Alignment;
+import io.bretty.console.table.ColumnFormatter;
+import io.bretty.console.table.Table;
 import org.apache.log4j.Logger;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,6 +19,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import sun.tools.jstat.ColumnFormat;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,11 +37,6 @@ public class SampleTest {
 
     @Test
     public void itAllStartsWithHelloWorld() throws Exception {
-        Logger logger = Logger.getLogger(DEMO_OUTPUT);
-
-        String message = CaseFormat.SENTENCE.to(CaseFormat.LOWER_CAMEL, "here we go into the other direction");
-        logger.warn(message);
-
         new TinyHttpServer().startServer();
 
         TransferObject transferObject = new TransferObject();
@@ -62,11 +64,31 @@ public class SampleTest {
         }
 
         private ClientHttpResponse log(final HttpRequest request, final byte[] body, final ClientHttpResponse response) throws IOException {
-            logger.debug("Method: " + request.getMethod().toString());
-            logger.debug("URI: " + request.getURI().toString());
-            logger.debug("Request Body: " + new String(body));
-            logger.debug("Response body: " + CharStreams.toString(new InputStreamReader(response.getBody(), "UTF-8")));
+            ColumnFormatter<String> requestColumn = ColumnFormatter.text(Alignment.LEFT, 60);
+            ColumnFormatter<String> responseColumn = ColumnFormatter.text(Alignment.LEFT, 60);
+            String requestJson = prettyJson(new String(body, "UTF-8"));
+            String responseJson = prettyJson(CharStreams.toString(new InputStreamReader(response.getBody(), "UTF-8")));
+
+
+            String[] requestJsons = requestJson.split("\n");
+            String[] responseJsons = responseJson.split("\n");
+            Table.Builder builder = new Table.Builder("request", requestJsons, requestColumn);
+            builder.addColumn("response", responseJsons, responseColumn);
+            logger.info(request.getMethod().toString() + " " + request.getURI().toString());
+            logger.info(builder.build());
+
             return response;
+        }
+
+
+        private String prettyJson(String ugly) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Object json = objectMapper.readValue(ugly, Object.class);
+                return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

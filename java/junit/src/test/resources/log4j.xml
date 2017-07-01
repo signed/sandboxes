@@ -19,7 +19,7 @@
         <appender-ref ref="STDOUT" />
     </category>
     <root>
-        <priority value ="debug" />
+        <priority value ="off" />
         <appender-ref ref="REMAINING" />
     </root>
 </log4j:configuration>

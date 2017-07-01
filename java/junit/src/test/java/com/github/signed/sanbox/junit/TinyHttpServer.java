@@ -5,6 +5,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,6 +15,8 @@ import java.util.Collections;
 import static java.util.stream.Collectors.joining;
 
 public class TinyHttpServer {
+
+    private static Logger logger = Logger.getLogger(TinyHttpServer.class);
 
     public static void main(String[] args) throws IOException {
         new TinyHttpServer().startServer();
@@ -34,12 +37,12 @@ public class TinyHttpServer {
 
         private void soutRequest(HttpExchange exchange) throws IOException {
             Headers requestHeaders = exchange.getRequestHeaders();
-            requestHeaders.forEach((key, value) -> System.out.println(key + ": " + value.stream().collect(joining(","))));
+            requestHeaders.forEach((key, value) -> logger.info(key + ": " + value.stream().collect(joining(","))));
 
             byte[] bytes = ByteStreams.toByteArray(exchange.getRequestBody());
             String jsonBody = new String(bytes, "UTF-8");
 
-            System.out.println("request body \n" + jsonBody);
+            logger.info("request body \n" + jsonBody);
         }
 
         private void sendResponse(HttpExchange exchange) throws IOException {
