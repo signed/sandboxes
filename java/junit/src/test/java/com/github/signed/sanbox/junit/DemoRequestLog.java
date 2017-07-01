@@ -94,13 +94,14 @@ public class DemoRequestLog extends TestWatcher {
         currentRequest.context.json = json;
     }
 
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void finished(Description description) {
         logger.info("Scenario: " + CaseFormat.LOWER_CAMEL.to(CaseFormat.SENTENCE, description.getMethodName()));
         requests.forEach(this::logRequest);
+        logger.info("");
+        requests.clear();
     }
 
     private void logRequest(Request request) {
