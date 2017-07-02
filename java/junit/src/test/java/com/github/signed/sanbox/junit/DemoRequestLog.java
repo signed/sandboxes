@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -53,7 +54,7 @@ public class DemoRequestLog extends TestWatcher {
         public URI uri;
         public String requestJson;
 
-        RequestContext context = new RequestContext();
+        public List<RequestContext> contexts = new ArrayList<>();
 
         public HttpStatus statusCode;
         public String responseJson;
@@ -90,8 +91,10 @@ public class DemoRequestLog extends TestWatcher {
     }
 
     public static void requestContext(String name, String json) {
-        currentRequest.context.name = name;
-        currentRequest.context.json = json;
+        RequestContext context = new RequestContext();
+        context.name = name;
+        context.json = json;
+        currentRequest.contexts.add(context);
     }
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -113,11 +116,13 @@ public class DemoRequestLog extends TestWatcher {
 
     private Table jsonTable(Request request) {
         ColumnFormatter<String> requestColumn = ColumnFormatter.text(Alignment.LEFT, 55);
-        ColumnFormatter<String> contextColumn = ColumnFormatter.text(Alignment.LEFT, 55);
         ColumnFormatter<String> responseColumn = ColumnFormatter.text(Alignment.LEFT, 55);
 
         Table.Builder builder = new Table.Builder("request", toModel(request.requestJson), requestColumn);
-        builder.addColumn(request.context.name, toModel(request.context.json), contextColumn);
+        request.contexts.forEach(context -> {
+            ColumnFormatter<String> contextColumn = ColumnFormatter.text(Alignment.LEFT, 55);
+            builder.addColumn(context.name, toModel(context.json), contextColumn);
+        });
         builder.addColumn("response", toModel(request.responseJson), responseColumn);
         return builder.build();
     }
