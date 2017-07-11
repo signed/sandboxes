@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -115,24 +116,31 @@ public class DemoRequestLog extends TestWatcher {
     }
 
     private Table jsonTable(Request request) {
-        ColumnFormatter<String> requestColumn = ColumnFormatter.text(Alignment.LEFT, 55);
-        ColumnFormatter<String> responseColumn = ColumnFormatter.text(Alignment.LEFT, 55);
+        int columnWidth = 50;
+        ColumnFormatter<String> requestColumn = ColumnFormatter.text(Alignment.LEFT, columnWidth);
+        ColumnFormatter<String> responseColumn = ColumnFormatter.text(Alignment.LEFT, columnWidth);
 
-        Table.Builder builder = new Table.Builder("request", toModel(request.requestJson), requestColumn);
+        Table.Builder builder = new Table.Builder("request", toModel(request.requestJson, columnWidth), requestColumn);
         request.contexts.forEach(context -> {
-            ColumnFormatter<String> contextColumn = ColumnFormatter.text(Alignment.LEFT, 55);
-            builder.addColumn(context.name, toModel(context.json), contextColumn);
+            ColumnFormatter<String> contextColumn = ColumnFormatter.text(Alignment.LEFT, columnWidth);
+            builder.addColumn(context.name, toModel(context.json, columnWidth), contextColumn);
         });
-        builder.addColumn("response", toModel(request.responseJson), responseColumn);
+        builder.addColumn("response", toModel(request.responseJson, columnWidth), responseColumn);
         return builder.build();
     }
 
-    private String[] toModel(String json) {
+    private String[] toModel(String json, int columnWidth) {
         String[] rows = prettyJson(json).split("\n");
+        int maxCharactersPerLine = columnWidth - 3 - 1;
+        List<String> adjustedRows = new LinkedList<>();
         for (int i = 0; i < rows.length; i++) {
-            rows[i] = "   " + rows[i];
+            String rawRow = rows[i];
+            for (int start = 0; start < rawRow.length(); start += maxCharactersPerLine) {
+                String trimmedLine = rawRow.substring(start, Math.min(rawRow.length(), start + maxCharactersPerLine));
+                adjustedRows.add("   " + trimmedLine);
+            }
         }
-        return rows;
+        return adjustedRows.toArray(new String[adjustedRows.size()]);
     }
 
     private String prettyJson(String ugly) {

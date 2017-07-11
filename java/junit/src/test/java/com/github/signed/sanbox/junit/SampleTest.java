@@ -55,7 +55,7 @@ public class SampleTest {
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         return DemoRequestLog.logExchangeWith(restTemplate, () -> {
             DemoRequestLog.newRequest("issue domain specific request");
-            DemoRequestLog.requestContext("information", "{ \"dafsdf\": null}");
+    DemoRequestLog.requestContext("information", "{ \"dafsdf\": \"this is an extra long text to force line wraps into multiple lines but keeps shorter lines together\"}");
             return restTemplate.exchange("http://localhost:8000/test", POST, new HttpEntity<>(transferObject), TransferObject.class);
         });
     }
