@@ -1,14 +1,16 @@
 package com.github.signed.sandbox.restassured;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.jayway.restassured.response.Response;
+import org.hamcrest.CoreMatchers;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.jayway.restassured.RestAssured.expect;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ATest {
 
@@ -17,13 +19,16 @@ public class ATest {
 
     @Test
     public void basicExample() throws Exception {
-        stubFor(get(urlEqualTo("/health"))
+        server.stubFor(get(urlEqualTo("/health"))
                 .willReturn(aResponse()
                         .withStatus(200)));
 
-        expect()
+        Response response = expect()
                 .statusCode(200)
-        .when()
+                .when()
                 .get("health");
+
+
+        assertThat(response.getStatusCode(), CoreMatchers.equalTo(200));
     }
 }
