@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    testCompile('com.jayway.restassured:rest-assured:1.7.2'
+            , 'junit:junit:4.12'
+            , 'com.github.tomakehurst:wiremock:2.7.1'
+            , 'ch.qos.logback:logback-classic:1.2.3'
+    )
+}
