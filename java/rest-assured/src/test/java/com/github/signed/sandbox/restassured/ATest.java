@@ -17,6 +17,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 
 public class ATest {
 
@@ -56,7 +57,7 @@ public class ATest {
                 .body("bar", equalTo(7))
                 .body("baz", equalTo("hello world"))
             .root("")
-            .body("array", allOf(hasItem("zwei"), hasItem("2")))
+            .body("array", hasItems("zwei", "2"))
         .when()
             .get("health");
     }
