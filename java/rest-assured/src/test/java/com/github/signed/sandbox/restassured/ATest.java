@@ -20,7 +20,7 @@ public class ATest {
     @Test
     public void basicExample() throws Exception {
         server.stubFor(get(urlEqualTo("/health"))
-                .willReturn(aResponse()
+                .willReturn(aResponse().withHeader("content-type", "application/json")
                         .withStatus(200)));
 
         Response response = expect()
