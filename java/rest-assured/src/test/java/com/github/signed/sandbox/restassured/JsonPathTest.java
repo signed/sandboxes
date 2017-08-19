@@ -9,13 +9,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class JsonPathTest {
 
     private static class To {
-        public String foo;
+        public String hello;
     }
 
     @Test
     public void extractObjects() throws Exception {
-        To object = new JsonPath("{\"foo\":\"world\"}").getObject("", To.class);
-        assertThat(object.foo, equalTo("world"));
+        To object = new JsonPath("{\n" +
+                "  \"foo\": {\n" +
+                "    \"hello\": \"world\"\n" +
+                "  }\n" +
+                "}").getObject("foo", To.class);
+        assertThat(object.hello, equalTo("world"));
     }
 
 
