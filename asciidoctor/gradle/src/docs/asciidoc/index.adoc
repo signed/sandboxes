@@ -1,0 +1,12 @@
+= Example Manual
+:generated_docs: ../../../build/generated/asciidoc
+
+== Introduction
+This page was built by the following command:
+
+ $ ./gradlew clean asciidoctor
+
+include::static/subsection.adoc[]
+
+include::{generated_docs}/generated.adoc[]
+
