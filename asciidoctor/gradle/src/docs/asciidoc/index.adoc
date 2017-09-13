@@ -8,5 +8,7 @@ This page was built by the following command:
 
 include::static/subsection.adoc[]
 
-include::{generated_docs}/generated.adoc[]
+include::{generated_docs}/junit4.adoc[]
+
+include::{generated_docs}/junit5.adoc[]
 

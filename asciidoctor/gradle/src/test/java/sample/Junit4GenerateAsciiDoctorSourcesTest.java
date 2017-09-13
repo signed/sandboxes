@@ -9,13 +9,13 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class GenerateAsciiDoctorSourcesTest {
+public class Junit4GenerateAsciiDoctorSourcesTest {
 
     @Test
-    public void name() throws Exception {
+    public void generateDocumentation() throws Exception {
         Path generatedAsciidocSource = Paths.get("build/generated/asciidoc");
         Files.createDirectories(generatedAsciidocSource);
-        Path outputFile = generatedAsciidocSource.resolve("generated.adoc");
+        Path outputFile = generatedAsciidocSource.resolve("junit4.adoc");
 
         LocalDateTime timestamp = LocalDateTime.now(ZoneId.of("UTC"));
         String content =
