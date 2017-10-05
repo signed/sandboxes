@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class IntegrationTest {
     @Test
-    public void ensureResourceIsStillCopiedToTargetFolder() throws Exception {
+    public void integrationTest() throws Exception {
         assertThat(new AClass().getString(), is("42"));
     }
 }
