@@ -40,4 +40,14 @@ public class JavaDocOnClass {
     public void bar(){
 
     }
+
+    /**
+     * Some text
+     *
+     * @author banana
+     *
+     */
+    public void baz(){
+
+    }
 }
