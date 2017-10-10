@@ -50,4 +50,15 @@ public class JavaDocOnClass {
     public void baz(){
 
     }
+
+    /**
+     * Some Test
+     *
+     * @author banana
+     * @since today
+     */
+
+    public void quox(){
+
+    }
 }
