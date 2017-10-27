@@ -1,1 +1,8 @@
 #!/usr/bin/env groovy
+//apm install language-groovy
+//https://jenkins.io/doc/book/pipeline/getting-started
+//http://localhost:8080/pipeline-syntax
+//http://localhost:8080/pipeline-syntax/globals
+node{
+    echo "hello world"
+}
