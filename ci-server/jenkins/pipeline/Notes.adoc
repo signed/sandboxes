@@ -41,3 +41,12 @@ node {
     }
 }
 ----
+
+== Concepts
+Step::
+A single task
+Node::
+Where will the actual work be executed and where the workspace will be generated
+
+Stage::
+Groups the pipeline into distinct parts
