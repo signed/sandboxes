@@ -1,7 +1,43 @@
 
-= Jenkins Pipeline Nodes
+= Jenkins Pipeline Notes
 Just some notes and reminders as I'm reading the documentation and tinker with the pipeline feature in Jenkins.
 
 == flavors
-- Declarative Pipeline
-- Scripted Pipeline
+
+.declerative pipeline
+[source,groovy]
+----
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+          ...
+        }
+        stage('Test'){
+          ...
+        }
+        stage('Deploy') {
+          ...
+        }
+    }
+}
+----
+
+.scripted pipeline
+[source,groovy]
+----
+node {
+    stage('Build') {
+      ...
+    }
+
+    stage('Test') {
+      ...
+    }
+
+    stage('Deploy') {
+      ....
+    }
+}
+----
