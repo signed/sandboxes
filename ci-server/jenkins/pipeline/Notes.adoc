@@ -1,0 +1,7 @@
+
+= Jenkins Pipeline Nodes
+Just some notes and reminders as I'm reading the documentation and tinker with the pipeline feature in Jenkins.
+
+== flavors
+- Declarative Pipeline
+- Scripted Pipeline
