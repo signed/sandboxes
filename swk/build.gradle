@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+
+    compile 'com.jayway.jsonpath:json-path:2.3.0'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
+    compile 'com.github.kittinunf.fuel:fuel:1.11.0'
+    compile 'com.github.freva:ascii-table:1.1.0'
+    testCompile 'com.codeborne:selenide:4.8'
+    testCompile('junit:junit:4.12', 'org.hamcrest:hamcrest-core:1.3')
+}
+
+task wrapper(type: Wrapper) {
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-4.3.1-all.zip'
+}
