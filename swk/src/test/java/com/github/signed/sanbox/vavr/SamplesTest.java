@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.junit.ScreenShooter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
@@ -23,6 +24,7 @@ import kotlin.Triple;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -57,6 +59,8 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(184553026L);
         foundNoMatchingAccountInAgora.add(206655503L);
         foundNoMatchingAccountInAgora.add(240746008L);
+        foundNoMatchingAccountInAgora.add(226997656L);
+        foundNoMatchingAccountInAgora.add(219849373L);
     }
 
     private final Map<Long, String> meetupToAgora = new HashMap<>();
@@ -217,13 +221,21 @@ public class SamplesTest {
         Triple<Request, Response, Result<String, FuelError>> sout = Fuel.get("https://api.meetup.com/Softwerkskammer-Karlsruhe/events/244623168/rsvps?response=yes")
                 .responseString();
         String jsonString = sout.component3().get();
-
         Configuration configuration = Configuration.builder().jsonProvider(new JacksonJsonProvider()).mappingProvider(new JacksonMappingProvider()).build();
         ParseContext using = JsonPath.using(configuration);
         DocumentContext documentCOntext = using.parse(jsonString);
         TypeRef<List<MeetupMember>> rsvpdMembers = new TypeRef<List<MeetupMember>>() {
         };
         return documentCOntext.read("$.*.[?(@.response == 'yes')]member", rsvpdMembers);
+    }
+
+    private String prettyPrint(String jsonString){
+        try {
+            Object o = mapper.readValue(jsonString, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<AgoraMember> agoraParticipants() {
@@ -280,6 +292,8 @@ public class SamplesTest {
             return agoraId + " " + agoraFullName;
         }
     }
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MeetupMember {
