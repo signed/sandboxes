@@ -36,13 +36,11 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
             //return model.toString();
             return new ObjectMapper().writeValueAsString(model);
         });
-
-        Thread.sleep(500);
     }
 
     @After
     public void tearDown() throws Exception {
-        Spark.stop();
+        SparkSupport.sparkStop();
     }
 
     private final String url = "http://localhost:8085/transferobject";

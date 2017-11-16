@@ -18,12 +18,11 @@ public class DoNotThrowExceptionsOn4xxReturnCodeTest {
     public void setUp() throws Exception {
         Spark.port(8085);
         Spark.get("/", (request, response) -> "Hello World");Thread.sleep(500);
-        Thread.sleep(500);
     }
 
     @After
     public void tearDown() throws Exception {
-        Spark.stop();
+        SparkSupport.sparkStop();
     }
 
     @Test
