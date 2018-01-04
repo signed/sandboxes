@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'org.processing:core:3.3.6'
+    testCompile('junit:junit:4.12', 'org.hamcrest:hamcrest-core:1.3')
+}
+
+task wrapper(type: Wrapper) {
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-4.1-all.zip'
+}
