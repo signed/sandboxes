@@ -14,5 +14,6 @@ dependencies {
             , 'junit:junit:4.12'
             , 'com.github.tomakehurst:wiremock:2.7.1'
             , 'ch.qos.logback:logback-classic:1.2.3'
+            , 'javax.xml.bind:jaxb-api:2.3.0'
     )
 }
