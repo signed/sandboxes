@@ -1,17 +1,13 @@
 package com.github.signed.sandbox.restassured;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.builder.ResponseBuilder;
 import com.jayway.restassured.filter.Filter;
 import com.jayway.restassured.filter.FilterContext;
-import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.FilterableRequestSpecification;
 import com.jayway.restassured.specification.FilterableResponseSpecification;
@@ -19,13 +15,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.jayway.restassured.RestAssured.expect;
-import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -38,7 +32,7 @@ public class ATest {
     public final WireMockRule server = new WireMockRule(8080);
 
     @Test
-    public void basicExample() throws Exception {
+    public void basicExample() {
         stubHealthJsonToReturn("{}");
 
         Response response = expect()
@@ -50,7 +44,7 @@ public class ATest {
     }
 
     @Test
-    public void assertJsonBody() throws Exception {
+    public void assertJsonBody() {
         stubHealthJsonToReturn("{\n" +
                 "  \"one\": 1,\n" +
                 "  \"array\": [\n" +
@@ -76,7 +70,7 @@ public class ATest {
     }
 
     @Test
-    public void thereIsJsonPath() throws Exception {
+    public void thereIsJsonPath() {
         stubHealthJsonToReturn("{\n" +
                 "  \"boolean\": true\n" +
                 "}");
