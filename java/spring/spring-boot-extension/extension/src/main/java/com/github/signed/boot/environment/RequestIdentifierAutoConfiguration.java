@@ -1,6 +1,5 @@
 package com.github.signed.boot.environment;
 
-import com.github.signed.boot.logfilter.LogFilterAutoConfiguration;
 import org.apache.log4j.MDC;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
