@@ -126,7 +126,7 @@ public class SamplesTest {
     }
 
     @Test
-    public void cleanUp() throws Exception {
+    public void localDryRunForDiffLogic() throws Exception {
         Map.Entry<String, Long> next = agoraToMeetup.entrySet().iterator().next();
         List<AgoraMember> rsvpAgora = asList(new AgoraMember(next.getKey(), "both"), new AgoraMember("agora_nickname", "Agora Only"));
         List<MeetupMember> rsvpMeetup = asList(MeetupMember.newMeetupMember(next.getValue(), "both"), MeetupMember.newMeetupMember(foundNoMatchingAccountInAgora.iterator().next(), "Meetup Only"));
