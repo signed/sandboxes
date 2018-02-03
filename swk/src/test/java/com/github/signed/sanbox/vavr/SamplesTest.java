@@ -61,6 +61,7 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(240746008L);
         foundNoMatchingAccountInAgora.add(226997656L);
         foundNoMatchingAccountInAgora.add(219849373L);
+        foundNoMatchingAccountInAgora.add(242225521L);
     }
 
     private final Map<Long, String> meetupToAgora = new HashMap<>();
@@ -71,6 +72,10 @@ public class SamplesTest {
         meetupToAgora.put(239580400L, "Thomas H");
         meetupToAgora.put(239246039L, "Urs");
         meetupToAgora.put(85047252L, "jan");
+        meetupToAgora.put(240845463L, "abakadaba");
+        meetupToAgora.put(205068395L, "beatngu13");
+        meetupToAgora.put(188418215L, "geeksogen");
+        meetupToAgora.put(115087542L, "roessler");
     }
 
     private final Map<String, Long> agoraToMeetup = invert(meetupToAgora);
@@ -105,28 +110,28 @@ public class SamplesTest {
 
     }
 
-    @Test
-    public void meetup() throws Exception {
-        List<MeetupMember> meetupMembers = meetupParticipants();
+	@Test
+    public void meetup() {
+        List<MeetupMember> meetupMembers = meetupParticipants("247284021");
         meetupMembers.forEach(System.out::println);
     }
 
     @Test
-    public void agora() throws Exception {
-        List<AgoraMember> agoraMembers = agoraParticipants();
+    public void agora() {
+        List<AgoraMember> agoraMembers = agoraParticipants("ka-treffen-77");
         System.out.println(agoraMembers);
     }
 
     @Test
-    public void combined() throws Exception {
-        List<MeetupMember> meetup = meetupParticipants();
-        List<AgoraMember> agora = agoraParticipants();
+    public void combined() {
+        List<MeetupMember> meetup = meetupParticipants("247284021");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-77");
 
         printUniqueRsvps(meetup, agora);
     }
 
     @Test
-    public void localDryRunForDiffLogic() throws Exception {
+    public void localDryRunForDiffLogic() {
         Map.Entry<String, Long> next = agoraToMeetup.entrySet().iterator().next();
         List<AgoraMember> rsvpAgora = asList(new AgoraMember(next.getKey(), "both"), new AgoraMember("agora_nickname", "Agora Only"));
         List<MeetupMember> rsvpMeetup = asList(MeetupMember.newMeetupMember(next.getValue(), "both"), MeetupMember.newMeetupMember(foundNoMatchingAccountInAgora.iterator().next(), "Meetup Only"));
@@ -217,16 +222,16 @@ public class SamplesTest {
         return agora.stream().filter(a -> a.agoraId.equals(agoraId)).findAny();
     }
 
-    private List<MeetupMember> meetupParticipants() {
-        Triple<Request, Response, Result<String, FuelError>> sout = Fuel.get("https://api.meetup.com/Softwerkskammer-Karlsruhe/events/244623168/rsvps?response=yes")
+    private List<MeetupMember> meetupParticipants(final String eventId) {
+        Triple<Request, Response, Result<String, FuelError>> sout = Fuel.get("https://api.meetup.com/Softwerkskammer-Karlsruhe/events/" + eventId + "/rsvps?response=yes")
                 .responseString();
         String jsonString = sout.component3().get();
         Configuration configuration = Configuration.builder().jsonProvider(new JacksonJsonProvider()).mappingProvider(new JacksonMappingProvider()).build();
         ParseContext using = JsonPath.using(configuration);
-        DocumentContext documentCOntext = using.parse(jsonString);
+        DocumentContext documentContext = using.parse(jsonString);
         TypeRef<List<MeetupMember>> rsvpdMembers = new TypeRef<List<MeetupMember>>() {
         };
-        return documentCOntext.read("$.*.[?(@.response == 'yes')]member", rsvpdMembers);
+        return documentContext.read("$.*.[?(@.response == 'yes')]member", rsvpdMembers);
     }
 
     private String prettyPrint(String jsonString){
@@ -238,7 +243,7 @@ public class SamplesTest {
         }
     }
 
-    private List<AgoraMember> agoraParticipants() {
+    private List<AgoraMember> agoraParticipants(final String activityName) {
 
         String login = System.getenv("login");
         if (null == login) {
@@ -261,7 +266,7 @@ public class SamplesTest {
 
         com.codeborne.selenide.Configuration.baseUrl = "https://www.softwerkskammer.org";
         Selenide.open("/auth/github?returnTo=%2F");
-        Selenide.open("/activities/ka-treffen-74");
+        Selenide.open("/activities/" + activityName);
         ElementsCollection blub = Selenide.$$(".dl-horizontal > *");
 
         List<AgoraMember> agoraMembers = new ArrayList<>(blub.size() / 2);
