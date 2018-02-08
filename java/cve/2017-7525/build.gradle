@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+    }
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin:'java'
+
+repositories{
+  mavenCentral()
+}
+
+dependencies{
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.3'
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.3")
+    testCompile( 'org.assertj:assertj-core:3.9.0' )
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")
+}
+
+
+junitPlatform {
+    // platformVersion '1.0.3'
+    filters {
+         tags {
+            // include 'fast'
+            exclude 'slow'
+        }
+        // includeClassNamePattern '.*Test'
+    }
+    // enableStandardTestTask true
+    // reportsDir file('build/test-results/junit-platform') // this is the default
+    logManager 'org.apache.logging.log4j.jul.LogManager'
+}
