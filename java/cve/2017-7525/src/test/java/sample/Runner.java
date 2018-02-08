@@ -25,6 +25,7 @@ class Runner {
 
     /**
      * https://adamcaudill.com/2017/10/04/exploiting-jackson-rce-cve-2017-7525/
+     * https://github.com/mbechler/marshalsec
      */
 
     static class Bean1599 {
@@ -69,7 +70,7 @@ class Runner {
 
     @Test
     void name() throws IOException {
-        Path absolute = Paths.get("out/test/classes/sample/Exploit.class");
+        Path absolute = Paths.get("out/test/classes/sample/Payload.class");
         byte[] bytes = Files.readAllBytes(absolute);
         String base64Encoded = Base64.getEncoder().encodeToString(bytes);
         System.out.println(base64Encoded);

