@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 
 class Runner {
 
@@ -29,7 +28,7 @@ class Runner {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enableDefaultTyping();
 
-        InvalidDefinitionException invalidDefinitionException = assertThrows(InvalidDefinitionException.class, () -> mapper.readValue(JSON, Bean1599.class));
+        Exception invalidDefinitionException = assertThrows(Exception.class, () -> mapper.readValue(JSON, Bean1599.class));
         Assertions.assertThat(invalidDefinitionException)
                 .hasMessageContaining("Invalid type")
                 .hasMessageContaining("to deserialize")
