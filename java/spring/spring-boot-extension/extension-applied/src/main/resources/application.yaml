@@ -3,4 +3,4 @@ spring:
     name: ExtensionDemo
 logging:
   environment: dev
-#  config: classpath:logback_experiments.xml
+  config: classpath:logback_experiments.xml

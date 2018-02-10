@@ -5,11 +5,12 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{yyyy-MM-ddHH:mm:ss.SSSX, UTC} ${LOG_LEVEL_PATTERN:-%5p} %mdcs{requestId:-RequestId} %msg %n</pattern>
+            <pattern>%class %date{yyyy-MM-ddHH:mm:ss.SSSX, UTC} ${LOG_LEVEL_PATTERN:-%5p} %mdcs{requestId:-RequestId} %msg %n</pattern>
             <charset>utf8</charset>
         </encoder>
     </appender>
 
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG"/>
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
