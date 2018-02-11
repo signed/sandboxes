@@ -2,7 +2,6 @@ package sample;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
-import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +11,6 @@ import spark.Spark;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -70,12 +67,13 @@ class Runner {
     }
 
 	@Test
-	void directlyTestExecution() throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+	void directlyTestExecution() throws Exception {
 		TemplatesImpl templates = new TemplatesImpl();
 
-		Field field = templates.getClass().getDeclaredField("_tfactory");
-		field.setAccessible(true);
-		field.set(templates, new TransformerFactoryImpl());
+		//Field field = templates.getClass().getDeclaredField("_tfactory");
+		//field.setAccessible(true);
+		//field.set(templates, new TransformerFactoryImpl());
+
 		Method transletName = templates.getClass().getDeclaredMethod("setTransletName", String.class);
 		transletName.setAccessible(true);
 		transletName.invoke(templates, "a.b");
