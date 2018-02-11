@@ -1,5 +1,6 @@
 package sample;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.assertj.core.api.Assertions;
@@ -29,6 +30,7 @@ class Runner {
 
     static class Bean1599 {
         public int id;
+        @JsonTypeInfo(use= JsonTypeInfo.Id.CLASS)
         public Object obj;
     }
 
@@ -46,6 +48,33 @@ class Runner {
     void tearDown() {
         Spark.stop();
     }
+
+	@Test
+	void viaObjectMapper() throws IOException {
+		byte[] bytes = byteCode();
+		String base64Encoded = Base64.getEncoder().encodeToString(bytes);
+		String payload = "AAIAZQ==";
+		payload = base64Encoded;
+		//language=JSON
+		final String JSON = "{\"id\": 124,\n" +
+				" \"obj\":[ \"com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\",\n" +
+				"  {\n" +
+				"    \"transletBytecodes\" : [ \"" + payload + "\" ],\n" +
+				"    \"transletName\" : \"a.b\",\n" +
+				"    \"outputProperties\" : { }\n" +
+				"  }\n" +
+				" ]\n" +
+				"}";
+		ObjectMapper mapper = new ObjectMapper();
+		//mapper.enableDefaultTyping();
+
+
+		Exception invalidDefinitionException = assertThrows(Exception.class, () -> mapper.readValue(JSON, Bean1599.class));
+		Assertions.assertThat(invalidDefinitionException)
+				.hasMessageContaining("Invalid type")
+				.hasMessageContaining("to deserialize")
+				.hasMessageContaining("prevented for security reasons");
+	}
 
     @Test
     void testSpark() throws IOException {
@@ -87,36 +116,6 @@ class Runner {
 
 		templates.getOutputProperties();
 	}
-
-	@Test
-    void viaObjectMapper() throws IOException {
-		byte[] bytes = byteCode();
-        String base64Encoded = Base64.getEncoder().encodeToString(bytes);
-        System.out.println(base64Encoded);
-
-
-        String payload = "AAIAZQ==";
-        payload = base64Encoded;
-		//language=JSON
-		final String JSON = "{\"id\": 124,\n" +
-				" \"obj\":[ \"com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\",\n" +
-				"  {\n" +
-				"    \"transletBytecodes\" : [ \"" + payload + "\" ],\n" +
-				"    \"transletName\" : \"a.b\",\n" +
-				"    \"outputProperties\" : { }\n" +
-				"  }\n" +
-				" ]\n" +
-				"}";
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enableDefaultTyping();
-
-
-        Exception invalidDefinitionException = assertThrows(Exception.class, () -> mapper.readValue(JSON, Bean1599.class));
-        Assertions.assertThat(invalidDefinitionException)
-                .hasMessageContaining("Invalid type")
-                .hasMessageContaining("to deserialize")
-                .hasMessageContaining("prevented for security reasons");
-    }
 
 	private byte[] byteCode() throws IOException {
 		return Files.readAllBytes(Paths.get("out/test/classes/sample/Payload.class"));
