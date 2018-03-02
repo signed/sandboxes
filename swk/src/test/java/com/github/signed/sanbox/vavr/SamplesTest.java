@@ -62,6 +62,8 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(226997656L);
         foundNoMatchingAccountInAgora.add(219849373L);
         foundNoMatchingAccountInAgora.add(242225521L);
+        foundNoMatchingAccountInAgora.add(243065615L);
+        foundNoMatchingAccountInAgora.add(222786776L);
         foundNoMatchingAccountInAgora.add(251736254L);
         foundNoMatchingAccountInAgora.add(251818755L);
         foundNoMatchingAccountInAgora.add(251815003L);
@@ -90,6 +92,7 @@ public class SamplesTest {
         meetupToAgora.put(205068395L, "beatngu13");
         meetupToAgora.put(188418215L, "geeksogen");
         meetupToAgora.put(115087542L, "roessler");
+        meetupToAgora.put(212880162L, "Mark_Treeman");
         meetupToAgora.put(198456464L, "Djelloul007");
         meetupToAgora.put(204051032L, "Slawa");
     }
