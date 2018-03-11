@@ -1,0 +1,14 @@
+{
+  "name": "broken-link-detector",
+  "version": "1.0.0",
+  "description": "Try to parse Markdown to clean it up",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "0.3.17"
+  }
+}
