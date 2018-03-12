@@ -19,7 +19,6 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.options.DataHolder;
 import com.vladsch.flexmark.util.options.MutableDataSet;
-import com.vladsch.flexmark.util.sequence.BasedSequence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,33 +42,27 @@ public class Markdown {
 
 	public List<Link> allLinks(Node node){
 		List<Link> links = new ArrayList<>();
-		NodeVisitor nodeVisitor = new NodeVisitor(new VisitHandler<>(Link.class, links::add));
-		nodeVisitor.visit(node);
+		visit(node, new VisitHandler<>(Link.class, links::add));
 		return links;
 	}
 
-	public void allLinkReferences(){
-		VisitHandler<LinkRef> linkReferences = new VisitHandler<>(LinkRef.class, new Visitor<LinkRef>() {
-			@Override
-			public void visit(LinkRef node) {
-				BasedSequence text = node.getText();
-				System.out.println(node);
-			}
-		});
+	public List<LinkRef> allLinkReferences(Node node){
+		List<LinkRef> linkRefs = new ArrayList<>();
+		visit(node, new VisitHandler<>(LinkRef.class, linkRefs::add));
+		return linkRefs;
 	}
 
-	public void allReferences(Node node){
-		VisitHandler<Reference> reference = new VisitHandler<>(Reference.class, new Visitor<Reference>() {
-			@Override
-			public void visit(Reference node) {
-				System.out.println(node);
-			}
-		});
+	public List<Reference> allReferences(Node node){
+		List<Reference> references = new ArrayList<>();
+		visit(node, new VisitHandler<>(Reference.class, references::add));
 
+		return references;
 	}
 
-
-
+	private void visit(Node node, VisitHandler<?> linkVisitHandler) {
+		NodeVisitor nodeVisitor = new NodeVisitor(linkVisitHandler);
+		nodeVisitor.visit(node);
+	}
 
 	public Formatter formatter(){
 		return Formatter.builder(FORMAT_OPTIONS).nodeFormatterFactory(new NodeFormatterFactory() {

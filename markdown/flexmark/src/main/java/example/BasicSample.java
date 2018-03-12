@@ -2,6 +2,8 @@ package example;
 
 import com.vladsch.flexmark.ast.Document;
 import com.vladsch.flexmark.ast.Link;
+import com.vladsch.flexmark.ast.Reference;
+import com.vladsch.flexmark.util.sequence.BasedSequence;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -18,6 +20,7 @@ public class BasicSample {
 
 	public static void main(String[] args) throws IOException {
 		String pathToRepositories = args[0];
+		System.out.println(pathToRepositories);
 
 		Markdown markdown = new Markdown();
 		Stream<Path> pathStream = Files.find(Paths.get(pathToRepositories), 200, new BiPredicate<Path, BasicFileAttributes>() {
@@ -32,25 +35,44 @@ public class BasicSample {
 			Document document = markdown.parser.parse(markdownString);
 			return new CleanUpContext(path, document);
 		}).forEach(cleanUpContext -> {
-			List<Link> links = markdown.allLinks(cleanUpContext.document);
-			List<Link> brokenLinks = links.stream()
-					.filter(link -> link.getUrl().toString().toLowerCase().contains("realestate-com-au/pact"))
-					.collect(Collectors.toList());
-			if (brokenLinks.isEmpty()) {
+			List<Link> candidatesForBrokenLinks = potentialBrokenLinkReference(markdown, cleanUpContext);
+
+
+			List<Link> linksToOldPactRepository = fullLinks(markdown, cleanUpContext);
+
+			if (candidatesForBrokenLinks.isEmpty() && linksToOldPactRepository.isEmpty()) {
 				return;
 			}
+
 			System.out.println();
 			System.out.println(cleanUpContext.path);
-			brokenLinks.forEach(link -> {
+			candidatesForBrokenLinks.forEach(link -> {
 				String brokenLink = link.getUrl().toString();
 				String fixedLink = brokenLink.replace("https://github.com/realestate-com-au/pact", "https://github.com/pact-foundation/pact-ruby");
 				System.out.println(link.getText());
 				System.out.println(brokenLink);
 				System.out.println(fixedLink);
 			});
+
+			linksToOldPactRepository.forEach(System.out::println);
 		});
 
 		String markdownString = "[top](ref)\n[buh][ref]\n\n[ref]: catch";
+	}
+
+	private static List<Link> potentialBrokenLinkReference(Markdown markdown, CleanUpContext cleanUpContext) {
+		List<Reference> references = markdown.allReferences(cleanUpContext.document);
+		List<BasedSequence> referenceKeys = references.stream().map(reference -> reference.getReference()).collect(Collectors.toList());
+		List<Link> links = markdown.allLinks(cleanUpContext.document);
+		return links.stream().filter(link -> referenceKeys.contains(link.getUrl())).collect(Collectors.toList());
+	}
+
+	private static List<Link> fullLinks(Markdown markdown, CleanUpContext cleanUpContext) {
+		List<Link> links = markdown.allLinks(cleanUpContext.document);
+		List<Link> brokenLinks = links.stream()
+				.filter(link -> link.getUrl().toString().toLowerCase().contains("realestate-com-au/pact"))
+				.collect(Collectors.toList());
+		return brokenLinks;
 	}
 
 	private static String readUtf8File(Path path) {
