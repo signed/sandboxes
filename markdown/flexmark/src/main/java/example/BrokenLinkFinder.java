@@ -16,7 +16,7 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BasicSample {
+public class BrokenLinkFinder {
 
 	public static void main(String[] args) throws IOException {
 		String pathToRepositories = args[0];
@@ -34,7 +34,7 @@ public class BasicSample {
 			String markdownString = readUtf8File(path);
 			Document document = markdown.parser.parse(markdownString);
 			return new CleanUpContext(path, document);
-		}).forEach(cleanUpContext -> {
+		}).forEach((CleanUpContext cleanUpContext) -> {
 			List<Link> candidatesForBrokenLinks = potentialBrokenLinkReference(markdown, cleanUpContext);
 
 
@@ -47,14 +47,18 @@ public class BasicSample {
 			System.out.println();
 			System.out.println(cleanUpContext.path);
 			candidatesForBrokenLinks.forEach(link -> {
+				System.out.println(link);
+			});
+
+			linksToOldPactRepository.forEach(link -> {
 				String brokenLink = link.getUrl().toString();
 				String fixedLink = brokenLink.replace("https://github.com/realestate-com-au/pact", "https://github.com/pact-foundation/pact-ruby");
 				System.out.println(link.getText());
 				System.out.println(brokenLink);
 				System.out.println(fixedLink);
-			});
 
-			linksToOldPactRepository.forEach(System.out::println);
+
+			});
 		});
 
 		String markdownString = "[top](ref)\n[buh][ref]\n\n[ref]: catch";

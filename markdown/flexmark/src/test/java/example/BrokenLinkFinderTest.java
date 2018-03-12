@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-class BasicSampleTest {
+class BrokenLinkFinderTest {
 
 	public static class LinkWithAlternative {
 		public final String current = "https://github.com/realestate-com-au/pact";
