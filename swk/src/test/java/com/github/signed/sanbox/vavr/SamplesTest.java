@@ -63,6 +63,9 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(219849373L);
         foundNoMatchingAccountInAgora.add(242225521L);
         foundNoMatchingAccountInAgora.add(251736254L);
+        foundNoMatchingAccountInAgora.add(251818755L);
+        foundNoMatchingAccountInAgora.add(251815003L);
+        foundNoMatchingAccountInAgora.add(251796732L);
     }
 
     private final Map<Long, String> meetupToAgora = new HashMap<>();
