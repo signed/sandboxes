@@ -20,12 +20,12 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
         public String value;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new DoNotTryToParseResponseEntityOnErrorTest().setUp();
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Spark.port(8085);
         Spark.get("/transferobject", (request, response) -> {
             TransferObject result = new TransferObject();
@@ -36,6 +36,7 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
             //return model.toString();
             return new ObjectMapper().writeValueAsString(model);
         });
+        Spark.awaitInitialization();
     }
 
     @After
@@ -47,7 +48,7 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
     private final RestTemplate spring = new RestTemplate();
 
     @Test
-    public void getWithSpringRestTemplateEntity() throws Exception {
+    public void getWithSpringRestTemplateEntity() {
 
         ResponseEntity<TransferObject> responseEntity = spring.getForEntity(url, TransferObject.class);
 
@@ -55,7 +56,7 @@ public class DoNotTryToParseResponseEntityOnErrorTest {
     }
 
     @Test
-    public void getWithSpringRestTemplateExchange() throws Exception {
+    public void getWithSpringRestTemplateExchange() {
         ResponseEntity<TransferObject> responseEntity = spring.exchange(url, HttpMethod.GET, null, TransferObject.class);
 
         assertThat(responseEntity.getBody().value, is("Hello Again"));

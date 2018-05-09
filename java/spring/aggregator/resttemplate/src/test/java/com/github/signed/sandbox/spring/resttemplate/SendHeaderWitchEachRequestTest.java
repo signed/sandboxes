@@ -27,6 +27,7 @@ public class SendHeaderWitchEachRequestTest {
             response.status(200);
             return "";
         });
+        Spark.awaitInitialization();
     }
 
     @After
