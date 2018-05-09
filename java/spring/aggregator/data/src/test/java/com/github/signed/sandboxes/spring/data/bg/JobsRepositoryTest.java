@@ -43,7 +43,8 @@ public class JobsRepositoryTest {
     }
 
     private void storeExistingJobs() {
-        repository.save(existingJobs.stream().map(JobBuilder::build).collect(Collectors.toList()));
+        List<Job> blub = existingJobs.stream().map(JobBuilder::build).collect(Collectors.toList());
+        repository.saveAll(blub);
     }
 
     private JobBuilder thereIsAJobForFirst() {
