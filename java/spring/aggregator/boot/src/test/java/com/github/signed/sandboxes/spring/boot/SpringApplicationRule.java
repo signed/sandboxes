@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.junit.rules.ExternalResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -19,7 +20,7 @@ import retrofit.RestAdapter;
 public class SpringApplicationRule extends ExternalResource {
 
     private final SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder()
-            .showBanner(false)
+            .bannerMode(Banner.Mode.OFF)
             .sources(BootApplication.class, ChooseAnAvailablePort.class);
 
     private final RuleConfiguration ruleConfiguration = new RuleConfiguration();
