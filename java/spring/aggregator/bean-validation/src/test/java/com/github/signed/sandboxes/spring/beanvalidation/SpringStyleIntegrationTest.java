@@ -35,8 +35,6 @@ public class SpringStyleIntegrationTest {
         parameters.put("port", port);
     }
 
-
-
     @Test
     public void ifNameIsMissingRespondWith400() {
         TransferObject transferObject = new TransferObject();
