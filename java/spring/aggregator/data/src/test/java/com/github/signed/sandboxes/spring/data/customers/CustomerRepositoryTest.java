@@ -7,7 +7,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListeners;
@@ -22,13 +22,13 @@ import static org.hamcrest.core.Is.is;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestExecutionListeners(listeners = {RepositoryTest.SchemaInitializer.class}, mergeMode = MERGE_WITH_DEFAULTS)
-@SpringApplicationConfiguration(classes = {H2Configuration.class, HibernateConfiguration.class})
-public class RepositoryTest {
+@TestExecutionListeners(listeners = {CustomerRepositoryTest.SchemaInitializer.class}, mergeMode = MERGE_WITH_DEFAULTS)
+@SpringBootTest(classes = {H2Configuration.class, HibernateConfiguration.class})
+public class CustomerRepositoryTest {
 
     public static class SchemaInitializer extends AbstractTestExecutionListener {
         @Override
-        public void beforeTestClass(TestContext testContext) throws Exception {
+        public void beforeTestClass(TestContext testContext) {
             DataSource dataSource = testContext.getApplicationContext().getBean(DataSource.class);
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
             jdbcTemplate.update("CREATE TABLE Customer(\n" +
@@ -44,7 +44,7 @@ public class RepositoryTest {
     private CustomerRepository repository;
 
     @Test
-    public void saveAndRead() throws Exception {
+    public void saveAndRead() {
         Customer john = new Customer("John", "Doe");
         Customer save = repository.save(john);
         assertThat(save.id, Matchers.notNullValue());

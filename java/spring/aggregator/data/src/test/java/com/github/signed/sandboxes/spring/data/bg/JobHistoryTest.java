@@ -11,14 +11,14 @@ import static org.junit.Assert.assertThat;
 public class JobHistoryTest {
 
     @Test
-    public void name() throws Exception {
+    public void name() {
         LocalDate base = LocalDate.of(2012, 1, 1);
         Job latest = jobFor(base.plusDays(3));
-        Job earlieast = jobFor(base.plusDays(0));
+        Job earliest = jobFor(base.plusDays(0));
         Job middle = jobFor(base.plusDays(1));
-        JobHistory jobHistory = JobHistory.createFromUnsorted(Arrays.asList(latest, earlieast, middle));
+        JobHistory jobHistory = JobHistory.createFromUnsorted(Arrays.asList(latest, earliest, middle));
 
-        assertThat(jobHistory.jobAt(0), sameInstance(earlieast));
+        assertThat(jobHistory.jobAt(0), sameInstance(earliest));
     }
 
     private Job jobFor(LocalDate localDate) {

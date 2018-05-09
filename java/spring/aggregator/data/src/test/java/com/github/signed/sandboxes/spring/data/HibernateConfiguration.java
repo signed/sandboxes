@@ -20,7 +20,6 @@ public class HibernateConfiguration {
         propertyMap.put("hibernate.show_sql", "true");
         propertyMap.put("hibernate.format_sql", "true");
         propertyMap.put("hibernate.use_sql_comments", "true");
-
         return hibernateJpaVendorAdapter;
     }
 
