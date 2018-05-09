@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.github.signed.sandboxes.spring.advices.configuration.AdvisedControllerApplicationConfiguration;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class AdvisedControllerApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(AdvisedControllerApplicationConfiguration.class, args);
     }
 

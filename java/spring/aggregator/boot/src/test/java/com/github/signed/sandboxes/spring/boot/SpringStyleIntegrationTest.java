@@ -3,18 +3,17 @@ package com.github.signed.sandboxes.spring.boot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import retrofit.RestAdapter;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { BootApplication.class, SpringStyleIntegrationTest.Blub.class})
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = { BootApplication.class, SpringStyleIntegrationTest.Blub.class})
 public class SpringStyleIntegrationTest {
 
 

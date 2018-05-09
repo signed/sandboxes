@@ -1,43 +1,41 @@
 package com.github.signed.sandboxes.spring.boot;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isA;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import retrofit.RestAdapter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {PropertiesFromConfigurationFileApplication.class})
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PropertiesFromConfigurationFileApplication.class})
 public class SpringStyleIntegrationTest {
 
     @Value("${local.server.port}")
     private int port;
 
     @Test
-    public void hasCommitHash() throws Exception {
+    public void hasCommitHash() {
         assertThat(versionInformation().commit_hash, isA(String.class));
     }
 
     @Test
-    public void hasHardCodedBuildNumber() throws Exception {
+    public void hasHardCodedBuildNumber() {
         assertThat(versionInformation().build_number, is("45"));
     }
 
     @Test
-    public void hasCurrentVersion() throws Exception {
+    public void hasCurrentVersion() {
         assertThat(versionInformation().version, is("0.1.0-SNAPSHOT"));
     }
 
     @Test
-    public void hasBuildTimeStamp() throws Exception {
+    public void hasBuildTimeStamp() {
         assertThat(versionInformation().timestamp, isA(String.class));
     }
 

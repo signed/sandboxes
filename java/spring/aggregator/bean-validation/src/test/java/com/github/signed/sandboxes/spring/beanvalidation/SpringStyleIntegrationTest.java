@@ -1,47 +1,44 @@
 package com.github.signed.sandboxes.spring.beanvalidation;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = BootWithBeanValidationApplication.class)
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = BootWithBeanValidationApplication.class)
 public class SpringStyleIntegrationTest {
 
-    private final RestTemplate restTemplate = new TestRestTemplate();
+    private final TestRestTemplate restTemplate = new TestRestTemplate();
     @Value("${local.server.port}")
     private int port;
 
     private final Map<String, Object> parameters = new HashMap<>();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         parameters.put("port", port);
     }
 
 
 
     @Test
-    public void ifNameIsMissingRespondWith400() throws Exception {
+    public void ifNameIsMissingRespondWith400() {
         TransferObject transferObject = new TransferObject();
         HttpEntity<?> requestEntity = new HttpEntity<>(transferObject);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:{port}/primitives", HttpMethod.PUT, requestEntity, String.class, parameters);
