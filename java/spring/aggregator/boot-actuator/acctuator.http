@@ -1,3 +1,6 @@
+# https://spring.io/blog/2018/03/16/micrometer-spring-boot-2-s-new-application-metrics-collector
+# http://www.baeldung.com/micrometer
+
 GET http://localhost:8080/actuator/health
 
 ###
