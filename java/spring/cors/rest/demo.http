@@ -1,0 +1,9 @@
+OPTIONS http://localhost:8080/greet
+Origin: http://foo.client.com
+Access-Control-Request-Method: GET
+Access-Control-Request-Headers: origin, accept, content-type, authorization
+
+###
+GET http://localhost:8080/greet
+###
+
