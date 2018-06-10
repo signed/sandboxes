@@ -14,6 +14,7 @@ https://blog.hazelcast.com/testing-hazelcast-spring-boot/
 == Questions
 [qanda]
 What is https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22hazelcast-client%22[hazelcast-client] for?::
+  Looks like the client does not store data or runs tasks.
   Do not know yet.
 How can the multicast cluster search be disabled?::
   Should be in http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#discovery-mechanisms[here], not read yet.
