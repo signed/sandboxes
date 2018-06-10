@@ -17,4 +17,6 @@ What is https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22hazelcast-client%22[h
 How can the multicast cluster search be disabled?::
   Do not know yet.
 How can http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#member-user-code-deployment-beta[member user code] be disabled?::
+  User Code Deployment feature is not enabled by default.
+How can configure that each member holds all the data?::
   Do not know yet.
