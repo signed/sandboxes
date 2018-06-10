@@ -19,7 +19,7 @@ public class One {
         JVMShutdownHook jvmShutdownHook = new JVMShutdownHook(watchlist);
         Runtime.getRuntime().addShutdownHook(jvmShutdownHook);
 
-        Map<Integer, String> mapCustomers = watchlist.map();
+        Map<Integer, String> mapCustomers = watchlist.customersMap();
         mapCustomers.put(1, "Joe");
         mapCustomers.put(2, "Ali");
         mapCustomers.put(3, "Avi");

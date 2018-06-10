@@ -13,8 +13,13 @@ public class Watchlist {
         instance = Hazelcast.newHazelcastInstance(cfg);
     }
 
-    public <Key, Value> IMap<Key, Value> map() {
-        return instance.getMap("customers");
+    public <Key, Value> IMap<Key, Value> customersMap() {
+        String mapName = "customers";
+        return map(mapName);
+    }
+
+    public <Key, Value> IMap<Key, Value> map(String mapName) {
+        return instance.getMap(mapName);
     }
 
     public <T> IQueue<T> queue() {
