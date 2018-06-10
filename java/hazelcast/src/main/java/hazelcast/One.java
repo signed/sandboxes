@@ -10,6 +10,7 @@ public class One {
 
     public static void main(String[] args) {
         Config cfg = new Config();
+        cfg.setProperty("hazelcast.logging.type", "slf4j");
         GroupConfig groupConfig = cfg.getGroupConfig();
         groupConfig.setName("development");
 

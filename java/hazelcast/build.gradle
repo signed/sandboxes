@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
 	compile 'com.hazelcast:hazelcast:3.10.2'
+	compile 'ch.qos.logback:logback-classic:1.2.3'
 	testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
 	testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
 	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
