@@ -77,6 +77,24 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(216825493L);
         foundNoMatchingAccountInAgora.add(80870252L);
         foundNoMatchingAccountInAgora.add(238485385L);
+        foundNoMatchingAccountInAgora.add(131798142L);
+        foundNoMatchingAccountInAgora.add(246799655L);
+        foundNoMatchingAccountInAgora.add(1169690L);
+        foundNoMatchingAccountInAgora.add(203197123L);
+        foundNoMatchingAccountInAgora.add(240898885L);
+        foundNoMatchingAccountInAgora.add(238066131L);
+        foundNoMatchingAccountInAgora.add(230877327L);
+        foundNoMatchingAccountInAgora.add(233945300L);
+        foundNoMatchingAccountInAgora.add(257090664L);
+        foundNoMatchingAccountInAgora.add(253961105L);
+        foundNoMatchingAccountInAgora.add(248575838L);
+        foundNoMatchingAccountInAgora.add(236278996L);
+        foundNoMatchingAccountInAgora.add(239164127L);
+        foundNoMatchingAccountInAgora.add(196670328L);
+        foundNoMatchingAccountInAgora.add(255103873L);
+        foundNoMatchingAccountInAgora.add(235970486L);
+        foundNoMatchingAccountInAgora.add(239656659L);
+        foundNoMatchingAccountInAgora.add(194363805L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -95,6 +113,7 @@ public class SamplesTest {
         meetupToAgora.put(212880162L, "Mark_Treeman");
         meetupToAgora.put(198456464L, "Djelloul007");
         meetupToAgora.put(204051032L, "Slawa");
+        meetupToAgora.put(240292672L, "touramakan");
     }
 
     private final Map<String, Long> agoraToMeetup = invert(meetupToAgora);
@@ -143,8 +162,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("250382919");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-80");
+        List<MeetupMember> meetup = meetupParticipants("251923777");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-82");
 
         printUniqueRsvps(meetup, agora);
     }
