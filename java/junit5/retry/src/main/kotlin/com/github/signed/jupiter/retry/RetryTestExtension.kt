@@ -9,8 +9,8 @@ import java.util.Spliterators.spliteratorUnknownSize
 import java.util.stream.Stream
 import java.util.stream.StreamSupport.stream
 
+@Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.ANNOTATION_CLASS])
 @TestTemplate
-@Target(AnnotationTarget.FUNCTION)
 @ExtendWith(RetryTestExtension::class)
 annotation class Retry(val times: Int = 1)
 
@@ -69,7 +69,7 @@ class RetryContext(val retries: Int) : ExtensionContext.Store.CloseableResource 
 
         private fun storeFor(context: ExtensionContext): ExtensionContext.Store {
             val namespace = ExtensionContext.Namespace.create(RetryTestExtension::class.java)
-            return context.parent.get().getStore(namespace)
+            return context.getStore(namespace)
         }
     }
 
