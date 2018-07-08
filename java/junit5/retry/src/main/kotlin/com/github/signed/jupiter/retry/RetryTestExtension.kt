@@ -34,11 +34,11 @@ class ShouldKeepTrying : ExecutionCondition {
     override fun evaluateExecutionCondition(executionContext: ExtensionContext?): ConditionEvaluationResult {
         val retryContext = RetryContext.from(executionContext)
         return when (retryContext.alreadySuccessful()) {
-            true -> ConditionEvaluationResult.disabled("already had one successful run")
             false -> {
                 retryContext.nextRun()
                 ConditionEvaluationResult.enabled("no success yet")
             }
+            true -> ConditionEvaluationResult.disabled("already had one successful run")
         }
     }
 }
@@ -82,16 +82,14 @@ class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCou
     }
 }
 
-class RetryInformation(val invocation: Int) {
-
-}
+class RetryInformation(val invocation: Int)
 
 class BetterName : TestExecutionExceptionHandler {
     override fun handleTestExecutionException(context: ExtensionContext?, throwable: Throwable?) {
         val retryContext = RetryContext.from(context)
         retryContext.failed()
         if (retryContext.isRetryLeft()) {
-            throw TestAbortedException("this is ugly")
+            throw TestAbortedException("retry left")
         } else {
             throw throwable!!
         }
