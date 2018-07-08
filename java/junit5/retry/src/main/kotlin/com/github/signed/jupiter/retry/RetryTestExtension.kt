@@ -43,17 +43,10 @@ class ConditionalRetryTemplateIterator(private val retryContext: RetryContext) :
     }
 }
 
-
 class ShouldKeepTrying : ExecutionCondition {
     override fun evaluateExecutionCondition(executionContext: ExtensionContext): ConditionEvaluationResult {
-        val retryContext = RetryContext.from(executionContext)
-        return when (retryContext.alreadySuccessful()) {
-            false -> {
-                retryContext.nextRun()
-                ConditionEvaluationResult.enabled("no success yet")
-            }
-            true -> ConditionEvaluationResult.disabled("already had one successful run")
-        }
+        RetryContext.from(executionContext).startNextTry()
+        return ConditionEvaluationResult.enabled("no success yet and retries left")
     }
 }
 
@@ -80,15 +73,11 @@ class RetryContext(val retries: Int) : ExtensionContext.Store.CloseableResource 
         failedCount += 1
     }
 
-    fun alreadySuccessful(): Boolean {
-        return invocationCount > failedCount
-    }
-
     fun invocationCount(): Int {
         return invocationCount
     }
 
-    fun nextRun() {
+    fun startNextTry() {
         invocationCount += 1
     }
 
@@ -98,6 +87,10 @@ class RetryContext(val retries: Int) : ExtensionContext.Store.CloseableResource 
 
     fun keepTrying(): Boolean {
         return !alreadySuccessful() && isRetryLeft()
+    }
+
+    private fun alreadySuccessful(): Boolean {
+        return invocationCount > failedCount
     }
 
     override fun close() {
