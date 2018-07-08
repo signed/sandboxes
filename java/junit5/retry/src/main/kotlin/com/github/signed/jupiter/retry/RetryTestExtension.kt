@@ -16,16 +16,14 @@ annotation class Retry(val times: Int = 1)
 
 class RetryTestExtension : TestTemplateInvocationContextProvider {
     override fun supportsTestTemplate(context: ExtensionContext): Boolean {
-        return context.testMethod.map { it.isAnnotationPresent(Retry::class.java) }.orElse(false)
+        return context.testMethod.map { AnnotationSupport.isAnnotated(it, Retry::class.java) }.orElse(false)
     }
 
     override fun provideTestTemplateInvocationContexts(extensionContext: ExtensionContext): Stream<TestTemplateInvocationContext> {
-        val testMethod = extensionContext.testMethod.orElseThrow { shouldNeverHappen() }
-        val retryAnnotation = AnnotationSupport.findAnnotation(testMethod, Retry::class.java).orElseThrow { shouldNeverHappen() }
-
+        val retryAnnotation = AnnotationSupport.findAnnotation(extensionContext.testMethod, Retry::class.java).orElseThrow { shouldNeverHappen() }
         val retryCount = retryAnnotation.times
-        val retryContext = RetryContext.erect(extensionContext, retryCount)
 
+        val retryContext = RetryContext.erectIn(extensionContext, retryCount)
         val spliterator = spliteratorUnknownSize<TestTemplateInvocationContext>(ConditionalRetryTemplateIterator(retryContext), Spliterator.NONNULL)
         return stream<TestTemplateInvocationContext>(spliterator, false)
     }
@@ -52,7 +50,7 @@ class ShouldKeepTrying : ExecutionCondition {
 
 class RetryContext(val retries: Int) : ExtensionContext.Store.CloseableResource {
     companion object {
-        fun erect(context: ExtensionContext, retryCount: Int): RetryContext {
+        fun erectIn(context: ExtensionContext, retryCount: Int): RetryContext {
             return storeFor(context).getOrComputeIfAbsent(context.requiredTestMethod.name, { RetryContext(retries = retryCount) }, RetryContext::class.java)
         }
 
