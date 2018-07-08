@@ -4,31 +4,45 @@ import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.*
 import org.junit.platform.commons.support.AnnotationSupport
 import org.opentest4j.TestAbortedException
-import java.util.stream.IntStream
+import java.util.*
+import java.util.Spliterators.spliteratorUnknownSize
 import java.util.stream.Stream
+import java.util.stream.StreamSupport.stream
 
 @TestTemplate
 @Target(AnnotationTarget.FUNCTION)
 @ExtendWith(RetryTestExtension::class)
-annotation class Retry(val count: Int = 1)
+annotation class Retry(val times: Int = 1)
 
 class RetryTestExtension : TestTemplateInvocationContextProvider {
     override fun supportsTestTemplate(context: ExtensionContext?): Boolean {
         return context!!.testMethod.map { it.isAnnotationPresent(Retry::class.java) }.orElse(false)
     }
 
-    override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext> {
-        val testMethod = context!!.testMethod.orElseThrow { shouldNeverHappen() }
+    override fun provideTestTemplateInvocationContexts(extensionContext: ExtensionContext?): Stream<TestTemplateInvocationContext> {
+        val testMethod = extensionContext!!.testMethod.orElseThrow { shouldNeverHappen() }
         val retryAnnotation = AnnotationSupport.findAnnotation(testMethod, Retry::class.java).orElseThrow { shouldNeverHappen() }
 
-        val retryCount = retryAnnotation.count
-        RetryContext.erect(context, retryCount)
+        val retryCount = retryAnnotation.times
+        val retryContext = RetryContext.erect(extensionContext, retryCount)
 
-        return IntStream.rangeClosed(1, retryCount + 1).mapToObj { RetryTemplate() }
+        val spliterator = spliteratorUnknownSize<TestTemplateInvocationContext>(ConditionalRetryTemplateIterator(retryContext), Spliterator.NONNULL)
+        return stream<TestTemplateInvocationContext>(spliterator, false)
     }
 
     private fun shouldNeverHappen() = ExtensionContextException("should never happen because this is check beforehand")
 }
+
+class ConditionalRetryTemplateIterator(private val retryContext: RetryContext) : Iterator<RetryTemplate> {
+    override fun hasNext(): Boolean {
+        return retryContext.keepTrying()
+    }
+
+    override fun next(): RetryTemplate {
+        return RetryTemplate()
+    }
+}
+
 
 class ShouldKeepTrying : ExecutionCondition {
     override fun evaluateExecutionCondition(executionContext: ExtensionContext?): ConditionEvaluationResult {
@@ -45,8 +59,8 @@ class ShouldKeepTrying : ExecutionCondition {
 
 class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCount: Int = 0) : ExtensionContext.Store.CloseableResource {
     companion object {
-        fun erect(context: ExtensionContext, retryCount: Int) {
-            storeFor(context).getOrComputeIfAbsent(context.requiredTestMethod.name, { RetryContext(retries = retryCount) }, RetryContext::class.java)
+        fun erect(context: ExtensionContext, retryCount: Int): RetryContext {
+            return storeFor(context).getOrComputeIfAbsent(context.requiredTestMethod.name, { RetryContext(retries = retryCount) }, RetryContext::class.java)
         }
 
         fun from(context: ExtensionContext?): RetryContext {
@@ -64,17 +78,19 @@ class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCou
     }
 
     fun alreadySuccessful(): Boolean {
-        println("[d] already successful")
         return invocationCount > failedCount
     }
 
     fun nextRun() {
-        println("[d] next run")
         invocationCount += 1
     }
 
     fun isRetryLeft(): Boolean {
         return failedCount <= retries
+    }
+
+    fun keepTrying(): Boolean {
+        return !alreadySuccessful() && isRetryLeft()
     }
 
     override fun close() {
