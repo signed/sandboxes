@@ -15,12 +15,12 @@ import java.util.stream.StreamSupport.stream
 annotation class Retry(val times: Int = 1)
 
 class RetryTestExtension : TestTemplateInvocationContextProvider {
-    override fun supportsTestTemplate(context: ExtensionContext?): Boolean {
-        return context!!.testMethod.map { it.isAnnotationPresent(Retry::class.java) }.orElse(false)
+    override fun supportsTestTemplate(context: ExtensionContext): Boolean {
+        return context.testMethod.map { it.isAnnotationPresent(Retry::class.java) }.orElse(false)
     }
 
-    override fun provideTestTemplateInvocationContexts(extensionContext: ExtensionContext?): Stream<TestTemplateInvocationContext> {
-        val testMethod = extensionContext!!.testMethod.orElseThrow { shouldNeverHappen() }
+    override fun provideTestTemplateInvocationContexts(extensionContext: ExtensionContext): Stream<TestTemplateInvocationContext> {
+        val testMethod = extensionContext.testMethod.orElseThrow { shouldNeverHappen() }
         val retryAnnotation = AnnotationSupport.findAnnotation(testMethod, Retry::class.java).orElseThrow { shouldNeverHappen() }
 
         val retryCount = retryAnnotation.times
@@ -45,7 +45,7 @@ class ConditionalRetryTemplateIterator(private val retryContext: RetryContext) :
 
 
 class ShouldKeepTrying : ExecutionCondition {
-    override fun evaluateExecutionCondition(executionContext: ExtensionContext?): ConditionEvaluationResult {
+    override fun evaluateExecutionCondition(executionContext: ExtensionContext): ConditionEvaluationResult {
         val retryContext = RetryContext.from(executionContext)
         return when (retryContext.alreadySuccessful()) {
             false -> {
@@ -57,14 +57,14 @@ class ShouldKeepTrying : ExecutionCondition {
     }
 }
 
-class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCount: Int = 0) : ExtensionContext.Store.CloseableResource {
+class RetryContext(val retries: Int) : ExtensionContext.Store.CloseableResource {
     companion object {
         fun erect(context: ExtensionContext, retryCount: Int): RetryContext {
             return storeFor(context).getOrComputeIfAbsent(context.requiredTestMethod.name, { RetryContext(retries = retryCount) }, RetryContext::class.java)
         }
 
-        fun from(context: ExtensionContext?): RetryContext {
-            return storeFor(context!!).get(context.requiredTestMethod.name, RetryContext::class.java)
+        fun from(context: ExtensionContext): RetryContext {
+            return storeFor(context).get(context.requiredTestMethod.name, RetryContext::class.java)
         }
 
         private fun storeFor(context: ExtensionContext): ExtensionContext.Store {
@@ -73,12 +73,19 @@ class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCou
         }
     }
 
+    private var invocationCount: Int = 0
+    private var failedCount: Int = 0
+
     fun failed() {
         failedCount += 1
     }
 
     fun alreadySuccessful(): Boolean {
         return invocationCount > failedCount
+    }
+
+    fun invocationCount(): Int {
+        return invocationCount
     }
 
     fun nextRun() {
@@ -101,7 +108,7 @@ class RetryContext(val retries: Int, var invocationCount: Int = 0, var failedCou
 class RetryInformation(val invocation: Int)
 
 class BetterName : TestExecutionExceptionHandler {
-    override fun handleTestExecutionException(context: ExtensionContext?, throwable: Throwable?) {
+    override fun handleTestExecutionException(context: ExtensionContext, throwable: Throwable?) {
         val retryContext = RetryContext.from(context)
         retryContext.failed()
         if (retryContext.isRetryLeft()) {
@@ -113,13 +120,13 @@ class BetterName : TestExecutionExceptionHandler {
 }
 
 class RetryInformationParameterResolver : ParameterResolver {
-    override fun supportsParameter(parameterContext: ParameterContext?, extensionContext: ExtensionContext?): Boolean {
+    override fun supportsParameter(parameterContext: ParameterContext?, extensionContext: ExtensionContext): Boolean {
         return RetryInformation::class.java == parameterContext!!.parameter.type
     }
 
-    override fun resolveParameter(parameterContext: ParameterContext?, extensionContext: ExtensionContext?): Any {
+    override fun resolveParameter(parameterContext: ParameterContext?, extensionContext: ExtensionContext): Any {
         val context = RetryContext.from(extensionContext)
-        return RetryInformation(context.invocationCount)
+        return RetryInformation(context.invocationCount())
     }
 }
 
