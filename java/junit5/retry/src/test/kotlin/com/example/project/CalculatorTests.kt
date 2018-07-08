@@ -1,11 +1,12 @@
 package com.example.project
 
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(DiagnosticExtension::class)
 class CalculatorTests {
 
     @Test
@@ -14,17 +15,18 @@ class CalculatorTests {
         assertEquals(2, calculator.add(1, 1), "1 + 1 should equal 2")
     }
 
-    @ParameterizedTest(name = "{0} + {1} = {2}")
-    @CsvSource(
-            "0,    1,   1",
-            "1,    2,   3",
-            "49,  51, 100",
-            "1,  100, 101"
-    )
-    fun add(first: Int, second: Int, expectedResult: Int) {
-        val calculator = Calculator()
-        assertEquals(expectedResult, calculator.add(first, second)) {
-            "$first + $second should equal $expectedResult"
-        }
+    @BeforeEach
+    fun setUp() {
+        println("CalculatorTests.setUp")
+    }
+
+    @AfterEach
+    fun tearDown() {
+        println("CalculatorTests.tearDown")
+    }
+
+    @Test
+    fun `raise exception`() {
+        throw RuntimeException("see what is called")
     }
 }
