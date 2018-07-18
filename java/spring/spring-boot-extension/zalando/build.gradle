@@ -12,5 +12,22 @@ repositories {
 dependencies {
     compile 'org.zalando:tracer-spring-boot-starter:0.17.0'
     compile("org.springframework.boot:spring-boot-starter-web:2.0.3.RELEASE")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.2.0"
+    testCompile('org.springframework.boot:spring-boot-starter-test:2.0.3.RELEASE') {
+        exclude group: 'junit', module: 'junit;'
+    }
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.2.0"
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    reports {
+        html.enabled = true
+    }
 }
