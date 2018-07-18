@@ -1,0 +1,16 @@
+plugins {
+    id 'org.springframework.boot' version '2.0.3.RELEASE'
+}
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.zalando:tracer-spring-boot-starter:0.17.0'
+    compile("org.springframework.boot:spring-boot-starter-web:2.0.3.RELEASE")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
