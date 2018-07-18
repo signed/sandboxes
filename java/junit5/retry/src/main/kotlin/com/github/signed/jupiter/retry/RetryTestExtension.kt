@@ -124,7 +124,7 @@ class RetryInformationParameterResolver : ParameterResolver {
 class RetryTemplate : TestTemplateInvocationContext {
 
     override fun getDisplayName(invocationIndex: Int): String {
-        return if (invocationIndex == 1) "initial run" else "retry " + (invocationIndex - 1)
+        return if (invocationIndex == 1) "initial try" else "retry " + (invocationIndex - 1)
     }
 
     override fun getAdditionalExtensions(): MutableList<Extension> {
