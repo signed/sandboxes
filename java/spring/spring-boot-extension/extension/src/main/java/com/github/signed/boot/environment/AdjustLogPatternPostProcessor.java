@@ -15,7 +15,7 @@ public class AdjustLogPatternPostProcessor implements EnvironmentPostProcessor {
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         MutablePropertySources propertySources = environment.getPropertySources();
         String system = environment.getProperty("logging.environment");
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         //map.put("logging.pattern.level", "%clr(%5p) %clr([${spring.application.name:},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]){yellow}");
         map.put("logging.pattern.level", "env=" + system + " lvl=%p request=%mdc{requestId:-none}");
         propertySources.addLast(new MapPropertySource(PROPERTY_SOURCE_NAME, map));
