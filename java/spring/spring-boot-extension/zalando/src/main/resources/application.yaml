@@ -3,7 +3,7 @@ spring:
     banner-mode: "off"
 tracer:
   traces:
-    X-Trace-ID: uuid
+    mdcs-request-id: uuid
 
 
 # As soon as there is a logback configuration file on the class path

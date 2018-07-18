@@ -3,10 +3,11 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="mdcs" converterClass="sample.MDCStructuralConverter"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} [%X{X-Trace-ID}] %msg%n</pattern>
+            <pattern>%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} lvl=%p%mdcs{mdcs-request-id:-request} %msg%n</pattern>
         </encoder>
     </appender>
 
