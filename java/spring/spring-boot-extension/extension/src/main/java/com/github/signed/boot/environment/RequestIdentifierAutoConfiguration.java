@@ -1,7 +1,9 @@
 package com.github.signed.boot.environment;
 
-import org.apache.log4j.MDC;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+//import org.apache.log4j.MDC;
+//import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.slf4j.MDC;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,7 +21,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 public class RequestIdentifierAutoConfiguration {
     @Bean(name = "requestIdFilter")
     public FilterRegistrationBean requestLoggingFilter() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean<OncePerRequestFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setName("RequestIdFilter");
         filterRegistrationBean.setOrder(HIGHEST_PRECEDENCE);
         filterRegistrationBean.setFilter(new OncePerRequestFilter() {
@@ -27,7 +29,7 @@ public class RequestIdentifierAutoConfiguration {
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
                 System.out.println("enter mdc");
                 try {
-                    MDC.put("requestId", UUID.randomUUID());
+                    MDC.put("requestId", UUID.randomUUID().toString());
                     filterChain.doFilter(request, response);
                 } finally {
                     MDC.clear();

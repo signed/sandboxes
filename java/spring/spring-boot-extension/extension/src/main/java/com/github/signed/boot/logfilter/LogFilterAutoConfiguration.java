@@ -1,6 +1,6 @@
 package com.github.signed.boot.logfilter;
 
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,7 +18,7 @@ public class LogFilterAutoConfiguration {
 
     @Bean(name = "requestLogFilter")
     public FilterRegistrationBean requestLoggingFilter() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean<RequestLogFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setName("RequestLogFilter");
         filterRegistrationBean.setOrder(HIGHEST_PRECEDENCE);
         filterRegistrationBean.setFilter(new RequestLogFilter());
