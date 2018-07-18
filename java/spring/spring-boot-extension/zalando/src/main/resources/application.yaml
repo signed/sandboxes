@@ -1,0 +1,15 @@
+spring:
+  main:
+    banner-mode: "off"
+tracer:
+  traces:
+    X-Trace-ID: uuid
+
+
+# As soon as there is a logback configuration file on the class path
+# this configuration here does no longer have an effect
+#logging:
+#  level:
+#    root: off
+#    sample.LogbookTracerBootApplication: info
+
