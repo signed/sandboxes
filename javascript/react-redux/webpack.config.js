@@ -1,27 +1,36 @@
-var path = require('path');
-
-var DIST_PATH = path.resolve(__dirname, 'dist');
-var SOURCE_PATH = path.resolve(__dirname, 'src');
+const path = require('path');
 
 module.exports = {
-  entry: SOURCE_PATH + '/app/app.js',
+  mode: "development",
+  entry: './src/index.js',
   output: {
-    path: DIST_PATH,
-    filename: 'app.dist.js',
-    publicPath: '/app/'
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
-    loaders: [
+    rules: [
+      {test: /\.txt$/, use: 'raw-loader'},
+      {test: /\.ts$/, use: 'ts-loader'},
       {
-        test: /.jsx?$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: [
-            'es2015',
-            'react',
-            'stage-2'
-          ]
+        test: /\.css$/,
+        use: [
+          {loader: 'style-loader'},
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
         }
       }
     ]
