@@ -4,6 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "babel": "babel",
+    "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
