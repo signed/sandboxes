@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "serve": "webpack-serve --config webpack.dev.js"
+    "serve": "webpack-serve --config webpack.dev.js --open"
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0-beta.54",
     "react": "16.4.1",
-    "react-dom": "16.4.1"
+    "react-dom": "16.4.1",
+    "redux": "4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.54",
