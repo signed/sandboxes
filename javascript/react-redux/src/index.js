@@ -1,16 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './components/clock';
-
-class Welcome extends React.Component {
-  render() {
-    return <h1>Hello, {this.props.name}</h1>;
-  }
-}
+import Welcome from './components/welcome'
 
 function App() {
   return (
     <div>
+      <h1>Hello, World!</h1>
       <Clock/>
       <Welcome name="Sara"/>
       <Welcome name="Cahal"/>
