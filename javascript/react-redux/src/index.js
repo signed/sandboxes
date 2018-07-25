@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './components/clock';
 import Welcome from './components/welcome'
+import Tree from './components/tree'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Welcome name="Sara"/>
       <Welcome name="Cahal"/>
       <Welcome name="Edite"/>
+      <Tree/>
     </div>
   );
 }
