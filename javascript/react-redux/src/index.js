@@ -2,7 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './components/clock';
 import Welcome from './components/welcome'
-import Tree from './components/tree'
+import {BackendBoundTree, TreeContainer} from './components/tree'
+
+import {createStore} from 'redux'
+import reducers from './state/reducers'
+import {replaceItemsWith} from "./state/actions";
+
+const store = createStore(reducers);
+store.subscribe(() => {
+  console.log("change")
+  const state = store.getState();
+  console.log(state);
+});
+
+store.dispatch(replaceItemsWith({name: "one"}));
+
 
 function App() {
   return (
@@ -12,7 +26,8 @@ function App() {
       <Welcome name="Sara"/>
       <Welcome name="Cahal"/>
       <Welcome name="Edite"/>
-      <Tree/>
+      <BackendBoundTree/>
+      <TreeContainer/>
     </div>
   );
 }

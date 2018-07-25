@@ -1,7 +1,7 @@
 import React from "react";
 import * as backend from '../inmemorybackend'
 
-export default class Tree extends React.Component {
+export class BackendBoundTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {items: []};
@@ -16,6 +16,40 @@ export default class Tree extends React.Component {
     return (
       <ul>
         {this.state.items.map(c => (
+          <li>{c.name}</li>
+        ))}
+      </ul>
+    );
+  }
+}
+
+export class TreeContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {items: []};
+  }
+
+  componentDidMount() {
+    backend.fetchSomeItems()
+      .then(items => this.setState({items}));
+  }
+
+  render() {
+    return (
+      <Tree items={this.state.items}/>
+    );
+  }
+}
+
+export class Tree extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.props.items.map(c => (
           <li>{c.name}</li>
         ))}
       </ul>
