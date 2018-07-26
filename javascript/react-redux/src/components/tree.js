@@ -15,8 +15,8 @@ export class BackendBoundTree extends React.Component {
   render() {
     return (
       <ul>
-        {this.state.items.map(c => (
-          <li>{c.name}</li>
+        {this.state.items.map((c, i) => (
+          <li key={i}>{c.name}</li>
         ))}
       </ul>
     );
@@ -49,8 +49,8 @@ export class Tree extends React.Component {
   render() {
     return (
       <ul>
-        {this.props.items.map(c => (
-          <li>{c.name}</li>
+        {this.props.items.map((c, i) => (
+          <li key={i}>{c.name}</li>
         ))}
       </ul>
     );
