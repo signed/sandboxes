@@ -15,7 +15,6 @@ function connectionsReducer(state = [], action) {
   return state
 }
 
-
 export default combineReducers({
   items: itemsReducer,
   connections: connectionsReducer,
