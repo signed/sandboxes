@@ -1,5 +1,6 @@
 import React from "react";
-import * as backend from '../inmemorybackend'
+import * as backend from '../inmemorybackend';
+import {connect} from 'react-redux';
 
 export class BackendBoundTree extends React.Component {
   constructor(props) {
@@ -41,6 +42,16 @@ export class TreeContainer extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    items: state.items
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
 export class Tree extends React.Component {
   constructor(props) {
     super(props);
@@ -56,3 +67,5 @@ export class Tree extends React.Component {
     );
   }
 }
+
+export const TreeContainerStoreBound = connect(mapStateToProps, mapDispatchToProps)(Tree);

@@ -1,22 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux'
 import Clock from './components/clock';
 import Welcome from './components/welcome'
-import {BackendBoundTree, TreeContainer} from './components/tree'
+import {TreeContainerStoreBound} from './components/tree'
 
 import {createStore} from 'redux'
 import reducers from './state/reducers'
-import {replaceItemsWith} from "./state/actions";
+import {FetchItemsButtonFunctionContainer} from "./components/FetchItemsButton";
 
 const store = createStore(reducers);
 store.subscribe(() => {
-  console.log("change")
+  console.log("change");
   const state = store.getState();
   console.log(state);
 });
-
-store.dispatch(replaceItemsWith({name: "one"}));
-
 
 function App() {
   return (
@@ -24,15 +22,15 @@ function App() {
       <h1>Hello, World!</h1>
       <Clock/>
       <Welcome name="Sara"/>
-      <Welcome name="Cahal"/>
-      <Welcome name="Edite"/>
-      <BackendBoundTree/>
-      <TreeContainer/>
+      <FetchItemsButtonFunctionContainer/>
+      <TreeContainerStoreBound/>
     </div>
   );
 }
 
 ReactDOM.render(
-  <App/>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root')
 );
