@@ -95,6 +95,9 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(235970486L);
         foundNoMatchingAccountInAgora.add(239656659L);
         foundNoMatchingAccountInAgora.add(194363805L);
+        foundNoMatchingAccountInAgora.add(259990930L);
+        foundNoMatchingAccountInAgora.add(260012823L);
+        foundNoMatchingAccountInAgora.add(243539786L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -114,6 +117,9 @@ public class SamplesTest {
         meetupToAgora.put(198456464L, "Djelloul007");
         meetupToAgora.put(204051032L, "Slawa");
         meetupToAgora.put(240292672L, "touramakan");
+        meetupToAgora.put(53511172L, "tgrip");
+        meetupToAgora.put(235776797L, "Junk");
+        meetupToAgora.put(182712146L, "rambii");
     }
 
     private final Map<String, Long> agoraToMeetup = invert(meetupToAgora);
@@ -162,8 +168,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("251923777");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-82");
+        List<MeetupMember> meetup = meetupParticipants("253106023");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-83");
 
         printUniqueRsvps(meetup, agora);
     }
