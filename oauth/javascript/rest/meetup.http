@@ -1,0 +1,35 @@
+GET https://secure.meetup.com/oauth2/authorize?client_id=6cl48m0hmuuqe44i5iqcrjrmo8&response_type=token&redirect_uri=https://localhost&scope=event_management
+###
+
+
+GET https://api.meetup.com/Softwerkskammer-Karlsruhe/events
+
+###
+HEAD https://api.meetup.com/Softwerkskammer-Karlsruhe/events
+###
+
+POST https://api.meetup.com/3/Softwerkskammer-Karlsruhe/events
+Authorization: Bearer eb914cc1d383123301bc2a7533332781
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+
+###
+
+###
+
+POST https://api.meetup.com/Softwerkskammer-Karlsruhe/events
+Authorization: Bearer eb914cc1d383123301bc2a7533332781
+Content-Type: application/x-www-form-urlencoded
+
+name=draft-from-the-api&publish_status=draft&time=1533749400000&self_rsvp=true&venue_id=25894242&description=Catch+me+if+you+can%0AOn+multiple%0Alines%0Aover+and+over+again+<i>juhuu</i>
+
+#queries=%28endpoint%3ASoftwerkskammer-Karlsruhe%2Fevents%2F%2Cmeta%3A%28method%3Apost%29%2Cparams%3A%28description%3A%27just+some+fun%27%2Cduration%3A7200000%2Cfee.accepts%3Anone%2Cfee.amount%3A%27%27%2Cfee.currency%3AUSD%2Cfee.refund_policy%3A%27%27%2Cfields%3Afee_options%2Cguest_limit%3A0%2Clocal_date%3A%272018-09-12%27%2Clocal_time%3A%2719%3A00%27%2Cname%3A%27Draft+title%27%2Cpublish_status%3Adraft%2Cquestion%3A%27%27%2Crsvp_close_offset%3APT0M%2Crsvp_limit%3A%27256%27%2Crsvp_open_offset%3APT0M%2Cseries.is_repeating%3A%21f%29%2Cref%3AeventSchedule%29
+
+###
+GET https://api.meetup.com/Softwerkskammer-Karlsruhe/events/253106023
+
+###
