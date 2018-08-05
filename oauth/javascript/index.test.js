@@ -5,16 +5,17 @@ const finalPosition = () => {
     return startRover;
 };
 
-describe("hello rover", () => {
-    const initialPosition = {x: 0, y: 0, direction: 'N'};
+const startingAt = (x) => (y) => direction => {
+    return {x, y, direction}
+};
 
-    it.only("rover without commands stays in position", () => {
-        expect(finalPosition()(initialPosition)([])).to.be.deep.equal({x: 0, y: 0, direction: 'N'})
+describe("hello rover", () => {
+    it("rover without commands stays in position", () => {
+        expect(finalPosition()(startingAt(0)(0)('N'))([])).to.be.deep.equal({x: 0, y: 0, direction: 'N'})
     });
     describe("move", () => {
         it("one step forward", () => {
-            const finalPosition = startRover(initialPosition)([]);
-            expect(finalPosition).to.be.deep.equal({x: 0, y: 0, direction: 'N'})
+            expect(startRover(startingAt(0)(0)('N'))(['f'])).to.be.deep.equal({x: 0, y: 1, direction: 'N'})
         });
     });
 });

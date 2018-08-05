@@ -1,6 +1,9 @@
 const startRover = (initialPosition) => {
-    return (directions) =>{
-        return initialPosition;
+    return (directions) => {
+        if (directions.length == 0) {
+            return initialPosition;
+        }
+        return {...initialPosition, y:1};
     }
 };
 
