@@ -3,7 +3,7 @@ const startRover = (initialPosition) => {
         if (directions.length == 0) {
             return initialPosition;
         }
-        return {...initialPosition, y:1};
+        return {...initialPosition, y: 1};
     }
 };
 
