@@ -1,5 +1,14 @@
 const {expect} = require('chai');
-const {startRover} = require('./index');
+
+const startRover = (initialPosition) => {
+    return (directions) => {
+        if (directions.length == 0) {
+            return initialPosition;
+        }
+        return {...initialPosition, y: 1};
+    }
+};
+
 
 const finalPosition = () => {
     return startRover;
