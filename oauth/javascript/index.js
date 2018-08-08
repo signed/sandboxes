@@ -3,6 +3,7 @@ const passport = require('passport');
 const fs = require("fs");
 const MeetupStrategy = require('passport-meetup-oauth2').Strategy;
 const conf = JSON.parse(fs.readFileSync("conf.json"));
+const {MeetupClient} = require('./Meetup');
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -11,11 +12,11 @@ const conf = JSON.parse(fs.readFileSync("conf.json"));
 //   the user by ID when deserializing.  However, since this example does not
 //   have a database of user records, the complete Meetup profile is
 //   serialized and deserialized.
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
@@ -38,7 +39,8 @@ passport.use(new MeetupStrategy(options, function (accessToken, refreshToken, pr
         // represent the logged-in user.  In a typical application, you would want
         // to associate the Meetup account with a user record in your database,
         // and return that user instead.
-        return done(null, profile);
+        const tokens = {accessToken, refreshToken};
+        return done(null, tokens);
     });
 
 }));
@@ -47,17 +49,38 @@ passport.use(new MeetupStrategy(options, function (accessToken, refreshToken, pr
 const app = express();
 
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('body-parser').urlencoded({extended: true}));
 app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true
 }));
-app.use(passport.initialize({ userProperty: 'user' }));
+app.use(passport.initialize({userProperty: 'user'}));
 app.use(passport.session());
 
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => {
+    if (req.user && req.user.accessToken) {
+        res.send('<form action="/event" method="post">\n' +
+            '  <input type="submit" value="Create Event">\n' +
+            '</form>')
+    } else {
+        res.send('<a href="/auth/meetup">Log In</a>');
+    }
+});
+
+app.post('/event', (req, res) => {
+    const meetupClient = new MeetupClient('Softwerkskammer-Karlsruhe');
+    meetupClient.createEvent(req.user.accessToken, (error, response, body) => {
+        if (error) {
+            res.send(error);
+            return;
+        }
+        const info = JSON.parse(body);
+        res.send(info);
+    });
+
+});
 
 app.get('/auth/meetup', passport.authenticate('meetup'));
 

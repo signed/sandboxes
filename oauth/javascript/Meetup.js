@@ -25,14 +25,6 @@ function MeetupClient(meetupGroup) {
     }
 }
 
-const meetupClient = new MeetupClient('Softwerkskammer-Karlsruhe');
-meetupClient.createEvent('<your token here', (error, response, body) => {
-    if (error) {
-        console.log('an error occurred: \n' + error);
-        return;
-    }
-
-    console.log("status code: " + response.statusCode);
-    const info = JSON.parse(body);
-    console.log(info);
-});
+module.exports = {
+    MeetupClient
+};
