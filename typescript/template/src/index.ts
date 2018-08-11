@@ -23,7 +23,7 @@ export function tasteOf(fruit: Fruit): Taste {
   return fruit.taste;
 }
 
-export function someFunction() {
+export function basicInterfaces() {
   console.log(tasteOf(new Apple()));
   console.log(tasteOf(new DuckTyping()));
   console.log(tasteOf({ taste: Taste.Sweet }));
