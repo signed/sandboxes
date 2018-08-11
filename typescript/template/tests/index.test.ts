@@ -1,7 +1,9 @@
 import { hello } from '../src';
 
+const name: string = 'Susan';
+
 describe('one', () => {
   it('should fly', () => {
-    expect(hello('world')).toBe('Hello world!');
+    expect(hello(name)).toBe('Hello Susan!');
   });
 });
