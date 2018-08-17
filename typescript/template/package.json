@@ -20,7 +20,10 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "displayName": "catch me",
+    "notify": true,
+    "notifyMode": "failure-success"
   },
   "devDependencies": {
     "@types/jest": "23.3.1",
