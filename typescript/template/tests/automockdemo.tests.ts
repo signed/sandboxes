@@ -11,4 +11,8 @@ describe('one', () => {
   it('should ', () => {
     expect(am.two()).toBeUndefined();
   });
+
+  it('should clear mock state between tests', () => {
+    expect(am.one()).toBeUndefined();
+  });
 });

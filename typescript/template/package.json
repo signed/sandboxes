@@ -23,7 +23,8 @@
     ],
     "displayName": "catch me",
     "notify": true,
-    "notifyMode": "failure-success"
+    "notifyMode": "failure-success",
+    "resetMocks": true
   },
   "devDependencies": {
     "@types/jest": "23.3.1",
