@@ -9,10 +9,11 @@
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
   },
   "jest": {
+    "roots": ["<rootDir>/src/", "<rootDir>/tests/"],
+    "testRegex": ".*\\.tests\\.ts$",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "/tests/.*",
     "moduleFileExtensions": [
       "ts",
       "tsx",
