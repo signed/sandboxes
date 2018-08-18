@@ -8,7 +8,12 @@ function translate(x, y) {
     return "translate(" + x + "," + y + ")"
 }
 
-let data = d3.tsv(dataFile, type)
+function parse(row, index, columns) {
+    row.value = +row.value;
+    return row;
+}
+
+const data = d3.tsv(dataFile, parse)
     .catch((error) => alert('error loading '+ dataFile + '\n' + JSON.stringify(error)));
 
 const svgTag = {
@@ -54,9 +59,4 @@ data.then((data) => {
         .attr("transform", translate(x(0), 0))
         .call(yAxis);
 });
-
-function type(d) {
-    d.value = +d.value;
-    return d;
-}
 
