@@ -18,7 +18,7 @@
     "webpack-cli": "3.1.0"
   },
   "dependencies": {
-    "d3": "4.6.0",
+    "d3": "4.13.0",
     "moment": "2.22.2"
   },
   "scripts": {
