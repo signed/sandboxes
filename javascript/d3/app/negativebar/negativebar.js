@@ -1,6 +1,6 @@
 "use strict";
 import * as d3 from 'd3';
-var dataFile = require('./data.tsv');
+const dataFile = require('./data.tsv');
 import css from 'style-loader!css-loader!./negativebar.css';
 
 
@@ -8,14 +8,8 @@ function translate(x, y) {
     return "translate(" + x + "," + y + ")"
 }
 
-let data = new Promise((resolve, reject) => {
-    d3.tsv(dataFile, type, function (error, data) {
-        if (error) {
-            reject(error);
-        }
-        resolve(data);
-    });
-}).catch((error) => alert(error));
+let data = d3.tsv(dataFile, type)
+    .catch((error) => alert('error loading '+ dataFile + '\n' + JSON.stringify(error)));
 
 const svgTag = {
     "group": "g",
