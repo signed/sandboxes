@@ -7,8 +7,7 @@
     "type": "git",
     "url": "blank"
   },
-  "author": "me",
-  "license": "ISC",
+  "private": true,
   "devDependencies": {
     "css-loader": "0.26.2",
     "file-loader": "0.10.1",
