@@ -13,7 +13,8 @@ const config = {
     entry: {
         main: './app/index.js',
         timescales: './app/timescale/timescales.js',
-        negativebar: './app/negativebar/negativebar.js'
+        negativebar: './app/negativebar/negativebar.js',
+        dependencytree: './app/dependencytree/dependencytree.js'
     },
 
     output: {
@@ -44,7 +45,12 @@ const config = {
         new HtmlWebpackPlugin({
             filename: 'negativebar.html',
             chunks: ['negativebar']
-        })]
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'dependencytree.html',
+            chunks: ['dependencytree']
+        })
+    ]
 };
 
 module.exports = config;

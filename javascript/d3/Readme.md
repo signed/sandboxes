@@ -8,6 +8,14 @@ have not yet used anything from this project
 * [webpack-serve](https://github.com/webpack-contrib/webpack-serve)
 
 # Graph layout libraries in javascript
+# d3
+* [search d3 diagrams](http://blockbuilder.org/search#d3version=v4;api=d3.tree)
+* [force directed tree](https://bl.ocks.org/mbostock/1138500)
+* [random tree](https://bl.ocks.org/mbostock/999346)
+* [tree layout orientation](https://bl.ocks.org/mbostock/3184089)
+* [interactive tree](http://bl.ocks.org/d3noob/8375092)
+* [collapsible tree](https://bl.ocks.org/mbostock/4339083)
+* [force directed graph](https://bl.ocks.org/mbostock/4062045)
 # http://js.cytoscape.org/
 * http://js.cytoscape.org/demos/dagre-layout/
 
