@@ -1,5 +1,6 @@
 'use strict';
 
+import css from 'style-loader!css-loader!./dependencytree.css';
 import * as d3 from 'd3';
 
 var treeData =
