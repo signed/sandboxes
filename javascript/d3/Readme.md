@@ -27,3 +27,6 @@ have not yet used anything from this project
 
 # treant.js
 * http://fperucic.github.io/treant-js/
+
+# react and d3
+http://www.jeromecukier.net/2016/08/17/the-big-leagues/
