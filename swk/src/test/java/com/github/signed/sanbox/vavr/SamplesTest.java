@@ -100,6 +100,12 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(243539786L);
         foundNoMatchingAccountInAgora.add(186169813L);
         foundNoMatchingAccountInAgora.add(210237124L);
+        foundNoMatchingAccountInAgora.add(252850107L);
+        foundNoMatchingAccountInAgora.add(143437142L);
+        foundNoMatchingAccountInAgora.add(224099539L);
+        foundNoMatchingAccountInAgora.add(255593075L);
+        foundNoMatchingAccountInAgora.add(226042915L);
+        foundNoMatchingAccountInAgora.add(190029084L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -124,6 +130,7 @@ public class SamplesTest {
         meetupToAgora.put(182712146L, "rambii");
         meetupToAgora.put(223752698L, "pfichtner");
         meetupToAgora.put(229867812L, "Simon S");
+        meetupToAgora.put(238687532L, "Corentin");
         meetupToAgora.put(0L, "");
     }
 
@@ -173,8 +180,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("254388084");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-84");
+        List<MeetupMember> meetup = meetupParticipants("254966615");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-85");
 
         printUniqueRsvps(meetup, agora);
     }
