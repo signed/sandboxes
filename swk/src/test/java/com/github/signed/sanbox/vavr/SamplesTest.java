@@ -323,7 +323,7 @@ public class SamplesTest {
         com.codeborne.selenide.Configuration.baseUrl = "https://www.softwerkskammer.org";
         Selenide.open("/auth/github?returnTo=%2F");
         Selenide.open("/activities/" + activityName);
-        ElementsCollection blub = Selenide.$$(".dl-horizontal > *");
+        ElementsCollection blub = Selenide.$$("dl.row > *");
 
         List<AgoraMember> agoraMembers = new ArrayList<>(blub.size() / 2);
 
