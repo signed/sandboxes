@@ -1,5 +1,5 @@
 {
-  "name": "library",
+  "name": "@signed/library",
   "version": "0.1.0",
   "description": "Just a library.",
   "main": "build/bundle.js",
