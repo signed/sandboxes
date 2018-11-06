@@ -5,7 +5,6 @@
   "main": "build/bundle.js",
   "author": "signed",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "build": "yarn clean && webpack --mode development",
     "release": "yarn clean && webpack --mode production",
