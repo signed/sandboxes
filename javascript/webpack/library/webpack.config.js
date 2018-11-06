@@ -3,8 +3,10 @@ const path = require("path");
 const config = {
   entry: "./src/index.ts",
   output: {
+    path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
-    path: __dirname + "/build"
+    library: 'library',
+    libraryTarget: "umd"
   },
 
   resolve: {
@@ -25,12 +27,7 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    config.devtool = 'source-map';
-  }
-
-  if (argv.mode === 'production') {
-    config.output.path = __dirname + "/docs";
-  }
+  const production = argv.mode === 'production';
+  config.devtool = production ? 'source-map' : 'inline-source-map';
   return config;
 };
