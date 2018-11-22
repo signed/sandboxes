@@ -1,13 +1,14 @@
 {
   "name": "@signed/library",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Just a library.",
   "main": "build/bundle.js",
+  "types": "build/index.d.ts",
   "author": "signed",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && webpack --mode development",
-    "release": "yarn clean && webpack --mode production",
+    "build": "yarn clean && webpack --mode production",
+    "release": "yarn clean && webpack --mode development",
     "clean": "rimraf build"
   },
   "devDependencies": {
