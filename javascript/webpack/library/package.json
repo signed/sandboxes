@@ -1,6 +1,6 @@
 {
   "name": "@signed/library",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Just a library.",
   "main": "build/bundle.js",
   "types": "build/index.d.ts",
