@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@signed/library@0.2.2":
-  version "0.2.2"
-  resolved "http://localhost:4873/@signed%2flibrary/-/library-0.2.2.tgz#9819723e1d2434fd665f5c03184fc5f238c39d41"
-  integrity sha512-SNioXtvrmTEJ00Qk8FKBRCE0qI1A780PEB8Mz6Cxlp7TzS8R/z0zmsQXKoQk1YzkbyEoacsxglF2DwlOWkM06w==
+"@signed/library@0.2.3":
+  version "0.2.3"
+  resolved "http://localhost:4873/@signed%2flibrary/-/library-0.2.3.tgz#e455bac1637786b068d306f3de9f7c31b6d63b34"
+  integrity sha512-C/xamC3hmCp1ccr5AWntlw8vyawGA1MaZVpmaEiKuiOkKfRPvFgNb7oVLJBptnS9fgZ2Z566/liclcQlHePumA==
 
 "@types/jest@23.3.9":
   version "23.3.9"
