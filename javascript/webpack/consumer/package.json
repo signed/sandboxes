@@ -11,7 +11,7 @@
     "clean": "rimraf build"
   },
   "devDependencies": {
-    "@signed/library": "0.2.1",
+    "@signed/library": "0.2.2",
     "@types/jest": "23.3.9",
     "awesome-typescript-loader": "5.2.1",
     "jest": "23.6.0",
