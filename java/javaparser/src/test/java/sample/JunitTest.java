@@ -1,10 +1,18 @@
 package sample;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JunitTest {
+
+    @BeforeClass
+    public static void classSetUp() { }
+
+    @AfterClass
+    public static void classTearDown(){ }
 
     @Before
     public void setUp() {

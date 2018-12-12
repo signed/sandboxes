@@ -10,5 +10,6 @@ dependencies {
     compile 'one.util:streamex:0.6.7'
 
     testCompile("junit:junit:4.12")
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')
 }
 
