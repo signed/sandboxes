@@ -4,12 +4,12 @@ import com.github.javaparser.Position;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.JavadocComment;
-import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
+import com.github.javaparser.ast.visitor.ModifierVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OneLineJavaDocTagScanner extends ModifierVisitorAdapter<Void> {
+public class OneLineJavaDocTagScanner extends ModifierVisitor<Void> {
     private final String tagName;
     public List<Range> ranges;
 
@@ -20,7 +20,7 @@ public class OneLineJavaDocTagScanner extends ModifierVisitorAdapter<Void> {
 
     @Override
     public Node visit(JavadocComment n, Void arg) {
-        int beginLine = n.getRange().begin.line;
+        int beginLine = n.getRange().orElseThrow().begin.line;
         String[] lines = n.getContent().split("\n");
         for (String line : lines) {
             if (line.toLowerCase().contains("@" + tagName)) {

@@ -2,14 +2,11 @@ package strip.javadoctag;
 
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
 import strip.Detector;
 
-import javax.swing.text.html.Option;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class UnwantedJavaDocTagDetector implements Detector {

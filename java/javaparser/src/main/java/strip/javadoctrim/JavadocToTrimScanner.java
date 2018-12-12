@@ -4,7 +4,7 @@ import com.github.javaparser.Position;
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.comments.JavadocComment;
-import com.github.javaparser.ast.visitor.ModifierVisitorAdapter;
+import com.github.javaparser.ast.visitor.ModifierVisitor;
 import one.util.streamex.StreamEx;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
+public class JavadocToTrimScanner extends ModifierVisitor<Void> {
 
     public final List<Range> ranges = new ArrayList<>();
     private final Consumer<String> logger;
@@ -30,19 +30,19 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
         String[] javadocLines = n.getContent().split("\n");
         List<String> cleanedUpLines = Arrays.stream(javadocLines).map(line -> line.replaceFirst("^\\s*\\*", "").trim()).collect(Collectors.toList());
         if (allLinesEmpty(cleanedUpLines)) {
-            ranges.add(n.getRange());
+            ranges.add(n.getRange().orElseThrow());
             return n;
         }
 
         int emptyLinesAtStartOfJavaDoc = numberOfEmptyLineAtStart(cleanedUpLines.stream());
         if (emptyLinesAtStartOfJavaDoc > 1) {
-            int startLine = n.getRange().begin.line + 1; //keep the first line
-            int endLine = n.getRange().begin.line + emptyLinesAtStartOfJavaDoc - 1;
+            int startLine = n.getRange().orElseThrow().begin.line + 1; //keep the first line
+            int endLine = n.getRange().orElseThrow().begin.line + emptyLinesAtStartOfJavaDoc - 1;
             int lastLineLengthIncludingNewLine = javadocLines[emptyLinesAtStartOfJavaDoc - 1].length() + 1;
             ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
         }
 
-        ConsecutiveEmptyLineBuilder builder = new ConsecutiveEmptyLineBuilder(javadocLines, n.getRange().begin.line);
+        ConsecutiveEmptyLineBuilder builder = new ConsecutiveEmptyLineBuilder(javadocLines, n.getRange().orElseThrow().begin.line);
         for (int currentLine = 0; currentLine < cleanedUpLines.size(); currentLine++) {
             if (cleanedUpLines.get(currentLine).isEmpty()) {
                 builder.emptyLineAt(currentLine);
@@ -54,8 +54,8 @@ public class JavadocToTrimScanner extends ModifierVisitorAdapter<Void> {
 
         int emptyLinesAtEndOfJavaDoc = numberOfEmptyLineAtStart(copyAndReverse(cleanedUpLines).stream());
         if (emptyLinesAtEndOfJavaDoc > 1) {
-            int startLine = n.getRange().end.line - emptyLinesAtEndOfJavaDoc + 1;
-            int endLine = n.getRange().end.line - 1;
+            int startLine = n.getRange().orElseThrow().end.line - emptyLinesAtEndOfJavaDoc + 1;
+            int endLine = n.getRange().orElseThrow().end.line - 1;
             int lastLineLengthIncludingNewLine = javadocLines[javadocLines.length - emptyLinesAtEndOfJavaDoc].length() + 1;
             ranges.add(new Range(new Position(startLine, 1), new Position(endLine, lastLineLengthIncludingNewLine)));
         }
