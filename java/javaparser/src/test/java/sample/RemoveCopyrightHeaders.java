@@ -32,7 +32,7 @@ public class RemoveCopyrightHeaders {
     private final Path pathToSampleJavaFile = Paths.get("src/main/java/sample/JavaDocOnClass.java");
 
     @Test
-    public void removeCopyrightHeaderInSampleFile() throws Exception {
+    public void removeCopyrightHeaderInSampleFile() {
         remove(copyrightBlock(), pathToSampleJavaFile);
     }
 
@@ -42,13 +42,13 @@ public class RemoveCopyrightHeaders {
     }
 
     @Test
-    public void removeAuthorTagInSampleFile() throws Exception {
+    public void removeAuthorTagInSampleFile() {
         remove(javadocTag("author"), pathToSampleJavaFile);
         remove(javadocTag("since"), pathToSampleJavaFile);
     }
 
     @Test
-    public void runAllDetectors() throws Exception {
+    public void runAllDetectors() {
         remove(copyrightBlock(), pathToSampleJavaFile);
         remove(javadocTag("author"), pathToSampleJavaFile);
         remove(javadocTag("since"), pathToSampleJavaFile);
