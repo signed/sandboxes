@@ -38,7 +38,7 @@ public class TestMethodMigration extends ModifierVisitor<Void> {
                     }
                     String s = body.toString();
 
-                    ImportDeclaration importDeclaration = JavaParser.parseImport("import static " + Assertions.class.getCanonicalName()+ ".assertThrows");
+                    ImportDeclaration importDeclaration = JavaParser.parseImport("import static " + Assertions.class.getCanonicalName()+ ".assertThrows;");
                     methodDeclaration.findAncestor(CompilationUnit.class).ifPresent(p -> p.addImport(importDeclaration));
 
                     Statement statement = JavaParser.parseStatement("assertThrows("+aggregator.exceptionClass.toString()+",()->" +
