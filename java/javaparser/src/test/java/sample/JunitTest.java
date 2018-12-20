@@ -9,10 +9,12 @@ import org.junit.Test;
 public class JunitTest {
 
     @BeforeClass
-    public static void classSetUp() { }
+    public static void classSetUp() {
+    }
 
     @AfterClass
-    public static void classTearDown(){ }
+    public static void classTearDown() {
+    }
 
     @Before
     public void setUp() {
@@ -30,7 +32,7 @@ public class JunitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void exceptions(){
+    public void exceptions() {
         System.out.println();
         throw new IllegalArgumentException();
     }

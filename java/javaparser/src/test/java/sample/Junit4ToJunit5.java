@@ -7,13 +7,17 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Junit4ToJunit5 {
 
     @Test
     public void name() throws IOException {
-        CompilationUnit test = JavaParser.parse(Paths.get("src/test/java/sample/JunitTest.java"));
+        Path sampleFile = Paths.get("src/test/java/sample/JunitTest.java");
+        CompilationUnit test = JavaParser.parse(sampleFile);
 
         CompilationUnit preparedForModification = LexicalPreservingPrinter.setup(test);
 
@@ -24,6 +28,8 @@ public class Junit4ToJunit5 {
         StringWriter writer = new StringWriter();
         LexicalPreservingPrinter.print(preparedForModification, writer);
 
-        System.out.println(writer.toString());
+        String transformedSourceCode = writer.toString();
+        System.out.println(transformedSourceCode);
+        Files.write(sampleFile, transformedSourceCode.getBytes(Charset.forName("UTF-8")));
     }
 }
