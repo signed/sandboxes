@@ -28,4 +28,10 @@ public class JunitTest {
     public void name() {
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void exceptions(){
+        throw new IllegalArgumentException();
+    }
+
 }
