@@ -6,7 +6,6 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 
 import java.lang.annotation.Annotation;
-import java.util.EnumSet;
 import java.util.Optional;
 
 public class Annotations {
@@ -14,9 +13,6 @@ public class Annotations {
         Optional<AnnotationExpr> annotationByClass = n.getAnnotationByClass(junit4);
         annotationByClass.ifPresent(it -> {
             it.replace(JavaParser.parseAnnotation("@" + junit5.getSimpleName()));
-            if (!n.getModifiers().contains(Modifier.STATIC)) {
-                n.setModifier(Modifier.PUBLIC, false);
-            }
         });
     }
 }
