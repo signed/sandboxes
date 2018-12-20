@@ -31,6 +31,7 @@ public class JunitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void exceptions(){
+        System.out.println();
         throw new IllegalArgumentException();
     }
 
