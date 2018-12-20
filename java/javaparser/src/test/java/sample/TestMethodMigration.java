@@ -8,7 +8,9 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.ClassExpr;
+import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
 import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.NormalAnnotationExpr;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
@@ -56,6 +58,12 @@ public class TestMethodMigration extends ModifierVisitor<Void> {
     public static class TestAnnotationMigration extends ModifierVisitor<TestAnnotationMigration.Aggregator>{
         public static class Aggregator {
             public ClassExpr exceptionClass;
+        }
+
+        @Override
+        public Visitable visit(NormalAnnotationExpr n, Aggregator arg) {
+            super.visit(n, arg);
+            return new MarkerAnnotationExpr("Test");
         }
 
         @Override
