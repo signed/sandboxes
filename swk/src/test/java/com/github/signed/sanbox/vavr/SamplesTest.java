@@ -112,6 +112,16 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(200177785L);
         foundNoMatchingAccountInAgora.add(257934440L);
         foundNoMatchingAccountInAgora.add(263331043L);
+        foundNoMatchingAccountInAgora.add(244836787L);
+        foundNoMatchingAccountInAgora.add(249229652L);
+        foundNoMatchingAccountInAgora.add(238316094L);
+        foundNoMatchingAccountInAgora.add(230085532L);
+        foundNoMatchingAccountInAgora.add(266934330L);
+        foundNoMatchingAccountInAgora.add(241284725L);
+        foundNoMatchingAccountInAgora.add(245735146L);
+        foundNoMatchingAccountInAgora.add(195639084L);
+        foundNoMatchingAccountInAgora.add(271631371L);
+        foundNoMatchingAccountInAgora.add(236938522L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -137,6 +147,8 @@ public class SamplesTest {
         meetupToAgora.put(223752698L, "pfichtner");
         meetupToAgora.put(229867812L, "Simon S");
         meetupToAgora.put(238687532L, "Corentin");
+        meetupToAgora.put(68284942L, "dos");
+        meetupToAgora.put(238017451L, "Wpt");
         meetupToAgora.put(0L, "");
     }
 
@@ -186,8 +198,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("254966615");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-85");
+        List<MeetupMember> meetup = meetupParticipants("257907396");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-88");
 
         printUniqueRsvps(meetup, agora);
     }
