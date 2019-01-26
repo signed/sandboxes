@@ -1,10 +1,12 @@
 jest.mock('../src/automockdemo');
+import { mocked as mock } from 'ts-jest';
 import * as am from '../src/automockdemo';
 
+const amMock = mock(am, true);
+
 describe('one', () => {
-  // The draw back of this approach is the type error when calling mockReturnValue
   it('should be mocked', () => {
-    am.one.mockReturnValue('1');
+    amMock.one.mockReturnValue('1');
     expect(am.one()).toBe('1');
   });
 
