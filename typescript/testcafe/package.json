@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
+    "coverage": "jest --coverage --collectCoverageFrom=src/*.ts",
+    "start": "webpack-dev-server --open --mode development"
   },
   "jest": {
     "roots": [
@@ -44,6 +45,7 @@
     "tslint-config-airbnb": "5.11.1",
     "typescript": "3.2.4",
     "webpack": "4.29.0",
-    "webpack-cli": "3.2.1"
+    "webpack-cli": "3.2.1",
+    "webpack-dev-server": "3.1.14"
   }
 }
