@@ -16,3 +16,9 @@ test('react selectors', async (tc) => {
   const selector = ReactSelector('ListItem').nth(1);
   await tc.expect(selector.textContent).eql('two');
 });
+
+test('access react properties', async (tc) => {
+  const selector = ReactSelector('ListItem').nth(1);
+  const component = await selector.getReact();
+  await tc.expect(component.props.content).eql('two');
+});
