@@ -9,10 +9,8 @@
     "interface-name": false,
     "no-console": false,
     "max-classes-per-file": false,
-    "import-name": [true, {
-      "application": "Application",
-      "list": "List"
-    }]
+    "import-name": false,
+    "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}]
   },
   "jsRules": {
     "eofline": false
