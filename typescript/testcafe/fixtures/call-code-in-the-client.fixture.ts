@@ -2,7 +2,7 @@ import { ClientFunction } from 'testcafe';
 
 const getPageUrl = ClientFunction(() => window.location.href);
 
-fixture('Getting Started')
+fixture('run code in client')
   .page('http://localhost:8080/');
 
 test('access document uri in client', async (tc) => {
