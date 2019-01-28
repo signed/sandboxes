@@ -9,7 +9,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "lib": [ "es2015" ]
+    "lib": [ "dom", "es2015" ]
   },
   "include": [
     "./src/**/*"

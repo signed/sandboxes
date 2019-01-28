@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "testcafe": "testcafe chrome fixtures/hello-world-fixture.ts",
+    "testcafe": "testcafe chrome fixtures/**/*.ts",
     "testcafe:headless": "testcafe chrome:headless fixtures/**/*.ts",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts",
     "start": "webpack-dev-server --open --mode development"
