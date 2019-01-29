@@ -7,7 +7,6 @@ describe('sort by name', () => {
     const three = new Person(3, 'Alice');
 
     const sorted = sortByName([one, two, three]);
-    console.log(sorted);
     expect(sorted[0].id).toBe(3);
     expect(sorted[1].id).toBe(1);
     expect(sorted[2].id).toBe(2);
