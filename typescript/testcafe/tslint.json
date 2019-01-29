@@ -10,6 +10,9 @@
     "no-console": false,
     "max-classes-per-file": false,
     "import-name": false,
+    "ordered-imports": false,
+    "ter-arrow-parens": false,
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}]
   },
   "jsRules": {
