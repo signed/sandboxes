@@ -28,7 +28,10 @@
     "displayName": "catch me",
     "notify": true,
     "notifyMode": "failure-success",
-    "resetMocks": true
+    "resetMocks": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/matchers/toEndWith.ts"
+    ]
   },
   "devDependencies": {
     "@types/jest": "23.3.13",
