@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "lib": [ "es2015", "dom" ],
-    "types": ["testcafe"]
+    "types": ["testcafe", "node"]
   },
   "include": [
     "./src/**/*"
