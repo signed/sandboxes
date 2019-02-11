@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        .container {
+            position: relative;
+            background-color: yellowgreen;
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+
+        .box {
+            box-sizing: border-box;
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 1px solid black;
+        }
+
+        .left {
+            left: -1px;
+            bottom: -1px;
+            background: aqua;
+        }
+
+        .middle {
+            left: 12px;
+            top: 12px;
+            background: green;
+        }
+
+        .right {
+            right: -1px;
+            top: -1px;
+            background: aliceblue;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="box left"></div>
+    <div class="box middle"></div>
+    <div class="box right"></div>
+</div>
+</body>
+</html>
