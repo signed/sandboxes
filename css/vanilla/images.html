@@ -3,59 +3,83 @@
 <head>
     <meta charset="UTF-8"/>
     <title>css sandbox</title>
+    <link href='https://fonts.googleapis.com/css?family=Pirata One' rel='stylesheet'>
     <style type="text/css">
 
         @font-face {
-            font-family: gloom;
-            src: url("https://doc-0o-0c-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/ft6v0c85j7s1il0k4ta2vhpdakfo7bfi/1550181600000/03164054090578463837/*/1tioEnQEIr_OI_49OhE23gIJp-DTJaBIS");
-        }
-        body {
-            background: black;
+            font-family: Qlassik;
+            src: url("fonts/Qlassik_TB.ttf");
         }
 
-        .container {
+        @font-face {
+            font-family: Qlassik;
+            font-weight: bold;
+            src: url("fonts/QlassikBold_TB.ttf");
+        }
+
+        body {
+            background: black;
+            display: flex;
+        }
+
+        .battlegoal {
             position: relative; /*required to allow absolute positioning withing .container*/
-            width: 400px;
-            height: 600px;
-            margin: 0 auto;
+            width: 200px;
+            height: 300px;
         }
 
         .card {
             position: absolute;
+            width: 200px;
+            height: 300px;
         }
 
-        .content {
+        .text {
             position: absolute;
             top: 70px;
             left: 50px;
             width: 50%;
             text-align: center;
-            font-family: gloom,serif;
+
         }
 
         .title {
-            margin: 0 auto;
+            margin: 0 0 17% 0;
+            font-family: 'Pirata One', cursive;
+            font-size: 1.35em;
+            font-weight: normal;
+        }
+
+        .description {
+            font-family: Qlassik, cursive;
+            font-size: 0.8em;
+            line-height: 1.2em;
         }
 
         .cardnumber {
             position: absolute;
             margin: 0 auto;
+            left: 10%;
             bottom: 10%;
+            color: white;
+            font-size: xx-small;
+        }
+
+        .blueprint {
+            width: 200px;
+            height: 300px;
         }
     </style>
-
 </head>
 <body>
-<img src="https://raw.githubusercontent.com/any2cards/gloomhaven/master/images/battle-goals/explorer.png">
-<div class="container">
+<div class="battlegoal">
     <img class="card" src="https://lh3.googleusercontent.com/u/0/d/19x3kdXZF2oEME3WipHeAXISfWkGtgmEA=w1440-h766-iv1">
-    <div class="content">
+    <div class="text">
         <h3 class="title">Explorer</h3>
-        <section class="description">
-            Reveal a room tile by opening a door on your turn during the scenario.
-        </section>
+        <section class="description">Reveal a room<br>tile by opening<br>a door on your<br>turn during the<br>scenario.</section>
     </div>
     <div class="cardnumber">267</div>
 </div>
+<img class="blueprint" src="https://raw.githubusercontent.com/any2cards/gloomhaven/master/images/battle-goals/explorer.png">
 </body>
 </html>
