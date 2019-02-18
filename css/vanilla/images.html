@@ -34,11 +34,17 @@
             height: 300px;
         }
 
+        .overlay {
+            position: absolute;
+            top: 22%;
+            right: 20%;
+            bottom: 10%;
+            left: 20%;
+        }
+
         .text {
             position: absolute;
-            top: 70px;
-            left: 50px;
-            width: 50%;
+            width: 100%;
             text-align: center;
         }
 
@@ -50,17 +56,21 @@
         }
 
         .description {
+            position: absolute;
             font-family: Qlassik, cursive;
             font-size: 0.8em;
             line-height: 1.2em;
+            left: 50%;
+            width: 68%;
+            margin: 0 0 0 -34%;
         }
 
         .perks {
             position: absolute;
-            bottom: 19.5%;
+            bottom: 12.5%;
             left: 50%;
-            width: 25%;
-            margin: 0 0 0 -12.5%;
+            width: 50%;
+            margin: 0 0 0 -25%;
             text-align: center;
             font-size: 2em;
             font-weight: bold;
@@ -68,10 +78,10 @@
 
         .cardnumber {
             position: absolute;
-            bottom: 13%;
+            bottom: 3%;
             left: 50%;
-            width: 10%;
-            margin: 0 0 0 -5%;
+            width: 20%;
+            margin: 0 0 0 -10%;
             color: white;
             font-size: xx-small;
             text-align: center;
@@ -86,12 +96,14 @@
 <body>
 <div class="battlegoal">
     <img class="card" src="https://lh3.googleusercontent.com/u/0/d/19x3kdXZF2oEME3WipHeAXISfWkGtgmEA=w1440-h766-iv1">
-    <div class="text">
-        <h3 class="title">Explorer</h3>
-        <section class="description">Reveal a room tile by opening a door on your turn during the scenario.</section>
+    <div class="overlay">
+        <div class="text">
+            <h3 class="title">Explorer</h3>
+            <section class="description">Reveal a room tile by opening a door on your turn during the scenario.</section>
+        </div>
+        <div class="perks">✓✓</div>
+        <div class="cardnumber">267</div>
     </div>
-    <div class="perks">✓✓</div>
-    <div class="cardnumber">267</div>
 </div>
 <img class="blueprint" src="https://raw.githubusercontent.com/any2cards/gloomhaven/master/images/battle-goals/explorer.png">
 </body>
