@@ -5,7 +5,6 @@
     <title>css sandbox</title>
     <link href='https://fonts.googleapis.com/css?family=Pirata One' rel='stylesheet'>
     <style type="text/css">
-
         @font-face {
             font-family: Qlassik;
             src: url("fonts/Qlassik_TB.ttf");
@@ -23,13 +22,12 @@
         }
 
         .battlegoal {
-            position: relative; /*required to allow absolute positioning withing .container*/
+            position: relative; /*required to allow absolute positioning within .container*/
             width: 200px;
             height: 300px;
         }
 
         .card {
-            position: absolute;
             width: 100%;
             height: 100%;
         }
@@ -37,32 +35,29 @@
         .overlay {
             position: absolute;
             top: 22%;
-            right: 20%;
+            width: 60%;
             bottom: 10%;
             left: 20%;
-        }
-
-        .text {
-            position: absolute;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
             text-align: center;
         }
 
         .title {
-            margin: 0 0 17% 0;
+            margin: 0;
             font-family: 'Pirata One', cursive;
             font-size: 1.35em;
             font-weight: normal;
         }
 
         .description {
-            position: absolute;
+            display: flex;
+            align-items: center;
             font-family: Qlassik, cursive;
             font-size: 0.8em;
             line-height: 1.2em;
-            left: 50%;
-            width: 68%;
-            margin: 0 0 0 -34%;
+            height: 52%;
+            padding: 0 20% 0 20%;
         }
 
         .perks {
@@ -71,7 +66,6 @@
             left: 50%;
             width: 50%;
             margin: 0 0 0 -30%;
-            text-align: center;
             font-size: 2em;
             font-weight: bold;
         }
@@ -84,7 +78,6 @@
             margin: 0 0 0 -15%;
             color: white;
             font-size: xx-small;
-            text-align: center;
         }
 
         .blueprint {
@@ -95,16 +88,14 @@
 </head>
 <body>
 <div class="battlegoal">
-    <img class="card" src="https://lh3.googleusercontent.com/u/0/d/19x3kdXZF2oEME3WipHeAXISfWkGtgmEA=w1440-h766-iv1">
+    <img class="card" src="https://lh3.googleusercontent.com/u/0/d/19x3kdXZF2oEME3WipHeAXISfWkGtgmEA=w1440-h766-iv1" alt="">
     <div class="overlay">
-        <div class="text">
-            <h3 class="title">Explorer</h3>
-            <section class="description">Reveal a room tile by opening a door on your turn during the scenario.</section>
-        </div>
+        <h3 class="title">Explorer</h3>
+        <div class="description">Reveal a room tile by opening a door on your turn during the scenario.</div>
         <div class="perks">✓✓</div>
         <div class="cardnumber">267</div>
     </div>
 </div>
-<img class="blueprint" src="https://raw.githubusercontent.com/any2cards/gloomhaven/master/images/battle-goals/explorer.png">
+<img class="blueprint" src="https://raw.githubusercontent.com/any2cards/gloomhaven/master/images/battle-goals/explorer.png" alt="">
 </body>
 </html>
