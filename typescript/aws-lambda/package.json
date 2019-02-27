@@ -1,0 +1,25 @@
+{
+  "name": "aws-lambda",
+  "version": "0.1.0",
+  "scripts": {
+    "compile": "tsc",
+    "execute": "ts-node ./src/index.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/jest": "24.0.9",
+    "@types/node": "11.9.5",
+    "jest": "24.1.0",
+    "ts-jest": "24.0.0",
+    "ts-node": "8.0.2",
+    "typescript": "3.3.3333"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/tests/"
+    ]
+  }
+}
