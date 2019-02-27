@@ -1,12 +1,11 @@
-import {handler} from "../src";
+import { handler } from "../src";
 
 describe('lambda', () => {
-    it('then', () => {
-      return handler({}).then(data => expect(data).toEqual('{}'));
-    });
-    it('await', async () => {
-      expect.assertions(1);
-      let data = await handler({});
-      expect(data).toEqual('{ }');
-    });
+  it('then', () => {
+    let callback = jest.fn();
+
+    handler({}, {}, callback);
+    let data = (callback).mock.calls[0][1];
+    expect(data).toEqual('{}');
+  });
 });

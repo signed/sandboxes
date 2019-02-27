@@ -1,7 +1,17 @@
 /*
  context: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html
  */
-export const handler = async (event: any = {}): Promise<any> => {
-    console.log('Hello World!');
-    return JSON.stringify(event, null, 2);
+
+interface Request {
+
+}
+
+interface Response {
+
+}
+
+export const handler = (event: any = {}, context: any = {}, callback: (error: any, next: Request | Response) => void): void => {
+  console.log('Hello World!');
+  let data = JSON.stringify(event, null, 2);
+  callback(null, data);
 };
