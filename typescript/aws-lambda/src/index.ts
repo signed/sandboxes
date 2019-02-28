@@ -2,20 +2,21 @@
  context: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html
  */
 
-
-interface Event {
+export interface Event {
   Records: Record[];
 }
 
-interface Record {
+export interface Record {
   cf: Cloudfront;
 }
 
-interface Cloudfront {
+export interface Cloudfront {
   config: Configuration;
+  request: Request;
+  response?: Response;
 }
 
-interface Configuration {
+export interface Configuration {
   /**
    * The domain name of the distribution that's associated with the request.
    */
@@ -31,16 +32,18 @@ interface Configuration {
   readonly requestId: string;
 }
 
-enum EventType {
+export enum EventType {
   ViewerRequest = 'viewer-request',
-  OriginResponse = 'origin-request'
+  OriginRquest = 'origin-request',
+  OriginResponse = 'origin-request',
+  ViewerResponse = 'viewer-response'
 }
 
 /**
  * the event object that CloudFront passes to a Lambda function when the function is
  * triggered by a CloudFront viewer request event or an origin request event:
  */
-interface Request {
+export interface Request {
   readonly body: Body;
   /**
    * The IP address of the viewer that made the request. If the viewer used
@@ -55,7 +58,7 @@ interface Request {
    * information about query strings, see Caching Content Based
    * on Query String Parameters.
    */
-  querystring: "size=large",
+  querystring: string,
   /**
    * The relative path of the requested object. Note the following:
    * - The new relative path must begin with a slash (like this: /).
@@ -75,12 +78,12 @@ interface Request {
  * You can specify either a custom origin or an Amazon S3 origin in
  * a single request, but not both.
  */
-interface Origin {
+export interface Origin {
   custom: Custom;
   s3: S3;
 }
 
-interface Custom {
+export interface Custom {
   /**
    * You can include custom headers with the request by specifying a header
    * name and value pair for each custom header. You can't add headers that are
@@ -137,7 +140,7 @@ interface Custom {
   sslProtocols: SslProtocol[];
 }
 
-interface S3 {
+export interface S3 {
   /**
    *  Set to origin-access-identity if your Amazon S3 bucket has an origin access identity (OAI) set up, or none if you aren’t using OAI. If you set authMethod to origin-access-identity, there are several requirements:
    *  - You must specify a Region in your header.
@@ -176,36 +179,36 @@ interface S3 {
   region: Region
 }
 
-enum Region {
+export enum Region {
   US_East_1 = 'us-east-1'
 }
 
-enum SslProtocol {
+export enum SslProtocol {
   TLSv1_3 = 'TLSv1.2',
   TLSv1_1 = 'TLSv1.1',
   TLSv1 = 'TLSv1',
   SSLv3 = 'SSLv3'
 }
 
-enum Protocol {
+export enum Protocol {
   Http = 'http',
   Https = 'https'
 }
 
-interface Headers {
+export interface Headers {
   [key: string]: Header[]
 }
 
-interface Header {
+export interface Header {
   key: string;
   value: string;
 }
 
-enum HttpMethod {
+export enum HttpMethod {
   GET = 'GET'
 }
 
-interface Body {
+export interface Body {
   /**
    * The action that you intend to take with the body. The options for action are the following:
    * read-only: This is the default. When returning the response from the Lambda function, if action is read-only, Lambda@Edge ignores any changes to encoding or data.
@@ -229,12 +232,12 @@ interface Body {
   readonly inputTruncated: boolean;
 }
 
-enum Action {
+export enum Action {
   ReadOnly = 'read-only',
   Replace = 'replace'
 }
 
-enum Encoding {
+export enum Encoding {
   Base64 = 'base64',
   Text = 'text'
 }
@@ -243,11 +246,11 @@ enum Encoding {
  * the event object that CloudFront passes to a Lambda function when the function
  * is triggered by a CloudFront viewer response event or an origin response event:
  */
-interface Response {
-
+export interface Response {
+  config: Configuration;
 }
 
-interface Context {
+export interface Context {
   getRemainingTimeInMillis: () => number;
   functionName: string;
 }
@@ -256,6 +259,5 @@ interface Context {
 
 export const handler = (event: Event, context: Context, callback: (error: any, next: Request | Response) => void): void => {
   console.log('Hello World!');
-  let data = JSON.stringify(event, null, 2);
-  callback(null, data);
+  callback(null, event.Records[0].cf.request);
 };
