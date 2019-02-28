@@ -247,7 +247,17 @@ export enum Encoding {
  * is triggered by a CloudFront viewer response event or an origin response event:
  */
 export interface Response {
-  config: Configuration;
+  /**
+   * The HTTP status code that CloudFront returns to the viewer.
+   */
+  status: string;
+  /**
+   * The HTTP status description that CloudFront returns to the viewer.
+   */
+  statusDescription: string;
+
+  headers: Headers;
+
 }
 
 export interface Context {
