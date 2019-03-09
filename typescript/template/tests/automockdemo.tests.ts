@@ -1,5 +1,5 @@
 jest.mock('../src/automockdemo');
-import { mocked as mock } from 'ts-jest';
+import { mocked as mock } from 'ts-jest/utils';
 import * as am from '../src/automockdemo';
 
 const amMock = mock(am, true);
