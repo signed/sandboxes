@@ -26,7 +26,7 @@
       "node"
     ],
     "displayName": "catch me",
-    "notify": true,
+    "notify": false,
     "notifyMode": "failure-success",
     "resetMocks": true,
     "setupFilesAfterEnv": [
