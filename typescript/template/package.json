@@ -35,9 +35,9 @@
   },
   "devDependencies": {
     "@types/jest": "23.3.13",
-    "jest": "24.1.0",
+    "jest": "24.5.0",
     "ts-jest": "24.0.0",
-    "tslint": "5.13.1",
+    "tslint": "5.14.0",
     "tslint-config-airbnb": "5.11.1",
     "typescript": "3.3.3333"
   }
