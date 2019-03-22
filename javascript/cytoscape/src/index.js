@@ -5,14 +5,17 @@ console.log('hello');
 
 const options = {
     container: document.getElementById('cytoscape'),
-    elements: [ // list of graph elements to start with
-        { // node a
+    elements: [
+        {
+            group: 'nodes',
             data: {id: 'a'}
         },
-        { // node b
+        {
+            group: 'nodes',
             data: {id: 'b'}
         },
-        { // edge ab
+        {
+            group: 'edges',
             data: {id: 'ab', source: 'a', target: 'b'}
         }
     ],
