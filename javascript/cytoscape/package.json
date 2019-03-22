@@ -2,13 +2,19 @@
   "name": "cytoscape",
   "version": "1.0.0",
   "description": "sandbox to test the library",
-  "main": "index.js",
-  "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --open --mode development"
+  },
   "dependencies": {
     "cytoscape": "3.5.0"
   },
   "devDependencies": {
-    "@types/cytoscape": "3.4.0"
+    "@types/cytoscape": "3.4.0",
+    "html-webpack-plugin": "3.2.0",
+    "source-map-loader": "0.2.4",
+    "webpack": "4.29.6",
+    "webpack-cli": "3.3.0",
+    "webpack-dev-server": "3.2.1"
   }
 }
