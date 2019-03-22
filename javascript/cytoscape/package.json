@@ -1,0 +1,14 @@
+{
+  "name": "cytoscape",
+  "version": "1.0.0",
+  "description": "sandbox to test the library",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "cytoscape": "3.5.0"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "3.4.0"
+  }
+}
