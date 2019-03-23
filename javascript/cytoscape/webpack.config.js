@@ -48,9 +48,5 @@ module.exports = (env, argv) => {
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
     }
-
-    if (argv.mode === 'production') {
-        config.output.path = __dirname + "/docs";
-    }
     return config;
 };

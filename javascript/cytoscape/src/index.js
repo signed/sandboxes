@@ -1,10 +1,10 @@
 import cytoscape from 'cytoscape';
-
-console.log('hello');
+import dagre from 'cytoscape-dagre';
+cytoscape.use(dagre);
 
 
 const options = {
-    container: document.getElementById('cytoscape'),
+    container: document.getElementById('graph'),
     elements: [
         {
             group: 'nodes',
@@ -15,8 +15,36 @@ const options = {
             data: {id: 'b'}
         },
         {
+            group: 'nodes',
+            data: {id: 'b1'}
+        },
+        {
+            group: 'nodes',
+            data: {id: 'b2'}
+        },
+        {
+            group: 'nodes',
+            data: {id: 'c'},
+        },
+        {
+            group: 'nodes',
+            data: {id: 'd'},
+        },
+        {
             group: 'edges',
             data: {id: 'ab', source: 'a', target: 'b'}
+        },
+        {
+            group: 'edges',
+            data: {id: 'ab1', source: 'a', target: 'b1'}
+        },
+        {
+            group: 'edges',
+            data: {id: 'ab2', source: 'a', target: 'b2'}
+        },
+        {
+            group: 'edges',
+            data: {id: 'b1c', source: 'b1', target: 'c'}
         }
     ],
     style: [ // the stylesheet for the graph
@@ -39,8 +67,7 @@ const options = {
         }
     ],
     layout: {
-        name: 'grid',
-        rows: 1
+        name: 'dagre'
     },
     headless: false
 };
