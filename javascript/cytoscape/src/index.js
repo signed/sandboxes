@@ -1,8 +1,10 @@
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
+import edgehandles from 'cytoscape-edgehandles';
 import uuid from 'uuid/v4';
 
 cytoscape.use(dagre);
+cytoscape.use(edgehandles);
 
 const node = title => {
     return {
@@ -10,7 +12,9 @@ const node = title => {
         data: {
             id: uuid(),
             title
-        }
+        },
+        classes: ['data']
+
     }
 };
 
@@ -50,8 +54,25 @@ const options = {
         {
             selector: 'node',
             style: {
-                'background-color': '#666',
+                'background-color': '#666'
+            }
+        },
+        {
+            selector: '.data',
+            style: {
                 'label': 'data(title)'
+            }
+        },
+        {
+            selector: '.eh-handle',
+            style: {
+                'background-color': 'red',
+                'width': 12,
+                'height': 12,
+                'shape': 'ellipse',
+                'overlay-opacity': 0,
+                'border-width': 12, // makes the handle easier to hit
+                'border-opacity': 0
             }
         },
         {
@@ -71,9 +92,10 @@ const options = {
     }
 };
 const cy = cytoscape(options);
+const eh = cy.edgehandles({});
+eh.enable();
 cy.on('click', e => {
     if (e.target === cy) {
-        console.log(e.position);
         const newNode = node('new');
         newNode.position = {
             x: e.position.x,
