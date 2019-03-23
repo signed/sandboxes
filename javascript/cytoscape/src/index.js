@@ -67,7 +67,8 @@ const options = {
         }
     ],
     layout: {
-        name: 'dagre'
+        name: 'dagre',
+        rankDir: 'BT'
     },
     headless: false
 };
