@@ -1,73 +1,84 @@
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
+import uuid from 'uuid/v4';
 
 cytoscape.use(dagre);
 
+const node = title => {
+    return {
+        type: 'node',
+        data: {
+            id: uuid(),
+            title
+        }
+    }
+};
+
+const edge = (from, to) => {
+    const fromId = from.data.id;
+    const toId = to.data.id;
+    const id = fromId + ' ' + toId;
+    return {
+        type: 'edge',
+        data: {
+            id,
+            source: fromId,
+            target: toId
+        }
+    }
+};
+
+const a = node('a');
+const b = node('b');
+const b1 = node('b1');
+const b2 = node('b2');
+const c = node('c');
+const d = node('d');
 
 const options = {
     container: document.getElementById('graph'),
     elements: {
-        nodes: [
-            {
-                data: {id: 'a'}
-            },
-            {
-                data: {id: 'b'}
-            },
-            {
-                data: {id: 'b1'}
-            },
-            {
-                data: {id: 'b2'}
-            },
-            {
-                data: {id: 'c'}
-            },
-            {
-                data: {id: 'd'}
-            }
-        ],
+        nodes: [a, b, b1, b2, c, d],
         edges: [
-            {
-                data: {id: 'ab', source: 'a', target: 'b'}
-            },
-            {
-                data: {id: 'ab1', source: 'a', target: 'b1'}
-            },
-            {
-                data: {id: 'ab2', source: 'a', target: 'b2'}
-            },
-            {
-                data: {id: 'b1c', source: 'b1', target: 'c'}
-            }
+            edge(a, b),
+            edge(a, b1),
+            edge(a, b2),
+            edge(b1, c)
         ]
     },
-    style: [ // the stylesheet for the graph
+    style: [
         {
             selector: 'node',
             style: {
                 'background-color': '#666',
-                'label': 'data(id)'
+                'label': 'data(title)'
             }
         },
-
         {
             selector: 'edge',
             style: {
                 'width': 3,
                 'line-color': '#ccc',
                 'target-arrow-color': '#ccc',
-                'target-arrow-shape': 'triangle'
+                'target-arrow-shape': 'triangle',
+                'curve-style': 'taxi'
             }
         }
     ],
     layout: {
         name: 'dagre',
         rankDir: 'BT'
-    },
-    headless: false
+    }
 };
 const cy = cytoscape(options);
-
-console.log(cy);
-console.log(cytoscape.warnings());
+cy.on('click', e => {
+    if (e.target === cy) {
+        console.log(e.position);
+        const newNode = node('new');
+        newNode.position = {
+            x: e.position.x,
+            y: e.position.y
+        };
+        cy.add(newNode)
+    }
+});
