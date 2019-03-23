@@ -85,13 +85,29 @@ const options = {
                 'curve-style': 'taxi'
             }
         }
-    ],
-    layout: {
-        name: 'dagre',
-        rankDir: 'BT'
-    }
+    ]
 };
 const cy = cytoscape(options);
+
+
+const layoutOptions = {
+    name: 'dagre',
+    rankDir: 'BT'
+};
+
+let layout;
+
+const runLayout = () => {
+    if (layout) {
+        layout.stop();
+        layout.destroy();
+    }
+    layout = cy.elements().layout(layoutOptions);
+    layout.run();
+};
+
+runLayout();
+
 const eh = cy.edgehandles({});
 eh.enable();
 cy.on('click', e => {
@@ -101,6 +117,7 @@ cy.on('click', e => {
             x: e.position.x,
             y: e.position.y
         };
-        cy.add(newNode)
+        cy.add(newNode);
+        runLayout()
     }
 });
