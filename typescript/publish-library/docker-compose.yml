@@ -1,0 +1,16 @@
+# https://github.com/verdaccio/docker-examples
+# x
+version: '3'
+
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:4.x-next
+    container_name: verdaccio-docker-local-storage-vol
+    ports:
+      - "4873:4873"
+    volumes:
+      - "./verdaccio/storage:/verdaccio/storage"
+      - "./verdaccio/conf:/verdaccio/conf"
+volumes:
+  verdaccio:
+    driver: local
