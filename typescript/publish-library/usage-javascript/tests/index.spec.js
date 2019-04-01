@@ -1,6 +1,6 @@
 const index = require('../src/index');
 
-describe('using typescript library', () => {
+describe('using typescript library in javascript', () => {
     it('should work with just the import', () => {
         expect(index.sum(1, 2)).toBe(3);
     });
