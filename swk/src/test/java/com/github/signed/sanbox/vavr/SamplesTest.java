@@ -126,6 +126,9 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(276049247L);
         foundNoMatchingAccountInAgora.add(276324060L);
         foundNoMatchingAccountInAgora.add(235067628L);
+        foundNoMatchingAccountInAgora.add(135126322L);
+        foundNoMatchingAccountInAgora.add(254333878L);
+        foundNoMatchingAccountInAgora.add(268052598L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -174,7 +177,7 @@ public class SamplesTest {
             return rsvpInAgora() && rsvpInMeetup();
         }
 
-        public Long meetupId(){
+        public Long meetupId() {
             return maybeRsvpInMeetup.orElseThrow(RuntimeException::new).id;
         }
 
@@ -186,9 +189,12 @@ public class SamplesTest {
             return maybeRsvpInMeetup.isPresent();
         }
 
+        public String name() {
+            return maybeRsvpInAgora.map(it -> it.agoraFullName).orElseGet(() -> maybeRsvpInMeetup.map(it -> it.name).orElse(""));
+        }
     }
 
-	@Test
+    @Test
     public void meetup() {
         List<MeetupMember> meetupMembers = meetupParticipants("247284021");
         meetupMembers.forEach(System.out::println);
@@ -202,8 +208,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("259427700");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-90");
+        List<MeetupMember> meetup = meetupParticipants("260301972");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-91");
 
         printUniqueRsvps(meetup, agora);
     }
@@ -234,7 +240,10 @@ public class SamplesTest {
         allEventParticipants.addAll(onlyRsvpInAgora);
 
 
-        List<String[]> lines = allEventParticipants.stream().sorted(rsvpInBothSystems().thenComparing(rsvpInAgora())).map(this::toColumnsInSingleLine).collect(Collectors.toList());
+        List<String[]> lines = allEventParticipants.stream()
+                .sorted(rsvpInBothSystems().thenComparing(rsvpInAgora().thenComparing(byName())))
+                .map(this::toColumnsInSingleLine)
+                .collect(Collectors.toList());
         String[] header = {"agora name", "meetup name", "agora id", "meetup id", "mmar"};
         String[][] data = lines.toArray(new String[lines.size()][]);
         String table = AsciiTable.getTable(AsciiTable.NO_BORDERS, header, null, data);
@@ -257,6 +266,15 @@ public class SamplesTest {
                     return 1;
                 }
                 return 0;
+            }
+        };
+    }
+
+    private Comparator<EventParticipant> byName() {
+        return new Comparator<EventParticipant>() {
+            @Override
+            public int compare(EventParticipant o1, EventParticipant o2) {
+                return o1.name().compareTo(o2.name());
             }
         };
     }
@@ -286,9 +304,9 @@ public class SamplesTest {
         columns.add(participant.maybeRsvpInMeetup.map(m -> m.name).orElse(""));
         columns.add(participant.maybeRsvpInAgora.map(a -> a.agoraId).orElse(""));
         columns.add(participant.maybeRsvpInMeetup.map(m -> m.id.toString()).orElse(""));
-        if(participant.rsvpInMeetup() && !meetupToAgora.containsKey(participant.meetupId()) && !foundNoMatchingAccountInAgora.contains(participant.meetupId())){
+        if (participant.rsvpInMeetup() && !meetupToAgora.containsKey(participant.meetupId()) && !foundNoMatchingAccountInAgora.contains(participant.meetupId())) {
             columns.add("yes");
-        }else{
+        } else {
             columns.add("");
         }
 
@@ -312,7 +330,7 @@ public class SamplesTest {
         return documentContext.read("$.*.[?(@.response == 'yes')]member", rsvpdMembers);
     }
 
-    private String prettyPrint(String jsonString){
+    private String prettyPrint(String jsonString) {
         try {
             Object o = mapper.readValue(jsonString, Object.class);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
@@ -335,7 +353,7 @@ public class SamplesTest {
         screenShooter.succeededTests();
 
         com.codeborne.selenide.Configuration.baseUrl = "https://github.com";
-        com.codeborne.selenide.Configuration.browser = WebDriverRunner.CHROME;
+        com.codeborne.selenide.Configuration.browser = WebDriverRunner.OPERA;
         Selenide.open("/login");
 
         $("#login_field").val(login);
