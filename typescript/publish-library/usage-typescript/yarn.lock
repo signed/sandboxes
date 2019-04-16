@@ -276,10 +276,10 @@
     "@types/istanbul-lib-coverage" "^1.1.0"
     "@types/yargs" "^12.0.9"
 
-"@signed/library@1.0.0":
-  version "1.0.0"
-  resolved "http://localhost:4873/@signed%2flibrary/-/library-1.0.0.tgz#e7008d5a697f202979bc399e1044d3e93490795d"
-  integrity sha512-cVVuaZC47xjbU0HgtB331+6qWd+mqIkLcUGsL9L65NTSHWHOmvykEnCF1UQIQ64CNtNFvo5jCzh1N7pbdSbHBA==
+"@signed/library@1.4.0":
+  version "1.4.0"
+  resolved "http://localhost:4873/@signed%2flibrary/-/library-1.4.0.tgz#42de7e6c401e10ac66a7de29163f960cd6b2cf4b"
+  integrity sha512-ILSjlPA3dX3IgsNI8EYHymhcDm4XOKgQNmoi+FoREZ/2aD7KW8dVFifzxgulICVdj6p7YbriqblQJUHcHD8BCw==
 
 "@types/babel__core@^7.1.0":
   version "7.1.0"
