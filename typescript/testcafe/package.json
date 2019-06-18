@@ -7,8 +7,10 @@
     "testcafe:run": "testcafe chrome fixtures/**/*.ts",
     "testcafe:headless": "testcafe chrome:headless fixtures/**/*.ts",
     "testcafe:debug": "testcafe $NODE_DEBUG_OPTION chrome",
+    "testcafe:ci": "start-server-and-test start http://localhost:8080 testcafe:headless",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts",
-    "start": "webpack-dev-server --open --mode development"
+    "start": "webpack-dev-server --mode development",
+    "start:dev": "yarn start --open"
   },
   "jest": {
     "roots": [
@@ -42,6 +44,7 @@
     "awesome-typescript-loader": "5.2.1",
     "html-webpack-plugin": "3.2.0",
     "jest": "24.8.0",
+    "start-server-and-test": "1.9.1",
     "testcafe": "1.2.1",
     "testcafe-react-selectors": "3.1.0",
     "ts-jest": "24.0.2",
