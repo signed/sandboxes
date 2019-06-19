@@ -9,3 +9,6 @@ There is an opensource version and a paid product
 
 ## Debug in the IDE
 [webstorm](https://devexpress.github.io/testcafe/documentation/recipes/debug-tests/webstorm.html)
+
+## Problems running in docker
+- Increase memory when starting the container https://github.com/DevExpress/testcafe/issues/2946
