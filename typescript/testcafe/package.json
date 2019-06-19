@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "testcafe:run": "testcafe chrome fixtures/**/*.ts",
-    "testcafe:headless": "testcafe chrome:headless fixtures/**/*.ts",
+    "testcafe:headless": "testcafe chrome:headless fixtures/**/*.ts --reporter spec,xunit:reports/report.xml,json:reports/report.json",
     "testcafe:debug": "testcafe $NODE_DEBUG_OPTION chrome",
     "testcafe:ci": "start-server-and-test start http://localhost:8080 testcafe:headless",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts",
