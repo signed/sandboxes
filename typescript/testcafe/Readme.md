@@ -13,3 +13,14 @@ There is an opensource version and a paid product
 ## Problems running in docker
 - Increase memory when starting the container https://github.com/DevExpress/testcafe/issues/2946
 - https://github.com/DevExpress/testcafe/issues/1883
+- https://github.com/DevExpress/testcafe/issues/2461
+
+```bash
+docker run --shm-size=1gb
+```
+```bash
+chrome --no-sandbox
+```
+## Something about roles and local storage
+- https://github.com/DevExpress/testcafe/issues/2782
+- looks interesting for sharing common setup code between fixtures
