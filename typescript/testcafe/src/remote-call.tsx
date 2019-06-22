@@ -10,20 +10,11 @@ export default class RemoteCall extends React.Component<any, { status: number, b
     };
   }
 
-  public componentDidMount(): void {
-    fetch('https://httpbin.org/user-agent')
-      .then(async result => {
-        const status = result.status;
-        const body = await result.text();
-        return this.setState({ status, body });
-      })
-      .catch(error => this.setState({ status: error.status }));
-  }
-
   public render(): React.ReactNode {
     const { body, status } = this.state;
     return (
       <div>
+        <button onClick={() => this.executeRemoteCall()} data-automation-id="remote-call__execute">execute remote call</button>
         <p>
           Status: <span key="status" data-automation-id="remote-call__status">{status}</span>
         </p>
@@ -32,5 +23,15 @@ export default class RemoteCall extends React.Component<any, { status: number, b
         </p>
       </div>
     );
+  }
+
+  private executeRemoteCall() {
+    fetch('https://httpbin.org/user-agent')
+      .then(async result => {
+        const status = result.status;
+        const body = await result.text();
+        return this.setState({ status, body });
+      })
+      .catch(error => this.setState({ status: error.status }));
   }
 }

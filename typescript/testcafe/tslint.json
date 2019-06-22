@@ -14,7 +14,9 @@
     "ter-arrow-parens": false,
     "object-literal-sort-keys": false,
     "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
-    "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}]
+    "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}],
+    "array-type": [true, "generic"],
+    "prefer-array-literal": false
   },
   "jsRules": {
     "eofline": false

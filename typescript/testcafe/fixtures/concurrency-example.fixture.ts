@@ -1,9 +1,9 @@
 // sample taken from https://github.com/DevExpress/testcafe/issues/2228
-import {ClientFunction} from 'testcafe';
+import { ClientFunction } from 'testcafe';
 
 fixture('Concurrent').page('example.com');
 
-const timeline = [];
+const timeline: Array<string> = [];
 
 test('Long test', async t => {
   timeline.push('long started');
