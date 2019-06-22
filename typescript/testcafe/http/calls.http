@@ -1,0 +1,9 @@
+PUT https://httpbin.org/anything
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "1st name"
+}
+
+###
