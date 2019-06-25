@@ -3,7 +3,7 @@ import { ClientFunction, Selector } from 'testcafe';
 fixture('interact with input elements')
   .page('http://localhost:8080/');
 
-test.only('email input', async (tc) => {
+test('email input', async (tc) => {
   const emailInput = Selector('#email-input');
 
   await tc.typeText(emailInput, 'initial@example.org');
