@@ -16,7 +16,8 @@
     "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}],
     "array-type": [true, "generic"],
-    "prefer-array-literal": false
+    "prefer-array-literal": false,
+    "align": [false, "arguments"]
   },
   "jsRules": {
     "eofline": false
