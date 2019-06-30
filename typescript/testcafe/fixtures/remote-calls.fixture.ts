@@ -21,6 +21,27 @@ test('stub response code', async (tc) => {
   await tc.wait(500).expect(Selector('[data-automation-id=remote-call__status]').textContent).eql('400');
 });
 
+test.only('dynamic responses', async (tc) => {
+  let counter = 0;
+  const userAgentFake = RequestMock()
+    .onRequestTo(httpBinUserAgent)
+    .respond((request, response) => {
+      const body = { counter: counter += 1 };
+      response.headers['content-type'] = 'application/json';
+      response.statusCode = 201;
+      response.setBody(body);
+    }, 200, {
+      'Access-Control-Allow-Origin': '*'
+    });
+  await tc.addRequestHooks(userAgentFake);
+
+  await executeRemoteCall(tc);
+  await tc.expect(Selector('[data-automation-id=remote-call__body]').textContent).contains('"counter":1');
+
+  await executeRemoteCall(tc);
+  await tc.expect(Selector('[data-automation-id=remote-call__body]').textContent).contains('"counter":2');
+});
+
 test('record calls', async (tc) => {
   await tc.addRequestHooks(requestLogger);
   await executeRemoteCall(tc);
