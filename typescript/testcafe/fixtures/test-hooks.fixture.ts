@@ -4,7 +4,7 @@ const printPropertiesFromContext = (t: TestController, name: string) => {
   console.log(`${name} "${t.ctx.someProp}" "${t.fixtureCtx.fixtureProperty}"`);
 };
 
-fixture.only('the fixture')
+fixture('the fixture')
   .page`http://example.com`
   .before(async (ctx) => {
     ctx.fixtureProperty = 'initialized in fixture before';

@@ -21,7 +21,7 @@ test('stub response code', async (tc) => {
   await tc.wait(500).expect(Selector('[data-automation-id=remote-call__status]').textContent).eql('400');
 });
 
-test.only('dynamic responses', async (tc) => {
+test('dynamic responses', async (tc) => {
   let counter = 0;
   const userAgentFake = RequestMock()
     .onRequestTo(httpBinUserAgent)
