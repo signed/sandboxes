@@ -218,8 +218,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("260707641");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-92");
+        List<MeetupMember> meetup = meetupParticipants("262878459");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-94");
 
         printUniqueRsvps(meetup, agora);
     }
@@ -363,7 +363,7 @@ public class SamplesTest {
         screenShooter.succeededTests();
 
         com.codeborne.selenide.Configuration.baseUrl = "https://github.com";
-        com.codeborne.selenide.Configuration.browser = WebDriverRunner.OPERA;
+        com.codeborne.selenide.Configuration.browser = WebDriverRunner.CHROME;
         Selenide.open("/login");
 
         $("#login_field").val(login);
