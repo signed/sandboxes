@@ -24,6 +24,7 @@
 
         .left {
             display: flex;
+            justify-content: flex-start;
             flex-grow: 1;
             flex-shrink: 1;
             flex-basis: 0;
@@ -33,11 +34,15 @@
         }
 
         .center {
+            display: flex;
+            justify-content: center;
             flex-grow: 0;
             flex-shrink: 0;
         }
 
         .right {
+            display: flex;
+            justify-content: flex-end;
             flex-grow: 1;
             text-align: right;
             flex-shrink: 0;
@@ -61,7 +66,11 @@
         <div class="ellipse border2"> This is a longer text that where the overflow should be hidden</div>
     </div>
     <div class="center border">center should have a longer text</div>
-    <div class="right border">right</div>
+    <div class="right border">
+        <div class="border2">one</div>
+        <div class="border2">two</div>
+        <div class="border2">three</div>
+    </div>
 </div>
 </body>
 </html>
