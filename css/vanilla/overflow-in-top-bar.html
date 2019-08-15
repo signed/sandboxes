@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>css sandbox</title>
+    <style type="text/css">
+        div {
+            margin: 2px;
+        }
+
+        .border {
+            border: 1px black solid;
+        }
+
+        .border2 {
+            border: 1px blue solid;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            max-height: 45px;
+        }
+
+        .left {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .center {
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        .right {
+            flex-grow: 1;
+            text-align: right;
+            flex-shrink: 0;
+            flex-basis: 0;
+        }
+
+        .overlay {
+            height: 500px;
+            background: aquamarine;
+        }
+
+        .ellipse {
+        }
+    </style>
+
+</head>
+<body>
+<div class="top-bar border">
+    <div class="left border">
+        <div class="overlay border2">click here</div>
+        <div class="ellipse border2"> This is a longer text that where the overflow should be hidden</div>
+    </div>
+    <div class="center border">center should have a longer text</div>
+    <div class="right border">right</div>
+</div>
+</body>
+</html>
