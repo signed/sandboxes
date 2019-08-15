@@ -17,24 +17,29 @@
         }
 
         .top-bar {
+            width: 100vw;
+            max-height: 55px;
+            position: relative;
+            top: 0;
             display: flex;
             justify-content: space-between;
-            max-height: 45px;
+            align-items: stretch;
         }
 
         .left {
             display: flex;
             justify-content: flex-start;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
             flex-grow: 1;
             flex-shrink: 1;
             flex-basis: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .center {
             display: flex;
+            align-items: center;
             justify-content: center;
             flex-grow: 0;
             flex-shrink: 0;
@@ -55,6 +60,9 @@
         }
 
         .ellipse {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 
