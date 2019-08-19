@@ -136,6 +136,11 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(200366681L);
         foundNoMatchingAccountInAgora.add(242700846L);
         foundNoMatchingAccountInAgora.add(192438824L);
+        foundNoMatchingAccountInAgora.add(281052584L);
+        foundNoMatchingAccountInAgora.add(183833661L);
+        foundNoMatchingAccountInAgora.add(274311244L);
+        foundNoMatchingAccountInAgora.add(280715192L);
+        foundNoMatchingAccountInAgora.add(272029304L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -218,8 +223,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("262878459");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-94");
+        List<MeetupMember> meetup = meetupParticipants("263759632");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-95");
 
         printUniqueRsvps(meetup, agora);
     }
