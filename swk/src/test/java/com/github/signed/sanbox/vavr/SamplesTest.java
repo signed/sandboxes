@@ -147,6 +147,10 @@ public class SamplesTest {
         foundNoMatchingAccountInAgora.add(182620758L);
         foundNoMatchingAccountInAgora.add(172059632L);
         foundNoMatchingAccountInAgora.add(210537264L);
+        foundNoMatchingAccountInAgora.add(246576352L);
+        foundNoMatchingAccountInAgora.add(284794286L);
+        foundNoMatchingAccountInAgora.add(292894894L);
+        foundNoMatchingAccountInAgora.add(76266812L);
         foundNoMatchingAccountInAgora.add(0L);
     }
 
@@ -177,6 +181,9 @@ public class SamplesTest {
         meetupToAgora.put(279423602L, "Novi");
         meetupToAgora.put(116433192L, "johanneslink");
         meetupToAgora.put(259065935L, "TimoS"); // and error_empire
+        meetupToAgora.put(247190267L, "agrippine");
+        meetupToAgora.put(278763867L, "Doninhas");
+        meetupToAgora.put(246731926L, "ibeljakov");
         meetupToAgora.put(0L, "");
     }
 
@@ -217,7 +224,7 @@ public class SamplesTest {
 
     @Test
     public void meetup() {
-        List<MeetupMember> meetupMembers = meetupParticipants("247284021");
+        List<MeetupMember> meetupMembers = meetupParticipants("265338304");
         meetupMembers.forEach(System.out::println);
     }
 
@@ -229,8 +236,8 @@ public class SamplesTest {
 
     @Test
     public void combined() {
-        List<MeetupMember> meetup = meetupParticipants("263759632");
-        List<AgoraMember> agora = agoraParticipants("ka-treffen-95");
+        List<MeetupMember> meetup = meetupParticipants("265338304");
+        List<AgoraMember> agora = agoraParticipants("ka-treffen-97");
 
         printUniqueRsvps(meetup, agora);
     }
@@ -380,6 +387,7 @@ public class SamplesTest {
         $("#login_field").val(login);
         $("#password").val(password);
         $("form input[name='commit']").click();
+
 
         com.codeborne.selenide.Configuration.baseUrl = "https://www.softwerkskammer.org";
         Selenide.open("/auth/github?returnTo=%2F");
