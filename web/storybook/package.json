@@ -26,7 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 6006 -s public --host localhost",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.1.15",
+    "@storybook/addon-design-assets": "6.1.15",
     "@storybook/addon-essentials": "^6.1.15",
     "@storybook/addon-links": "^6.1.15",
     "@storybook/node-logger": "^6.1.15",

@@ -2631,6 +2631,23 @@
     core-js "^3.0.1"
     ts-dedent "^2.0.0"
 
+"@storybook/addon-design-assets@6.1.15":
+  version "6.1.15"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-design-assets/-/addon-design-assets-6.1.15.tgz#d88e188869baff1729cdf01307813a560d5f64e8"
+  integrity sha512-N08ZK3t54U4JCIqdf56As/7wSjNTqKfGwDqs4zk4zXEJwC51+T72O5/IqqbOLsBoyyjNyyU3vwbGp7eapxd9bA==
+  dependencies:
+    "@storybook/addons" "6.1.15"
+    "@storybook/api" "6.1.15"
+    "@storybook/client-logger" "6.1.15"
+    "@storybook/components" "6.1.15"
+    "@storybook/core-events" "6.1.15"
+    "@storybook/theming" "6.1.15"
+    core-js "^3.0.1"
+    global "^4.3.2"
+    regenerator-runtime "^0.13.7"
+    ts-dedent "^2.0.0"
+    use-image "^1.0.3"
+
 "@storybook/addon-docs@6.1.15":
   version "6.1.15"
   resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-6.1.15.tgz#b2c08d0e9d058dc01a10ddd39266630551697ee5"
@@ -15136,6 +15153,11 @@ use-composed-ref@^1.0.0:
   integrity sha512-my1lNHGWsSDAhhVAT4MKs6IjBUtG6ZG11uUqexPH9PptiIZDQOzaF4f5tEbJ2+7qvNbtXNBbU3SfmN+fXlWDhg==
   dependencies:
     ts-essentials "^2.0.3"
+
+use-image@^1.0.3:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/use-image/-/use-image-1.0.7.tgz#b2c42b78d32868762a37631673eb169a244d5ad1"
+  integrity sha512-Z8hB8+lAGe25iqO3YaHO7bSvBSGErEakYQ6RGyRrPZoMDLKBIuZ67ikzn8f5ydjWorqFzeX+U3vVwnXoE1Q56Q==
 
 use-isomorphic-layout-effect@^1.0.0:
   version "1.1.1"
