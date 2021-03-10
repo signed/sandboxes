@@ -7,6 +7,7 @@ export const createAggregate = (a: string, b: string): Aggregate => {
     return { a, b };
 };
 
+// https://youtrack.jetbrains.com/issue/WEB-49969
 export const someFunction = (a: string, b: string, c: number) => {
     const ag = createAggregate(a, b)
 
