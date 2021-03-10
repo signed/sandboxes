@@ -1,4 +1,4 @@
-import { someFunction } from './functiona-call-to-parameter';
+import { someFunction } from './function-call-to-parameter';
 
 
 someFunction('a', 'b', 42)
