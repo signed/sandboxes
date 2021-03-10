@@ -7,6 +7,7 @@ interface Data {
     two: number
 }
 
+// https://youtrack.jetbrains.com/issue/WEB-49970
 // @ts-expect-error
 class Builder implements FluentBuilder<Data> {
 
