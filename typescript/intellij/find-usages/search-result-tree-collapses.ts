@@ -1,3 +1,4 @@
+// https://youtrack.jetbrains.com/issue/IDEA-264126
 export const someFunction = () => {
 
 }
