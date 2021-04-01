@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+micro-signals@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/micro-signals/-/micro-signals-2.4.0.tgz#007af19ea18051e360f9fa17023284779d839593"
+  integrity sha512-OpGuAaqeJQEV4Q45M8K1RWi4/Fs8QRl9xB9Q5MBGcMlXu5rJu4exdZ0dNXrHKDUpXcIvGW/Lndr7qrtlNB5MGg==
+
 typescript@4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
