@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "files": [
-    "."
+  "include": [
+    "src"
   ]
 }
