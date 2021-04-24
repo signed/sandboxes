@@ -1,3 +1,4 @@
+// https://youtrack.jetbrains.com/issue/WEB-50680
 enum SomeEnum {
     one = 'one',
     two = 'two',
