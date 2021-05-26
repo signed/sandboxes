@@ -7,6 +7,11 @@ micro-signals@2.4.0:
   resolved "https://registry.yarnpkg.com/micro-signals/-/micro-signals-2.4.0.tgz#007af19ea18051e360f9fa17023284779d839593"
   integrity sha512-OpGuAaqeJQEV4Q45M8K1RWi4/Fs8QRl9xB9Q5MBGcMlXu5rJu4exdZ0dNXrHKDUpXcIvGW/Lndr7qrtlNB5MGg==
 
+prettier@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.0.tgz#b6a5bf1284026ae640f17f7ff5658a7567fc0d18"
+  integrity sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==
+
 typescript@4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
