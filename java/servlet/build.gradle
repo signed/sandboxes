@@ -1,3 +1,7 @@
+plugins {
+    id "com.github.ben-manes.versions" version "0.39.0"
+}
+
 apply plugin: 'war'
 
 repositories{
@@ -12,7 +16,7 @@ dependencies {
 
     )
     providedCompile(
-            'javax.servlet:javax.servlet-api:3.1.0'
+            'javax.servlet:javax.servlet-api:4.0.1'
     )
 
     testImplementation(platform('org.junit:junit-bom:5.7.2'))
