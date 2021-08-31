@@ -14,6 +14,7 @@ interface Three {
 }
 
 type Numbers = One | Two | Three
+type Types = Numbers['type']
 
 type NumberDocument = {
   'one': One
@@ -21,9 +22,4 @@ type NumberDocument = {
   'three': Three
 }
 type WithDefaults = 'one' | 'three'
-
-// hand coded
-type Defaults = {
-  [Property in keyof NumberDocument as Extract<Property, WithDefaults>]: NumberDocument[Property]['value']
-}
 
