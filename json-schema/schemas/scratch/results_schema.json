@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "resource:/schemas/results_schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "type",
+      "name"
+    ],
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "dateOfBirth": {
+        "type": "string"
+      }
+    }
+  }
+}

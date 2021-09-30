@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "Language",
+  "description": "The language used in the user interface",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "value"
+  ],
+  "properties": {
+    "type": {
+      "const": "general.language"
+    },
+    "value": {
+      "title": "SupportedLanguage",
+      "type": "string",
+      "enum": [
+        "EO",
+        "EN",
+        "ZH",
+        "ES"
+      ],
+      "default": "EN"
+    }
+  }
+}

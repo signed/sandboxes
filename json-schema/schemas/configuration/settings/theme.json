@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "Theme",
+  "description": "The current theme",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "value"
+  ],
+  "properties": {
+    "type": {
+      "const": "ui.theme"
+    },
+    "value": {
+      "title": "SupportedTheme",
+      "type": "string",
+      "enum": [
+        "Specular",
+        "Amos",
+        "Folie"
+      ],
+      "default": "AMOS"
+    }
+  }
+}

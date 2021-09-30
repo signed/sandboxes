@@ -5,7 +5,9 @@
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "generate:schema": "typescript-json-schema tsconfig.json  \"*\" --noExtraProps --strictNullChecks --out src/hand-craftet/example.generated.json"
+    "generate:schema": "typescript-json-schema tsconfig.json  \"*\" --noExtraProps --strictNullChecks --required --out src/hand-craftet/example.generated.json",
+    "generate:typescript": "json2ts --input src/hand-craftet/example.improved.json",
+    "generate:configuration": "json2ts --input schemas/configuration/ --output src/generated --no-bannerComment"
   },
   "devDependencies": {
     "@babel/core": "7.15.0",
@@ -13,8 +15,10 @@
     "@babel/preset-typescript": "7.15.0",
     "@types/jest": "27.0.1",
     "jest": "27.1.0",
+    "json-schema-to-typescript": "10.1.4",
     "prettier": "2.3.2",
     "ts-node": "10.2.1",
+    "ts-poet": "4.5.0",
     "typescript": "4.4.2",
     "typescript-json-schema": "0.50.1"
   },

@@ -1,26 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "NumberDocument",
     "definitions": {
-        "NumberDocument": {
-            "additionalProperties": false,
-            "properties": {
-                "one": {
-                    "$ref": "#/definitions/One"
-                },
-                "three": {
-                    "$ref": "#/definitions/Three"
-                },
-                "two": {
-                    "$ref": "#/definitions/Two"
-                }
-            },
-            "required": [
-                "one",
-                "three",
-                "two"
-            ],
-            "type": "object"
-        },
         "Numbers": {
             "anyOf": [
                 {
@@ -115,6 +96,25 @@
             ],
             "type": "string"
         }
-    }
+    },
+    "additionalProperties": false,
+    "properties": {
+        "one": {
+            "$ref": "#/definitions/One"
+        },
+        "three": {
+            "$ref": "#/definitions/Three"
+        },
+        "two": {
+            "$ref": "#/definitions/Two"
+        }
+    },
+    "required": [
+        "one",
+        "three",
+        "two"
+    ],
+    "type": "object"
+
 }
 

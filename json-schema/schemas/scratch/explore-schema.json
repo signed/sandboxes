@@ -1,0 +1,25 @@
+{
+  "$comment": "https://bcherny.github.io/json-schema-to-typescript-browser/",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "resource:/schemas/results_schema#",
+  "additionalProperties": false,
+  "type": "object",
+  "title": "sub",
+  "description": "Gime details",
+  "required": [
+    "type",
+    "name"
+  ],
+  "properties": {
+    "type": {
+      "const": "hard-coded-string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string",
+      "default": "blue"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "Mode",
+  "description": "The current ui mode",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "value"
+  ],
+  "properties": {
+    "type": {
+      "const": "ui.mode"
+    },
+    "value": {
+      "title": "Theme",
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
+      ],
+      "default": "dark"
+    }
+  }
+}
