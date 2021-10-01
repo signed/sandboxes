@@ -1,34 +1,5 @@
-// https://www.reddit.com/r/typescript/comments/d8w658/dynamic_property_lookup_via_type/
-import { AutoSave } from './settings/auto-save'
-import { Language } from './settings/language'
-import { Mode } from './settings/mode'
-import { Theme } from './settings/theme'
+import { defaults, Setting, Settings, SettingTypeWithDefault } from './settings'
 
-// Is generated
-type Setting = Theme | Mode | Language | AutoSave
-
-// Is generated
-export type Settings = {
-  'ui.theme': Theme
-  'ui.mode': Mode
-  'general.language': Language
-  'editor.auto-save': AutoSave
-}
-
-// Is generated
-type SettingTypeWithDefault =  'ui.mode' | 'general.language'
-
-// Is generated
-const defaults: Defaults = {
-  'ui.mode': 'dark',
-  'general.language': 'EN',
-}
-
-type Defaults = {
-  [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
-}
-
-// fake it till you make it
 export function settingFor<T extends SettingTypeWithDefault>(id: T, settings: Setting[]): Settings[T]
 export function settingFor<T extends keyof Settings>(
   id: T,

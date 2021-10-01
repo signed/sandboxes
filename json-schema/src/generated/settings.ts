@@ -45,7 +45,11 @@ export interface AutoSave {
 
 export type Setting = Theme | Mode | Language | AutoSave
 export type SettingTypeWithDefault = 'ui.mode' | 'general.language'
-export type Defaults = { 
-  'ui.mode': 'dark'
+
+type Defaults = {
+  [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
+}
+export const defaults: Defaults = { 
+  'ui.mode': 'dark',
   'general.language': 'EN'
 }

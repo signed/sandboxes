@@ -70,7 +70,11 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
     const defaultt = wohoo.get(`#/properties/${key}/properties/value/default`)
     return { type , defaultt }
   })
-  return `export type Defaults = { 
-  ${union.map(({type, defaultt}) => `'${type}': '${defaultt}'`).join('\n  ')}
+  return `
+type Defaults = {
+  [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
+}
+export const defaults: Defaults = { 
+  ${union.map(({type, defaultt}) => `'${type}': '${defaultt}'`).join(',\n  ')}
 }`
 }
