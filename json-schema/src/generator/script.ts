@@ -1,8 +1,8 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser'
-import { readFileSync, writeFileSync } from 'fs'
-import { JSONSchema4 } from 'json-schema'
+import { writeFileSync } from 'fs'
 import { compile } from 'json-schema-to-typescript'
 import { extname } from 'path'
+import { readSchema } from './shared'
 
 export async function generate() {
   const fileName = process.cwd() + '/schemas/configuration/settings.json'
@@ -26,11 +26,6 @@ export async function generate() {
   const code = snippets.join('\n')
   console.log(code)
   writeFileSync(process.cwd() + '/src/generated/settings.ts', code)
-}
-
-const readSchema = (filename: string): JSONSchema4 => {
-  const contents = readFileSync(filename)
-  return JSON.parse(contents.toString())
 }
 
 const stripExtension = (filename: string): string => filename.replace(extname(filename), '')
