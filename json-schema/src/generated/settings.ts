@@ -43,5 +43,5 @@ export interface AutoSave {
   };
 }
 
-export type SettingWithDefault = Theme | Mode | Language | AutoSave
 export type Setting = Theme | Mode | Language | AutoSave
+export type SettingTypeWithDefault = 'ui.mode' | 'general.language'

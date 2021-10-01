@@ -15,8 +15,8 @@ export type Settings = {
   'editor.auto-save': AutoSave
 }
 
-// TODO has to be generated
-type SettingWithDefault = 'general.language' | 'ui.mode'
+// Is generated
+type SettingTypeWithDefault =  'ui.mode' | 'general.language'
 
 // TODO has to be generated
 const defaults: Defaults = {
@@ -25,11 +25,11 @@ const defaults: Defaults = {
 }
 
 type Defaults = {
-  [Property in keyof Settings as Extract<Property, SettingWithDefault>]: Settings[Property]['value']
+  [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
 
 // fake it till you make it
-export function settingFor<T extends SettingWithDefault>(id: T, settings: Setting[]): Settings[T]
+export function settingFor<T extends SettingTypeWithDefault>(id: T, settings: Setting[]): Settings[T]
 export function settingFor<T extends keyof Settings>(
   id: T,
   settings: Setting[],
@@ -39,5 +39,5 @@ export function settingFor<T extends keyof Settings>(id: T, settings: Setting[])
   if (found !== undefined) {
     return found.value
   }
-  return defaults[id as SettingWithDefault]
+  return defaults[id as SettingTypeWithDefault]
 }
