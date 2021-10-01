@@ -7,9 +7,10 @@
     "typecheck": "tsc --noEmit",
     "generate:schema": "typescript-json-schema tsconfig.json  \"*\" --noExtraProps --strictNullChecks --required --out src/hand-craftet/example.generated.json",
     "generate:typescript": "json2ts --input src/hand-craftet/example.improved.json",
-    "generate:configuration": "json2ts --input schemas/configuration/ --output src/generated --no-bannerComment"
+    "generate:configuration": "VERBOSE=true json2ts --input schemas/configuration/ --output src/generated --no-bannerComment"
   },
   "devDependencies": {
+    "@apidevtools/json-schema-ref-parser": "9.0.9",
     "@babel/core": "7.15.0",
     "@babel/preset-env": "7.15.0",
     "@babel/preset-typescript": "7.15.0",
@@ -25,5 +26,8 @@
   "volta": {
     "node": "16.6.1",
     "yarn": "1.22.11"
+  },
+  "dependencies": {
+    "json-schema": "0.3.0"
   }
 }

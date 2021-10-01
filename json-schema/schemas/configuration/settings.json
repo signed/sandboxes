@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "Settings",
+  "description": "All settings supported by the application",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ui.theme": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings/theme.json"
+    },
+    "ui.mode": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings/mode.json"
+    },
+    "general.language": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings/language.json"
+    },
+    "editor.auto-save": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings/auto-save.json"
+    }
+  }
+}

@@ -13,7 +13,7 @@
       "const": "ui.mode"
     },
     "value": {
-      "title": "Theme",
+      "title": "SupportedMode",
       "type": "string",
       "enum": [
         "dark",
