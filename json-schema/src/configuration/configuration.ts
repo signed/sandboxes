@@ -18,10 +18,10 @@ export type Settings = {
 // Is generated
 type SettingTypeWithDefault =  'ui.mode' | 'general.language'
 
-// TODO has to be generated
+// Is generated
 const defaults: Defaults = {
-  'general.language': 'EN',
   'ui.mode': 'dark',
+  'general.language': 'EN',
 }
 
 type Defaults = {

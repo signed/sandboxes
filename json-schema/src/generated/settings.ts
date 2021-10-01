@@ -45,3 +45,7 @@ export interface AutoSave {
 
 export type Setting = Theme | Mode | Language | AutoSave
 export type SettingTypeWithDefault = 'ui.mode' | 'general.language'
+export type Defaults = { 
+  'ui.mode': 'dark'
+  'general.language': 'EN'
+}

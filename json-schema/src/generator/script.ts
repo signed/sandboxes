@@ -12,6 +12,7 @@ export async function generate() {
   const wohoo = await parser.resolve(schema)
   const settingTypeCode = settingType(wohoo)
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(wohoo)
+  const defaultsTypeCode = defaultsType(wohoo)
 
   const options = { cwd: process.cwd(), bannerComment: '' }
   const settingsCode = await compile(schema, stripExtension(fileName), options)
@@ -20,6 +21,7 @@ export async function generate() {
     settingsCode,
     settingTypeCode,
     settingTypeWithDefaultTypeCode,
+    defaultsTypeCode,
   ]
   const code = snippets.join('\n')
   console.log(code)
@@ -54,4 +56,21 @@ const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
     return wohoo.get(`#/properties/${key}/properties/type/const`)
   }).map(type => `'${type}'`).join(' | ')
   return `export type SettingTypeWithDefault = ${union}`
+}
+
+const defaultsType = function(wohoo: $RefParser.$Refs) {
+  const o = wohoo.get('#/properties')
+  if (o === null) {
+    throw new Error('Settings has no properties, that should not happen')
+  }
+  const keys = Object.keys(o)
+  const keysWithDefault = keys.filter(key => wohoo.exists(`#/properties/${key}/properties/value/default`))
+  const union = keysWithDefault.map(key => {
+    const type = wohoo.get(`#/properties/${key}/properties/type/const`)
+    const defaultt = wohoo.get(`#/properties/${key}/properties/value/default`)
+    return { type , defaultt }
+  })
+  return `export type Defaults = { 
+  ${union.map(({type, defaultt}) => `'${type}': '${defaultt}'`).join('\n  ')}
+}`
 }
