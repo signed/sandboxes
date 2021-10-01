@@ -4,9 +4,11 @@ import { Language } from './settings/language'
 import { Mode } from './settings/mode'
 import { Theme } from './settings/theme'
 
+// Is generated
 type Setting = Theme | Mode | Language | AutoSave
 
-type Settings = {
+// Is generated
+export type Settings = {
   'ui.theme': Theme
   'ui.mode': Mode
   'general.language': Language

@@ -4,6 +4,12 @@
   "description": "All settings supported by the application",
   "type": "object",
   "additionalProperties": false,
+  "required": [
+    "ui.theme",
+    "ui.mode",
+    "general.language",
+    "editor.auto-save"
+  ],
   "properties": {
     "ui.theme": {
       "type": "object",

@@ -6,10 +6,10 @@ export type SupportedLanguage = "EO" | "EN" | "ZH" | "ES";
  * All settings supported by the application
  */
 export interface Settings {
-  "ui.theme"?: Theme;
-  "ui.mode"?: Mode;
-  "general.language"?: Language;
-  "editor.auto-save"?: AutoSave;
+  "ui.theme": Theme;
+  "ui.mode": Mode;
+  "general.language": Language;
+  "editor.auto-save": AutoSave;
 }
 /**
  * The current theme
