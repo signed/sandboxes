@@ -16,7 +16,7 @@ export type Settings = {
 }
 
 // TODO has to be generated
-type SettingsWithDefault = 'general.language' | 'ui.mode'
+type SettingWithDefault = 'general.language' | 'ui.mode'
 
 // TODO has to be generated
 const defaults: Defaults = {
@@ -25,11 +25,11 @@ const defaults: Defaults = {
 }
 
 type Defaults = {
-  [Property in keyof Settings as Extract<Property, SettingsWithDefault>]: Settings[Property]['value']
+  [Property in keyof Settings as Extract<Property, SettingWithDefault>]: Settings[Property]['value']
 }
 
 // fake it till you make it
-export function settingFor<T extends SettingsWithDefault>(id: T, settings: Setting[]): Settings[T]
+export function settingFor<T extends SettingWithDefault>(id: T, settings: Setting[]): Settings[T]
 export function settingFor<T extends keyof Settings>(
   id: T,
   settings: Setting[],
@@ -39,5 +39,5 @@ export function settingFor<T extends keyof Settings>(id: T, settings: Setting[])
   if (found !== undefined) {
     return found.value
   }
-  return defaults[id as SettingsWithDefault]
+  return defaults[id as SettingWithDefault]
 }
