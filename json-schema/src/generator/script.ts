@@ -4,7 +4,7 @@ import { compile } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
-export async function generate() {
+export async function generateSettingsFromSchema() {
   const fileName = process.cwd() + '/schemas/configuration/settings.json'
   const schema = readSchema(fileName)
 
@@ -24,7 +24,6 @@ export async function generate() {
     defaultsTypeCode,
   ]
   const code = snippets.join('\n')
-  console.log(code)
   writeFileSync(process.cwd() + '/src/generated/settings.ts', code)
 }
 
