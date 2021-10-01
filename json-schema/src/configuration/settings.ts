@@ -1,4 +1,3 @@
-// https://www.reddit.com/r/typescript/comments/d8w658/dynamic_property_lookup_via_type/
 import { AutoSave } from './settings/auto-save'
 import { Language } from './settings/language'
 import { Mode } from './settings/mode'
