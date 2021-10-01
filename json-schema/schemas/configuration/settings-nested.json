@@ -1,0 +1,32 @@
+{
+  "$comment": "this is auto generated",
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "SettingsGenerated",
+  "description": "All settings supported by the application",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "editor.auto-save",
+    "general.language",
+    "ui.mode",
+    "ui.theme"
+  ],
+  "properties": {
+    "editor.auto-save": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings-nested/editor/auto-save.json"
+    },
+    "general.language": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings-nested/general/language.json"
+    },
+    "ui.mode": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings-nested/ui/mode.json"
+    },
+    "ui.theme": {
+      "type": "object",
+      "$ref": "schemas/configuration/settings-nested/ui/theme.json"
+    }
+  }
+}
