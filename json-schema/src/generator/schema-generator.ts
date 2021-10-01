@@ -8,7 +8,7 @@ export const generateSettingsSchema = () => {
   const settingsSchemaTemplate = {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
-    'title': 'SettingsGenerated',
+    'title': 'Settings',
     'description': 'All settings supported by the application',
     'type': 'object',
     'additionalProperties': false,
