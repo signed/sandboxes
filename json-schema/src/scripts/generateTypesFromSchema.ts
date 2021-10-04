@@ -72,3 +72,5 @@ export const defaults: Defaults = {
   ${union.map(({type, defaultt}) => `'${type}': '${defaultt}'`).join(',\n  ')}
 }`
 }
+
+generateTypesFromSchema().catch(e => console.error(e))
