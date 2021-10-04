@@ -5,9 +5,7 @@
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "generate:schema": "typescript-json-schema tsconfig.json  \"*\" --noExtraProps --strictNullChecks --required --out src/hand-craftet/example.generated.json",
-    "generate:typescript": "json2ts --input src/hand-craftet/example.improved.json",
-    "generate:configuration": "VERBOSE=true json2ts --input schemas/configuration/ --output src/generated --no-bannerComment"
+    "generate": "yarn ts-node src/scripts/ensureTypeInSettingSchemaAreUpdated.ts && yarn ts-node src/scripts/generateSettingsSchema.ts && ts-node src/scripts/generateTypesFromSchema.ts"
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "9.0.9",
