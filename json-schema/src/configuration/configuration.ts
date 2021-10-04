@@ -1,4 +1,4 @@
-import { defaults, Setting, Settings, SettingTypeWithDefault } from './settings'
+import { defaults, Setting, Settings, SettingTypeWithDefault } from '../generated/settings'
 
 export function settingFor<T extends SettingTypeWithDefault>(id: T, settings: Setting[]): Settings[T]
 export function settingFor<T extends keyof Settings>(

@@ -4,7 +4,7 @@ import p from 'path'
 import { readSchema } from './shared'
 
 export const generateSettingsSchema = () => {
-  const settingsBase = p.resolve(process.cwd() + '/schemas/configuration/settings-nested/')
+  const settingsBase = p.resolve(process.cwd() + '/schemas/configuration/settings/')
   const settingsSchemaTemplate = {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
@@ -23,9 +23,8 @@ export const generateSettingsSchema = () => {
   const properties = foundSchemas.reduce((acc, schema) => {
     const type = schema.segments.join('.')
     const json = schema.segments.join(p.sep) + '.json'
-    const pathToSchema = 'schemas/configuration/settings-nested/' + json
+    const pathToSchema = 'schemas/configuration/settings/' + json
     acc[type] = {
-      type: 'object',
       '$ref': pathToSchema,
     }
     return acc
@@ -33,12 +32,12 @@ export const generateSettingsSchema = () => {
 
   const settingsSchema = { ...settingsSchemaTemplate, required, properties }
 
-  const settingsPath = p.resolve(process.cwd() + '/schemas/configuration/settings-nested.json')
+  const settingsPath = p.resolve(process.cwd() + '/schemas/configuration/settings.json')
   writeFileSync(settingsPath, JSON.stringify(settingsSchema, null, 2))
 }
 
 export const ensureCorrectTypePropertyInSettings = () => {
-  const settingsBase = p.resolve(process.cwd() + '/schemas/configuration/settings-nested/')
+  const settingsBase = p.resolve(process.cwd() + '/schemas/configuration/settings/')
   const foundSchemas = findSchemasIn(settingsBase)
 
   foundSchemas.forEach(async found => {

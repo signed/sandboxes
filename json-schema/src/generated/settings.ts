@@ -1,36 +1,15 @@
-export type SupportedTheme = "Specular" | "Amos" | "Folie";
-export type SupportedMode = "dark" | "light";
 export type SupportedLanguage = "EO" | "EN" | "ZH" | "ES";
+export type SupportedMode = "dark" | "light";
+export type SupportedTheme = "Specular" | "Amos" | "Folie";
 
 /**
  * All settings supported by the application
  */
 export interface Settings {
-  "ui.theme": Theme;
-  "ui.mode": Mode;
-  "general.language": Language;
   "editor.auto-save": AutoSave;
-}
-/**
- * The current theme
- */
-export interface Theme {
-  type: "ui.theme";
-  value: SupportedTheme;
-}
-/**
- * The current ui mode
- */
-export interface Mode {
-  type: "ui.mode";
-  value: SupportedMode;
-}
-/**
- * The language used in the user interface
- */
-export interface Language {
-  type: "general.language";
-  value: SupportedLanguage;
+  "general.language": Language;
+  "ui.mode": Mode;
+  "ui.theme": Theme;
 }
 /**
  * Automatically save changes
@@ -42,14 +21,35 @@ export interface AutoSave {
     interval: number;
   };
 }
+/**
+ * The language used in the user interface
+ */
+export interface Language {
+  type: "general.language";
+  value: SupportedLanguage;
+}
+/**
+ * The current ui mode
+ */
+export interface Mode {
+  type: "ui.mode";
+  value: SupportedMode;
+}
+/**
+ * The current theme
+ */
+export interface Theme {
+  type: "ui.theme";
+  value: SupportedTheme;
+}
 
-export type Setting = Theme | Mode | Language | AutoSave
-export type SettingTypeWithDefault = 'ui.mode' | 'general.language'
+export type Setting = AutoSave | Language | Mode | Theme
+export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
 type Defaults = {
   [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
 export const defaults: Defaults = { 
-  'ui.mode': 'dark',
-  'general.language': 'EN'
+  'general.language': 'EN',
+  'ui.mode': 'dark'
 }

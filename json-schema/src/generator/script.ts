@@ -4,7 +4,7 @@ import { compile } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
-export async function generateSettingsFromSchema() {
+export async function generateTypesFromSchema() {
   const fileName = process.cwd() + '/schemas/configuration/settings.json'
   const schema = readSchema(fileName)
 
