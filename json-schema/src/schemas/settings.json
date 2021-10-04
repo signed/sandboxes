@@ -13,16 +13,16 @@
   ],
   "properties": {
     "editor.auto-save": {
-      "$ref": "schemas/configuration/settings/editor/auto-save.json"
+      "$ref": "src/schemas/settings/editor/auto-save.json"
     },
     "general.language": {
-      "$ref": "schemas/configuration/settings/general/language.json"
+      "$ref": "src/schemas/settings/general/language.json"
     },
     "ui.mode": {
-      "$ref": "schemas/configuration/settings/ui/mode.json"
+      "$ref": "src/schemas/settings/ui/mode.json"
     },
     "ui.theme": {
-      "$ref": "schemas/configuration/settings/ui/theme.json"
+      "$ref": "src/schemas/settings/ui/theme.json"
     }
   }
 }

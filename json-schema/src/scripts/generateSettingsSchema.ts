@@ -22,7 +22,7 @@ export const generateSettingsSchema = () => {
   const properties = foundSchemas.reduce((acc, schema) => {
     const type = schema.segments.join('.')
     const json = schema.segments.join(sep) + '.json'
-    const pathToSchema = 'schemas/configuration/settings/' + json
+    const pathToSchema = 'src/schemas/settings/' + json
     acc[type] = {
       '$ref': pathToSchema,
     }
