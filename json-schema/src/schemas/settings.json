@@ -1,16 +1,11 @@
 {
   "$comment": "this is auto generated",
   "$schema": "http://json-schema.org/draft-06/schema/schema",
-  "title": "Settings",
+  "title": "SettingsDocument",
   "description": "All settings supported by the application",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "editor.auto-save",
-    "general.language",
-    "ui.mode",
-    "ui.theme"
-  ],
+  "required": [],
   "properties": {
     "editor.auto-save": {
       "$ref": "src/schemas/settings/editor/auto-save.json"

@@ -65,6 +65,7 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
     return { type , defaultt }
   })
   return `
+export type Settings = Required<SettingsDocument>
 type Defaults = {
   [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }

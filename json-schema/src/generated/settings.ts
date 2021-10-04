@@ -5,11 +5,11 @@ export type SupportedTheme = "Specular" | "Amos" | "Folie";
 /**
  * All settings supported by the application
  */
-export interface Settings {
-  "editor.auto-save": AutoSave;
-  "general.language": Language;
-  "ui.mode": Mode;
-  "ui.theme": Theme;
+export interface SettingsDocument {
+  "editor.auto-save"?: AutoSave;
+  "general.language"?: Language;
+  "ui.mode"?: Mode;
+  "ui.theme"?: Theme;
 }
 /**
  * Automatically save changes
@@ -46,6 +46,7 @@ export interface Theme {
 export type Setting = AutoSave | Language | Mode | Theme
 export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
+export type Settings = Required<SettingsDocument>
 type Defaults = {
   [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
