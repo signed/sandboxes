@@ -5,7 +5,7 @@ import { extname } from 'path'
 import { readSchema } from './shared'
 
 export async function generateTypesFromSchema() {
-  const fileName = process.cwd() + '/schemas/configuration/settings.json'
+  const fileName = process.cwd() + '/src/schemas/settings.json'
   const schema = readSchema(fileName)
 
   const parser = new $RefParser()

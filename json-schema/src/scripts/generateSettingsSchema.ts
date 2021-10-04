@@ -3,7 +3,7 @@ import { resolve, sep } from 'path'
 import { findSchemasIn } from './shared'
 
 export const generateSettingsSchema = () => {
-  const settingsBase = resolve(process.cwd() + '/schemas/configuration/settings/')
+  const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
   const settingsSchemaTemplate = {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
@@ -31,7 +31,7 @@ export const generateSettingsSchema = () => {
 
   const settingsSchema = { ...settingsSchemaTemplate, required, properties }
 
-  const settingsPath = resolve(process.cwd() + '/schemas/configuration/settings.json')
+  const settingsPath = resolve(process.cwd() + '/src/schemas/settings.json')
   writeFileSync(settingsPath, JSON.stringify(settingsSchema, null, 2))
 }
 

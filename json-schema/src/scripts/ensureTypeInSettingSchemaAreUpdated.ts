@@ -4,7 +4,7 @@ import { resolve } from 'path'
 import { findSchemasIn, readSchema } from './shared'
 
 export const ensureCorrectTypePropertyInSettings = () => {
-  const settingsBase = resolve(process.cwd() + '/schemas/configuration/settings/')
+  const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
   const foundSchemas = findSchemasIn(settingsBase)
 
   foundSchemas.forEach(async found => {
