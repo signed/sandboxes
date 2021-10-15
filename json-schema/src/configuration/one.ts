@@ -1,11 +1,8 @@
-import { AutoSave, Language, Mode, SettingsDocument, Theme } from '../generated/settings'
+import { Settings, SettingsDocument } from '../generated/settings'
 
-export const oneTypesOfKnowSettings: (keyof SettingsDocument) [] = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme']
-
-
-export interface SettingsDocumentOne {
-  'editor.auto-save'?: AutoSave;
-  'general.language'?: Language;
-  'ui.mode'?: Mode;
-  'ui.theme'?: Theme;
+const typesInOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
+export const oneTypesOfKnowSettings: (keyof SettingsDocument) [] = typesInOne.map(type => type)
+type Bongo = (typeof typesInOne)[number]
+export type SettingsDocumentOne = {
+  [prop in Bongo]?: Settings[prop]
 }
