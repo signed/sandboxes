@@ -1,6 +1,7 @@
-import { SettingsDocument } from '../generated/settings'
+import { AutoSave, Language, Mode, SettingsDocument, Theme } from '../generated/settings'
 import { SettingsDto } from './dto'
 import { extractSettings } from './parser'
+
 
 test('extract known settings and ignore unknown settings', () => {
   const backendGenerated: SettingsDto = {
@@ -27,21 +28,24 @@ test('extract known settings and ignore unknown settings', () => {
   const typesOfKnowSettings: (keyof SettingsDocument) [] = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme']
   const settingsDocument = extractSettings(receivedJson, typesOfKnowSettings)
 
-  expect(settingsDocument['editor.auto-save']).toStrictEqual({
+  expect(assertType<MayBe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
     type: 'editor.auto-save',
     value: {
       value: false,
       interval: 45,
     },
   })
-  expect(settingsDocument['ui.mode']).toStrictEqual({
+  expect(assertType<MayBe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
     type: 'ui.mode',
     value: 'dark',
   })
   expect(Object.keys(settingsDocument)).toStrictEqual(['editor.auto-save', 'ui.mode'])
+  assertType<MayBe<Theme>>(settingsDocument['ui.theme'])
+  assertType<MayBe<Language>>(settingsDocument['general.language'])
 })
 
 const sendOverTheWire = (serialized: string) => serialized
 
+type MayBe<T> = T | undefined
 
-
+const assertType = <T>(x: T) => x
