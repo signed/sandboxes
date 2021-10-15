@@ -2,7 +2,10 @@ import { Settings, SettingsDocument } from '../generated/settings'
 
 const typesInOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const oneTypesOfKnowSettings: (keyof SettingsDocument) [] = typesInOne.map(type => type)
-type Bongo = (typeof typesInOne)[number]
-export type SettingsDocumentOne = {
-  [prop in Bongo]?: Settings[prop]
+type OneSettingsTypes = (typeof typesInOne)[number]
+
+type SettingsDocument2<T extends keyof Settings> = {
+  [prop in T]?: Settings[prop]
 }
+
+export type SettingsDocumentOne = SettingsDocument2<OneSettingsTypes>
