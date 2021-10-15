@@ -8,17 +8,17 @@ test('extract known settings and ignore unknown settings', () => {
         value: false,
         interval: 45,
       },
-      unknown: 'not know should be ignored'
+      unknown: 'not know should be ignored',
     },
     ui: {
       mode: 'dark',
-      unknown: 'not know should be ignored'
+      unknown: 'not know should be ignored',
     },
     unknown: {
       'category': {
-        unknown: 'not know should be ignored'
-      }
-    }
+        unknown: 'not know should be ignored',
+      },
+    },
   }
   const serialized = JSON.stringify(backendGenerated)
   const received = sendOverTheWire(serialized)
@@ -42,18 +42,21 @@ test('extract known settings and ignore unknown settings', () => {
 
 const sendOverTheWire = (serialized: string) => serialized
 
-function extractSettings(receivedJson: any, types:(keyof SettingsDocument) [] ): SettingsDocument {
-  const result: SettingsDocument = {}
-  types.forEach(type => {
-    const path = type.split('.')
-    const value = path.reduce((object, segment) => {
-      return object?.[segment]
-    }, receivedJson)
+type KnowSetting = keyof SettingsDocument
+
+const extractSettings = (receivedJson: any, types: KnowSetting []): SettingsDocument => {
+  return types.reduce((document: SettingsDocument, type) => {
+    const value = extractSettingFrom(receivedJson, type)
     if (value !== undefined) {
-      result[type] = {
+      document[type] = {
         type, value,
       } as any
     }
-  })
-  return result
+    return document
+  }, {})
 }
+
+const extractSettingFrom = (receivedJson: any, type: KnowSetting) =>
+  type.split('.').reduce((object, segment) => {
+    return object?.[segment]
+  }, receivedJson)
