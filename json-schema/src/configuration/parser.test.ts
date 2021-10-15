@@ -1,5 +1,6 @@
 import { SettingsDocument } from '../generated/settings'
 import { SettingsDto } from './dto'
+import { extractSettings } from './parser'
 
 test('extract known settings and ignore unknown settings', () => {
   const backendGenerated: SettingsDto = {
@@ -42,21 +43,5 @@ test('extract known settings and ignore unknown settings', () => {
 
 const sendOverTheWire = (serialized: string) => serialized
 
-type KnowSetting = keyof SettingsDocument
 
-const extractSettings = (receivedJson: any, types: KnowSetting []): SettingsDocument => {
-  return types.reduce((document: SettingsDocument, type) => {
-    const value = extractSettingFrom(receivedJson, type)
-    if (value !== undefined) {
-      document[type] = {
-        type, value,
-      } as any
-    }
-    return document
-  }, {})
-}
 
-const extractSettingFrom = (receivedJson: any, type: KnowSetting) =>
-  type.split('.').reduce((object, segment) => {
-    return object?.[segment]
-  }, receivedJson)
