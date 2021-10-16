@@ -1,3 +1,4 @@
+import { assertType } from '../asserts'
 import { AutoSave, Language, Mode, Theme } from '../generated/settings'
 import { SettingsDto } from './dto'
 import { typesInOne } from './one'
@@ -64,4 +65,3 @@ const sendOverTheWire = (serialized: string) => serialized
 
 type Maybe<T> = T | undefined
 
-const assertType = <T>(x: T) => x
