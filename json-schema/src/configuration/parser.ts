@@ -1,8 +1,6 @@
-import { SettingsDocumentOne } from './one'
+import { OneSettingsTypes, SettingsDocumentOne } from './one'
 
-type KnowSetting = keyof SettingsDocumentOne
-
-export const extractSettings = (receivedJson: any, types: KnowSetting []): SettingsDocumentOne => {
+export const extractSettings = (receivedJson: any, types: OneSettingsTypes []): SettingsDocumentOne => {
   return types.reduce((document: SettingsDocumentOne, type) => {
     const value = extractSettingFrom(receivedJson, type)
     if (value !== undefined) {
@@ -14,7 +12,7 @@ export const extractSettings = (receivedJson: any, types: KnowSetting []): Setti
   }, {})
 }
 
-const extractSettingFrom = (receivedJson: any, type: KnowSetting) =>
+const extractSettingFrom = (receivedJson: any, type: OneSettingsTypes) =>
   type.split('.').reduce((object, segment) => {
     return object?.[segment]
   }, receivedJson)
