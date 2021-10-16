@@ -48,7 +48,7 @@ export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
 export type SettingType = Setting['type']
 export type Settings = Required<SettingsDocument>
-export type Defaults = {
+type Defaults = {
   [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
 export const defaults: Defaults = {
