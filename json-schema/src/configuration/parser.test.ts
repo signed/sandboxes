@@ -1,6 +1,6 @@
 import { AutoSave, Language, Mode, Theme } from '../generated/settings'
 import { SettingsDto } from './dto'
-import { oneTypesOfKnowSettings } from './one'
+import { typesInOne } from './one'
 import { extractSettings } from './parser'
 
 
@@ -26,7 +26,7 @@ test('extract known settings and ignore unknown settings', () => {
   const serialized = JSON.stringify(backendGenerated)
   const received = sendOverTheWire(serialized)
   const receivedJson = JSON.parse(received)
-  const settingsDocument = extractSettings(receivedJson, oneTypesOfKnowSettings)
+  const settingsDocument = extractSettings(receivedJson, typesInOne)
 
   expect(assertType<MayBe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
     type: 'editor.auto-save',
