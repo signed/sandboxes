@@ -24,7 +24,7 @@ export const generateSettingsSchema = () => {
     'required': [],
   }
   const foundSchemas = findSchemasIn(settingsBase)
-  const properties = foundSchemas.reduce((acc: SchemaReferences, schema) => {
+  const settingsProperties = foundSchemas.reduce((acc: SchemaReferences, schema) => {
     const type = schema.segments.join('.')
     const json = schema.segments.join(sep) + '.json'
     const pathToSchema = 'src/schemas/settings/' + json
@@ -34,14 +34,41 @@ export const generateSettingsSchema = () => {
     return acc
   }, {})
 
+  const settingsDtoProperties = {
+    editor: {
+      type: 'object',
+      additionalProperties: true,
+      title: 'Editor',
+      properties: {
+        'hello': 'string',
+      }
+    },
+    general: {
+      type: 'object',
+      additionalProperties: true,
+      title: 'General',
+      properties: {
+        'hello': 'string',
+      },
+    },
+    ui: {
+      type: 'object',
+      additionalProperties: true,
+      title: 'Ui',
+      properties: {
+        'hello': 'string',
+      },
+    },
+  }
+
   const settingsSchema = {
-    ...settingsSchemaTemplate, properties, definitions: {
+    ...settingsSchemaTemplate, properties: settingsDtoProperties, definitions: {
       'settings': {
         'title': 'SettingsDocument',
         'description': 'All settings supported by the application',
         'type': 'object',
         'additionalProperties': false,
-        properties,
+        properties: settingsProperties,
       },
     },
   }

@@ -36,39 +36,40 @@ export async function generateTypesFromSchema() {
 
 const stripExtension = (filename: string): string => filename.replace(extname(filename), '')
 
+const settingsBase = '#/definitions/settings'
 const settingType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get('#/properties')
+  const o = wohoo.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const keys = Object.keys(o)
-  const union = keys.map(key => wohoo.get(`#/properties/${key}/title`)).join(' | ')
+  const union = keys.map(key => wohoo.get(`${settingsBase}/properties/${key}/title`)).join(' | ')
   return `export type Setting = ${union}`
 }
 
 const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get('#/properties')
+  const o = wohoo.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const keys = Object.keys(o)
-  const keysWithDefault = keys.filter(key => wohoo.exists(`#/properties/${key}/properties/value/default`))
+  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/properties/value/default`))
   const union = keysWithDefault.map(key => {
-    return wohoo.get(`#/properties/${key}/properties/type/const`)
+    return wohoo.get(`${settingsBase}/properties/${key}/properties/type/const`)
   }).map(type => `'${type}'`).join(' | ')
   return `export type SettingTypeWithDefault = ${union}`
 }
 
 const defaultsType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get('#/properties')
+  const o = wohoo.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const keys = Object.keys(o)
-  const keysWithDefault = keys.filter(key => wohoo.exists(`#/properties/${key}/properties/value/default`))
+  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/properties/value/default`))
   const union = keysWithDefault.map(key => {
-    const type = wohoo.get(`#/properties/${key}/properties/type/const`)
-    const defaultt = wohoo.get(`#/properties/${key}/properties/value/default`)
+    const type = wohoo.get(`${settingsBase}/properties/${key}/properties/type/const`)
+    const defaultt = wohoo.get(`${settingsBase}/properties/${key}/properties/value/default`)
     return { type, defaultt }
   })
   return `

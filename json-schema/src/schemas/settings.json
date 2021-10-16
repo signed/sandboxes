@@ -29,17 +29,29 @@
   "additionalProperties": true,
   "required": [],
   "properties": {
-    "editor.auto-save": {
-      "$ref": "src/schemas/settings/editor/auto-save.json"
+    "editor": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "Editor",
+      "properties": {
+        "hello": "string"
+      }
     },
-    "general.language": {
-      "$ref": "src/schemas/settings/general/language.json"
+    "general": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "General",
+      "properties": {
+        "hello": "string"
+      }
     },
-    "ui.mode": {
-      "$ref": "src/schemas/settings/ui/mode.json"
-    },
-    "ui.theme": {
-      "$ref": "src/schemas/settings/ui/theme.json"
+    "ui": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "Ui",
+      "properties": {
+        "hello": "string"
+      }
     }
   }
 }
