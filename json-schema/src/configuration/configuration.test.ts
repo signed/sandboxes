@@ -1,4 +1,5 @@
-import { settingFor } from './configuration'
+import { settingFor, settingFor2 } from './configuration'
+import { SettingsDocument } from './parser'
 
 test('return the value from the settings', () => {
   const language = settingFor('general.language', [{ type: 'general.language', value: 'ES' }])
@@ -23,4 +24,13 @@ test('values without a default can be undefined', () => {
 test('values without a default can be undefined', () => {
   const setting = settingFor('editor.auto-save', [])
   expect(setting).toBe(undefined)
+})
+
+test('quick and dirty', () => {
+  const settings: SettingsDocument<'general.language'| "ui.theme" | "ui.mode" | "editor.auto-save"> = {}
+
+  const language = settingFor2(settings, 'general.language')
+  const theme = settingFor2(settings, "ui.theme")
+  const mode = settingFor2(settings, "ui.mode")
+  const autosave = settingFor2(settings, "editor.auto-save")
 })

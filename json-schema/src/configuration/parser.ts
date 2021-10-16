@@ -1,6 +1,6 @@
 import { Settings } from '../generated/settings'
 
-type SettingsDocument<T extends keyof Settings> = {
+export type SettingsDocument<T extends keyof Settings> = {
   [prop in T]?: Settings[prop]
 }
 
