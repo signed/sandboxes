@@ -7,7 +7,10 @@
     "test": "jest",
     "typecheck": "tsc --noEmit" ,
     "check-for-any": "yarn type-coverage --detail --show-relative-path",
-    "generate": "yarn ts-node src/scripts/ensureTypeInSettingSchemaAreUpdated.ts && yarn ts-node src/scripts/generateSettingsSchema.ts && ts-node src/scripts/generateTypesFromSchema.ts"
+    "generate": "yarn generate:ensureProperTypee && yarn generate:settingsSchema && yarn generate:typesFromSchema",
+    "generate:ensureProperTypee": "yarn ts-node src/scripts/ensureTypeInSettingSchemaAreUpdated.ts ",
+    "generate:settingsSchema": "yarn ts-node src/scripts/generateSettingsSchema.ts",
+    "generate:typesFromSchema": "yarn ts-node src/scripts/generateTypesFromSchema.ts"
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "9.0.9",

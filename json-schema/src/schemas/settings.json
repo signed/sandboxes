@@ -1,10 +1,32 @@
 {
   "$comment": "this is auto generated",
   "$schema": "http://json-schema.org/draft-06/schema/schema",
-  "title": "SettingsDocument",
-  "description": "All settings supported by the application",
+  "definitions": {
+    "settings": {
+      "title": "SettingsDocument",
+      "description": "All settings supported by the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "editor.auto-save": {
+          "$ref": "src/schemas/settings/editor/auto-save.json"
+        },
+        "general.language": {
+          "$ref": "src/schemas/settings/general/language.json"
+        },
+        "ui.mode": {
+          "$ref": "src/schemas/settings/ui/mode.json"
+        },
+        "ui.theme": {
+          "$ref": "src/schemas/settings/ui/theme.json"
+        }
+      }
+    }
+  },
+  "title": "SettingsDtoWip",
+  "description": "The wire format of the settings",
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [],
   "properties": {
     "editor.auto-save": {

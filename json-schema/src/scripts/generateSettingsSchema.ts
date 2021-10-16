@@ -16,10 +16,11 @@ export const generateSettingsSchema = () => {
   const settingsSchemaTemplate = {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
-    'title': 'SettingsDocument',
-    'description': 'All settings supported by the application',
+    'definitions': {},
+    'title': 'SettingsDtoWip',
+    'description': 'The wire format of the settings',
     'type': 'object',
-    'additionalProperties': false,
+    'additionalProperties': true,
     'required': [],
   }
   const foundSchemas = findSchemasIn(settingsBase)
@@ -33,7 +34,17 @@ export const generateSettingsSchema = () => {
     return acc
   }, {})
 
-  const settingsSchema = { ...settingsSchemaTemplate, properties }
+  const settingsSchema = {
+    ...settingsSchemaTemplate, properties, definitions: {
+      'settings': {
+        'title': 'SettingsDocument',
+        'description': 'All settings supported by the application',
+        'type': 'object',
+        'additionalProperties': false,
+        properties,
+      },
+    },
+  }
 
   const settingsPath = resolve(process.cwd() + '/src/schemas/settings.json')
   writeFileSync(settingsPath, JSON.stringify(settingsSchema, null, 2))
