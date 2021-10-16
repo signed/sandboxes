@@ -3,8 +3,40 @@ import { SettingsDto } from './dto'
 import { typesInOne } from './one'
 import { extractSettings } from './parser'
 
-
 test('extract known settings and ignore unknown settings', () => {
+  const receivedJson = roundTripJson()
+  const settingsDocument = extractSettings(receivedJson, typesInOne)
+
+  expect(assertType<Maybe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
+    type: 'editor.auto-save',
+    value: {
+      value: false,
+      interval: 45,
+    },
+  })
+  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
+    type: 'ui.mode',
+    value: 'dark',
+  })
+  expect(Object.keys(settingsDocument)).toStrictEqual(['editor.auto-save', 'ui.mode'])
+  assertType<Maybe<Theme>>(settingsDocument['ui.theme'])
+  assertType<Maybe<Language>>(settingsDocument['general.language'])
+})
+
+export const typesInTwo = ['ui.mode', 'ui.theme'] as const
+test('not all settings', () => {
+  const receivedJson = roundTripJson()
+  const settingsDocument = extractSettings(receivedJson, typesInTwo)
+
+  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
+    type: 'ui.mode',
+    value: 'dark',
+  })
+  expect(assertType<Maybe<Theme>>(settingsDocument['ui.theme'])).toBe(undefined)
+  expect(Object.keys(settingsDocument)).toStrictEqual(['ui.mode'])
+})
+
+const roundTripJson = () => {
   const backendGenerated: SettingsDto = {
     editor: {
       'auto-save': {
@@ -25,27 +57,11 @@ test('extract known settings and ignore unknown settings', () => {
   }
   const serialized = JSON.stringify(backendGenerated)
   const received = sendOverTheWire(serialized)
-  const receivedJson = JSON.parse(received)
-  const settingsDocument = extractSettings(receivedJson, typesInOne)
-
-  expect(assertType<MayBe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
-    type: 'editor.auto-save',
-    value: {
-      value: false,
-      interval: 45,
-    },
-  })
-  expect(assertType<MayBe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
-    type: 'ui.mode',
-    value: 'dark',
-  })
-  expect(Object.keys(settingsDocument)).toStrictEqual(['editor.auto-save', 'ui.mode'])
-  assertType<MayBe<Theme>>(settingsDocument['ui.theme'])
-  assertType<MayBe<Language>>(settingsDocument['general.language'])
-})
+  return JSON.parse(received)
+}
 
 const sendOverTheWire = (serialized: string) => serialized
 
-type MayBe<T> = T | undefined
+type Maybe<T> = T | undefined
 
 const assertType = <T>(x: T) => x
