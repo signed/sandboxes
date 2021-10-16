@@ -1,21 +1,21 @@
-export type SupportedLanguage = "EO" | "EN" | "ZH" | "ES";
-export type SupportedMode = "dark" | "light";
-export type SupportedTheme = "Specular" | "Amos" | "Folie";
+export type SupportedLanguage = 'EO' | 'EN' | 'ZH' | 'ES';
+export type SupportedMode = 'dark' | 'light';
+export type SupportedTheme = 'Specular' | 'Amos' | 'Folie';
 
 /**
  * All settings supported by the application
  */
 export interface SettingsDocument {
-  "editor.auto-save"?: AutoSave;
-  "general.language"?: Language;
-  "ui.mode"?: Mode;
-  "ui.theme"?: Theme;
+  'editor.auto-save'?: AutoSave;
+  'general.language'?: Language;
+  'ui.mode'?: Mode;
+  'ui.theme'?: Theme;
 }
 /**
  * Automatically save changes
  */
 export interface AutoSave {
-  type: "editor.auto-save";
+  type: 'editor.auto-save';
   value: {
     value: boolean;
     interval: number;
@@ -25,21 +25,21 @@ export interface AutoSave {
  * The language used in the user interface
  */
 export interface Language {
-  type: "general.language";
+  type: 'general.language';
   value: SupportedLanguage;
 }
 /**
  * The current ui mode
  */
 export interface Mode {
-  type: "ui.mode";
+  type: 'ui.mode';
   value: SupportedMode;
 }
 /**
  * The current theme
  */
 export interface Theme {
-  type: "ui.theme";
+  type: 'ui.theme';
   value: SupportedTheme;
 }
 

@@ -1,6 +1,6 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser'
 import { writeFileSync } from 'fs'
-import { compile } from 'json-schema-to-typescript'
+import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
@@ -15,7 +15,7 @@ export async function generateTypesFromSchema() {
   const defaultsTypeCode = defaultsType(wohoo)
   const clientsTypeCode = clientsType()
 
-  const options = { cwd: process.cwd(), bannerComment: '' }
+  const options: Partial<Options> = { cwd: process.cwd(), bannerComment: '', style: { singleQuote: true } }
   const settingsCode = await compile(schema, stripExtension(fileName), options)
 
   const snippets = [
@@ -23,7 +23,7 @@ export async function generateTypesFromSchema() {
     settingTypeCode,
     settingTypeWithDefaultTypeCode,
     defaultsTypeCode,
-    clientsTypeCode
+    clientsTypeCode,
   ]
   const code = snippets.join('\n')
   writeFileSync(process.cwd() + '/src/generated/settings.ts', code)
