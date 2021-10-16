@@ -6,7 +6,7 @@
     "verify": "yarn test && yarn typecheck",
     "test": "jest",
     "typecheck": "tsc --noEmit" ,
-    "check-for-any": "yarn type-coverage --detail",
+    "check-for-any": "yarn type-coverage --detail --show-relative-path",
     "generate": "yarn ts-node src/scripts/ensureTypeInSettingSchemaAreUpdated.ts && yarn ts-node src/scripts/generateSettingsSchema.ts && ts-node src/scripts/generateTypesFromSchema.ts"
   },
   "devDependencies": {
