@@ -1,12 +1,12 @@
 import { assertType, Maybe } from '../asserts'
 import { AutoSave, Language, Mode, Theme } from '../generated/settings'
 import { SettingsDto } from './dto'
-import { typesInOne } from './one'
+import { usedSettings } from './client-one'
 import { extractSettings } from './parser'
 
 test('extract known settings and ignore unknown settings', () => {
   const receivedJson = roundTripJson()
-  const settingsDocument = extractSettings(receivedJson, typesInOne)
+  const settingsDocument = extractSettings(receivedJson, usedSettings)
 
   expect(assertType<Maybe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
     type: 'editor.auto-save',
