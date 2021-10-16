@@ -15,7 +15,12 @@ export async function generateTypesFromSchema() {
   const defaultsTypeCode = defaultsType(wohoo)
   const clientsTypeCode = clientsType()
 
-  const options: Partial<Options> = { cwd: process.cwd(), bannerComment: '', style: { singleQuote: true } }
+  const options: Partial<Options> = {
+    cwd: process.cwd(),
+    bannerComment: '',
+    unreachableDefinitions: true,
+    style: { singleQuote: true },
+  }
   const settingsCode = await compile(schema, stripExtension(fileName), options)
 
   const snippets = [
