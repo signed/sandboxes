@@ -1,9 +1,9 @@
 import { assertType, Maybe } from './asserts'
 import { usedSettings as settingsUsedInClientOne } from './configuration/client-one'
-import { settingFor } from './configuration/configuration'
+import { Configuration, DocumentBackedConfiguration } from './configuration/configuration'
 import { SettingsDto } from './configuration/dto'
 import { extractSettings } from './configuration/parser'
-import { Language, SupportedLanguage, SupportedMode, SupportedTheme, Theme } from './generated/settings'
+import { SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
 
 const backendGenerated: SettingsDto = {
   editor: {
@@ -24,14 +24,13 @@ const backendGenerated: SettingsDto = {
   },
 }
 
+type ClientOneSettings = (typeof settingsUsedInClientOne)[number]
+
 test('extract known settings and ignore unknown settings', () => {
   const receivedJson = roundTripJson()
-  const settingsDocument = extractSettings(receivedJson, settingsUsedInClientOne)
-
-  assertType<Maybe<Theme>>(settingsDocument['ui.theme'])
-  assertType<Maybe<Language>>(settingsDocument['general.language'])
-
-  const autoSave = settingFor(settingsDocument, 'editor.auto-save')
+  const document = extractSettings(receivedJson, settingsUsedInClientOne)
+  const configuration: Configuration<ClientOneSettings> = new DocumentBackedConfiguration(document)
+  const autoSave = configuration.settingFor('editor.auto-save')
   assertType<Maybe<{
     value: boolean;
     interval: number;
@@ -40,37 +39,39 @@ test('extract known settings and ignore unknown settings', () => {
     value: false,
     interval: 45,
   })
-  const language = settingFor(settingsDocument, 'general.language')
+  const language = configuration.settingFor('general.language')
   assertType<SupportedLanguage>(language)
   expect(language).toBe('EN')
 
-  const mode = settingFor(settingsDocument, 'ui.mode')
+  const mode = configuration.settingFor('ui.mode')
   assertType<SupportedMode>(mode)
   expect(mode).toBe('dark')
 
-  const theme = settingFor(settingsDocument, 'ui.theme')
+  const theme = configuration.settingFor('ui.theme')
   assertType<Maybe<SupportedTheme>>(theme)
   expect(theme).toBe(undefined)
 })
 
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
+type ClientTwoSettings = (typeof settingsUsedInClientTwo)[number]
 
 test('not all settings', () => {
   const receivedJson = roundTripJson()
-  const settingsDocument = extractSettings(receivedJson, settingsUsedInClientTwo)
+  const document = extractSettings(receivedJson, settingsUsedInClientTwo)
+  const configuration: Configuration<ClientTwoSettings> = new DocumentBackedConfiguration(document)
 
-  const mode = settingFor(settingsDocument, 'ui.mode')
+  const mode = configuration.settingFor('ui.mode')
   assertType<SupportedMode>(mode)
   expect(mode).toBe('dark')
 
-  const theme = settingFor(settingsDocument, 'ui.theme')
+  const theme = configuration.settingFor('ui.theme')
   assertType<Maybe<SupportedTheme>>(theme)
   expect(theme).toBe(undefined)
 
   // @ts-expect-error types prohibite access to
-  settingFor(settingsDocument, 'general.language')
+  configuration.settingFor('general.language')
   // @ts-expect-error types prohibite access to
-  settingFor(settingsDocument, 'editor.auto-save')
+  configuration.settingFor('editor.auto-save')
 })
 
 const roundTripJson = () => {

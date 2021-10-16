@@ -1,7 +1,6 @@
 import { defaults, Settings, SettingType, SettingTypeWithDefault, SettingValueTypeLookup } from '../generated/settings'
 import { SettingsDocument } from './parser'
 
-// idea: third override with a default
 export function settingFor<K extends SettingType, T extends Extract<K, SettingTypeWithDefault>>(settings: SettingsDocument<K>, id: T): Settings[T]['value']
 export function settingFor<K extends SettingType, T extends Extract<K, SettingType>>(
   settings: SettingsDocument<K>,
@@ -14,7 +13,6 @@ export function settingFor<K extends SettingType, T extends Extract<K, SettingTy
   }
   return defaults[id as SettingTypeWithDefault]
 }
-
 
 export interface Configuration<U extends SettingType> {
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
