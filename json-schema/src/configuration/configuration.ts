@@ -1,4 +1,4 @@
-import { defaults, Settings, SettingType, SettingTypeWithDefault } from '../generated/settings'
+import { defaults, Settings, SettingType, SettingTypeWithDefault, SettingValueTypeLookup } from '../generated/settings'
 import { SettingsDocument } from './parser'
 
 // idea: third override with a default
@@ -13,4 +13,22 @@ export function settingFor<K extends SettingType, T extends Extract<K, SettingTy
     return found.value
   }
   return defaults[id as SettingTypeWithDefault]
+}
+
+
+export interface Configuration<U extends SettingType> {
+  settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
+}
+
+export class DocumentBackedConfiguration<U extends SettingType> implements Configuration<U> {
+  constructor(private readonly settings: SettingsDocument<U>) {
+  }
+
+  settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type] {
+    const found = this.settings[type]
+    if (found !== undefined) {
+      return found.value as SettingValueTypeLookup[Type]
+    }
+    return defaults[type as SettingTypeWithDefault] as SettingValueTypeLookup[Type]
+  }
 }

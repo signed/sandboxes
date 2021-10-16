@@ -1,9 +1,9 @@
 import { assertType, Maybe } from '../asserts'
-import { defaults, SettingType, SettingTypeWithDefault, SettingValueTypeLookup, SupportedLanguage } from '../generated/settings'
-import { settingFor } from './configuration'
+import { SupportedLanguage } from '../generated/settings'
+import { Configuration, DocumentBackedConfiguration, settingFor } from './configuration'
 import { SettingsDocument } from './parser'
 
-type UsedSettings = 'general.language' | "editor.auto-save"
+type UsedSettings = 'general.language' | 'editor.auto-save'
 
 test('return the value from the settings', () => {
   const document: SettingsDocument<UsedSettings> = {}
@@ -55,7 +55,7 @@ type Used = 'general.language' | 'editor.auto-save'
 
 test('asfasdf', () => {
   const settings: SettingsDocument<Used> = {}
-  const configuration = new DocumentBackedConfiguration(settings)
+  const configuration: Configuration<Used> = new DocumentBackedConfiguration(settings)
   const autoSave = configuration.settingFor('editor.auto-save')
   assertType<Maybe<{
     value: boolean;
@@ -66,16 +66,3 @@ test('asfasdf', () => {
   // @ts-expect-error trying to get a setting with a default that is not in UsedSettings results in type error
   configuration.settingFor('ui.mode')
 })
-
-export class DocumentBackedConfiguration<UsedSetting extends SettingType> {
-  constructor(private readonly settings: SettingsDocument<UsedSetting>) {
-  }
-
-  settingFor<Identifier extends UsedSetting>(id: Identifier): SettingValueTypeLookup[Identifier] {
-    const found = this.settings[id]
-    if (found !== undefined) {
-      return found.value as SettingValueTypeLookup[Identifier]
-    }
-    return defaults[id as SettingTypeWithDefault] as SettingValueTypeLookup[Identifier]
-  }
-}
