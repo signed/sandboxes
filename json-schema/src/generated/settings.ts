@@ -48,10 +48,10 @@ export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
 export type SettingType = Setting['type']
 export type Settings = Required<SettingsDocument>
-type Defaults = {
+export type Defaults = {
   [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
-export const defaults: Defaults = { 
+export const defaults: Defaults = {
   'general.language': 'EN',
   'ui.mode': 'dark'
 }

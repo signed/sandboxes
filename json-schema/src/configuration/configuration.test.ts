@@ -1,5 +1,5 @@
 import { assertType, Maybe } from '../asserts'
-import { SupportedLanguage } from '../generated/settings'
+import { Defaults, defaults, Settings, SettingType, SettingTypeWithDefault, SupportedLanguage } from '../generated/settings'
 import { settingFor } from './configuration'
 import { SettingsDocument } from './parser'
 
@@ -44,8 +44,42 @@ test('only allow quering for UsedSettings', () => {
   const settings: SettingsDocument<UsedSettings> = {}
 
   // @ts-expect-error trying to get a setting without a default that is not in UsedSettings results in type error
-  settingFor(settings, "ui.theme")
+  settingFor(settings, 'ui.theme')
 
   // @ts-expect-error trying to get a setting with a default that is not in UsedSettings results in type error
-  settingFor(settings, "ui.mode")
+  settingFor(settings, 'ui.mode')
 })
+
+
+type Used = 'general.language' | 'editor.auto-save'
+
+test('asfasdf', () => {
+  const settings: SettingsDocument<Used> = {}
+  const configuration = new DocumentBackedConfiguration(settings)
+  const autoSave = configuration.settingFor('editor.auto-save')
+  const language = configuration.settingFor('general.language')
+  // @ts-expect-error trying to get a setting with a default that is not in UsedSettings results in type error
+  configuration.settingFor('ui.mode')
+})
+
+export class DocumentBackedConfiguration<UsedSetting extends SettingType> {
+  constructor(private readonly settings: SettingsDocument<UsedSetting>) {
+  }
+
+  paralel<Identifier extends UsedSetting>(id: Identifier): Identifier extends keyof Defaults ? Settings[Identifier]['value'] : Settings[Identifier]['value'] | undefined{
+    const found = this.settings[id]
+    if (found !== undefined) {
+      // did not find a way how to properly tyep this
+      return found.value as any
+    }
+    return defaults[id as SettingTypeWithDefault]
+  }
+
+  settingFor<Identifier extends UsedSetting>(id: Identifier): Settings[Identifier]['value'] | undefined {
+    const found = this.settings[id]
+    if (found !== undefined) {
+      return found.value
+    }
+    return defaults[id as SettingTypeWithDefault]
+  }
+}
