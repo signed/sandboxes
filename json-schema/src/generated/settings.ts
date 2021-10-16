@@ -84,8 +84,5 @@ export type SettingValueTypeLookup = {
 }
 
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
-export type ClientOneSettings = (typeof settingsUsedInClientOne)[number]
-
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-export type ClientTwoSettings = (typeof settingsUsedInClientTwo)[number]
 
