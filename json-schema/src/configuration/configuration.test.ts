@@ -1,7 +1,7 @@
 import { assertType, Maybe } from '../asserts'
 import { SupportedLanguage } from '../generated/settings'
 import { Configuration, DocumentBackedConfiguration } from './configuration'
-import { SettingsDocument } from './parser'
+import { SettingsDocument } from './configuration'
 
 type UsedSettings = 'general.language' | 'editor.auto-save'
 

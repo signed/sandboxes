@@ -1,18 +1,4 @@
 import { defaults, Settings, SettingType, SettingTypeWithDefault, SettingValueTypeLookup } from '../generated/settings'
-import { SettingsDocument } from './parser'
-
-export function settingFor<K extends SettingType, T extends Extract<K, SettingTypeWithDefault>>(settings: SettingsDocument<K>, id: T): Settings[T]['value']
-export function settingFor<K extends SettingType, T extends Extract<K, SettingType>>(
-  settings: SettingsDocument<K>,
-  id: T,
-): Settings[T]['value'] | undefined
-export function settingFor<K extends SettingType, T extends Extract<K, SettingType>>(settings: SettingsDocument<K>, id: T) {
-  const found = settings[id]
-  if (found !== undefined) {
-    return found.value
-  }
-  return defaults[id as SettingTypeWithDefault]
-}
 
 export interface Configuration<U extends SettingType> {
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
@@ -29,4 +15,26 @@ export class DocumentBackedConfiguration<U extends SettingType> implements Confi
     }
     return defaults[type as SettingTypeWithDefault] as SettingValueTypeLookup[Type]
   }
+}
+
+export const extractSettings = <T extends keyof Settings>(receivedJson: any, types: readonly T[]): SettingsDocument<T> => {
+  return types.reduce((document: SettingsDocument<T>, type) => {
+    const value = extractSettingFrom(receivedJson, type)
+    if (value !== undefined) {
+      document[type] = {
+        type, value,
+      } as any
+    }
+    return document
+  }, {})
+}
+
+const extractSettingFrom = <T extends keyof Settings>(receivedJson: any, type: T) =>
+  type.split('.').reduce((object, segment) => {
+    return object?.[segment]
+  }, receivedJson)
+
+
+export type SettingsDocument<T extends keyof Settings> = {
+  [prop in T]?: Settings[prop]
 }

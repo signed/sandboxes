@@ -1,7 +1,6 @@
 import { assertType, Maybe } from '../asserts'
-import { AutoSave, Language, Mode, Theme } from '../generated/settings'
-import { SettingsDto } from './dto'
-import { extractSettings } from './parser'
+import { AutoSave, Language, Mode, SettingsDto, Theme } from '../generated/settings'
+import { extractSettings } from './configuration'
 
 test('extract known settings and ignore unknown settings', () => {
   const backendGenerated: SettingsDto = {

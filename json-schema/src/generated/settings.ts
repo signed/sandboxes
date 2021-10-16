@@ -57,6 +57,35 @@ export const defaults: Defaults = {
 }
 
 // 📋  not yet generated
+
+export interface SettingsDto {
+  'editor'?: {
+    'auto-save'?: {
+      value: boolean;
+      interval: number;
+    },
+    [segment: string]: unknown
+  },
+  'general'?: {
+    language: SupportedLanguage
+    [segment: string]: unknown
+  }
+  'ui'?: {
+    'mode'?: SupportedMode
+    'theme'?: SupportedTheme
+    [segment: string]: unknown
+  },
+
+  [segment: string]: unknown
+}
+
 export type SettingValueTypeLookup = {
   [type in keyof Settings]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
 }
+
+export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
+export type ClientOneSettings = (typeof settingsUsedInClientOne)[number]
+
+export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
+export type ClientTwoSettings = (typeof settingsUsedInClientTwo)[number]
+

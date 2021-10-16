@@ -1,9 +1,7 @@
 import { assertType, Maybe } from './asserts'
-import { usedSettings as settingsUsedInClientOne } from './configuration/client-one'
 import { Configuration, DocumentBackedConfiguration } from './configuration/configuration'
-import { SettingsDto } from './configuration/dto'
-import { extractSettings } from './configuration/parser'
-import { SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
+import { extractSettings } from './configuration/configuration'
+import { ClientOneSettings, ClientTwoSettings, SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
 
 const backendGenerated: SettingsDto = {
   editor: {
@@ -23,8 +21,6 @@ const backendGenerated: SettingsDto = {
     },
   },
 }
-
-type ClientOneSettings = (typeof settingsUsedInClientOne)[number]
 
 test('extract known settings and ignore unknown settings', () => {
   const receivedJson = roundTripJson()
@@ -51,9 +47,6 @@ test('extract known settings and ignore unknown settings', () => {
   assertType<Maybe<SupportedTheme>>(theme)
   expect(theme).toBe(undefined)
 })
-
-export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-type ClientTwoSettings = (typeof settingsUsedInClientTwo)[number]
 
 test('not all settings', () => {
   const receivedJson = roundTripJson()
