@@ -4,6 +4,11 @@ export interface Configuration<U extends SettingType> {
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
 }
 
+export const extractConfigurationFrom = <T extends SettingType>(receivedJson: SettingsDto, types: readonly T[]): Configuration<T> => {
+  const document: SettingsDocument<T> = extractSettings(receivedJson, types)
+  return new DocumentBackedConfiguration(document)
+}
+
 export class DocumentBackedConfiguration<U extends SettingType> implements Configuration<U> {
   constructor(private readonly settings: SettingsDocument<U>) {
   }

@@ -1,7 +1,6 @@
 import { assertType, Maybe } from './asserts'
-import { Configuration, DocumentBackedConfiguration } from './configuration/configuration'
-import { extractSettings } from './configuration/configuration'
-import { ClientOneSettings, ClientTwoSettings, SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
+import { extractConfigurationFrom } from './configuration/configuration'
+import { SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
 
 const backendGenerated: SettingsDto = {
   editor: {
@@ -22,14 +21,8 @@ const backendGenerated: SettingsDto = {
   },
 }
 
-let extractConfiguration = function(receivedJson: SettingsDto) {
-  const document = extractSettings(receivedJson, settingsUsedInClientOne)
-  const configuration: Configuration<ClientOneSettings> = new DocumentBackedConfiguration(document)
-  return configuration
-}
 test('extract known settings and ignore unknown settings', () => {
-  const receivedJson = roundTripJson()
-  const configuration = extractConfiguration(receivedJson)
+  const configuration = extractConfigurationFrom(roundTripJson(), settingsUsedInClientOne)
   const autoSave = configuration.settingFor('editor.auto-save')
   assertType<Maybe<{
     value: boolean;
@@ -53,9 +46,7 @@ test('extract known settings and ignore unknown settings', () => {
 })
 
 test('not all settings', () => {
-  const receivedJson = roundTripJson()
-  const document = extractSettings(receivedJson, settingsUsedInClientTwo)
-  const configuration: Configuration<ClientTwoSettings> = new DocumentBackedConfiguration(document)
+  const configuration = extractConfigurationFrom(roundTripJson(), settingsUsedInClientTwo)
 
   const mode = configuration.settingFor('ui.mode')
   assertType<SupportedMode>(mode)
