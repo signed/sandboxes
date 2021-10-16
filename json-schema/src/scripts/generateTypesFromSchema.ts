@@ -66,13 +66,21 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
   })
   return `
 export type SettingType = Setting['type']
+
 export type Settings = Required<SettingsDocument>
+
 type Defaults = {
   [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
+
 export const defaults: Defaults = { 
   ${union.map(({ type, defaultt }) => `'${type}': '${defaultt}'`).join(',\n  ')}
-}`
+}
+
+export type SettingValueTypeLookup = {
+  [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
+}
+`
 }
 
 generateTypesFromSchema().catch((e: unknown) => console.error(e))

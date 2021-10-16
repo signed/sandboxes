@@ -47,17 +47,23 @@ export type Setting = AutoSave | Language | Mode | Theme
 export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
 export type SettingType = Setting['type']
+
 export type Settings = Required<SettingsDocument>
+
 type Defaults = {
   [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
+
 export const defaults: Defaults = {
   'general.language': 'EN',
   'ui.mode': 'dark'
 }
 
-// 📋  not yet generated
+export type SettingValueTypeLookup = {
+  [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
+}
 
+// 📋  not yet generated
 export interface SettingsDto {
   'editor'?: {
     'auto-save'?: {
@@ -77,10 +83,6 @@ export interface SettingsDto {
   },
 
   [segment: string]: unknown
-}
-
-export type SettingValueTypeLookup = {
-  [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
 }
 
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
