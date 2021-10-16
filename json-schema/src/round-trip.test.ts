@@ -1,8 +1,8 @@
-import { assertType, Maybe } from '../asserts'
-import { AutoSave, Language, Mode, Theme } from '../generated/settings'
-import { SettingsDto } from './dto'
-import { usedSettings } from './client-one'
-import { extractSettings } from './parser'
+import { assertType, Maybe } from './asserts'
+import { AutoSave, Language, Mode, Theme } from './generated/settings'
+import { SettingsDto } from './configuration/dto'
+import { usedSettings } from './configuration/client-one'
+import { extractSettings } from './configuration/parser'
 
 test('extract known settings and ignore unknown settings', () => {
   const receivedJson = roundTripJson()
