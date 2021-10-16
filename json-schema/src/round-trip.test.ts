@@ -22,10 +22,14 @@ const backendGenerated: SettingsDto = {
   },
 }
 
-test('extract known settings and ignore unknown settings', () => {
-  const receivedJson = roundTripJson()
+let extractConfiguration = function(receivedJson: SettingsDto) {
   const document = extractSettings(receivedJson, settingsUsedInClientOne)
   const configuration: Configuration<ClientOneSettings> = new DocumentBackedConfiguration(document)
+  return configuration
+}
+test('extract known settings and ignore unknown settings', () => {
+  const receivedJson = roundTripJson()
+  const configuration = extractConfiguration(receivedJson)
   const autoSave = configuration.settingFor('editor.auto-save')
   assertType<Maybe<{
     value: boolean;
@@ -70,7 +74,7 @@ test('not all settings', () => {
 const roundTripJson = () => {
   const serialized = JSON.stringify(backendGenerated)
   const received = sendOverTheWire(serialized)
-  return JSON.parse(received)
+  return JSON.parse(received) as SettingsDto
 }
 
 const sendOverTheWire = (serialized: string) => serialized

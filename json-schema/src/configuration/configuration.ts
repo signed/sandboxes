@@ -1,4 +1,4 @@
-import { defaults, Settings, SettingType, SettingTypeWithDefault, SettingValueTypeLookup } from '../generated/settings'
+import { defaults, Settings, SettingsDto, SettingType, SettingTypeWithDefault, SettingValueTypeLookup } from '../generated/settings'
 
 export interface Configuration<U extends SettingType> {
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
@@ -17,7 +17,7 @@ export class DocumentBackedConfiguration<U extends SettingType> implements Confi
   }
 }
 
-export const extractSettings = <T extends keyof Settings>(receivedJson: any, types: readonly T[]): SettingsDocument<T> => {
+export const extractSettings = <T extends SettingType>(receivedJson: SettingsDto, types: readonly T[]): SettingsDocument<T> => {
   return types.reduce((document: SettingsDocument<T>, type) => {
     const value = extractSettingFrom(receivedJson, type)
     if (value !== undefined) {
@@ -29,12 +29,12 @@ export const extractSettings = <T extends keyof Settings>(receivedJson: any, typ
   }, {})
 }
 
-const extractSettingFrom = <T extends keyof Settings>(receivedJson: any, type: T) =>
+const extractSettingFrom = <T extends SettingType>(receivedJson: any, type: T) =>
   type.split('.').reduce((object, segment) => {
     return object?.[segment]
   }, receivedJson)
 
 
-export type SettingsDocument<T extends keyof Settings> = {
+export type SettingsDocument<T extends SettingType> = {
   [prop in T]?: Settings[prop]
 }
