@@ -1,9 +1,9 @@
 import { assertType, Maybe } from '../asserts'
-import { SupportedLanguage, SupportedMode, SupportedTheme } from '../generated/settings'
+import { SupportedLanguage } from '../generated/settings'
 import { settingFor } from './configuration'
 import { SettingsDocument } from './parser'
 
-type UsedSettings = 'general.language'| "ui.theme" | "ui.mode" | "editor.auto-save"
+type UsedSettings = 'general.language' | "editor.auto-save"
 
 test('return the value from the settings', () => {
   const document: SettingsDocument<UsedSettings> = {}
@@ -40,11 +40,12 @@ test('values without a default can be undefined', () => {
   expect(setting).toBe(undefined)
 })
 
-test('quick and dirty', () => {
+test('only allow quering for UsedSettings', () => {
   const settings: SettingsDocument<UsedSettings> = {}
 
-  const theme = settingFor(settings, "ui.theme")
-  assertType<Maybe<SupportedTheme>>(theme)
-  const mode = settingFor(settings, "ui.mode")
-  assertType<SupportedMode>(mode)
+  // @ts-expect-error trying to get a setting without a default that is not in UsedSettings results in type error
+  settingFor(settings, "ui.theme")
+
+  // @ts-expect-error trying to get a setting with a default that is not in UsedSettings results in type error
+  settingFor(settings, "ui.mode")
 })
