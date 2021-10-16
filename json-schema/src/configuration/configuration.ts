@@ -1,12 +1,12 @@
 import { defaults, Setting, Settings, SettingTypeWithDefault } from '../generated/settings'
 import { SettingsDocument } from './parser'
 
-export function settingFor<T extends SettingTypeWithDefault>(id: T, settings: Setting[]): Settings[T]['value']
+export function settingFor<T extends SettingTypeWithDefault>(settings: Setting[], id: T): Settings[T]["value"]
 export function settingFor<T extends keyof Settings>(
-  id: T,
   settings: Setting[],
-): Settings[T]['value'] | undefined
-export function settingFor<T extends keyof Settings>(id: T, settings: Setting[]) {
+  id: T,
+): Settings[T]["value"] | undefined
+export function settingFor<T extends keyof Settings>(settings: Setting[], id: T) {
   const found = settings.find((setting) => setting.type === id)
   if (found !== undefined) {
     return found.value

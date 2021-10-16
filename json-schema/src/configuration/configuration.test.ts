@@ -2,19 +2,19 @@ import { settingFor, settingFor2 } from './configuration'
 import { SettingsDocument } from './parser'
 
 test('return the value from the settings', () => {
-  const language = settingFor('general.language', [{ type: 'general.language', value: 'ES' }])
+  const language = settingFor([{ type: 'general.language', value: 'ES' }], 'general.language')
   expect(language).toBe('ES')
 })
 
 test('return default if it exists and not explicit setting', () => {
-  const language = settingFor('general.language', [])
+  const language = settingFor([], 'general.language')
   expect(language).toBe('EN')
 })
 
 test('values without a default can be undefined', () => {
-  const setting = settingFor('editor.auto-save', [
+  const setting = settingFor([
     { type: 'editor.auto-save', value: { value: true, interval: 500 } },
-  ])
+  ], 'editor.auto-save')
   // @ts-expect-error type should communicate that the setting can be undefined
   setting.value
   expect(setting?.value).toEqual(true)
@@ -22,7 +22,7 @@ test('values without a default can be undefined', () => {
 })
 
 test('values without a default can be undefined', () => {
-  const setting = settingFor('editor.auto-save', [])
+  const setting = settingFor([], 'editor.auto-save')
   expect(setting).toBe(undefined)
 })
 
