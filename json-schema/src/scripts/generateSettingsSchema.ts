@@ -1,6 +1,15 @@
 import { writeFileSync } from 'fs'
 import { resolve, sep } from 'path'
+import { Maybe } from '../asserts'
 import { findSchemasIn } from './shared'
+
+type SchemaReference = {
+  '$ref': string
+}
+
+type SchemaReferences = {
+  [identifier: string]: Maybe<SchemaReference>
+}
 
 export const generateSettingsSchema = () => {
   const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
@@ -14,7 +23,7 @@ export const generateSettingsSchema = () => {
     'required': [],
   }
   const foundSchemas = findSchemasIn(settingsBase)
-  const properties = foundSchemas.reduce((acc, schema) => {
+  const properties = foundSchemas.reduce((acc: SchemaReferences, schema) => {
     const type = schema.segments.join('.')
     const json = schema.segments.join(sep) + '.json'
     const pathToSchema = 'src/schemas/settings/' + json
@@ -22,7 +31,7 @@ export const generateSettingsSchema = () => {
       '$ref': pathToSchema,
     }
     return acc
-  }, {} as any)
+  }, {})
 
   const settingsSchema = { ...settingsSchemaTemplate, properties }
 
