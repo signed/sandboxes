@@ -55,3 +55,8 @@ export const defaults: Defaults = {
   'general.language': 'EN',
   'ui.mode': 'dark'
 }
+
+// 📋  not yet generated
+export type SettingValueTypeLookup = {
+  [type in keyof Settings]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
+}
