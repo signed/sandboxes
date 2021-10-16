@@ -1,3 +1,5 @@
+import { assertType, Maybe } from '../asserts'
+import { SupportedLanguage, SupportedMode, SupportedTheme } from '../generated/settings'
 import { settingFor, settingFor2 } from './configuration'
 import { SettingsDocument } from './parser'
 
@@ -29,8 +31,13 @@ test('values without a default can be undefined', () => {
 test('quick and dirty', () => {
   const settings: SettingsDocument<'general.language'| "ui.theme" | "ui.mode" | "editor.auto-save"> = {}
 
-  const language = settingFor2(settings, 'general.language')
-  const theme = settingFor2(settings, "ui.theme")
+  assertType<SupportedLanguage>(settingFor2(settings, 'general.language'))
+  assertType<Maybe<SupportedTheme>>(settingFor2(settings, "ui.theme"))
   const mode = settingFor2(settings, "ui.mode")
+  assertType<SupportedMode>(mode)
   const autosave = settingFor2(settings, "editor.auto-save")
+  assertType<Maybe<{
+    value: boolean;
+    interval: number;
+  }>>(autosave)
 })

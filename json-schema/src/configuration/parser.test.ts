@@ -1,4 +1,4 @@
-import { assertType } from '../asserts'
+import { assertType, Maybe } from '../asserts'
 import { AutoSave, Language, Mode, Theme } from '../generated/settings'
 import { SettingsDto } from './dto'
 import { typesInOne } from './one'
@@ -62,6 +62,4 @@ const roundTripJson = () => {
 }
 
 const sendOverTheWire = (serialized: string) => serialized
-
-type Maybe<T> = T | undefined
 
