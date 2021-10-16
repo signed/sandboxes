@@ -46,6 +46,7 @@ export interface Theme {
 export type Setting = AutoSave | Language | Mode | Theme
 export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
+export type SettingType = Setting['type']
 export type Settings = Required<SettingsDocument>
 type Defaults = {
   [Property in keyof Settings as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
