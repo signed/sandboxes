@@ -1,7 +1,5 @@
-import { defaults, Setting, Settings, SettingTypeWithDefault } from '../generated/settings'
+import { defaults, Settings, SettingType, SettingTypeWithDefault } from '../generated/settings'
 import { SettingsDocument } from './parser'
-
-type SettingType = Setting['type']
 
 // idea: third override with a default
 export function settingFor<K extends SettingType, T extends Extract<K, SettingTypeWithDefault>>(settings: SettingsDocument<K>, id: T): Settings[T]['value']
