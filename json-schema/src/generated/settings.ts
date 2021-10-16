@@ -63,6 +63,11 @@ export type SettingValueTypeLookup = {
   [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
 }
 
+
+//TODO create from meta data in the schema
+export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
+export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
+
 // 📋  not yet generated
 export interface SettingsDto {
   'editor'?: {
@@ -84,7 +89,3 @@ export interface SettingsDto {
 
   [segment: string]: unknown
 }
-
-export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
-export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-

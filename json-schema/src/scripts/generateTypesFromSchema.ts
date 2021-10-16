@@ -13,6 +13,7 @@ export async function generateTypesFromSchema() {
   const settingTypeCode = settingType(wohoo)
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(wohoo)
   const defaultsTypeCode = defaultsType(wohoo)
+  const clientsTypeCode = clientsType()
 
   const options = { cwd: process.cwd(), bannerComment: '' }
   const settingsCode = await compile(schema, stripExtension(fileName), options)
@@ -22,6 +23,7 @@ export async function generateTypesFromSchema() {
     settingTypeCode,
     settingTypeWithDefaultTypeCode,
     defaultsTypeCode,
+    clientsTypeCode
   ]
   const code = snippets.join('\n')
   writeFileSync(process.cwd() + '/src/generated/settings.ts', code)
@@ -73,7 +75,7 @@ type Defaults = {
   [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
 }
 
-export const defaults: Defaults = { 
+export const defaults: Defaults = {
   ${union.map(({ type, defaultt }) => `'${type}': '${defaultt}'`).join(',\n  ')}
 }
 
@@ -82,5 +84,12 @@ export type SettingValueTypeLookup = {
 }
 `
 }
+
+const clientsType = () => `
+//TODO create from meta data in the schema
+export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
+export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
+`
+
 
 generateTypesFromSchema().catch((e: unknown) => console.error(e))
