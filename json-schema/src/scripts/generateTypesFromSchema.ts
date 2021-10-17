@@ -10,9 +10,9 @@ export async function generateTypesFromSchema() {
   const schema = readSchema(fileName)
 
   const parser = new $RefParser()
-  const wohoo = await parser.resolve(schema)
-  const settingTypeWithDefaultTypeCode = settingWithDefaultType(wohoo)
-  const defaultsTypeCode = defaultsType(wohoo)
+  const refs = await parser.resolve(schema)
+  const settingTypeWithDefaultTypeCode = settingWithDefaultType(refs)
+  const defaultsTypeCode = defaultsType(refs)
   const clientsTypeCode = clientsType()
   const handCraftedCode = handCrafted()
 
@@ -41,26 +41,26 @@ const settingsBase = '#/definitions/settings'
 
 const pathToDefaultFor = (type: string) => `${settingsBase}/properties/${type}/default`
 
-const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get(`${settingsBase}/properties`)
+const settingWithDefaultType = function(refs: $RefParser.$Refs) {
+  const o = refs.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const types = Object.keys(o)
-  const keysWithDefault = types.filter(type => wohoo.exists(pathToDefaultFor(type)))
+  const keysWithDefault = types.filter(type => refs.exists(pathToDefaultFor(type)))
   const union = keysWithDefault.map(type => `'${type}'`).join(' | ')
   return `export type SettingTypeWithDefault = ${union}`
 }
 
-const defaultsType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get(`${settingsBase}/properties`)
+const defaultsType = function(refs: $RefParser.$Refs) {
+  const o = refs.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const types = Object.keys(o)
-  const keysWithDefault = types.filter(type => wohoo.exists(pathToDefaultFor(type)))
+  const keysWithDefault = types.filter(type => refs.exists(pathToDefaultFor(type)))
   const union = keysWithDefault.map(type => {
-    const defaultt = wohoo.get(pathToDefaultFor(type))
+    const defaultt = refs.get(pathToDefaultFor(type))
     return { type, defaultt }
   })
   return `
