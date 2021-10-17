@@ -3,12 +3,17 @@ import { JSONSchema4 } from 'json-schema'
 import { dirname, basename, extname, join, sep } from 'path'
 import { readdirSync, lstatSync } from 'fs'
 
+export type FoundSettingSchema = {
+  path: string
+  segments: readonly string []
+}
+
 export const readSchema = (filename: string): JSONSchema4 => {
   const contents = readFileSync(filename)
   return JSON.parse(contents.toString())
 }
 
-export const findSchemasIn = function(settingsBase: string) {
+export const findSchemasIn = function(settingsBase: string): FoundSettingSchema[]{
   const schemas = jsonFiles(settingsBase)
   return schemas.map(found => {
     const sub = dirname(found).replace(settingsBase + '/', '')

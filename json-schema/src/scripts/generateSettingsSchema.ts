@@ -2,7 +2,9 @@ import { writeFileSync } from 'fs'
 import { resolve, sep } from 'path'
 import { Maybe } from '../asserts'
 import { findSchemasIn } from './shared'
+import { JSONSchema7 } from 'json-schema'
 
+// todo use jscon schema types
 type SchemaReference = {
   '$ref': string
 }
@@ -11,9 +13,11 @@ type SchemaReferences = {
   [identifier: string]: Maybe<SchemaReference>
 }
 
+type JsonSchmeaProperties = Exclude<JSONSchema7['properties'], undefined>
+
 export const generateSettingsSchema = () => {
   const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
-  const settingsSchemaTemplate = {
+  const settingsSchemaTemplate: JSONSchema7 = {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
     'definitions': {},
@@ -34,21 +38,25 @@ export const generateSettingsSchema = () => {
     return acc
   }, {})
 
-  const settingsDtoProperties = {
+  let settingsDtoProperties: JsonSchmeaProperties = {
     editor: {
       type: 'object',
       additionalProperties: true,
       title: 'Editor',
       properties: {
-        'hello': 'string',
-      }
+        'hello': {
+          type: 'string',
+        },
+      },
     },
     general: {
       type: 'object',
       additionalProperties: true,
       title: 'General',
       properties: {
-        'hello': 'string',
+        'hello': {
+          type: 'string',
+        }
       },
     },
     ui: {
@@ -56,10 +64,17 @@ export const generateSettingsSchema = () => {
       additionalProperties: true,
       title: 'Ui',
       properties: {
-        'hello': 'string',
+        'hello': {
+          type: 'string',
+        }
       },
     },
   }
+
+  settingsDtoProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+    console.log(schema.segments)
+    return acc
+  }, {})
 
   const settingsSchema = {
     ...settingsSchemaTemplate, properties: settingsDtoProperties, definitions: {

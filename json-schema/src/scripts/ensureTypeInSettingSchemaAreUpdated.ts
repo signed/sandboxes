@@ -1,7 +1,7 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser'
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
-import { findSchemasIn, readSchema } from './shared'
+import { findSchemasIn, FoundSettingSchema, readSchema } from './shared'
 
 export const ensureCorrectTypePropertyInSettings = () => {
   const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
@@ -12,7 +12,7 @@ export const ensureCorrectTypePropertyInSettings = () => {
   })
 }
 
-const ensureProperType = async function(found: { path: string; segments: string[] }) {
+const ensureProperType = async function(found: FoundSettingSchema) {
   const schema = readSchema(found.path)
   const parser = new $RefParser()
   const r = await parser.resolve(schema)

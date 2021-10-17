@@ -28,30 +28,5 @@
   "type": "object",
   "additionalProperties": true,
   "required": [],
-  "properties": {
-    "editor": {
-      "type": "object",
-      "additionalProperties": true,
-      "title": "Editor",
-      "properties": {
-        "hello": "string"
-      }
-    },
-    "general": {
-      "type": "object",
-      "additionalProperties": true,
-      "title": "General",
-      "properties": {
-        "hello": "string"
-      }
-    },
-    "ui": {
-      "type": "object",
-      "additionalProperties": true,
-      "title": "Ui",
-      "properties": {
-        "hello": "string"
-      }
-    }
-  }
+  "properties": {}
 }
