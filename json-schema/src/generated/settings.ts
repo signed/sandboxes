@@ -41,22 +41,20 @@ export interface UiCategory {
   [k: string]: unknown;
 }
 /**
- * All settings supported by the application
+ * Support type for TypeScript to get a mapping from setting type to the value type of each setting
  *
  * This interface was referenced by `SettingsDto`'s JSON-Schema
  * via the `definition` "settings".
  */
-export interface SettingsDocument {
-  'editor.auto-save'?: AutoSave;
-  'general.language'?: SupportedLanguage;
-  'ui.mode'?: Mode;
-  'ui.theme'?: Theme;
+export interface Settings {
+  'editor.auto-save': AutoSave;
+  'general.language': SupportedLanguage;
+  'ui.mode': Mode;
+  'ui.theme': Theme;
 }
 
 export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
-
-export type SettingType = keyof SettingsDocument
-export type Settings = Required<SettingsDocument>
+export type SettingType = keyof Settings
 
 type Defaults = {
   [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]
@@ -70,9 +68,6 @@ export const defaults: Defaults = {
 export type SettingValueTypeLookup = {
   [type in SettingType]: Settings[type] | (type extends keyof Defaults ? never : undefined)
 }
-
-
 //TODO create from meta data in the schema
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-

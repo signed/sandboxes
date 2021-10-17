@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs'
-import { JSONSchema7 } from 'json-schema'
+import { JSONSchema7, JSONSchema7Definition } from 'json-schema'
 import { resolve, sep } from 'path'
 import { findSchemasIn, FoundSettingSchema } from './shared'
 
@@ -22,13 +22,7 @@ export const generateSettingsSchema = () => {
     additionalProperties: true,
   }
   const foundSchemas = findSchemasIn(settingsBase)
-  const settingsProperties: JsonSchmeaProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
-    const type = schema.segments.join('.')
-    acc[type] = {
-      $ref: pathTo(schema),
-    }
-    return acc
-  }, {})
+  const settings = schemaForSettingsFrom(foundSchemas)
 
   const settingsDtoProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
     const categoryName = schema.segments[0]
@@ -53,18 +47,32 @@ export const generateSettingsSchema = () => {
     ...settingsSchemaTemplate,
     properties: settingsDtoProperties,
     definitions: {
-      settings: {
-        title: 'SettingsDocument',
-        description: 'All settings supported by the application',
-        type: 'object',
-        additionalProperties: false,
-        properties: settingsProperties,
-      },
+      settings,
     },
   }
 
   const settingsPath = resolve(process.cwd() + '/src/schemas/settings.json')
   writeFileSync(settingsPath, JSON.stringify(settingsSchema, null, 2))
+}
+
+const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {
+  const settings: JSONSchema7Definition = {
+    title: 'Settings',
+    description: 'Support type for TypeScript to get a mapping from setting type to the value type of each setting',
+    type: 'object',
+    additionalProperties: false,
+  }
+  settings.required = foundSchemas.reduce((acc: string[], schema) => {
+    return [...acc, schema.segments.join('.')]
+  }, [])
+  settings.properties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+    const type = schema.segments.join('.')
+    acc[type] = {
+      $ref: pathTo(schema),
+    }
+    return acc
+  }, {})
+  return settings
 }
 
 generateSettingsSchema()

@@ -3,10 +3,16 @@
   "$schema": "http://json-schema.org/draft-06/schema/schema",
   "definitions": {
     "settings": {
-      "title": "SettingsDocument",
-      "description": "All settings supported by the application",
+      "title": "Settings",
+      "description": "Support type for TypeScript to get a mapping from setting type to the value type of each setting",
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "editor.auto-save",
+        "general.language",
+        "ui.mode",
+        "ui.theme"
+      ],
       "properties": {
         "editor.auto-save": {
           "$ref": "src/schemas/settings/editor/auto-save.json"
