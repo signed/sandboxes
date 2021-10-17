@@ -4,6 +4,30 @@ import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
+function handCrafted() {
+  return `//TODO not yet generated from schema
+export interface SettingsDto {
+  'editor'?: {
+    'auto-save'?: {
+      value: boolean;
+      interval: number;
+    },
+    [segment: string]: unknown
+  },
+  'general'?: {
+    language: SupportedLanguage
+    [segment: string]: unknown
+  }
+  'ui'?: {
+    'mode'?: SupportedMode
+    'theme'?: SupportedTheme
+    [segment: string]: unknown
+  },
+
+  [segment: string]: unknown
+}`
+}
+
 export async function generateTypesFromSchema() {
   const fileName = process.cwd() + '/src/schemas/settings.json'
   const schema = readSchema(fileName)
@@ -14,6 +38,7 @@ export async function generateTypesFromSchema() {
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(wohoo)
   const defaultsTypeCode = defaultsType(wohoo)
   const clientsTypeCode = clientsType()
+  const handCraftedCode = handCrafted()
 
   const options: Partial<Options> = {
     cwd: process.cwd(),
@@ -29,6 +54,7 @@ export async function generateTypesFromSchema() {
     settingTypeWithDefaultTypeCode,
     defaultsTypeCode,
     clientsTypeCode,
+    handCraftedCode
   ]
   const code = snippets.join('\n')
   writeFileSync(process.cwd() + '/src/generated/settings.ts', code)

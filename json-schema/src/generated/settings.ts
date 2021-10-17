@@ -93,7 +93,7 @@ export type SettingValueTypeLookup = {
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
 
-// 📋  not yet generated
+//TODO not yet generated from schema
 export interface SettingsDto {
   'editor'?: {
     'auto-save'?: {
