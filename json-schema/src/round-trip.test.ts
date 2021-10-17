@@ -73,8 +73,7 @@ test('not all settings', () => {
 
 const roundTripJson = () => {
   const serialized = JSON.stringify(backendGenerated)
-  const received = sendOverTheWire(serialized)
-  return JSON.parse(received) as SettingsDocument
+  return sendOverTheWire(serialized)
 }
 
 const sendOverTheWire = (serialized: string) => serialized

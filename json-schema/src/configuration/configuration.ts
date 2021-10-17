@@ -12,11 +12,12 @@ export interface Configuration<U extends SettingType> {
 }
 
 export const extractConfigurationFrom = <T extends SettingType>(
-  receivedJson: SettingsDocument,
+  receivedJson: string,
   types: readonly T[],
 ): Configuration<T> => {
-  const document: SettingsDictionary<T> = extractSettings(receivedJson, types)
-  return new DictionaryBackedConfiguration(document)
+  const document = JSON.parse(receivedJson) as SettingsDocument
+  const dictionary: SettingsDictionary<T> = extractSettings(document, types)
+  return new DictionaryBackedConfiguration(dictionary)
 }
 
 export class DictionaryBackedConfiguration<U extends SettingType> implements Configuration<U> {
