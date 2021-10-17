@@ -28,5 +28,39 @@
   "type": "object",
   "additionalProperties": true,
   "required": [],
-  "properties": {}
+  "properties": {
+    "editor": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "editorCategory",
+      "properties": {
+        "auto-save": {
+          "$ref": "src/schemas/settings/editor/auto-save.json"
+        }
+      }
+    },
+    "general": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "generalCategory",
+      "properties": {
+        "language": {
+          "$ref": "src/schemas/settings/general/language.json"
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "uiCategory",
+      "properties": {
+        "mode": {
+          "$ref": "src/schemas/settings/ui/mode.json"
+        },
+        "theme": {
+          "$ref": "src/schemas/settings/ui/theme.json"
+        }
+      }
+    }
+  }
 }

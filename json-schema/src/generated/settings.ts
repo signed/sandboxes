@@ -6,34 +6,14 @@ export type SupportedTheme = 'Specular' | 'Amos' | 'Folie';
  * The wire format of the settings
  */
 export interface SettingsDtoWip {
-  editor?: Editor;
-  general?: General;
-  ui?: Ui;
+  editor?: EditorCategory;
+  general?: GeneralCategory;
+  ui?: UiCategory;
   [k: string]: unknown;
 }
-export interface Editor {
-  hello?: 'string';
+export interface EditorCategory {
+  'auto-save'?: AutoSave;
   [k: string]: unknown;
-}
-export interface General {
-  hello?: 'string';
-  [k: string]: unknown;
-}
-export interface Ui {
-  hello?: 'string';
-  [k: string]: unknown;
-}
-/**
- * All settings supported by the application
- *
- * This interface was referenced by `SettingsDtoWip`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface SettingsDocument {
-  'editor.auto-save'?: AutoSave;
-  'general.language'?: Language;
-  'ui.mode'?: Mode;
-  'ui.theme'?: Theme;
 }
 /**
  * Automatically save changes
@@ -45,12 +25,21 @@ export interface AutoSave {
     interval: number;
   };
 }
+export interface GeneralCategory {
+  language?: Language;
+  [k: string]: unknown;
+}
 /**
  * The language used in the user interface
  */
 export interface Language {
   type: 'general.language';
   value: SupportedLanguage;
+}
+export interface UiCategory {
+  mode?: Mode;
+  theme?: Theme;
+  [k: string]: unknown;
 }
 /**
  * The current ui mode
@@ -65,6 +54,18 @@ export interface Mode {
 export interface Theme {
   type: 'ui.theme';
   value: SupportedTheme;
+}
+/**
+ * All settings supported by the application
+ *
+ * This interface was referenced by `SettingsDtoWip`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface SettingsDocument {
+  'editor.auto-save'?: AutoSave;
+  'general.language'?: Language;
+  'ui.mode'?: Mode;
+  'ui.theme'?: Theme;
 }
 
 export type Setting = AutoSave | Language | Mode | Theme

@@ -1,8 +1,8 @@
 import { writeFileSync } from 'fs'
+import { JSONSchema7 } from 'json-schema'
 import { resolve, sep } from 'path'
 import { Maybe } from '../asserts'
-import { findSchemasIn } from './shared'
-import { JSONSchema7 } from 'json-schema'
+import { findSchemasIn, FoundSettingSchema } from './shared'
 
 // todo use jscon schema types
 type SchemaReference = {
@@ -14,6 +14,11 @@ type SchemaReferences = {
 }
 
 type JsonSchmeaProperties = Exclude<JSONSchema7['properties'], undefined>
+
+const pathTo = (schema: FoundSettingSchema) => {
+  const json = schema.segments.join(sep) + '.json'
+  return 'src/schemas/settings/' + json
+}
 
 export const generateSettingsSchema = () => {
   const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
@@ -30,49 +35,28 @@ export const generateSettingsSchema = () => {
   const foundSchemas = findSchemasIn(settingsBase)
   const settingsProperties = foundSchemas.reduce((acc: SchemaReferences, schema) => {
     const type = schema.segments.join('.')
-    const json = schema.segments.join(sep) + '.json'
-    const pathToSchema = 'src/schemas/settings/' + json
     acc[type] = {
-      '$ref': pathToSchema,
+      $ref: pathTo(schema),
     }
     return acc
   }, {})
 
-  let settingsDtoProperties: JsonSchmeaProperties = {
-    editor: {
-      type: 'object',
-      additionalProperties: true,
-      title: 'Editor',
-      properties: {
-        'hello': {
-          type: 'string',
-        },
-      },
-    },
-    general: {
-      type: 'object',
-      additionalProperties: true,
-      title: 'General',
-      properties: {
-        'hello': {
-          type: 'string',
-        }
-      },
-    },
-    ui: {
-      type: 'object',
-      additionalProperties: true,
-      title: 'Ui',
-      properties: {
-        'hello': {
-          type: 'string',
-        }
-      },
-    },
-  }
-
-  settingsDtoProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
-    console.log(schema.segments)
+  const settingsDtoProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+    const categoryName = schema.segments[0]
+    let category = acc[categoryName] as JSONSchema7 | undefined
+    if (category === undefined) {
+      category = {
+        type: 'object',
+        additionalProperties: true,
+        title: `${categoryName}Category`,
+        properties: {}
+      }
+      acc[categoryName] = category
+    }
+    const settingsProperties = category.properties ?? {}
+    settingsProperties[schema.segments[1]] = {
+      $ref: pathTo(schema)
+    }
     return acc
   }, {})
 
