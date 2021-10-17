@@ -38,13 +38,16 @@ export async function generateTypesFromSchema() {
 const stripExtension = (filename: string): string => filename.replace(extname(filename), '')
 
 const settingsBase = '#/definitions/settings'
+
+const pathToDefaultFor = (type: string) => `${settingsBase}/properties/${type}/default`
+
 const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
   const o = wohoo.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
-  const keys = Object.keys(o)
-  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/default`))
+  const types = Object.keys(o)
+  const keysWithDefault = types.filter(type => wohoo.exists(pathToDefaultFor(type)))
   const union = keysWithDefault.map(type => `'${type}'`).join(' | ')
   return `export type SettingTypeWithDefault = ${union}`
 }
@@ -55,9 +58,9 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const types = Object.keys(o)
-  const keysWithDefault = types.filter(type => wohoo.exists(`${settingsBase}/properties/${type}/default`))
+  const keysWithDefault = types.filter(type => wohoo.exists(pathToDefaultFor(type)))
   const union = keysWithDefault.map(type => {
-    const defaultt = wohoo.get(`${settingsBase}/properties/${type}/default`)
+    const defaultt = wohoo.get(pathToDefaultFor(type))
     return { type, defaultt }
   })
   return `
