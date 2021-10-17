@@ -7,7 +7,7 @@ type UsedSettings = 'general.language' | 'editor.auto-save'
 
 test('return the value from the settings', () => {
   const document: SettingsDocument<UsedSettings> = {}
-  document['general.language'] = { type: 'general.language', value: 'ES' }
+  document['general.language'] = 'ES'
   const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
   const language = configuration.settingFor('general.language')
   expect(language).toBe('ES')
@@ -24,7 +24,7 @@ test('return default if it exists and not explicit setting', () => {
 
 test('values without a default can be undefined', () => {
   const document: SettingsDocument<UsedSettings> = {}
-  document['editor.auto-save'] = { type: 'editor.auto-save', value: { value: true, interval: 500 } }
+  document['editor.auto-save'] = { value: true, interval: 500 }
   const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
 
   const autoSave = configuration.settingFor('editor.auto-save')
@@ -49,8 +49,8 @@ test('only allow quering for UsedSettings', () => {
   const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
 
   // @ts-expect-error trying to get a setting without a default that is not in UsedSettings results in type error
-  configuration.settingFor( 'ui.theme')
+  configuration.settingFor('ui.theme')
 
   // @ts-expect-error trying to get a setting with a default that is not in UsedSettings results in type error
-  configuration.settingFor( 'ui.mode')
+  configuration.settingFor('ui.mode')
 })

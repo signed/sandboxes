@@ -7,8 +7,7 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "check-for-any": "yarn type-coverage --detail --show-relative-path",
-    "generate": "yarn generate:ensureProperTypee && yarn generate:settingsSchema && yarn generate:typesFromSchema",
-    "generate:ensureProperTypee": "yarn ts-node src/scripts/ensureTypeInSettingSchemaAreUpdated.ts ",
+    "generate": "yarn generate:settingsSchema && yarn generate:typesFromSchema",
     "generate:settingsSchema": "yarn ts-node src/scripts/generateSettingsSchema.ts",
     "generate:typesFromSchema": "yarn ts-node src/scripts/generateTypesFromSchema.ts"
   },

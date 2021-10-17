@@ -19,8 +19,8 @@ export interface SettingsDto {
     [segment: string]: unknown
   }
   'ui'?: {
-    'mode'?: SupportedMode
-    'theme'?: SupportedTheme
+    'mode'?: Mode
+    'theme'?: Theme
     [segment: string]: unknown
   },
 
@@ -67,10 +67,8 @@ const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
     throw new Error('Settings has no properties, that should not happen')
   }
   const keys = Object.keys(o)
-  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/properties/value/default`))
-  const union = keysWithDefault.map(key => {
-    return wohoo.get(`${settingsBase}/properties/${key}/properties/type/const`)
-  }).map(type => `'${type}'`).join(' | ')
+  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/default`))
+  const union = keysWithDefault.map(type => `'${type}'`).join(' | ')
   return `export type SettingTypeWithDefault = ${union}`
 }
 
@@ -79,11 +77,10 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
   }
-  const keys = Object.keys(o)
-  const keysWithDefault = keys.filter(key => wohoo.exists(`${settingsBase}/properties/${key}/properties/value/default`))
-  const union = keysWithDefault.map(key => {
-    const type = wohoo.get(`${settingsBase}/properties/${key}/properties/type/const`)
-    const defaultt = wohoo.get(`${settingsBase}/properties/${key}/properties/value/default`)
+  const types = Object.keys(o)
+  const keysWithDefault = types.filter(type => wohoo.exists(`${settingsBase}/properties/${type}/default`))
+  const union = keysWithDefault.map(type => {
+    const defaultt = wohoo.get(`${settingsBase}/properties/${type}/default`)
     return { type, defaultt }
   })
   return `
@@ -91,7 +88,7 @@ export type SettingType = keyof SettingsDocument
 export type Settings = Required<SettingsDocument>
 
 type Defaults = {
-  [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
+  [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]
 }
 
 export const defaults: Defaults = {
@@ -99,7 +96,7 @@ export const defaults: Defaults = {
 }
 
 export type SettingValueTypeLookup = {
-  [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
+  [type in SettingType]: Settings[type] | (type extends keyof Defaults ? never : undefined)
 }
 `
 }

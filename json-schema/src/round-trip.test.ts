@@ -1,6 +1,6 @@
 import { assertType, Maybe } from './asserts'
 import { extractConfigurationFrom } from './configuration/configuration'
-import { SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, SupportedMode, SupportedTheme } from './generated/settings'
+import { SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, Mode, Theme } from './generated/settings'
 
 const backendGenerated: SettingsDto = {
   editor: {
@@ -37,11 +37,11 @@ test('extract known settings and ignore unknown settings', () => {
   expect(language).toBe('EN')
 
   const mode = configuration.settingFor('ui.mode')
-  assertType<SupportedMode>(mode)
+  assertType<Mode>(mode)
   expect(mode).toBe('dark')
 
   const theme = configuration.settingFor('ui.theme')
-  assertType<Maybe<SupportedTheme>>(theme)
+  assertType<Maybe<Theme>>(theme)
   expect(theme).toBe(undefined)
 })
 
@@ -49,11 +49,11 @@ test('not all settings', () => {
   const configuration = extractConfigurationFrom(roundTripJson(), settingsUsedInClientTwo)
 
   const mode = configuration.settingFor('ui.mode')
-  assertType<SupportedMode>(mode)
+  assertType<Mode>(mode)
   expect(mode).toBe('dark')
 
   const theme = configuration.settingFor('ui.theme')
-  assertType<Maybe<SupportedTheme>>(theme)
+  assertType<Maybe<Theme>>(theme)
   expect(theme).toBe(undefined)
 
   // @ts-expect-error types prohibite access to

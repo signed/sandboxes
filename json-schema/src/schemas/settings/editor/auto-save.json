@@ -5,28 +5,15 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "type",
-    "value"
+    "value",
+    "interval"
   ],
   "properties": {
-    "type": {
-      "const": "editor.auto-save"
-    },
     "value": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "value",
-        "interval"
-      ],
-      "properties": {
-        "value": {
-          "type": "boolean"
-        },
-        "interval": {
-          "type": "number"
-        }
-      }
+      "type": "boolean"
+    },
+    "interval": {
+      "type": "number"
     }
   }
 }

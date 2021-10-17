@@ -1,6 +1,15 @@
+/**
+ * The language used in the user interface
+ */
 export type SupportedLanguage = 'EO' | 'EN' | 'ZH' | 'ES';
-export type SupportedMode = 'dark' | 'light';
-export type SupportedTheme = 'Specular' | 'Amos' | 'Folie';
+/**
+ * The current ui mode
+ */
+export type Mode = 'dark' | 'light';
+/**
+ * The current theme
+ */
+export type Theme = 'Specular' | 'Amos' | 'Folie';
 
 /**
  * The wire format of the settings
@@ -19,41 +28,17 @@ export interface EditorCategory {
  * Automatically save changes
  */
 export interface AutoSave {
-  type: 'editor.auto-save';
-  value: {
-    value: boolean;
-    interval: number;
-  };
+  value: boolean;
+  interval: number;
 }
 export interface GeneralCategory {
-  language?: Language;
+  language?: SupportedLanguage;
   [k: string]: unknown;
-}
-/**
- * The language used in the user interface
- */
-export interface Language {
-  type: 'general.language';
-  value: SupportedLanguage;
 }
 export interface UiCategory {
   mode?: Mode;
   theme?: Theme;
   [k: string]: unknown;
-}
-/**
- * The current ui mode
- */
-export interface Mode {
-  type: 'ui.mode';
-  value: SupportedMode;
-}
-/**
- * The current theme
- */
-export interface Theme {
-  type: 'ui.theme';
-  value: SupportedTheme;
 }
 /**
  * All settings supported by the application
@@ -63,7 +48,7 @@ export interface Theme {
  */
 export interface SettingsDocument {
   'editor.auto-save'?: AutoSave;
-  'general.language'?: Language;
+  'general.language'?: SupportedLanguage;
   'ui.mode'?: Mode;
   'ui.theme'?: Theme;
 }
@@ -74,7 +59,7 @@ export type SettingType = keyof SettingsDocument
 export type Settings = Required<SettingsDocument>
 
 type Defaults = {
-  [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]['value']
+  [Property in SettingType as Extract<Property, SettingTypeWithDefault>]: Settings[Property]
 }
 
 export const defaults: Defaults = {
@@ -83,7 +68,7 @@ export const defaults: Defaults = {
 }
 
 export type SettingValueTypeLookup = {
-  [type in SettingType]: Settings[type]['value'] | (type extends keyof Defaults ? never : undefined)
+  [type in SettingType]: Settings[type] | (type extends keyof Defaults ? never : undefined)
 }
 
 
@@ -105,8 +90,8 @@ export interface SettingsDto {
     [segment: string]: unknown
   }
   'ui'?: {
-    'mode'?: SupportedMode
-    'theme'?: SupportedTheme
+    'mode'?: Mode
+    'theme'?: Theme
     [segment: string]: unknown
   },
 

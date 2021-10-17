@@ -16,7 +16,7 @@ export class DocumentBackedConfiguration<U extends SettingType> implements Confi
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type] {
     const found = this.settings[type]
     if (found !== undefined) {
-      return found.value as SettingValueTypeLookup[Type]
+      return found as SettingValueTypeLookup[Type]
     }
     return defaults[type as SettingTypeWithDefault] as SettingValueTypeLookup[Type]
   }
@@ -26,9 +26,7 @@ export const extractSettings = <T extends SettingType>(receivedJson: SettingsDto
   return types.reduce((document: SettingsDocument<T>, type) => {
     const value = extractSettingFrom(receivedJson, type)
     if (value !== undefined) {
-      document[type] = {
-        type, value,
-      } as any
+      document[type] = value
     }
     return document
   }, {})

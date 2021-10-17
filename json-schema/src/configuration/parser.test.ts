@@ -1,5 +1,5 @@
 import { assertType, Maybe } from '../asserts'
-import { AutoSave, Language, Mode, SettingsDto, Theme } from '../generated/settings'
+import { AutoSave, SupportedLanguage, Mode, SettingsDto, Theme } from '../generated/settings'
 import { extractSettings } from './configuration'
 
 test('extract known settings and ignore unknown settings', () => {
@@ -26,19 +26,13 @@ test('extract known settings and ignore unknown settings', () => {
   const settingsDocument = extractSettings(receivedJson, useAllSettings)
 
   expect(assertType<Maybe<AutoSave>>(settingsDocument['editor.auto-save'])).toStrictEqual({
-    type: 'editor.auto-save',
-    value: {
-      value: false,
-      interval: 45,
-    },
+    value: false,
+    interval: 45,
   })
-  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
-    type: 'ui.mode',
-    value: 'dark',
-  })
+  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual('dark')
   expect(Object.keys(settingsDocument)).toStrictEqual(['editor.auto-save', 'ui.mode'])
   assertType<Maybe<Theme>>(settingsDocument['ui.theme'])
-  assertType<Maybe<Language>>(settingsDocument['general.language'])
+  assertType<Maybe<SupportedLanguage>>(settingsDocument['general.language'])
 })
 
 test('not all settings', () => {
@@ -64,10 +58,7 @@ test('not all settings', () => {
   const useSubsetOfSettings = ['ui.mode', 'ui.theme'] as const
   const settingsDocument = extractSettings(receivedJson, useSubsetOfSettings)
 
-  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual({
-    type: 'ui.mode',
-    value: 'dark',
-  })
+  expect(assertType<Maybe<Mode>>(settingsDocument['ui.mode'])).toStrictEqual('dark')
   expect(assertType<Maybe<Theme>>(settingsDocument['ui.theme'])).toBe(undefined)
   expect(Object.keys(settingsDocument)).toStrictEqual(['ui.mode'])
 })
