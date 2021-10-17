@@ -68,11 +68,9 @@ export interface SettingsDocument {
   'ui.theme'?: Theme;
 }
 
-export type Setting = AutoSave | Language | Mode | Theme
 export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
 
-export type SettingType = Setting['type']
-
+export type SettingType = keyof SettingsDocument
 export type Settings = Required<SettingsDocument>
 
 type Defaults = {

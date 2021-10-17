@@ -34,7 +34,6 @@ export async function generateTypesFromSchema() {
 
   const parser = new $RefParser()
   const wohoo = await parser.resolve(schema)
-  const settingTypeCode = settingType(wohoo)
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(wohoo)
   const defaultsTypeCode = defaultsType(wohoo)
   const clientsTypeCode = clientsType()
@@ -50,7 +49,6 @@ export async function generateTypesFromSchema() {
 
   const snippets = [
     settingsCode,
-    settingTypeCode,
     settingTypeWithDefaultTypeCode,
     defaultsTypeCode,
     clientsTypeCode,
@@ -63,16 +61,6 @@ export async function generateTypesFromSchema() {
 const stripExtension = (filename: string): string => filename.replace(extname(filename), '')
 
 const settingsBase = '#/definitions/settings'
-const settingType = function(wohoo: $RefParser.$Refs) {
-  const o = wohoo.get(`${settingsBase}/properties`)
-  if (o === null) {
-    throw new Error('Settings has no properties, that should not happen')
-  }
-  const keys = Object.keys(o)
-  const union = keys.map(key => wohoo.get(`${settingsBase}/properties/${key}/title`)).join(' | ')
-  return `export type Setting = ${union}`
-}
-
 const settingWithDefaultType = function(wohoo: $RefParser.$Refs) {
   const o = wohoo.get(`${settingsBase}/properties`)
   if (o === null) {
@@ -99,8 +87,7 @@ const defaultsType = function(wohoo: $RefParser.$Refs) {
     return { type, defaultt }
   })
   return `
-export type SettingType = Setting['type']
-
+export type SettingType = keyof SettingsDocument
 export type Settings = Required<SettingsDocument>
 
 type Defaults = {
