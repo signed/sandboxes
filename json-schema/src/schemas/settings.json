@@ -27,7 +27,6 @@
   "description": "The wire format of the settings",
   "type": "object",
   "additionalProperties": true,
-  "required": [],
   "properties": {
     "editor": {
       "type": "object",

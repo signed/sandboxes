@@ -20,7 +20,6 @@ export const generateSettingsSchema = () => {
     description: 'The wire format of the settings',
     type: 'object',
     additionalProperties: true,
-    required: [],
   }
   const foundSchemas = findSchemasIn(settingsBase)
   const settingsProperties: JsonSchmeaProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
