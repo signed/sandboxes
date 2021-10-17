@@ -4,29 +4,6 @@ import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
-function handCrafted() {
-  return `//TODO not yet generated from schema
-export interface SettingsDto {
-  'editor'?: {
-    'auto-save'?: {
-      value: boolean;
-      interval: number;
-    },
-    [segment: string]: unknown
-  },
-  'general'?: {
-    language: SupportedLanguage
-    [segment: string]: unknown
-  }
-  'ui'?: {
-    'mode'?: Mode
-    'theme'?: Theme
-    [segment: string]: unknown
-  },
-
-  [segment: string]: unknown
-}`
-}
 
 export async function generateTypesFromSchema() {
   const fileName = process.cwd() + '/src/schemas/settings.json'
@@ -106,6 +83,6 @@ const clientsType = () => `
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
 `
-
+const handCrafted = () => ``
 
 generateTypesFromSchema().catch((e: unknown) => console.error(e))

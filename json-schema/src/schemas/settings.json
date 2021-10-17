@@ -23,7 +23,7 @@
       }
     }
   },
-  "title": "SettingsDtoWip",
+  "title": "SettingsDto",
   "description": "The wire format of the settings",
   "type": "object",
   "additionalProperties": true,

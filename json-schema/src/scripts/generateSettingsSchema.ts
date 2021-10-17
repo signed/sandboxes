@@ -26,7 +26,7 @@ export const generateSettingsSchema = () => {
     '$comment': 'this is auto generated',
     '$schema': 'http://json-schema.org/draft-06/schema/schema',
     'definitions': {},
-    'title': 'SettingsDtoWip',
+    'title': 'SettingsDto',
     'description': 'The wire format of the settings',
     'type': 'object',
     'additionalProperties': true,

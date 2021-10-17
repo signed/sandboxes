@@ -14,7 +14,7 @@ export type Theme = 'Specular' | 'Amos' | 'Folie';
 /**
  * The wire format of the settings
  */
-export interface SettingsDtoWip {
+export interface SettingsDto {
   editor?: EditorCategory;
   general?: GeneralCategory;
   ui?: UiCategory;
@@ -43,7 +43,7 @@ export interface UiCategory {
 /**
  * All settings supported by the application
  *
- * This interface was referenced by `SettingsDtoWip`'s JSON-Schema
+ * This interface was referenced by `SettingsDto`'s JSON-Schema
  * via the `definition` "settings".
  */
 export interface SettingsDocument {
@@ -76,24 +76,3 @@ export type SettingValueTypeLookup = {
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
 
-//TODO not yet generated from schema
-export interface SettingsDto {
-  'editor'?: {
-    'auto-save'?: {
-      value: boolean;
-      interval: number;
-    },
-    [segment: string]: unknown
-  },
-  'general'?: {
-    language: SupportedLanguage
-    [segment: string]: unknown
-  }
-  'ui'?: {
-    'mode'?: Mode
-    'theme'?: Theme
-    [segment: string]: unknown
-  },
-
-  [segment: string]: unknown
-}
