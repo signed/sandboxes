@@ -1,8 +1,15 @@
 import { assertType, Maybe } from './asserts'
 import { extractConfigurationFrom } from './configuration/configuration'
-import { SettingsDto, settingsUsedInClientOne, settingsUsedInClientTwo, SupportedLanguage, Mode, Theme } from './generated/settings'
+import {
+  SettingsDocument,
+  settingsUsedInClientOne,
+  settingsUsedInClientTwo,
+  SupportedLanguage,
+  Mode,
+  Theme,
+} from './generated/settings'
 
-const backendGenerated: SettingsDto = {
+const backendGenerated: SettingsDocument = {
   editor: {
     'auto-save': {
       value: false,
@@ -15,7 +22,7 @@ const backendGenerated: SettingsDto = {
     unknown: 'not know should be ignored',
   },
   unknown: {
-    'category': {
+    category: {
       unknown: 'not know should be ignored',
     },
   },
@@ -24,10 +31,12 @@ const backendGenerated: SettingsDto = {
 test('extract known settings and ignore unknown settings', () => {
   const configuration = extractConfigurationFrom(roundTripJson(), settingsUsedInClientOne)
   const autoSave = configuration.settingFor('editor.auto-save')
-  assertType<Maybe<{
-    value: boolean;
-    interval: number;
-  }>>(autoSave)
+  assertType<
+    Maybe<{
+      value: boolean
+      interval: number
+    }>
+  >(autoSave)
   expect(autoSave).toStrictEqual({
     value: false,
     interval: 45,
@@ -65,8 +74,7 @@ test('not all settings', () => {
 const roundTripJson = () => {
   const serialized = JSON.stringify(backendGenerated)
   const received = sendOverTheWire(serialized)
-  return JSON.parse(received) as SettingsDto
+  return JSON.parse(received) as SettingsDocument
 }
 
 const sendOverTheWire = (serialized: string) => serialized
-

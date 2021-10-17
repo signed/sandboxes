@@ -1,9 +1,9 @@
 import { assertType, Maybe } from '../asserts'
-import { AutoSave, SupportedLanguage, Mode, SettingsDto, Theme } from '../generated/settings'
+import { AutoSave, SupportedLanguage, Mode, SettingsDocument, Theme } from '../generated/settings'
 import { extractSettings } from './configuration'
 
 test('extract known settings and ignore unknown settings', () => {
-  const backendGenerated: SettingsDto = {
+  const backendGenerated: SettingsDocument = {
     editor: {
       'auto-save': {
         value: false,
@@ -16,7 +16,7 @@ test('extract known settings and ignore unknown settings', () => {
       unknown: 'not know should be ignored',
     },
     unknown: {
-      'category': {
+      category: {
         unknown: 'not know should be ignored',
       },
     },
@@ -36,7 +36,7 @@ test('extract known settings and ignore unknown settings', () => {
 })
 
 test('not all settings', () => {
-  const backendGenerated: SettingsDto = {
+  const backendGenerated: SettingsDocument = {
     editor: {
       'auto-save': {
         value: false,
@@ -49,7 +49,7 @@ test('not all settings', () => {
       unknown: 'not know should be ignored',
     },
     unknown: {
-      'category': {
+      category: {
         unknown: 'not know should be ignored',
       },
     },
@@ -63,11 +63,7 @@ test('not all settings', () => {
   expect(Object.keys(settingsDocument)).toStrictEqual(['ui.mode'])
 })
 
-const sendOverTheWire = (backendGenerated: SettingsDto) => {
+const sendOverTheWire = (backendGenerated: SettingsDocument) => {
   const serialized = JSON.stringify(backendGenerated)
   return JSON.parse(serialized)
 }
-
-
-
-

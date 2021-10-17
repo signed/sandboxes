@@ -14,7 +14,7 @@ export type Theme = 'Specular' | 'Amos' | 'Folie';
 /**
  * The wire format of the settings
  */
-export interface SettingsDto {
+export interface SettingsDocument {
   editor?: EditorCategory;
   general?: GeneralCategory;
   ui?: UiCategory;
@@ -43,7 +43,7 @@ export interface UiCategory {
 /**
  * Support type for TypeScript to get a mapping from setting type to the value type of each setting
  *
- * This interface was referenced by `SettingsDto`'s JSON-Schema
+ * This interface was referenced by `SettingsDocument`'s JSON-Schema
  * via the `definition` "settings".
  */
 export interface Settings {

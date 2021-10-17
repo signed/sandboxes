@@ -16,7 +16,7 @@ export const generateSettingsSchema = () => {
     $comment: 'this is auto generated',
     $schema: 'http://json-schema.org/draft-06/schema/schema',
     definitions: {},
-    title: 'SettingsDto',
+    title: 'SettingsDocument',
     description: 'The wire format of the settings',
     type: 'object',
     additionalProperties: true,
@@ -24,7 +24,7 @@ export const generateSettingsSchema = () => {
   const foundSchemas = findSchemasIn(settingsBase)
   const settings = schemaForSettingsFrom(foundSchemas)
 
-  const settingsDtoProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+  const settingsDocumentProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
     const categoryName = schema.segments[0]
     let category = acc[categoryName] as JSONSchema7 | undefined
     if (category === undefined) {
@@ -45,7 +45,7 @@ export const generateSettingsSchema = () => {
 
   const settingsSchema: JSONSchema7 = {
     ...settingsSchemaTemplate,
-    properties: settingsDtoProperties,
+    properties: settingsDocumentProperties,
     definitions: {
       settings,
     },

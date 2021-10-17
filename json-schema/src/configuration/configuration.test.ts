@@ -1,52 +1,54 @@
 import { assertType, Maybe } from '../asserts'
 import { SupportedLanguage } from '../generated/settings'
-import { Configuration, DocumentBackedConfiguration } from './configuration'
-import { SettingsDocument } from './configuration'
+import { Configuration, DictionaryBackedConfiguration } from './configuration'
+import { SettingsDictionary } from './configuration'
 
 type UsedSettings = 'general.language' | 'editor.auto-save'
 
 test('return the value from the settings', () => {
-  const document: SettingsDocument<UsedSettings> = {}
+  const document: SettingsDictionary<UsedSettings> = {}
   document['general.language'] = 'ES'
-  const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
   const language = configuration.settingFor('general.language')
   expect(language).toBe('ES')
   assertType<SupportedLanguage>(language)
 })
 
 test('return default if it exists and not explicit setting', () => {
-  const document: SettingsDocument<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
+  const document: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
 
   const language = configuration.settingFor('general.language')
   expect(language).toBe('EN')
 })
 
 test('values without a default can be undefined', () => {
-  const document: SettingsDocument<UsedSettings> = {}
+  const document: SettingsDictionary<UsedSettings> = {}
   document['editor.auto-save'] = { value: true, interval: 500 }
-  const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
 
   const autoSave = configuration.settingFor('editor.auto-save')
-  assertType<Maybe<{
-    value: boolean;
-    interval: number;
-  }>>(autoSave)
+  assertType<
+    Maybe<{
+      value: boolean
+      interval: number
+    }>
+  >(autoSave)
 
   expect(autoSave?.value).toEqual(true)
   expect(autoSave?.interval).toEqual(500)
 })
 
 test('values without a default can be undefined', () => {
-  const document: SettingsDocument<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
+  const document: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
   const setting = configuration.settingFor('editor.auto-save')
   expect(setting).toBe(undefined)
 })
 
 test('only allow quering for UsedSettings', () => {
-  const document: SettingsDocument<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DocumentBackedConfiguration(document)
+  const document: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
 
   // @ts-expect-error trying to get a setting without a default that is not in UsedSettings results in type error
   configuration.settingFor('ui.theme')

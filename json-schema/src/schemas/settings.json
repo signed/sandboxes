@@ -29,7 +29,7 @@
       }
     }
   },
-  "title": "SettingsDto",
+  "title": "SettingsDocument",
   "description": "The wire format of the settings",
   "type": "object",
   "additionalProperties": true,
