@@ -9,7 +9,7 @@ import {
   relativePathToSettingsBase,
 } from './shared'
 
-type JsonSchmeaProperties = Exclude<JSONSchema7['properties'], undefined>
+type JsonSchemaProperties = Exclude<JSONSchema7['properties'], undefined>
 
 const pathTo = (schema: FoundSettingSchema) => {
   const json = schema.segments.join(sep) + '.json'
@@ -30,7 +30,7 @@ export const generateSettingsSchema = () => {
   const foundSchemas = findSchemasIn(settingsBase)
   const settings = schemaForSettingsFrom(foundSchemas)
 
-  const settingsDocumentProperties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+  const settingsDocumentProperties = foundSchemas.reduce((acc: JsonSchemaProperties, schema) => {
     const categoryName = schema.segments[0]
     let category = acc[categoryName] as JSONSchema7 | undefined
     if (category === undefined) {
@@ -70,7 +70,7 @@ const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {
   settings.required = foundSchemas.reduce((acc: string[], schema) => {
     return [...acc, schema.segments.join('.')]
   }, [])
-  settings.properties = foundSchemas.reduce((acc: JsonSchmeaProperties, schema) => {
+  settings.properties = foundSchemas.reduce((acc: JsonSchemaProperties, schema) => {
     const type = schema.segments.join('.')
     acc[type] = {
       $ref: pathTo(schema),
