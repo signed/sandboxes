@@ -9,11 +9,11 @@ export type WithDefaultBoolean = boolean;
 /**
  * Setting with boolean default
  */
-export type WithDefaultBoolean1 = number;
+export type WithDefaultNumber = number;
 /**
  * Setting with boolean default
  */
-export type WithDefaultBoolean2 = string;
+export type WithDefaultString = string;
 /**
  * The current ui mode
  */
@@ -50,9 +50,16 @@ export interface GeneralCategory {
 }
 export interface TestingCategory {
   'with-default-boolean'?: WithDefaultBoolean;
-  'with-default-number'?: WithDefaultBoolean1;
-  'with-default-string'?: WithDefaultBoolean2;
+  'with-default-number'?: WithDefaultNumber;
+  'with-default-object'?: WithDefaultObject;
+  'with-default-string'?: WithDefaultString;
   [k: string]: unknown;
+}
+/**
+ * Setting with boolean default
+ */
+export interface WithDefaultObject {
+  value: string;
 }
 export interface UiCategory {
   mode?: Mode;
@@ -69,13 +76,14 @@ export interface Settings {
   'editor.auto-save': AutoSave;
   'general.language': SupportedLanguage;
   'testing.with-default-boolean': WithDefaultBoolean;
-  'testing.with-default-number': WithDefaultBoolean1;
-  'testing.with-default-string': WithDefaultBoolean2;
+  'testing.with-default-number': WithDefaultNumber;
+  'testing.with-default-object': WithDefaultObject;
+  'testing.with-default-string': WithDefaultString;
   'ui.mode': Mode;
   'ui.theme': Theme;
 }
 
-export type SettingTypeWithDefault = 'general.language' | 'testing.with-default-boolean' | 'testing.with-default-number' | 'testing.with-default-string' | 'ui.mode'
+export type SettingTypeWithDefault = 'general.language' | 'testing.with-default-boolean' | 'testing.with-default-number' | 'testing.with-default-object' | 'testing.with-default-string' | 'ui.mode'
 export type SettingType = keyof Settings
 
 type Defaults = {
@@ -86,6 +94,7 @@ export const defaults: Defaults = {
   'general.language': 'EN',
   'testing.with-default-boolean': true,
   'testing.with-default-number': 42,
+  'testing.with-default-object': {"value":"default in an object"},
   'testing.with-default-string': 'Hello World',
   'ui.mode': 'dark'
 }
@@ -96,4 +105,9 @@ export type SettingValueTypeLookup = {
 //TODO create from meta data in the schema
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-export const settingsUsedInTestClient = ['testing.with-default-boolean', 'testing.with-default-number', 'testing.with-default-string'] as const
+export const settingsUsedInTestClient = [
+  'testing.with-default-boolean',
+  'testing.with-default-number',
+  'testing.with-default-string',
+  'testing.with-default-object',
+] as const

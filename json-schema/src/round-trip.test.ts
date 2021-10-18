@@ -92,4 +92,9 @@ describe('use default for', () => {
   test('use default for string values', () => {
     expect(configuration.settingFor('testing.with-default-string')).toBe('Hello World')
   })
+  test('use default for object values', () => {
+    expect(configuration.settingFor('testing.with-default-object')).toStrictEqual({
+      value: 'default in an object',
+    })
+  })
 })

@@ -51,6 +51,9 @@ const createDefaultValue = (defaultt: { type: JSONSchema7TypeName; value: JSONSc
   if (typesWithoutValueEscape.includes(defaultt.type)) {
     return `${defaultt.value}`
   }
+  if (defaultt.type === 'object') {
+    return JSON.stringify(defaultt.value)
+  }
   return `'${defaultt.value}'`
 }
 
@@ -90,8 +93,12 @@ const clientsType = () =>
 //TODO create from meta data in the schema
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-export const settingsUsedInTestClient = ['testing.with-default-boolean', 'testing.with-default-number', 'testing.with-default-string'] as const
-`.trim()
+export const settingsUsedInTestClient = [
+  'testing.with-default-boolean',
+  'testing.with-default-number',
+  'testing.with-default-string',
+  'testing.with-default-object',
+] as const`.trim()
 const handCrafted = () => ``
 
 generateTypesFromSchema().catch((e: unknown) => console.error(e))

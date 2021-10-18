@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "title": "WithDefaultObject",
+  "description": "Setting with boolean default",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "value"
+  ],
+  "properties": {
+    "value": {
+      "type": "string"
+    }
+  },
+  "default": {
+    "value": "default in an object"
+  }
+}

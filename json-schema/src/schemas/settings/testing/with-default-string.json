@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema/schema",
-  "title": "WithDefaultBoolean",
+  "title": "WithDefaultString",
   "description": "Setting with boolean default",
   "type": "string",
   "default": "Hello World"

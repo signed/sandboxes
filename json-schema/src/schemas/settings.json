@@ -12,6 +12,7 @@
         "general.language",
         "testing.with-default-boolean",
         "testing.with-default-number",
+        "testing.with-default-object",
         "testing.with-default-string",
         "ui.mode",
         "ui.theme"
@@ -28,6 +29,9 @@
         },
         "testing.with-default-number": {
           "$ref": "src/schemas/settings/testing/with-default-number.json"
+        },
+        "testing.with-default-object": {
+          "$ref": "src/schemas/settings/testing/with-default-object.json"
         },
         "testing.with-default-string": {
           "$ref": "src/schemas/settings/testing/with-default-string.json"
@@ -76,6 +80,9 @@
         },
         "with-default-number": {
           "$ref": "src/schemas/settings/testing/with-default-number.json"
+        },
+        "with-default-object": {
+          "$ref": "src/schemas/settings/testing/with-default-object.json"
         },
         "with-default-string": {
           "$ref": "src/schemas/settings/testing/with-default-string.json"
