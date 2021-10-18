@@ -3,11 +3,10 @@ import { writeFileSync } from 'fs'
 import { JSONSchema7Type, JSONSchema7TypeName } from 'json-schema'
 import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
-import { readSchema } from './shared'
+import { absolutPathToSettingsJson, pathToSettingsTs, readSchema } from './shared'
 
 export const generateTypesFromSchema = async () => {
-  const fileName = process.cwd() + '/src/schemas/settings.json'
-  const schema = readSchema(fileName)
+  const schema = readSchema(absolutPathToSettingsJson)
 
   const parser = new $RefParser()
   const refs = await parser.resolve(schema)
@@ -22,11 +21,11 @@ export const generateTypesFromSchema = async () => {
     unreachableDefinitions: true,
     style: { singleQuote: true },
   }
-  const settingsCode = await compile(schema, stripExtension(fileName), options)
+  const settingsCode = await compile(schema, stripExtension(absolutPathToSettingsJson), options)
 
   const snippets = [settingsCode, settingTypeWithDefaultTypeCode, defaultsTypeCode, clientsTypeCode, handCraftedCode]
   const code = snippets.join('\n')
-  writeFileSync(process.cwd() + '/src/generated/settings.ts', code)
+  writeFileSync(pathToSettingsTs, code)
 }
 
 const stripExtension = (filename: string): string => filename.replace(extname(filename), '')

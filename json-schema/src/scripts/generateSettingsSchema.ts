@@ -1,17 +1,23 @@
 import { writeFileSync } from 'fs'
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema'
-import { resolve, sep } from 'path'
-import { findSchemasIn, FoundSettingSchema } from './shared'
+import { sep } from 'path'
+import {
+  absolutPathToSettingsBase,
+  absolutPathToSettingsJson,
+  findSchemasIn,
+  FoundSettingSchema,
+  relativePathToSettingsBase,
+} from './shared'
 
 type JsonSchmeaProperties = Exclude<JSONSchema7['properties'], undefined>
 
 const pathTo = (schema: FoundSettingSchema) => {
   const json = schema.segments.join(sep) + '.json'
-  return 'src/schemas/settings/' + json
+  return `${relativePathToSettingsBase}/${json}`
 }
 
 export const generateSettingsSchema = () => {
-  const settingsBase = resolve(process.cwd() + '/src/schemas/settings/')
+  const settingsBase = absolutPathToSettingsBase
   const settingsSchemaTemplate: JSONSchema7 = {
     $comment: 'this is auto generated',
     $schema: 'http://json-schema.org/draft-06/schema/schema',
@@ -51,8 +57,7 @@ export const generateSettingsSchema = () => {
     },
   }
 
-  const settingsPath = resolve(process.cwd() + '/src/schemas/settings.json')
-  writeFileSync(settingsPath, JSON.stringify(settingsSchema, null, 2))
+  writeFileSync(absolutPathToSettingsJson, JSON.stringify(settingsSchema, null, 2))
 }
 
 const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {

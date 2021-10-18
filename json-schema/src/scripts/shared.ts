@@ -1,7 +1,6 @@
-import { readFileSync } from 'fs'
+import { lstatSync, readdirSync, readFileSync } from 'fs'
 import { JSONSchema4 } from 'json-schema'
-import { dirname, basename, extname, join, sep } from 'path'
-import { readdirSync, lstatSync } from 'fs'
+import { basename, dirname, extname, join, sep } from 'path'
 
 export type FoundSettingSchema = {
   path: string
@@ -39,3 +38,9 @@ const jsonFiles = (base: string, found: string[] = []) => {
   })
   return found
 }
+const relativeSchemasBase = 'src/schemas'
+export const relativePathToSettingsBase = `${relativeSchemasBase}/settings`
+const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`
+export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}/settings`
+export const absolutPathToSettingsJson = `${absolutPathToSchemaBase}/settings.json`
+export const pathToSettingsTs = `${process.cwd()}/src/generated/settings.ts`
