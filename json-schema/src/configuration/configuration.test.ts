@@ -6,26 +6,26 @@ import { SettingsDictionary } from './configuration'
 type UsedSettings = 'general.language' | 'editor.auto-save'
 
 test('return the value from the settings', () => {
-  const document: SettingsDictionary<UsedSettings> = {}
-  document['general.language'] = 'ES'
-  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
+  const dictionary: SettingsDictionary<UsedSettings> = {}
+  dictionary['general.language'] = 'ES'
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(dictionary)
   const language = configuration.settingFor('general.language')
   expect(language).toBe('ES')
   assertType<SupportedLanguage>(language)
 })
 
 test('return default if it exists and not explicit setting', () => {
-  const document: SettingsDictionary<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
+  const dictionary: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(dictionary)
 
   const language = configuration.settingFor('general.language')
   expect(language).toBe('EN')
 })
 
 test('values without a default can be undefined', () => {
-  const document: SettingsDictionary<UsedSettings> = {}
-  document['editor.auto-save'] = { value: true, interval: 500 }
-  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
+  const dictionary: SettingsDictionary<UsedSettings> = {}
+  dictionary['editor.auto-save'] = { value: true, interval: 500 }
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(dictionary)
 
   const autoSave = configuration.settingFor('editor.auto-save')
   assertType<
@@ -40,15 +40,15 @@ test('values without a default can be undefined', () => {
 })
 
 test('values without a default can be undefined', () => {
-  const document: SettingsDictionary<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
+  const dictionary: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(dictionary)
   const setting = configuration.settingFor('editor.auto-save')
   expect(setting).toBe(undefined)
 })
 
 test('only allow quering for UsedSettings', () => {
-  const document: SettingsDictionary<UsedSettings> = {}
-  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(document)
+  const dictionary: SettingsDictionary<UsedSettings> = {}
+  const configuration: Configuration<UsedSettings> = new DictionaryBackedConfiguration(dictionary)
 
   // @ts-expect-error trying to get a setting without a default that is not in UsedSettings results in type error
   configuration.settingFor('ui.theme')

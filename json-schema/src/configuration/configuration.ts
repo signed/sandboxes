@@ -15,8 +15,8 @@ export const extractConfigurationFrom = <T extends SettingType>(
   receivedJson: string,
   types: readonly T[],
 ): Configuration<T> => {
-  const document = JSON.parse(receivedJson) as SettingsDocument
-  const dictionary: SettingsDictionary<T> = extractSettings(document, types)
+  const settingsDocument = JSON.parse(receivedJson) as SettingsDocument
+  const dictionary: SettingsDictionary<T> = extractSettings(settingsDocument, types)
   return new DictionaryBackedConfiguration(dictionary)
 }
 
@@ -36,12 +36,12 @@ export const extractSettings = <T extends SettingType>(
   receivedJson: SettingsDocument,
   types: readonly T[],
 ): SettingsDictionary<T> => {
-  return types.reduce((document: SettingsDictionary<T>, type) => {
+  return types.reduce((dictionary: SettingsDictionary<T>, type) => {
     const value = extractSettingFrom(receivedJson, type)
     if (value !== undefined) {
-      document[type] = value
+      dictionary[type] = value
     }
-    return document
+    return dictionary
   }, {})
 }
 
