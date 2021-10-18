@@ -81,16 +81,15 @@ const sendOverTheWire = (serialized: string) => serialized
 
 const emptySettingsDocument = '{}'
 describe('use default for', () => {
+  const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInTestClient)
+
   test('use default for boolean values', () => {
-    const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInTestClient)
     expect(configuration.settingFor('testing.with-default-boolean')).toBe(true)
   })
   test('use default for number values', () => {
-    const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInTestClient)
     expect(configuration.settingFor('testing.with-default-number')).toBe(42)
   })
   test('use default for string values', () => {
-    const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInTestClient)
     expect(configuration.settingFor('testing.with-default-string')).toBe('Hello World')
   })
 })
