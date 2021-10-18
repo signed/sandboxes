@@ -5,7 +5,7 @@ import { readdirSync, lstatSync } from 'fs'
 
 export type FoundSettingSchema = {
   path: string
-  segments: readonly string []
+  segments: readonly string[]
 }
 
 export const readSchema = (filename: string): JSONSchema4 => {
@@ -13,9 +13,9 @@ export const readSchema = (filename: string): JSONSchema4 => {
   return JSON.parse(contents.toString())
 }
 
-export const findSchemasIn = function(settingsBase: string): FoundSettingSchema[]{
+export const findSchemasIn = function (settingsBase: string): FoundSettingSchema[] {
   const schemas = jsonFiles(settingsBase)
-  return schemas.map(found => {
+  return schemas.map((found) => {
     const sub = dirname(found).replace(settingsBase + '/', '')
     const filename = basename(found, '.json')
     const segments = [...sub.split(sep), filename]
@@ -23,14 +23,14 @@ export const findSchemasIn = function(settingsBase: string): FoundSettingSchema[
   })
 }
 
-
-const jsonFiles = (base: string, found: string [] = []) => {
+const jsonFiles = (base: string, found: string[] = []) => {
   const elements = readdirSync(base)
   elements.forEach((element) => {
     const path = join(base, element)
     const stat = lstatSync(path)
     if (stat.isDirectory()) {
-      return jsonFiles(path, found)
+      jsonFiles(path, found)
+      return
     }
     const s = extname(path)
     if (stat.isFile() && s === '.json') {
