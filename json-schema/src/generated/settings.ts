@@ -3,6 +3,18 @@
  */
 export type SupportedLanguage = 'EO' | 'EN' | 'ZH' | 'ES';
 /**
+ * Setting with boolean default
+ */
+export type WithDefaultBoolean = boolean;
+/**
+ * Setting with boolean default
+ */
+export type WithDefaultBoolean1 = number;
+/**
+ * Setting with boolean default
+ */
+export type WithDefaultBoolean2 = string;
+/**
  * The current ui mode
  */
 export type Mode = 'dark' | 'light';
@@ -17,6 +29,7 @@ export type Theme = 'Specular' | 'Amos' | 'Folie';
 export interface SettingsDocument {
   editor?: EditorCategory;
   general?: GeneralCategory;
+  testing?: TestingCategory;
   ui?: UiCategory;
   [k: string]: unknown;
 }
@@ -35,6 +48,12 @@ export interface GeneralCategory {
   language?: SupportedLanguage;
   [k: string]: unknown;
 }
+export interface TestingCategory {
+  'with-default-boolean'?: WithDefaultBoolean;
+  'with-default-number'?: WithDefaultBoolean1;
+  'with-default-string'?: WithDefaultBoolean2;
+  [k: string]: unknown;
+}
 export interface UiCategory {
   mode?: Mode;
   theme?: Theme;
@@ -49,11 +68,14 @@ export interface UiCategory {
 export interface Settings {
   'editor.auto-save': AutoSave;
   'general.language': SupportedLanguage;
+  'testing.with-default-boolean': WithDefaultBoolean;
+  'testing.with-default-number': WithDefaultBoolean1;
+  'testing.with-default-string': WithDefaultBoolean2;
   'ui.mode': Mode;
   'ui.theme': Theme;
 }
 
-export type SettingTypeWithDefault = 'general.language' | 'ui.mode'
+export type SettingTypeWithDefault = 'general.language' | 'testing.with-default-boolean' | 'testing.with-default-number' | 'testing.with-default-string' | 'ui.mode'
 export type SettingType = keyof Settings
 
 type Defaults = {
@@ -62,6 +84,9 @@ type Defaults = {
 
 export const defaults: Defaults = {
   'general.language': 'EN',
+  'testing.with-default-boolean': true,
+  'testing.with-default-number': 42,
+  'testing.with-default-string': 'Hello World',
   'ui.mode': 'dark'
 }
 
@@ -71,3 +96,4 @@ export type SettingValueTypeLookup = {
 //TODO create from meta data in the schema
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
+export const settingsUsedInTestClient = ['testing.with-default-boolean', 'testing.with-default-number', 'testing.with-default-string'] as const

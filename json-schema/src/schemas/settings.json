@@ -10,6 +10,9 @@
       "required": [
         "editor.auto-save",
         "general.language",
+        "testing.with-default-boolean",
+        "testing.with-default-number",
+        "testing.with-default-string",
         "ui.mode",
         "ui.theme"
       ],
@@ -19,6 +22,15 @@
         },
         "general.language": {
           "$ref": "src/schemas/settings/general/language.json"
+        },
+        "testing.with-default-boolean": {
+          "$ref": "src/schemas/settings/testing/with-default-boolean.json"
+        },
+        "testing.with-default-number": {
+          "$ref": "src/schemas/settings/testing/with-default-number.json"
+        },
+        "testing.with-default-string": {
+          "$ref": "src/schemas/settings/testing/with-default-string.json"
         },
         "ui.mode": {
           "$ref": "src/schemas/settings/ui/mode.json"
@@ -51,6 +63,22 @@
       "properties": {
         "language": {
           "$ref": "src/schemas/settings/general/language.json"
+        }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "testingCategory",
+      "properties": {
+        "with-default-boolean": {
+          "$ref": "src/schemas/settings/testing/with-default-boolean.json"
+        },
+        "with-default-number": {
+          "$ref": "src/schemas/settings/testing/with-default-number.json"
+        },
+        "with-default-string": {
+          "$ref": "src/schemas/settings/testing/with-default-string.json"
         }
       }
     },
