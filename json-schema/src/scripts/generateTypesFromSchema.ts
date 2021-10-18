@@ -4,7 +4,7 @@ import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
 import { readSchema } from './shared'
 
-export async function generateTypesFromSchema() {
+export const generateTypesFromSchema = async () => {
   const fileName = process.cwd() + '/src/schemas/settings.json'
   const schema = readSchema(fileName)
 
@@ -34,7 +34,7 @@ const settingsBase = '#/definitions/settings'
 
 const pathToDefaultFor = (type: string) => `${settingsBase}/properties/${type}/default`
 
-const settingWithDefaultType = function (refs: $RefParser.$Refs) {
+const settingWithDefaultType = (refs: $RefParser.$Refs) => {
   const o = refs.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')
@@ -45,7 +45,7 @@ const settingWithDefaultType = function (refs: $RefParser.$Refs) {
   return `export type SettingTypeWithDefault = ${union}`
 }
 
-const defaultsType = function (refs: $RefParser.$Refs) {
+const defaultsType = (refs: $RefParser.$Refs) => {
   const o = refs.get(`${settingsBase}/properties`)
   if (o === null) {
     throw new Error('Settings has no properties, that should not happen')

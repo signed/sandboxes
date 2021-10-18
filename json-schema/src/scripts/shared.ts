@@ -13,7 +13,7 @@ export const readSchema = (filename: string): JSONSchema4 => {
   return JSON.parse(contents.toString())
 }
 
-export const findSchemasIn = function (settingsBase: string): FoundSettingSchema[] {
+export const findSchemasIn = (settingsBase: string): FoundSettingSchema[] => {
   const schemas = jsonFiles(settingsBase)
   return schemas.map((found) => {
     const sub = dirname(found).replace(settingsBase + '/', '')
