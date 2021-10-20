@@ -3,7 +3,13 @@ import { writeFileSync } from 'fs'
 import { JSONSchema7Type, JSONSchema7TypeName } from 'json-schema'
 import { compile, Options } from 'json-schema-to-typescript'
 import { extname } from 'path'
-import { absolutPathToSettingsJson, pathToSettingsTs, readSchema } from './shared'
+import {
+  absolutPathToSettingsJson,
+  pathToSettingsTs,
+  readAllSettingSchemas,
+  readSchema,
+  settingTypeFor,
+} from './shared'
 
 export const generateTypesFromSchema = async () => {
   const settingsSchema = readSchema(absolutPathToSettingsJson)
@@ -12,7 +18,7 @@ export const generateTypesFromSchema = async () => {
   const refs = await parser.resolve(settingsSchema)
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(refs)
   const defaultsTypeCode = defaultsType(refs)
-  const clientsTypeCode = clientsType()
+  const clientsTypeCode = await clientsType()
   const handCraftedCode = handCrafted()
 
   const options: Partial<Options> = {
@@ -88,17 +94,34 @@ export type SettingValueTypeLookup = {
 `.trim()
 }
 
-const clientsType = () =>
-  `
-//TODO create from meta data in the schema
-export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
-export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-export const settingsUsedInTestClient = [
-  'testing.with-default-boolean',
-  'testing.with-default-number',
-  'testing.with-default-string',
-  'testing.with-default-object',
-] as const`.trim()
+const clientsType = async () => {
+  const parser = new $RefParser()
+
+  const foundSchemas = readAllSettingSchemas()
+  const clientsToUsedSettings = new Map<string, string[]>()
+  for (const found of foundSchemas) {
+    const settingType = settingTypeFor(found)
+    const refs = await parser.resolve(readSchema(found.path))
+    const consumers = refs.get('#/$meta/consumer') as string[]
+    for (const consumer of consumers) {
+      let usedSettings = clientsToUsedSettings.get(consumer)
+      if (usedSettings === undefined) {
+        usedSettings = []
+        clientsToUsedSettings.set(consumer, usedSettings)
+      }
+      usedSettings.push(settingType)
+    }
+  }
+  return [...clientsToUsedSettings]
+    .map(([key, types]) => {
+      const arrayValues = types.map((type) => `'${type}'`).join(', ')
+      return `export const settingsUsedInClient${capitalizeFirstCharacter(key)} = [${arrayValues}] as const`
+    })
+    .join('\n')
+}
+
+const capitalizeFirstCharacter = (input: string) => input.charAt(0).toUpperCase() + input.slice(1)
+
 const handCrafted = () => ``
 
 generateTypesFromSchema().catch((e: unknown) => console.error(e))

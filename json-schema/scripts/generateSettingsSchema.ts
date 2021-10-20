@@ -6,6 +6,7 @@ import {
   FoundSettingSchema,
   readAllSettingSchemas,
   relativePathToSettingsBase,
+  settingTypeFor,
 } from './shared'
 
 type JsonSchemaProperties = Exclude<JSONSchema7['properties'], undefined>
@@ -61,10 +62,10 @@ const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {
     additionalProperties: false,
   }
   settings.required = foundSchemas.reduce((acc: string[], schema) => {
-    return [...acc, schema.segments.join('.')]
+    return [...acc, settingTypeFor(schema)]
   }, [])
   settings.properties = foundSchemas.reduce((acc: JsonSchemaProperties, schema) => {
-    const type = schema.segments.join('.')
+    const type = settingTypeFor(schema)
     acc[type] = {
       $ref: pathTo(schema),
     }

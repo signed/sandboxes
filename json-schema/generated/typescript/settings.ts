@@ -102,12 +102,6 @@ export const defaults: Defaults = {
 export type SettingValueTypeLookup = {
   [type in SettingType]: Settings[type] | (type extends keyof Defaults ? never : undefined)
 }
-//TODO create from meta data in the schema
 export const settingsUsedInClientOne = ['editor.auto-save', 'general.language', 'ui.mode', 'ui.theme'] as const
+export const settingsUsedInClientTest = ['testing.with-default-boolean', 'testing.with-default-number', 'testing.with-default-object', 'testing.with-default-string'] as const
 export const settingsUsedInClientTwo = ['ui.mode', 'ui.theme'] as const
-export const settingsUsedInTestClient = [
-  'testing.with-default-boolean',
-  'testing.with-default-number',
-  'testing.with-default-string',
-  'testing.with-default-object',
-] as const

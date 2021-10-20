@@ -2,6 +2,8 @@ import { lstatSync, readdirSync, readFileSync } from 'fs'
 import { JSONSchema4 } from 'json-schema'
 import { basename, dirname, extname, join, sep } from 'path'
 
+export const settingTypeFor = (schema: FoundSettingSchema) => schema.segments.join('.')
+
 export type FoundSettingSchema = {
   path: string
   segments: readonly string[]

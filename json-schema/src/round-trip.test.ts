@@ -5,7 +5,7 @@ import {
   SettingsDocument,
   settingsUsedInClientOne,
   settingsUsedInClientTwo,
-  settingsUsedInTestClient,
+  settingsUsedInClientTest,
   SupportedLanguage,
   Theme,
 } from '../generated/typescript/settings'
@@ -81,7 +81,7 @@ const sendOverTheWire = (serialized: string) => serialized
 
 const emptySettingsDocument = '{}'
 describe('use default for', () => {
-  const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInTestClient)
+  const configuration = extractConfigurationFrom(emptySettingsDocument, settingsUsedInClientTest)
 
   test('use default for boolean values', () => {
     expect(configuration.settingFor('testing.with-default-boolean')).toBe(true)
