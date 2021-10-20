@@ -39,8 +39,8 @@ const jsonFiles = (base: string, found: string[] = []) => {
   return found
 }
 const relativeSchemasBase = 'src/schemas'
-export const relativePathToSettingsBase = `${relativeSchemasBase}/settings`
+export const relativePathToSettingsBase = `${relativeSchemasBase}`
 const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`
-export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}/settings`
+export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}`
 export const absolutPathToSettingsJson = `generated/schema/settings.json`
 export const pathToSettingsTs = `generated/typescript/settings.ts`

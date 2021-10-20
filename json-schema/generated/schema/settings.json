@@ -19,28 +19,28 @@
       ],
       "properties": {
         "editor.auto-save": {
-          "$ref": "src/schemas/settings/editor/auto-save.json"
+          "$ref": "src/schemas/editor/auto-save.json"
         },
         "general.language": {
-          "$ref": "src/schemas/settings/general/language.json"
+          "$ref": "src/schemas/general/language.json"
         },
         "testing.with-default-boolean": {
-          "$ref": "src/schemas/settings/testing/with-default-boolean.json"
+          "$ref": "src/schemas/testing/with-default-boolean.json"
         },
         "testing.with-default-number": {
-          "$ref": "src/schemas/settings/testing/with-default-number.json"
+          "$ref": "src/schemas/testing/with-default-number.json"
         },
         "testing.with-default-object": {
-          "$ref": "src/schemas/settings/testing/with-default-object.json"
+          "$ref": "src/schemas/testing/with-default-object.json"
         },
         "testing.with-default-string": {
-          "$ref": "src/schemas/settings/testing/with-default-string.json"
+          "$ref": "src/schemas/testing/with-default-string.json"
         },
         "ui.mode": {
-          "$ref": "src/schemas/settings/ui/mode.json"
+          "$ref": "src/schemas/ui/mode.json"
         },
         "ui.theme": {
-          "$ref": "src/schemas/settings/ui/theme.json"
+          "$ref": "src/schemas/ui/theme.json"
         }
       }
     }
@@ -56,7 +56,7 @@
       "title": "editorCategory",
       "properties": {
         "auto-save": {
-          "$ref": "src/schemas/settings/editor/auto-save.json"
+          "$ref": "src/schemas/editor/auto-save.json"
         }
       }
     },
@@ -66,7 +66,7 @@
       "title": "generalCategory",
       "properties": {
         "language": {
-          "$ref": "src/schemas/settings/general/language.json"
+          "$ref": "src/schemas/general/language.json"
         }
       }
     },
@@ -76,16 +76,16 @@
       "title": "testingCategory",
       "properties": {
         "with-default-boolean": {
-          "$ref": "src/schemas/settings/testing/with-default-boolean.json"
+          "$ref": "src/schemas/testing/with-default-boolean.json"
         },
         "with-default-number": {
-          "$ref": "src/schemas/settings/testing/with-default-number.json"
+          "$ref": "src/schemas/testing/with-default-number.json"
         },
         "with-default-object": {
-          "$ref": "src/schemas/settings/testing/with-default-object.json"
+          "$ref": "src/schemas/testing/with-default-object.json"
         },
         "with-default-string": {
-          "$ref": "src/schemas/settings/testing/with-default-string.json"
+          "$ref": "src/schemas/testing/with-default-string.json"
         }
       }
     },
@@ -95,10 +95,10 @@
       "title": "uiCategory",
       "properties": {
         "mode": {
-          "$ref": "src/schemas/settings/ui/mode.json"
+          "$ref": "src/schemas/ui/mode.json"
         },
         "theme": {
-          "$ref": "src/schemas/settings/ui/theme.json"
+          "$ref": "src/schemas/ui/theme.json"
         }
       }
     }
