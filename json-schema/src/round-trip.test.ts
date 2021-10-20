@@ -1,5 +1,5 @@
 import { assertType, Maybe } from './asserts'
-import { extractConfigurationFrom } from './configuration/configuration'
+import { extractConfigurationFrom } from './configuration'
 import {
   Mode,
   SettingsDocument,
