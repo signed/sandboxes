@@ -1,5 +1,5 @@
 import { assertType, Maybe } from '../asserts'
-import { AutoSave, SupportedLanguage, Mode, SettingsDocument, Theme } from '../generated/settings'
+import { AutoSave, SupportedLanguage, Mode, SettingsDocument, Theme } from '../../generated/typescript/settings'
 import { extractSettings } from './configuration'
 
 test('extract known settings and ignore unknown settings', () => {

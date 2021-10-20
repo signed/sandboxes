@@ -8,7 +8,7 @@ import {
   settingsUsedInTestClient,
   SupportedLanguage,
   Theme,
-} from './generated/settings'
+} from '../generated/typescript/settings'
 
 const backendGenerated: SettingsDocument = {
   editor: {

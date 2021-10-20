@@ -1,5 +1,5 @@
 import { assertType, Maybe } from '../asserts'
-import { SupportedLanguage } from '../generated/settings'
+import { SupportedLanguage } from '../../generated/typescript/settings'
 import { Configuration, DictionaryBackedConfiguration } from './configuration'
 import { SettingsDictionary } from './configuration'
 

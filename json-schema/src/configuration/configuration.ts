@@ -5,7 +5,7 @@ import {
   SettingType,
   SettingTypeWithDefault,
   SettingValueTypeLookup,
-} from '../generated/settings'
+} from '../../generated/typescript/settings'
 
 export interface Configuration<U extends SettingType> {
   settingFor<Type extends U>(type: Type): SettingValueTypeLookup[Type]
