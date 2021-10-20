@@ -18,7 +18,7 @@
     "@babel/preset-typescript": "7.15.0",
     "@types/jest": "27.0.2",
     "@types/json-schema": "7.0.9",
-    "jest": "27.2.5",
+    "jest": "27.3.1",
     "json-schema-to-typescript": "10.1.5",
     "prettier": "2.4.1",
     "ts-node": "10.3.0",
