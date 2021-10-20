@@ -1,5 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "$meta": {
+    "consumer": ["one", "two"]
+  },
   "title": "Theme",
   "description": "The current theme",
   "type": "string",

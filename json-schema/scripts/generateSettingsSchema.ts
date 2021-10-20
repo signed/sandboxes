@@ -2,32 +2,16 @@ import { writeFileSync } from 'fs'
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema'
 import { sep } from 'path'
 import {
-  absolutPathToSettingsBase,
   absolutPathToSettingsJson,
-  findSchemasIn,
   FoundSettingSchema,
+  readAllSettingSchemas,
   relativePathToSettingsBase,
 } from './shared'
 
 type JsonSchemaProperties = Exclude<JSONSchema7['properties'], undefined>
 
-const pathTo = (schema: FoundSettingSchema) => {
-  const schemaFile = schema.segments.join(sep)
-  return `${relativePathToSettingsBase}/${schemaFile}.json`
-}
-
 export const generateSettingsSchema = () => {
-  const settingsBase = absolutPathToSettingsBase
-  const settingsSchemaTemplate: JSONSchema7 = {
-    $comment: 'this is auto generated',
-    $schema: 'http://json-schema.org/draft-06/schema/schema',
-    definitions: {},
-    title: 'SettingsDocument',
-    description: 'The wire format of the settings',
-    type: 'object',
-    additionalProperties: true,
-  }
-  const foundSchemas = findSchemasIn(settingsBase)
+  const foundSchemas = readAllSettingSchemas()
   const settings = schemaForSettingsFrom(foundSchemas)
 
   const settingsDocumentProperties = foundSchemas.reduce((acc: JsonSchemaProperties, schema) => {
@@ -49,6 +33,15 @@ export const generateSettingsSchema = () => {
     return acc
   }, {})
 
+  const settingsSchemaTemplate: JSONSchema7 = {
+    $comment: 'this is auto generated',
+    $schema: 'http://json-schema.org/draft-06/schema/schema',
+    definitions: {},
+    title: 'SettingsDocument',
+    description: 'The wire format of the settings',
+    type: 'object',
+    additionalProperties: true,
+  }
   const settingsSchema: JSONSchema7 = {
     ...settingsSchemaTemplate,
     properties: settingsDocumentProperties,
@@ -78,6 +71,11 @@ const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {
     return acc
   }, {})
   return settings
+}
+
+const pathTo = (schema: FoundSettingSchema) => {
+  const schemaFile = schema.segments.join(sep)
+  return `${relativePathToSettingsBase}/${schemaFile}.json`
 }
 
 generateSettingsSchema()

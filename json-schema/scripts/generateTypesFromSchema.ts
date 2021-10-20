@@ -6,10 +6,10 @@ import { extname } from 'path'
 import { absolutPathToSettingsJson, pathToSettingsTs, readSchema } from './shared'
 
 export const generateTypesFromSchema = async () => {
-  const schema = readSchema(absolutPathToSettingsJson)
+  const settingsSchema = readSchema(absolutPathToSettingsJson)
 
   const parser = new $RefParser()
-  const refs = await parser.resolve(schema)
+  const refs = await parser.resolve(settingsSchema)
   const settingTypeWithDefaultTypeCode = settingWithDefaultType(refs)
   const defaultsTypeCode = defaultsType(refs)
   const clientsTypeCode = clientsType()
@@ -21,7 +21,7 @@ export const generateTypesFromSchema = async () => {
     unreachableDefinitions: true,
     style: { singleQuote: true },
   }
-  const settingsCode = await compile(schema, stripExtension(absolutPathToSettingsJson), options)
+  const settingsCode = await compile(settingsSchema, stripExtension(absolutPathToSettingsJson), options)
 
   const snippets = [settingsCode, settingTypeWithDefaultTypeCode, defaultsTypeCode, clientsTypeCode, handCraftedCode]
   const code = snippets.join('\n')

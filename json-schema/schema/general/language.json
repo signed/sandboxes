@@ -1,5 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "$meta": {
+    "consumer": ["one"]
+  },
   "title": "SupportedLanguage",
   "description": "The language used in the user interface",
   "type": "string",

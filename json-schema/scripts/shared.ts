@@ -38,6 +38,8 @@ const jsonFiles = (base: string, found: string[] = []) => {
   })
   return found
 }
+export const readAllSettingSchemas = () => findSchemasIn(absolutPathToSettingsBase)
+
 const relativeSchemasBase = 'schema'
 export const relativePathToSettingsBase = `${relativeSchemasBase}`
 const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`

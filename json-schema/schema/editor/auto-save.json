@@ -1,5 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema/schema",
+  "$meta": {
+    "consumer": ["one"]
+  },
   "title": "AutoSave",
   "description": "Automatically save changes",
   "type": "object",
