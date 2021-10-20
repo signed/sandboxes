@@ -12,8 +12,8 @@ import {
 type JsonSchemaProperties = Exclude<JSONSchema7['properties'], undefined>
 
 const pathTo = (schema: FoundSettingSchema) => {
-  const json = schema.segments.join(sep) + '.json'
-  return `${relativePathToSettingsBase}/${json}`
+  const schemaFile = schema.segments.join(sep)
+  return `${relativePathToSettingsBase}/${schemaFile}.json`
 }
 
 export const generateSettingsSchema = () => {
