@@ -42,5 +42,5 @@ const relativeSchemasBase = 'src/schemas'
 export const relativePathToSettingsBase = `${relativeSchemasBase}/settings`
 const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`
 export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}/settings`
-export const absolutPathToSettingsJson = `${absolutPathToSchemaBase}/settings.json`
+export const absolutPathToSettingsJson = `generated/schema/settings.json`
 export const pathToSettingsTs = `${process.cwd()}/src/generated/settings.ts`
