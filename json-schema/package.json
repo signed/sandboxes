@@ -8,8 +8,8 @@
     "typecheck": "tsc --noEmit",
     "check-for-any": "yarn type-coverage --detail --show-relative-path",
     "generate": "yarn generate:settingsSchema && yarn generate:typesFromSchema",
-    "generate:settingsSchema": "yarn ts-node src/scripts/generateSettingsSchema.ts",
-    "generate:typesFromSchema": "yarn ts-node src/scripts/generateTypesFromSchema.ts"
+    "generate:settingsSchema": "yarn ts-node scripts/generateSettingsSchema.ts",
+    "generate:typesFromSchema": "yarn ts-node scripts/generateTypesFromSchema.ts"
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "9.0.9",
