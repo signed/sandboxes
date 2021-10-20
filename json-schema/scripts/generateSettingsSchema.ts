@@ -5,7 +5,7 @@ import {
   absolutPathToSettingsJson,
   FoundSettingSchema,
   readAllSettingSchemas,
-  relativePathToSettingsBase,
+  relativeSchemasBase,
   settingTypeFor,
 } from './shared'
 
@@ -29,7 +29,7 @@ export const generateSettingsSchema = () => {
     }
     const settingsProperties = category.properties ?? {}
     settingsProperties[schema.segments[1]] = {
-      $ref: pathTo(schema),
+      $ref: jsonPathTo(schema),
     }
     return acc
   }, {})
@@ -67,16 +67,16 @@ const schemaForSettingsFrom = (foundSchemas: FoundSettingSchema[]) => {
   settings.properties = foundSchemas.reduce((acc: JsonSchemaProperties, schema) => {
     const type = settingTypeFor(schema)
     acc[type] = {
-      $ref: pathTo(schema),
+      $ref: jsonPathTo(schema),
     }
     return acc
   }, {})
   return settings
 }
 
-const pathTo = (schema: FoundSettingSchema) => {
+const jsonPathTo = (schema: FoundSettingSchema) => {
   const schemaFile = schema.segments.join(sep)
-  return `${relativePathToSettingsBase}/${schemaFile}.json`
+  return `${relativeSchemasBase}/${schemaFile}.json`
 }
 
 generateSettingsSchema()

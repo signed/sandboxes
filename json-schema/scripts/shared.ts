@@ -40,11 +40,9 @@ const jsonFiles = (base: string, found: string[] = []) => {
   })
   return found
 }
-export const readAllSettingSchemas = () => findSchemasIn(absolutPathToSettingsBase)
+export const readAllSettingSchemas = () => findSchemasIn(relativeSchemasBase)
 
-const relativeSchemasBase = 'schema'
-export const relativePathToSettingsBase = `${relativeSchemasBase}`
-const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`
-export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}`
-export const absolutPathToSettingsJson = `generated/schema/settings.json`
-export const pathToSettingsTs = `generated/typescript/settings.ts`
+export const relativeSchemasBase = 'schema'
+const generatedBase = `generated`
+export const absolutPathToSettingsJson = `${generatedBase}/schema/settings.json`
+export const pathToSettingsTs = `${generatedBase}/typescript/settings.ts`
