@@ -38,7 +38,7 @@ const jsonFiles = (base: string, found: string[] = []) => {
   })
   return found
 }
-const relativeSchemasBase = 'src/schema'
+const relativeSchemasBase = 'schema'
 export const relativePathToSettingsBase = `${relativeSchemasBase}`
 const absolutPathToSchemaBase = `${process.cwd()}/${relativeSchemasBase}`
 export const absolutPathToSettingsBase = `${absolutPathToSchemaBase}`
