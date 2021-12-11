@@ -1,3 +1,4 @@
+// https://youtrack.jetbrains.com/issue/WEB-54005
 export type Options = {
     one: string
     two: number
