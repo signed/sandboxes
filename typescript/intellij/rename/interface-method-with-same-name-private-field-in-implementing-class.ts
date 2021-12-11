@@ -1,15 +1,14 @@
 // https://youtrack.jetbrains.com/issue/IDEA-265722
 interface AnInterface {
-    newName():void
+  newName(): void
 }
 
-class AnImplementation implements AnInterface{
-    readonly #toRename: string = 'initial'
+class AnImplementation implements AnInterface {
+  readonly #toRename: string = 'initial'
 
-    public retrieve() {
-        return this.#toRename
-    }
+  public retrieve() {
+    return this.#toRename
+  }
 
-    newName(): void {
-    }
+  newName(): void {}
 }

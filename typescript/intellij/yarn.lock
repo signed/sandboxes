@@ -2,17 +2,22 @@
 # yarn lockfile v1
 
 
+"@signed/prettier-config@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@signed/prettier-config/-/prettier-config-0.1.0.tgz#4e1ab02f34fd4e43af2779aac97225738ccc71c6"
+  integrity sha512-gMob/Xh26ksh7Z3l/65WGHip9iuC5Jp6jUPxhLJcHEvfPntnRSjxfS2dzBQa/xW2q8zpCEHFNpf5T4IGqUB6LQ==
+
 micro-signals@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/micro-signals/-/micro-signals-2.4.0.tgz#007af19ea18051e360f9fa17023284779d839593"
   integrity sha512-OpGuAaqeJQEV4Q45M8K1RWi4/Fs8QRl9xB9Q5MBGcMlXu5rJu4exdZ0dNXrHKDUpXcIvGW/Lndr7qrtlNB5MGg==
 
-prettier@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.0.tgz#b6a5bf1284026ae640f17f7ff5658a7567fc0d18"
-  integrity sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==
+prettier@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.5.1.tgz#fff75fa9d519c54cf0fce328c1017d94546bc56a"
+  integrity sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
 
-typescript@4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
-  integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
+typescript@4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.3.tgz#afaa858e68c7103317d89eb90c5d8906268d353c"
+  integrity sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==
