@@ -1,3 +1,4 @@
+// https://youtrack.jetbrains.com/issue/WEB-54004
 type Options = {
   state: PermissionState
   args: string[]
