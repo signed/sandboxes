@@ -3,16 +3,11 @@ export type Options = {
     two: number
 }
 
-const processOne = (_one: string) => {
-};
-const processTwo = (_two: number) => {
-};
-
 const expensive = () => 2;
 
 export const someFunction = (options: Options) => {
-    processOne(options.one);
-    processTwo(options.two);
+    console.log(options.one);
+    console.log(options.two);
 };
 
 someFunction({
