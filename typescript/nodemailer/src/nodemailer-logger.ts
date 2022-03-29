@@ -79,7 +79,8 @@ export function createDefaultLogger(levels: readonly LogLevel[]) {
 
     message = util.format(message, ...args);
     message.split(/\r?\n/).forEach(line => {
-      console.log('[%s] %s %s', new Date().toISOString().substr(0, 19).replace(/T/, ' '), levelNames.get(level), prefix + line);
+      const lineToPrint = util.format('[%s] %s %s', new Date().toISOString().substr(0, 19).replace(/T/, ' '), levelNames.get(level), prefix + line);
+      console.log(lineToPrint)
     });
   };
 
