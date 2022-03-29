@@ -4,15 +4,8 @@ const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const;
 type LogLevel = typeof levels[number]
 
 
-const _logFunc = (logger: any, level: LogLevel, defaults: any, data: any, message: any, ...args: any[]) => {
+const _logFunc = (logger: any, level: LogLevel, data: any, message: any, ...args: any[]) => {
   let entry: any = {};
-
-  Object.keys(defaults || {}).forEach(key => {
-    if (key !== 'level') {
-      entry[key] = defaults[key];
-    }
-  });
-
   Object.keys(data || {}).forEach(key => {
     if (key !== 'level') {
       entry[key] = data[key];
@@ -30,7 +23,7 @@ const _logFunc = (logger: any, level: LogLevel, defaults: any, data: any, messag
  * @param {Object} [options] Options object that might include 'logger' value
  * @return {Object} bunyan compatible logger
  */
-export const getLogger = (options: any, defaults: any) => {
+export const getLogger = (options: any) => {
   options = options || {};
 
   let response: any = {};
@@ -52,7 +45,7 @@ export const getLogger = (options: any, defaults: any) => {
 
   levels.forEach(level => {
     response[level] = (data: any, message: string, ...args: any []) => {
-      _logFunc(logger, level, defaults, data, message, ...args);
+      _logFunc(logger, level, data, message, ...args);
     };
   });
 
