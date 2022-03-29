@@ -23,25 +23,9 @@ const _logFunc = (logger: any, level: LogLevel, data: any, message: any, ...args
  * @param {Object} [options] Options object that might include 'logger' value
  * @return {Object} bunyan compatible logger
  */
-export const getLogger = (options: any) => {
-  options = options || {};
-
+export const getLogger = () => {
   let response: any = {};
-
-  if (!options.logger) {
-    // use vanity logger
-    levels.forEach(level => {
-      response[level] = () => false;
-    });
-    return response;
-  }
-
-  let logger = options.logger;
-
-  if (options.logger === true) {
-    // create console logger
-    logger = createDefaultLogger(levels);
-  }
+  let logger = createDefaultLogger(levels);
 
   levels.forEach(level => {
     response[level] = (data: any, message: string, ...args: any []) => {
