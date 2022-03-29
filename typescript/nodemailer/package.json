@@ -1,0 +1,52 @@
+{
+  "name": "nodemailer-sandbox",
+  "version": "2.0.0",
+  "description": "template for TypeScript sandboxes",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@babel/core": "7.17.8",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "7.16.7",
+    "@types/jest": "27.4.1",
+    "babel-jest": "27.5.1",
+    "jest": "27.5.1",
+    "prettier": "2.6.1",
+    "typescript": "4.6.3"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "testRegex": ".*\\.tests\\.ts$",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/matchers/toEndWith.ts"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-typescript"
+    ]
+  },
+  "prettier": "@signed/prettier-config",
+  "dependencies": {
+    "@types/nodemailer": "6.4.4",
+    "nodemailer": "6.7.3"
+  }
+}
