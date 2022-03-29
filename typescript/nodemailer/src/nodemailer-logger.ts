@@ -1,8 +1,16 @@
 import util from 'util';
+import * as winston from 'winston';
 
 const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const;
 type LogLevel = typeof levels[number]
 
+const winstonLogger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({
+      formatter: options => options.message
+    })
+  ]
+});
 
 const _logFunc = (logger: any, level: LogLevel, data: any, message: any, ...args: any[]) => {
   let entry: any = {};
@@ -20,7 +28,6 @@ const _logFunc = (logger: any, level: LogLevel, data: any, message: any, ...args
  * Returns a bunyan-compatible logger interface. Uses either provided logger or
  * creates a default console logger
  *
- * @param {Object} [options] Options object that might include 'logger' value
  * @return {Object} bunyan compatible logger
  */
 export const getLogger = () => {
@@ -80,7 +87,7 @@ export function createDefaultLogger(levels: readonly LogLevel[]) {
     message = util.format(message, ...args);
     message.split(/\r?\n/).forEach(line => {
       const lineToPrint = util.format('[%s] %s %s', new Date().toISOString().substr(0, 19).replace(/T/, ' '), levelNames.get(level), prefix + line);
-      console.log(lineToPrint)
+      winstonLogger.log(level, lineToPrint);
     });
   };
 
