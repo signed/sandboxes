@@ -1,44 +1,48 @@
 {
   "name": "template",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "template for TypeScript sandboxes",
   "main": "index.js",
   "private": true,
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@babel/core": "7.17.8",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "7.16.7",
+    "@types/jest": "27.4.1",
+    "babel-jest": "27.5.1",
+    "jest": "27.5.1",
+    "prettier": "2.6.1",
+    "typescript": "4.6.3"
   },
   "jest": {
     "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/tests/"
+      "<rootDir>/src/"
     ],
     "testRegex": ".*\\.tests\\.ts$",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
-      "jsx",
-      "json",
-      "node"
+      "ts"
     ],
-    "displayName": "catch me",
-    "notify": false,
-    "notifyMode": "failure-success",
-    "resetMocks": true,
     "setupFilesAfterEnv": [
-      "<rootDir>/tests/matchers/toEndWith.ts"
+      "<rootDir>/src/matchers/toEndWith.ts"
     ]
   },
-  "devDependencies": {
-    "@types/jest": "23.3.13",
-    "jest": "24.5.0",
-    "ts-jest": "24.0.0",
-    "tslint": "5.14.0",
-    "tslint-config-airbnb": "5.11.1",
-    "typescript": "3.3.3333"
-  }
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-typescript"
+    ]
+  },
+  "prettier": "@signed/prettier-config"
 }
