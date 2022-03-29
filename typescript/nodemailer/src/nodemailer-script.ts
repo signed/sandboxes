@@ -1,7 +1,7 @@
-import nodemailer, {SendMailOptions} from 'nodemailer';
+import nodemailer, { SendMailOptions } from 'nodemailer';
 
 
-const theFunction= async () => {
+const theFunction = async () => {
   // create a temporary account at https://ethereal.email
   const user = '<create-one>@ethereal.email';
   const pass = '<your password>';
@@ -12,7 +12,6 @@ const theFunction= async () => {
     logger: true,
     debug: true,
     auth: {
-
       user,
       pass
     }
@@ -24,7 +23,7 @@ const theFunction= async () => {
     text: 'Hello World'
 
   };
-  const report = await transporter.sendMail(email)
-  console.log(JSON.stringify(report, null, 2))
-}
-theFunction()
+  const report = await transporter.sendMail(email);
+  console.log(JSON.stringify(report, null, 2));
+};
+theFunction();
