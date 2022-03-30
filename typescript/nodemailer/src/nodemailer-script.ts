@@ -22,7 +22,6 @@ const theFunction = async () => {
     to: user,
     subject: 'Hello You',
     text: 'Hello World'
-
   };
   const report = await transporter.sendMail(email);
   console.log(JSON.stringify(report, null, 2));
