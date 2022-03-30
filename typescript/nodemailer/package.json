@@ -34,9 +34,6 @@
     "moduleFileExtensions": [
       "js",
       "ts"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/matchers/toEndWith.ts"
     ]
   },
   "babel": {
