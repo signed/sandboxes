@@ -15,12 +15,21 @@ const nodeMailerLogLevelToWinstonNpmLevels = {
   'trace': 'silly'
 }
 
-const preFormattedMessage = (options: any) => options.message;
+const fileTransport = new (winston.transports.File)({
+  "timestamp": true,
+  "json": false,
+  "filename": "log/nodemailer.log",
+  "maxFiles": 5,
+  "maxsize": 10485760
+});
+const consoleTransport = new (winston.transports.Console)({
+});
+
 const winstonLogger = new (winston.Logger)({
+  level: 'silly',
   transports: [
-    new (winston.transports.Console)({
-      formatter: preFormattedMessage
-    })
+    consoleTransport,
+    fileTransport
   ]
 });
 
@@ -98,9 +107,8 @@ export function createDefaultLogger(levels: readonly LogLevel[]) {
 
     message = util.format(message, ...args);
     message.split(/\r?\n/).forEach(line => {
-      const lineToPrint = util.format('[%s] %s %s', new Date().toISOString().substr(0, 19).replace(/T/, ' '), levelNames.get(level), prefix + line);
       const winstonNpmLevel = nodeMailerLogLevelToWinstonNpmLevels[level];
-      winstonLogger.log(winstonNpmLevel, lineToPrint);
+      winstonLogger.log(winstonNpmLevel, prefix + line);
     });
   };
 
