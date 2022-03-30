@@ -4,10 +4,22 @@ import * as winston from 'winston';
 const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const;
 type LogLevel = typeof levels[number]
 
+// https://github.com/winstonjs/winston/tree/2.x#logging-levels
+const nodeMailerLogLevelToWinstonNpmLevels = {
+  'fatal': 'error',
+  'error' : 'error',
+  'warn': 'warn',
+  'info': 'info',
+  //'': 'verbose', //no match for verbose
+  'debug': 'debug',
+  'trace': 'silly'
+}
+
+const preFormattedMessage = (options: any) => options.message;
 const winstonLogger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
-      formatter: options => options.message
+      formatter: preFormattedMessage
     })
   ]
 });
@@ -87,7 +99,8 @@ export function createDefaultLogger(levels: readonly LogLevel[]) {
     message = util.format(message, ...args);
     message.split(/\r?\n/).forEach(line => {
       const lineToPrint = util.format('[%s] %s %s', new Date().toISOString().substr(0, 19).replace(/T/, ' '), levelNames.get(level), prefix + line);
-      winstonLogger.log(level, lineToPrint);
+      const winstonNpmLevel = nodeMailerLogLevelToWinstonNpmLevels[level];
+      winstonLogger.log(winstonNpmLevel, lineToPrint);
     });
   };
 
