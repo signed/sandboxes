@@ -1,40 +1,61 @@
+import { useMachine } from '@xstate/react'
 import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { Data, pollingMachine } from './machines/pollingMachine'
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  const [data, setData] = useState<Data>()
+  const [state, send] = useMachine(pollingMachine, {
+    services: {
+      pollResource: async () => {
+        const response = await fetch('https://httpbin.org/get', {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+          },
+        })
+        if (response.status === 200) {
+          return await response.json()
+        }
+        throw new Error(`status code ${response.status}`)
+      },
+    },
+    guards: {
+      readyCondition: (context) => {
+        return context.lastData?.inSession === true
+      },
+    },
+    actions: {
+      onReady: (context) => {
+        if (context.lastData) {
+          setData(context.lastData)
+        }
+      },
+      onExpire: () => {
+        console.log('expired')
+      },
+    },
+  })
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+      <button
+        onClick={() => {
+          send({ type: 'Poll' })
+        }}
+      >
+        Poll
+      </button>
+      <button
+        onClick={() => {
+          send({ type: 'Pause' })
+        }}
+      >
+        Pause
+      </button>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+
+      <pre>{JSON.stringify(state.value, null, 2)}</pre>
+      <pre>{JSON.stringify(state.context, null, 2)}</pre>
+    </>
   )
 }
-
-export default App

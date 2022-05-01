@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "xstate": "xstate typegen \"src/**/*.ts?(x)\" --watch",
     "typecheck": "tsc --noEmit",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xstate/cli": "0.1.7",
+    "@xstate/react": "3.0.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "xstate": "4.31.0"
