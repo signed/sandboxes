@@ -6,5 +6,5 @@
 # [refresh the log file](https://deno.land/manual/linking_to_external_code/integrity_checking)
 
 ```shell
-deno cache --lock=lock.json --lock-write dependencies.ts
+deno cache --lock=lock.json --lock-write deps.ts
 ```

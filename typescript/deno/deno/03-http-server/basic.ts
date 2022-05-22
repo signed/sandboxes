@@ -1,4 +1,4 @@
-import { serve } from '../dependencies.ts';
+import { serve } from '../deps.ts';
 
 function handler(req: Request): Response {
   console.log('got called');
