@@ -1,4 +1,4 @@
-import Person, { sortByName } from '../src/person';
+import Person, { sortByName } from './person';
 
 describe('sort by name', () => {
   it('basic example', () => {
@@ -7,8 +7,8 @@ describe('sort by name', () => {
     const three = new Person(3, 'Alice');
 
     const sorted = sortByName([one, two, three]);
-    expect(sorted[0].id).toBe(3);
-    expect(sorted[1].id).toBe(1);
-    expect(sorted[2].id).toBe(2);
+    expect(sorted[0]!.id).toBe(3);
+    expect(sorted[1]!.id).toBe(1);
+    expect(sorted[2]!.id).toBe(2);
   });
 });

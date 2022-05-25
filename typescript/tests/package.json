@@ -4,38 +4,24 @@
   "description": "",
   "main": "index.js",
   "private": true,
+  "packageManager": "pnpm@7.1.5",
   "scripts": {
     "test": "jest",
+    "typecheck": "tsc --noEmit",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
   },
-  "jest": {
-    "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/tests/"
-    ],
-    "testRegex": ".*\\.tests\\.ts$",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "displayName": "catch me",
-    "notify": true,
-    "notifyMode": "failure-success",
-    "resetMocks": true
-  },
   "devDependencies": {
-    "@types/jest": "23.3.13",
-    "jest": "24.0.0",
-    "ts-jest": "23.10.5",
-    "tslint": "5.12.1",
-    "tslint-config-airbnb": "5.11.1",
-    "typescript": "3.2.4"
-  }
+    "@babel/core": "7.18.2",
+    "@babel/preset-env": "7.18.2",
+    "@babel/preset-typescript": "7.17.12",
+    "@jest/types": "28.1.0",
+    "@signed/prettier-config": "0.1.0",
+    "@types/jest": "27.5.1",
+    "babel-jest": "28.1.0",
+    "jest": "28.1.0",
+    "prettier": "2.6.2",
+    "ts-node": "10.8.0",
+    "typescript": "4.7.2"
+  },
+  "prettier": "@signed/prettier-config"
 }
