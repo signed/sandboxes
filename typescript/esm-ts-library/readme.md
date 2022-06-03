@@ -22,6 +22,14 @@ https://nodejs.org/api/esm.html
 
 # mocha
 - https://stackoverflow.com/questions/40635956/overriding-tsconfig-json-for-ts-node-in-mocha
+- https://github.com/mochajs/mocha-examples/issues/47
+- https://mochajs.org/#configuring-mocha-nodejs
+
+"test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
+
 # ava
 - https://github.com/avajs/ava/blob/main/docs/recipes/typescript.md
-- 
+- https://github.com/avajs/ava/issues/2593
+
+
+https://github.com/TypeStrong/ts-node#recipes

@@ -1,5 +1,5 @@
 {
-  "name": "esm-cjs-library",
+  "name": "esm-ts-library",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,12 +11,17 @@
   },
   "scripts": {
     "ava": "TS_NODE_PROJECT='./tsconfig.ava.json' ava",
+    "mocha": "TS_NODE_PROJECT='./tsconfig.mocha.json' mocha",
     "typecheck": "tsc --noEmit",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
   },
   "devDependencies": {
     "@signed/prettier-config": "0.1.0",
+    "@types/chai": "4.3.1",
+    "@types/mocha": "9.1.1",
     "ava": "4.3.0",
+    "chai": "4.3.6",
+    "mocha": "10.0.0",
     "prettier": "2.6.2",
     "ts-node": "10.8.0",
     "typescript": "4.7.2"
