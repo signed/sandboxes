@@ -8,7 +8,7 @@ test('basic ava example', async (t: ExecutionContext) => {
 
   const sorted = sortByName([one, two, three]);
 
-  t.is(sorted[0].id, 3);
+  t.is(sorted[0]!.id, 3);
   t.is(sorted[1]!.id, 1);
   t.is(sorted[2]!.id, 2);
 });

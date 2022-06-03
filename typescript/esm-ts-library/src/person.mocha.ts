@@ -8,7 +8,7 @@ it('basic mocha example', () => { // the single test
 
   const sorted = sortByName([one, two, three]);
 
-  expect(sorted[0].id).to.equal(3)
+  expect(sorted[0]!.id).to.equal(3)
   expect(sorted[1]!.id).to.equal(1)
   expect(sorted[2]!.id).to.equal(2)
 });

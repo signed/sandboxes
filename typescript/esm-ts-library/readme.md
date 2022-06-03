@@ -27,6 +27,7 @@ https://github.com/TypeStrong/ts-node#transpileonly
 - https://github.com/mochajs/mocha-examples/issues/47
 - https://mochajs.org/#configuring-mocha-nodejs
 - https://github.com/mochajs/mocha/blob/master/example/config/.mocharc.yml
+- https://gist.github.com/jordansexton/2a0c3c360aa700cc9528e89620e82c3d
 
 "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
 
