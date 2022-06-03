@@ -19,11 +19,14 @@ https://github.com/sindresorhus/ky targeting deno
 
 # docs
 https://nodejs.org/api/esm.html
+https://github.com/TypeStrong/ts-node#options
+https://github.com/TypeStrong/ts-node#transpileonly
 
 # mocha
 - https://stackoverflow.com/questions/40635956/overriding-tsconfig-json-for-ts-node-in-mocha
 - https://github.com/mochajs/mocha-examples/issues/47
 - https://mochajs.org/#configuring-mocha-nodejs
+- https://github.com/mochajs/mocha/blob/master/example/config/.mocharc.yml
 
 "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
 
