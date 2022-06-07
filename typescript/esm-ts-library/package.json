@@ -12,6 +12,7 @@
   "scripts": {
     "ava": "TS_NODE_PROJECT='./tsconfig.ava.json' ava",
     "mocha": "TS_NODE_PROJECT='./tsconfig.mocha.json' mocha",
+    "vitest": "vitest",
     "typecheck": "tsc --noEmit",
     "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
   },
@@ -24,7 +25,8 @@
     "mocha": "10.0.0",
     "prettier": "2.6.2",
     "ts-node": "10.8.1",
-    "typescript": "4.7.3"
+    "typescript": "4.7.3",
+    "vitest": "0.14.1"
   },
   "sideEffects": false,
   "prettier": "@signed/prettier-config",
