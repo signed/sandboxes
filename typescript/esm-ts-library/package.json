@@ -13,8 +13,7 @@
     "ava": "TS_NODE_PROJECT='./tsconfig.ava.json' ava",
     "mocha": "TS_NODE_PROJECT='./tsconfig.mocha.json' mocha",
     "vitest": "vitest",
-    "typecheck": "tsc --noEmit",
-    "coverage": "jest --coverage --collectCoverageFrom=src/*.ts"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@signed/prettier-config": "0.1.0",
