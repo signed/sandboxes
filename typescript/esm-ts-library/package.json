@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "main": "index.js",
-  "packageManager": "pnpm@7.1.7",
+  "packageManager": "pnpm@7.2.1",
   "exports": {
     "import": "./index.js",
     "require": "./index.cjs.js"
