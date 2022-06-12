@@ -11,7 +11,7 @@
   },
   "scripts": {
     "ava": "TS_NODE_PROJECT='./tsconfig.ava.json' ava",
-    "mocha": "TS_NODE_PROJECT='./tsconfig.mocha.json' mocha",
+    "mocha": "TS_NODE_PROJECT='./tsconfig.mocha.json' mocha */**/*.mocha.ts",
     "vitest": "vitest",
     "typecheck": "tsc --noEmit"
   },

@@ -1,8 +1,5 @@
 {
   "extensions": ["ts"],
   "require": "ts-node/register",
-  "loader": "ts-node/esm/transpile-only.mjs",
-  "spec": [
-    "**/*.mocha.ts"
-  ]
+  "loader": "ts-node/esm/transpile-only.mjs"
 }
