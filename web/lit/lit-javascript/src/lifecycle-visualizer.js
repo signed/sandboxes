@@ -1,5 +1,10 @@
 import {LitElement, html} from 'lit';
 
+
+/**
+ * There is an overview of the lifecycle in the middle of this page
+ * https://codelabs.developers.google.com/codelabs/lit-2-for-react-devs#11
+ */
 class LifecycleVisualizer extends LitElement {
     static get properties() {
         return {
@@ -29,9 +34,32 @@ class LifecycleVisualizer extends LitElement {
         this._calls = [...this._calls, 'disconnectedCallback']
     }
 
-    willUpdate(_changedProperties) {
-        super.willUpdate(_changedProperties);
+    shouldUpdate(_changedProperties) {
+        const shouldUpdate = super.shouldUpdate(_changedProperties);
+        this._calls.push('shouldUpdate')
+        return shouldUpdate;
+    }
+
+    /**
+     * Changes to reactive properties in `willUpdate` do not re-trigger the update cycle
+     * This method is called on the server in SSR, so accessing the DOM is not advised here
+     * @param changedProperties
+     */
+    willUpdate(changedProperties) {
+        super.willUpdate(changedProperties);
         this._calls = [...this._calls, 'willUpdate']
+    }
+
+    /**
+     * Changes to reactive properties in update do not re-trigger the update cycle if changed before calling super.update
+     * Good place to capture information from the DOM surrounding the component before the rendered output is committed to the DOM
+     * @param changedProperties
+     */
+    update(changedProperties) {
+        this._calls = [...this._calls, 'update']
+        super.update(changedProperties);
+        // doing this here will trigger a re-render
+        //this._calls = [...this._calls, 'update']
     }
 
     /**
