@@ -3,7 +3,6 @@ import {LitElement, html} from 'lit';
 class LifecycleVisualizer extends LitElement {
     static get properties() {
         return {
-            name: {type: String},
             _calls: {state: true}
         }
     }
@@ -12,7 +11,6 @@ class LifecycleVisualizer extends LitElement {
 
     constructor() {
         super();
-        this.name = '';
         this._calls = []
     }
 
