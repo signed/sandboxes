@@ -1,44 +1,44 @@
 import {LitElement, html} from 'lit';
 
-
-class LitClock extends LitElement {
-    static get properties() {
-        return {
-            _now: {state: true}
-        }
-    }
-
-    constructor() {
-        super();
+class ClockController {
+    constructor(host, timout) {
+        this.host = host;
+        this.timeout = timout
+        host.addController(this);
         this._tick()
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-        this._scheduleTimeUpdate()
-    }
-
-    disconnectedCallback() {
-        globalThis.clearTimeout(this._timeoutIdentifier)
-        this._timeoutIdentifier = undefined
-    }
-
-    _scheduleTimeUpdate () {
-        this._timeoutIdentifier = globalThis.setTimeout(() => {
-            this._tick();
-            this._scheduleTimeUpdate()
-        }, 1000)
     }
 
     _tick() {
         this._now = new Date()
+        this.host.requestUpdate()
     }
+
+    hostConnected() {
+        this._scheduleTimeUpdate()
+    }
+
+    hostDisconnected() {
+        globalThis.clearTimeout(this._timeoutIdentifier)
+        this._timeoutIdentifier = undefined
+    }
+
+    _scheduleTimeUpdate() {
+        this._timeoutIdentifier = globalThis.setTimeout(() => {
+            this._tick();
+            this._scheduleTimeUpdate()
+        }, this.timeout)
+    }
+
+}
+
+class LitClock extends LitElement {
+    _clockController = new ClockController(this)
 
     render() {
         return html`
             <div>
                 <h1>Hello, world!</h1>
-                <h2>It is ${this._now.toLocaleTimeString()}.</h2>
+                <h2>It is ${this._clockController._now.toLocaleTimeString()}.</h2>
             </div>`
     }
 }
