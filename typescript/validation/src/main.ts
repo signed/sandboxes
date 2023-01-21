@@ -2,10 +2,10 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import { setupCounter } from './counter'
 
-const appElement = document.querySelector<HTMLDivElement>('#app');
-const counterElement = document.querySelector<HTMLButtonElement>('#counter');
+const appElement = document.querySelector<HTMLDivElement>('#app')
+const counterElement = document.querySelector<HTMLButtonElement>('#counter')
 if (appElement === null || counterElement === null) {
-    throw new Error('missing dom element')
+  throw new Error('missing dom element')
 }
 
 appElement.innerHTML = `
