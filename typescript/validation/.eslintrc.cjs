@@ -12,4 +12,12 @@ module.exports = {
     'plugin:@typescript-eslint/strict',
     'plugin:expect-type/recommended',
   ],
+  overrides: [
+    {
+      files: ['*.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+      },
+    },
+  ],
 }
