@@ -7,7 +7,8 @@
   "packageManager": "pnpm@8.6.12",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "nit-pick": "pnpm test && pnpm typecheck"
   },
   "devDependencies": {
     "prettier": "3.0.1",
