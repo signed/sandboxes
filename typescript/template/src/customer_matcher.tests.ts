@@ -1,8 +1,11 @@
+import {describe, expect, test} from "vitest";
+import './matchers/toEndWith'
+
 describe('ends with matcher', () => {
-  it('actually ends with the suffix ', () => {
+  test('actually ends with the suffix ', () => {
     expect('Hello Matcher').toEndWith('Matcher');
   });
-  it('does not end with the suffix', () => {
+  test('does not end with the suffix', () => {
     expect('Hello Matcher').not.toEndWith('Bogus');
   });
 });

@@ -1,3 +1,4 @@
+import {expect} from "vitest";
 // https://jestjs.io/docs/en/expect.html#expectextendmatchers
 expect.extend({
   toEndWith(received: string, suffix: string) {
@@ -16,3 +17,15 @@ expect.extend({
     };
   },
 });
+
+
+expect.extend({
+  toBeFoo(received, expected) {
+    const { isNot } = this
+    return {
+      // do not alter your "pass" based on isNot. Vitest does it for you
+      pass: received === 'foo',
+      message: () => `${received} is${isNot ? ' not' : ''} foo`
+    }
+  }
+})

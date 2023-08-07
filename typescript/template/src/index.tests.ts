@@ -1,9 +1,10 @@
+import {describe, test, expect} from "vitest";
 import { hello } from '../src';
 
 const name: string = 'Susan';
 
 describe('one', () => {
-  it('should fly', () => {
+  test('should fly', () => {
     expect(hello(name)).toBe('Hello Susan!');
   });
 });
