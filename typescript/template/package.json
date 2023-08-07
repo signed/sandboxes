@@ -4,6 +4,7 @@
   "description": "template for TypeScript sandboxes",
   "main": "index.js",
   "private": true,
+  "packageManager": "pnpm@8.6.12",
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit"
