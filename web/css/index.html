@@ -2,12 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Same size flex box items with scrolling</title>
+    <style>
+      .flex {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        border: solid red;
+      }
+      .flex > .item {
+        flex: 1;
+        min-width: 250px;
+        border: solid blue;
+      }
+    </style>
+    <script>
+      function addItem() {
+        const flexContainer = document.querySelector('.flex')
+
+        const newFlexItem = document.createElement('div')
+        newFlexItem.classList.add('item')
+        newFlexItem.textContent = 'look at me'
+        flexContainer.appendChild(newFlexItem)
+      }
+      function removeItem() {
+        const flexContainer = document.querySelector('.flex')
+        if (flexContainer.children.length > 3) {
+          flexContainer.removeChild(flexContainer.lastChild)
+        }
+      }
+    </script>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank"
+      >How to Make Flexbox Items the Same Width</a
+    >
+    <a href="https://www.youtube.com/watch?v=VKHmCDKIsf0">mdn selectors</a>
+    <div>
+      <ul>
+        <li>dynamic number of columns</li>
+        <li>there are never less than three columns</li>
+        <li>every column should have the same width</li>
+        <li>width should never be smaller than 250px</li>
+        <li>horizontal scroll if there is not enough space for all columns</li>
+      </ul>
+    </div>
+    <div>
+      <button onclick="removeItem()">-</button>
+      <button onclick="addItem()">+</button>
+    </div>
+    <div class="flex">
+      <div class="item">one</div>
+      <div class="item">second item</div>
+      <div class="item">third item wit more text</div>
+    </div>
   </body>
 </html>
