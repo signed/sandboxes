@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Round Color Button</title>
+    <style>
+      .round-button {
+        box-sizing: border-box;
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        border: 1px solid green;
+      }
+    </style>
+    <script>
+      function onClick() {
+        console.log('clicked')
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <button class="round-button" style="background: red" onclick="onClick()"></button>
+      <button class="round-button" style="background: green" onclick="onClick()"></button>
+      <button class="round-button" style="background: blue" onclick="onClick()"></button>
+      <button class="round-button" style="background: cyan" onclick="onClick()"></button>
+    </div>
+  </body>
+</html>
