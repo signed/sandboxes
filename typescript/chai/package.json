@@ -1,0 +1,20 @@
+{
+  "name": "chai-plugin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "nit-pick": "pnpm test && pnpm typecheck"
+  },
+  "dependencies": {
+    "chai": "4.3.8"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "20.1.2",
+    "@tsconfig/strictest": "2.0.2",
+    "@types/chai": "4.3.6",
+    "typescript": "5.2.2",
+    "vitest": "0.34.5"
+  }
+}
