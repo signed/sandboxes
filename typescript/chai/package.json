@@ -8,13 +8,13 @@
     "nit-pick": "pnpm test && pnpm typecheck"
   },
   "dependencies": {
-    "chai": "4.3.8"
+    "chai": "4.3.10"
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
     "@types/chai": "4.3.9",
     "typescript": "5.2.2",
-    "vitest": "0.34.5"
+    "vitest": "0.34.6"
   }
 }
