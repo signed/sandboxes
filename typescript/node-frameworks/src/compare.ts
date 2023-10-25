@@ -24,6 +24,10 @@ const frameworks: Framework [] = [
   github('tinyhttp', 'https://github.com/tinyhttp/tinyhttp'),
   github('express', 'https://github.com/expressjs/express'),
   github('fastify', 'https://github.com/fastify/fastify'),
+  github('restify', 'https://github.com/restify/node-restify'),
+  github('next.js', 'https://github.com/vercel/next.js'),
+  github('remix', 'https://github.com/remix-run/remix'),
+  github('hapi', 'https://github.com/hapijs/hapi'),
 ]
 
 const octokit = new Octokit();
@@ -38,8 +42,7 @@ const stats = await Promise.all(frameworks.map(async framework => {
   const language = data.language;
   const license = data.license?.name;
 
-  return {name: framework.name, data: {stars, language, license}}
+  return {name: framework.name, stars, language, license}
 }));
 
-const table = stats.map(stat => `${stat.name} ${stat.data.license} ${stat.data.language} ${stat.data.stars}`).join('\n');
-console.log(table)
+console.table(stats)
