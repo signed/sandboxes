@@ -1,5 +1,5 @@
 import {describe, test, expect} from "vitest";
-import { hello } from '../src';
+import { hello } from './index.js';
 
 const name: string = 'Susan';
 
