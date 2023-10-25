@@ -1,7 +1,7 @@
 import {Octokit} from 'octokit'
 
-type GithubCoordinates = { owner: string, repo: string }
-type Framework = { name: string, github: GithubCoordinates }
+export type GithubCoordinates = { owner: string, repo: string }
+export type Framework = { name: string, github: GithubCoordinates }
 
 export const github = (name: string, url: string): Framework => {
   const parts = url.split('/');
@@ -18,38 +18,20 @@ export const github = (name: string, url: string): Framework => {
   }
 }
 
-// https://dev.to/tejaskaneriya/when-to-use-these-nodejs-frameworks-express-koa-nest-socket-io-meteor-js-3p63
-// https://www.kindacode.com/article/best-node-js-frameworks-to-build-backend-apis/
-// https://npmtrends.com/express-vs-fastify-vs-hapi-vs-koa-vs-restify
-const frameworks: Framework [] = [
-  github('express', 'https://github.com/expressjs/express'),
-  github('fastify', 'https://github.com/fastify/fastify'),
-  github('loopback', 'https://github.com/loopbackio/loopback-next'),
-  github('nest.js', 'https://github.com/nestjs/nest'),
-  github('koa', 'https://github.com/koajs/koa'),
-  github('tinyhttp', 'https://github.com/tinyhttp/tinyhttp'),
-  github('restify', 'https://github.com/restify/node-restify'),
-  github('next.js', 'https://github.com/vercel/next.js'),
-  github('remix', 'https://github.com/remix-run/remix'),
-  github('hapi', 'https://github.com/hapijs/hapi'),
-  github('socket.io', 'https://github.com/socketio/socket.io'),
-  github('meteor.js', 'https://github.com/meteor/meteor'),
-  github('adonisjs', 'https://github.com/adonisjs/core'),
-]
+export const compare = async (frameworks: Framework[]) =>{
+  const octokit = new Octokit();
+  const stats = await Promise.all(frameworks.map(async framework => {
+    const response = await octokit.rest.repos.get({
+      ...framework.github
+    });
+    const data = response.data;
 
-const octokit = new Octokit();
+    const stars = data.stargazers_count;
+    const language = data.language;
+    const license = data.license?.name;
 
-const stats = await Promise.all(frameworks.map(async framework => {
-  const response = await octokit.rest.repos.get({
-    ...framework.github
-  });
-  const data = response.data;
+    return {name: framework.name, stars, language, license}
+  }));
 
-  const stars = data.stargazers_count;
-  const language = data.language;
-  const license = data.license?.name;
-
-  return {name: framework.name, stars, language, license}
-}));
-
-console.table(stats)
+  console.table(stats)
+}
