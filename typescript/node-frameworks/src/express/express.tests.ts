@@ -1,11 +1,50 @@
 import {expect, test} from "vitest";
-import axios from 'axios'
+import axios, {AxiosHeaders} from 'axios'
 import {ExpressBackend} from "./express.js";
 
 test('hello express', async () => {
   const backend = new ExpressBackend({port: 0});
   backend.start()
   const response = await axios.get(`http://localhost:${backend.port()}`);
+  expect(response.status).toEqual(200)
   expect(response.data).toEqual('Welcome to Express & TypeScript Server')
+  const headers = response.headers;
+  if (!(headers instanceof AxiosHeaders)) {
+    throw new Error('no axios header')
+  }
+  expect(headers.getContentType()).toEqual('text/html; charset=utf-8')
+  backend.stop()
+});
+
+test('do not expose details about the server', async () => {
+  const backend = new ExpressBackend({port: 0});
+  backend.start()
+  const response = await axios.get(`http://localhost:${backend.port()}`);
+
+  const headers = response.headers;
+  if (!(headers instanceof AxiosHeaders)) {
+    throw new Error('no axios header')
+  }
+  expect(headers.has('x-powered-by')).toEqual(false);
+});
+
+const validateStatus =  function (_status: number) {
+  return true;
+}
+
+test('endpoint throws error', async () => {
+  const backend = new ExpressBackend({port: 0});
+  backend.start()
+  const response = await axios.get(`http://localhost:${backend.port()}/throw-error`, {
+    validateStatus
+  });
+  expect(response.status).toEqual(500)
+  expect(response.data).toEqual('')
+  const headers = response.headers;
+  if (!(headers instanceof AxiosHeaders)) {
+    throw new Error('no axios header')
+  }
+  expect(headers.has('x-powered-by')).toEqual(false);
+  expect(headers.getContentType()).toBeUndefined()
   backend.stop()
 });

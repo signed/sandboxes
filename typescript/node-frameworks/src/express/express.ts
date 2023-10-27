@@ -1,5 +1,5 @@
 // https://dev.to/cristain/how-to-set-up-typescript-with-nodejs-and-express-2023-gf
-import type {Request} from 'express';
+import type {NextFunction, Request} from 'express';
 import express, {type Application, type Response} from 'express'
 import type {Server} from 'node:net'
 
@@ -29,12 +29,18 @@ export class ExpressBackend {
   start() {
     // add middleware
     this.app.use(express.json())
+    this.app.disable('x-powered-by')
+
 
     // add routes
     this.app.get('/', (_req: Request, res: Response) => {
       //await Promise.resolve()
       res.send('Welcome to Express & TypeScript Server');
     });
+
+    this.app.get('/throw-error', () => {
+      throw Error('look at me')
+    })
 
     this.app.post('/api/challenge', (req: Request<unknown, unknown, PostChallengeRequest>, res: Response<PostChallengeResponse>) => {
       console.log('/api/challenge called')
@@ -43,6 +49,14 @@ export class ExpressBackend {
         response: `you can not handle the answer to ${challenge}`
       }
       res.send(result)
+    })
+
+
+    // custom default error handler for exception thrown synchronously
+    // every request handler has to handle its own errors
+    // if an exception escapes the request handler, this is always an Internal Server Error HTTP 500
+    this.app.use((_error: Error, _req: Request, res: Response, _next: NextFunction) => {
+      res.status(500).send()
     })
 
     // start
