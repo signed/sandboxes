@@ -1,0 +1,25 @@
+{
+  "name": "debug-node",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "template for TypeScript sandboxes",
+  "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@8.9.2",
+  "scripts": {
+    "debug": "tsx --inspect src/index.ts",
+    "debug-wait": "tsx --inspect-brk src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "nit-pick": "pnpm test && pnpm typecheck"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "20.1.2",
+    "@tsconfig/strictest": "2.0.2",
+    "prettier": "3.0.3",
+    "tsx": "3.14.0",
+    "typescript": "5.2.2",
+    "vitest": "0.34.6"
+  },
+  "prettier": "@signed/prettier-config"
+}
