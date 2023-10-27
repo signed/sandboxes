@@ -2,13 +2,18 @@
 // https://typescript-eslint.io/docs/
 module.exports = {
     root: true,
-    parser: '@typescript-eslint/parser',
+    parser: '',
+    parserOptions: {
+        project: true,
+        tsconfigRootDir: __dirname,
+
+    },
     plugins: ['@typescript-eslint'],
     env: {
         'node': true,
         'es2021': true
     },
-    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended-type-checked'],
     overrides: [
         {
             files: ['*.ts'],
