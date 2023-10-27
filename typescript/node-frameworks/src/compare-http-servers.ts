@@ -1,7 +1,8 @@
 // https://dev.to/tejaskaneriya/when-to-use-these-nodejs-frameworks-express-koa-nest-socket-io-meteor-js-3p63
 // https://www.kindacode.com/article/best-node-js-frameworks-to-build-backend-apis/
 // https://npmtrends.com/express-vs-fastify-vs-hapi-vs-koa-vs-restify
-import {Framework, github, compare} from "./compare.js";
+import type {Framework} from "./compare.js";
+import {github, compare} from "./compare.js";
 
 const frameworks: Framework [] = [
   github('express', 'https://github.com/expressjs/express'),

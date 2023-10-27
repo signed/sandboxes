@@ -1,5 +1,6 @@
 // https://dev.to/cristain/how-to-set-up-typescript-with-nodejs-and-express-2023-gf
-import express,  {type Request, type Response, type Application} from 'express'
+import type {Request} from 'express';
+import express, {type Response, type Application} from 'express'
 
 const app: Application = express();
 const port = 3000;
@@ -18,9 +19,9 @@ type PostChallengeResponse = {
 }
 
 app.post('/api/challenge', (req: Request<unknown, unknown, PostChallengeRequest>, res: Response<PostChallengeResponse>) => {
-  console.log('/api/challenge called' )
+  console.log('/api/challenge called')
   const challenge = req.body.challenge;
-  const result =  {
+  const result = {
     response: `you can not handle the answer to ${challenge}`
   }
   res.send(result)

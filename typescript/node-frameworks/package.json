@@ -7,12 +7,17 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
     "nit-pick": "pnpm test && pnpm typecheck"
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
     "@types/express": "4.17.20",
+    "@types/node": "20.8.9",
+    "@typescript-eslint/eslint-plugin": "6.9.0",
+    "@typescript-eslint/parser": "6.9.0",
+    "eslint": "8.52.0",
     "prettier": "3.0.3",
     "tsx": "3.14.0",
     "typescript": "5.2.2",
