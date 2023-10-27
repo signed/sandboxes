@@ -3,9 +3,9 @@
 1. tsx: looks more promising and uptodate
 2. ts-node: ran into know bugs
 
-going with tsx.
+going with [tsx](https://github.com/esbuild-kit/tsx).
 
-Tsx passes forwards almost all command line arguments to node.
+[Tsx forwards](https://github.com/esbuild-kit/tsx#usage) almost all command line arguments to node.
 The official [debugging-guide](https://nodejs.org/en/docs/guides/debugging-getting-started) gives more details.
 
 # Execute node with open debug port
