@@ -2,7 +2,7 @@
 import type {NextFunction, Request} from 'express';
 import express, {type Application, type Response} from 'express'
 import type {Server} from 'node:net'
-
+import * as path from 'node:path'
 
 type ExpressBackendConfiguration = {
   port: number;
@@ -28,8 +28,9 @@ export class ExpressBackend {
 
   start() {
     // add middleware
-    this.app.use(express.json())
     this.app.disable('x-powered-by')
+    this.app.use(express.json())
+    this.app.use('/static', express.static(path.join(__dirname, 'public')))
 
 
     // add routes

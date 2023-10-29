@@ -16,6 +16,22 @@ test('hello express', async () => {
   backend.stop()
 });
 
+test('server static content', async () => {
+  const backend = new ExpressBackend({port: 0});
+  backend.start()
+  const response = await axios.get(`http://localhost:${backend.port()}/static/guard.txt`, {
+    validateStatus
+  });
+  expect(response.status).toEqual(200)
+  expect(response.data).toEqual('Stop! Who there?\n')
+  const headers = response.headers;
+  if (!(headers instanceof AxiosHeaders)) {
+    throw new Error('no axios header')
+  }
+  expect(headers.getContentType()).toEqual('text/plain; charset=UTF-8')
+  backend.stop()
+});
+
 describe('make fingerprinting express as server harder', () => {
   test('do not expose details about the server', async () => {
     const backend = new ExpressBackend({port: 0});
