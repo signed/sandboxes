@@ -30,7 +30,7 @@ export class ExpressBackend {
     // add middleware
     this.app.disable('x-powered-by')
     this.app.use(express.json())
-    this.app.use('/static', express.static(path.join(__dirname, 'public')))
+    this.app.use('/cdn', express.static(path.join(__dirname, 'public')))
 
 
     // add routes

@@ -19,7 +19,7 @@ test('hello express', async () => {
 test('server static content', async () => {
   const backend = new ExpressBackend({port: 0});
   backend.start()
-  const response = await axios.get(`http://localhost:${backend.port()}/static/guard.txt`, {
+  const response = await axios.get(`http://localhost:${backend.port()}/cdn/guard.txt`, {
     validateStatus
   });
   expect(response.status).toEqual(200)
