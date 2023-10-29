@@ -52,6 +52,10 @@ export class ExpressBackend {
     })
 
 
+    this.app.use((_req, res, _next) => {
+      res.status(404).send()
+    })
+
     // custom default error handler for exception thrown synchronously
     // every request handler has to handle its own errors
     // if an exception escapes the request handler, this is always an Internal Server Error HTTP 500
