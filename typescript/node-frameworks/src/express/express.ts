@@ -19,7 +19,7 @@ type PostChallengeResponse = {
 
 export class ExpressBackend {
   private readonly configuration: ExpressBackendConfiguration;
-  private delegate: Server| 'not started' = 'not started'
+  private delegate: Server | 'not started' = 'not started'
   private readonly app: Application = express();
 
   constructor(configuration: ExpressBackendConfiguration) {
@@ -27,8 +27,11 @@ export class ExpressBackend {
   }
 
   start() {
+    if (this.delegate !== 'not started') {
+      return
+    }
     // add middleware
-    this.app.disable('x-powered-by')
+    this.app.disable('x-powered-by');
     this.app.use(express.json())
     this.app.use('/cdn', express.static(path.join(__dirname, 'public')))
 
@@ -87,6 +90,7 @@ export class ExpressBackend {
     }
     this.delegate.close()
     this.delegate = 'not started'
+    console.log('stopped')
   }
 }
 

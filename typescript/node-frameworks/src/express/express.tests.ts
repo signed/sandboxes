@@ -1,10 +1,12 @@
-import {expect, test, describe} from "vitest";
+import {describe, expect, test} from "vitest";
 import axios, {AxiosHeaders} from 'axios'
 import {ExpressBackend} from "./express.js";
+import {setupBackendControl} from "../backend-control-rule.js";
+
+const control = setupBackendControl();
 
 test('hello express', async () => {
-  const backend = new ExpressBackend({port: 0});
-  backend.start()
+  const backend = control.start(new ExpressBackend({port: 0}))
   const response = await axios.get(`http://localhost:${backend.port()}`);
   expect(response.status).toEqual(200)
   expect(response.data).toEqual('Welcome to Express & TypeScript Server')
@@ -13,12 +15,10 @@ test('hello express', async () => {
     throw new Error('no axios header')
   }
   expect(headers.getContentType()).toEqual('text/html; charset=utf-8')
-  backend.stop()
 });
 
 test('server static content', async () => {
-  const backend = new ExpressBackend({port: 0});
-  backend.start()
+  const backend = control.start(new ExpressBackend({port: 0}));
   const response = await axios.get(`http://localhost:${backend.port()}/cdn/guard.txt`, {
     validateStatus
   });
@@ -29,13 +29,11 @@ test('server static content', async () => {
     throw new Error('no axios header')
   }
   expect(headers.getContentType()).toEqual('text/plain; charset=UTF-8')
-  backend.stop()
 });
 
 describe('make fingerprinting express as server harder', () => {
   test('do not expose details about the server', async () => {
-    const backend = new ExpressBackend({port: 0});
-    backend.start()
+    const backend = control.start(new ExpressBackend({port: 0}));
     const response = await axios.get(`http://localhost:${backend.port()}`);
 
     const headers = response.headers;
@@ -46,8 +44,7 @@ describe('make fingerprinting express as server harder', () => {
   });
 
   test('use a custom 404 message', async () => {
-    const backend = new ExpressBackend({port: 0});
-    backend.start()
+    const backend = control.start(new ExpressBackend({port: 0}));
     const response = await axios.get(`http://localhost:${backend.port()}/not-mapped-in-the-router`, {
       validateStatus
     });
@@ -59,12 +56,10 @@ describe('make fingerprinting express as server harder', () => {
       throw new Error('no axios header')
     }
     expect(headers.getContentType()).toBeUndefined()
-    backend.stop()
   });
 
   test('use custom 500 response', async () => {
-    const backend = new ExpressBackend({port: 0});
-    backend.start()
+    const backend = control.start(new ExpressBackend({port: 0}));
     const response = await axios.get(`http://localhost:${backend.port()}/throw-error`, {
       validateStatus
     });
@@ -76,7 +71,6 @@ describe('make fingerprinting express as server harder', () => {
     }
     expect(headers.has('x-powered-by')).toEqual(false);
     expect(headers.getContentType()).toBeUndefined()
-    backend.stop()
   })
 });
 
