@@ -7,7 +7,7 @@ interface Backend {
 }
 
 interface BackendControl {
-  start<T extends Backend>(backend: T): T
+  start<T extends Backend>(this: void, backend: T): T
 }
 
 export const setupBackendControl = () => {
@@ -22,7 +22,7 @@ export const setupBackendControl = () => {
   })
 
   return new (class implements BackendControl {
-    start<T extends Backend>(backend: T): T {
+    start<T extends Backend>(this: void, backend: T): T {
       backend.start()
       backends.push(backend)
       return backend
