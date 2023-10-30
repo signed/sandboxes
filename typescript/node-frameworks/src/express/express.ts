@@ -16,6 +16,16 @@ type PostChallengeResponse = {
   response: string
 }
 
+const asyncWrapper = (asyncFn: (req: Request, res: Response, next: NextFunction) => Promise<void>) => {
+  return function (req: Request, res: Response, next: NextFunction) {
+    console.log('hit')
+    asyncFn(req, res, next).catch(e => {
+      console.log('catch')
+      next(e);
+    })
+  }
+}
+
 
 export class ExpressBackend {
   private readonly configuration: ExpressBackendConfiguration;
@@ -38,13 +48,21 @@ export class ExpressBackend {
 
     // add routes
     this.app.get('/', (_req: Request, res: Response) => {
-      //await Promise.resolve()
       res.send('Welcome to Express & TypeScript Server');
     });
 
     this.app.get('/throw-error', () => {
       throw Error('look at me')
     })
+
+    this.app.get('/handle-rejected-promises', asyncWrapper(async (_req, res) => {
+      const body = await new Promise<string>((_resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('has to be an error'))
+        }, 0)
+      });
+      res.send(body)
+    }))
 
     this.app.post('/api/challenge', (req: Request<unknown, unknown, PostChallengeRequest>, res: Response<PostChallengeResponse>) => {
       console.log('/api/challenge called')
@@ -57,6 +75,7 @@ export class ExpressBackend {
 
 
     this.app.use((_req, res, _next) => {
+      console.log('not found handler')
       res.status(404).send()
     })
 
@@ -64,6 +83,7 @@ export class ExpressBackend {
     // every request handler has to handle its own errors
     // if an exception escapes the request handler, this is always an Internal Server Error HTTP 500
     this.app.use((_error: Error, _req: Request, res: Response, _next: NextFunction) => {
+      console.log('error handler')
       res.status(500).send()
     })
 

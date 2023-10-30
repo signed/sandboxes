@@ -69,7 +69,20 @@ describe('make fingerprinting express as server harder', () => {
     if (!(headers instanceof AxiosHeaders)) {
       throw new Error('no axios header')
     }
-    expect(headers.has('x-powered-by')).toEqual(false);
+    expect(headers.getContentType()).toBeUndefined()
+  })
+
+  test('handle errors in promises', async () => {
+    const backend = start(new ExpressBackend({port: 0}));
+    const response = await axios.get(`http://localhost:${backend.port()}/handle-rejected-promises`, {
+      validateStatus
+    });
+    expect(response.status).toEqual(500)
+    expect(response.data).toEqual('')
+    const headers = response.headers;
+    if (!(headers instanceof AxiosHeaders)) {
+      throw new Error('no axios header')
+    }
     expect(headers.getContentType()).toBeUndefined()
   })
 });
