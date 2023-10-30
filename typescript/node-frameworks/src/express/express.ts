@@ -18,11 +18,7 @@ type PostChallengeResponse = {
 
 const asyncWrapper = (asyncFn: (req: Request, res: Response, next: NextFunction) => Promise<void>) => {
   return function (req: Request, res: Response, next: NextFunction) {
-    console.log('hit')
-    asyncFn(req, res, next).catch(e => {
-      console.log('catch')
-      next(e);
-    })
+    asyncFn(req, res, next).catch(next)
   }
 }
 
@@ -65,7 +61,6 @@ export class ExpressBackend {
     }))
 
     this.app.post('/api/challenge', (req: Request<unknown, unknown, PostChallengeRequest>, res: Response<PostChallengeResponse>) => {
-      console.log('/api/challenge called')
       const challenge = req.body.challenge;
       const result = {
         response: `you can not handle the answer to ${challenge}`
@@ -75,7 +70,6 @@ export class ExpressBackend {
 
 
     this.app.use((_req, res, _next) => {
-      console.log('not found handler')
       res.status(404).send()
     })
 
@@ -83,7 +77,6 @@ export class ExpressBackend {
     // every request handler has to handle its own errors
     // if an exception escapes the request handler, this is always an Internal Server Error HTTP 500
     this.app.use((_error: Error, _req: Request, res: Response, _next: NextFunction) => {
-      console.log('error handler')
       res.status(500).send()
     })
 
