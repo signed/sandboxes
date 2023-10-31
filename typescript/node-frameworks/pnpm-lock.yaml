@@ -4,51 +4,108 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  express:
-    specifier: 4.18.2
-    version: 4.18.2
-  octokit:
-    specifier: 3.1.1
-    version: 3.1.1
+importers:
 
-devDependencies:
-  '@tsconfig/node20':
-    specifier: 20.1.2
-    version: 20.1.2
-  '@tsconfig/strictest':
-    specifier: 2.0.2
-    version: 2.0.2
-  '@types/express':
-    specifier: 4.17.20
-    version: 4.17.20
-  '@types/node':
-    specifier: 20.8.9
-    version: 20.8.9
-  '@typescript-eslint/eslint-plugin':
-    specifier: 6.9.0
-    version: 6.9.0(@typescript-eslint/parser@6.9.0)(eslint@8.52.0)(typescript@5.2.2)
-  '@typescript-eslint/parser':
-    specifier: 6.9.0
-    version: 6.9.0(eslint@8.52.0)(typescript@5.2.2)
-  axios:
-    specifier: 1.6.0
-    version: 1.6.0
-  eslint:
-    specifier: 8.52.0
-    version: 8.52.0
-  prettier:
-    specifier: 3.0.3
-    version: 3.0.3
-  tsx:
-    specifier: 3.14.0
-    version: 3.14.0
-  typescript:
-    specifier: 5.2.2
-    version: 5.2.2
-  vitest:
-    specifier: 0.34.6
-    version: 0.34.6
+  .:
+    dependencies:
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+      octokit:
+        specifier: 3.1.1
+        version: 3.1.1
+    devDependencies:
+      '@tsconfig/node20':
+        specifier: 20.1.2
+        version: 20.1.2
+      '@tsconfig/strictest':
+        specifier: 2.0.2
+        version: 2.0.2
+      '@types/express':
+        specifier: 4.17.20
+        version: 4.17.20
+      '@types/node':
+        specifier: 20.8.9
+        version: 20.8.9
+      '@typescript-eslint/eslint-plugin':
+        specifier: 6.9.0
+        version: 6.9.0(@typescript-eslint/parser@6.9.0)(eslint@8.52.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: 6.9.0
+        version: 6.9.0(eslint@8.52.0)(typescript@5.2.2)
+      axios:
+        specifier: 1.6.0
+        version: 1.6.0
+      eslint:
+        specifier: 8.52.0
+        version: 8.52.0
+      prettier:
+        specifier: 3.0.3
+        version: 3.0.3
+      tsx:
+        specifier: 3.14.0
+        version: 3.14.0
+      typescript:
+        specifier: 5.2.2
+        version: 5.2.2
+      vitest:
+        specifier: 0.34.6
+        version: 0.34.6
+
+  mixed/remix:
+    devDependencies:
+      '@tsconfig/remix':
+        specifier: 2.0.1
+        version: 2.0.1
+      '@tsconfig/strictest':
+        specifier: 2.0.2
+        version: 2.0.2
+
+  servers/express:
+    dependencies:
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+      octokit:
+        specifier: 3.1.1
+        version: 3.1.1
+    devDependencies:
+      '@tsconfig/node20':
+        specifier: 20.1.2
+        version: 20.1.2
+      '@tsconfig/strictest':
+        specifier: 2.0.2
+        version: 2.0.2
+      '@types/express':
+        specifier: 4.17.20
+        version: 4.17.20
+      '@types/node':
+        specifier: 20.8.9
+        version: 20.8.9
+      '@typescript-eslint/eslint-plugin':
+        specifier: 6.9.0
+        version: 6.9.0(@typescript-eslint/parser@6.9.0)(eslint@8.52.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: 6.9.0
+        version: 6.9.0(eslint@8.52.0)(typescript@5.2.2)
+      axios:
+        specifier: 1.6.0
+        version: 1.6.0
+      eslint:
+        specifier: 8.52.0
+        version: 8.52.0
+      prettier:
+        specifier: 3.0.3
+        version: 3.0.3
+      tsx:
+        specifier: 3.14.0
+        version: 3.14.0
+      typescript:
+        specifier: 5.2.2
+        version: 5.2.2
+      vitest:
+        specifier: 0.34.6
+        version: 0.34.6
 
 packages:
 
@@ -598,6 +655,10 @@ packages:
 
   /@tsconfig/node20@20.1.2:
     resolution: {integrity: sha512-madaWq2k+LYMEhmcp0fs+OGaLFk0OenpHa4gmI4VEmCKX4PJntQ6fnnGADVFrVkBj0wIdAlQnK/MrlYTHsa1gQ==}
+    dev: true
+
+  /@tsconfig/remix@2.0.1:
+    resolution: {integrity: sha512-9G2UUj+xY1VFUhcWhNj0pzKrAoSQL+Qo3frv8mcTlhjvtM0Pch2V2znt+SrDvdbDwPSS2Me8Fn04zD+RYn4rBg==}
     dev: true
 
   /@tsconfig/strictest@2.0.2:

@@ -1,0 +1,12 @@
+{
+  "name": "@sandbox/remix",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tsconfig/remix": "2.0.1",
+    "@tsconfig/strictest": "2.0.2"
+  }
+}

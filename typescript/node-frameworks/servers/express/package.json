@@ -1,12 +1,11 @@
 {
-  "name": "node-frameworks",
+  "name": "@sandbox/express",
   "version": "2.0.0",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@8.10.0",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "pnpm --recursive typecheck",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "nit-pick": "pnpm test && pnpm typecheck"
   },
