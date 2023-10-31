@@ -1,6 +1,6 @@
 {
   "extends": [
-    "@tsconfig/remix/tsconfig.json",
+    "@tsconfig/next/tsconfig.json",
     "@tsconfig/strictest/tsconfig.json"
   ]
 }

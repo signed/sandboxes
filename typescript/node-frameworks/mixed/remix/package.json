@@ -3,10 +3,20 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "nit-pick": "pnpm test && pnpm typecheck"
   },
   "devDependencies": {
-    "@tsconfig/remix": "2.0.1",
-    "@tsconfig/strictest": "2.0.2"
+    "@remix-run/dev": "2.2.0",
+    "@tsconfig/remix": "2.0.1"
+  },
+  "dependencies": {
+    "@remix-run/node": "2.2.0",
+    "@remix-run/react": "2.2.0",
+    "@remix-run/serve": "2.2.0",
+    "isbot": "3.7.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }

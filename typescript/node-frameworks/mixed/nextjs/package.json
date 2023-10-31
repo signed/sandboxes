@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "name": "@sandbox/next.js",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "nit-pick": "pnpm test && pnpm typecheck"
+  },
+  "devDependencies": {
+    "@tsconfig/next": "2.0.1"
+  }
+}
