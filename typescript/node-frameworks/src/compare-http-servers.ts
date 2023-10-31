@@ -18,6 +18,7 @@ const frameworks: Framework [] = [
   github('socket.io', 'https://github.com/socketio/socket.io'),
   github('meteor.js', 'https://github.com/meteor/meteor'),
   github('adonisjs', 'https://github.com/adonisjs/core'),
+  github('astro', 'https://github.com/withastro/astro'),
 ]
 
 await compare(frameworks)
