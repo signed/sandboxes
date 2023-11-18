@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "test": "vitest run",
+    "dev": "tsx src/express/express.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "nit-pick": "pnpm test && pnpm typecheck"

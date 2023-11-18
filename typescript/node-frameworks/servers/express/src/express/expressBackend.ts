@@ -2,6 +2,7 @@ import type {Application, NextFunction, Request, Response} from "express";
 import express from "express";
 import {type Server} from "node:net";
 import path from "node:path";
+import {fileURLToPath} from "node:url";
 
 type ExpressBackendConfiguration = {
   port: number;
@@ -17,6 +18,9 @@ const asyncWrapper = (asyncFn: (req: Request, res: Response, next: NextFunction)
     asyncFn(req, res, next).catch(next)
   }
 }
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
 
 export class ExpressBackend {
   private readonly configuration: ExpressBackendConfiguration;
