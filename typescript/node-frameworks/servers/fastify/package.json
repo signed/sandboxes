@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "nit-pick": "pnpm test && pnpm typecheck"
+    "nitpick": "pnpm test && pnpm typecheck"
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.2",
