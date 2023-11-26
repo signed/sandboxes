@@ -4,4 +4,4 @@ node_modules/
 coverage/
 .cache/
 build
-tsconfig.tsbuildinfo
+*.tsbuildinfo

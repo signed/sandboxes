@@ -1,11 +1,15 @@
 ### echo call
-
 POST http://localhost:3000/api/challenge
 Content-Type: application/json
 
 {
-  "challenge": "45 + 4"
+  "challenge": "45 + 5"
 }
 
-### Hello World
-GET http://localhost:3000
+### Identity
+POST http://localhost:3000/identity
+Content-Type: application/json
+
+{
+  "challenge": "45 + 3"
+}
