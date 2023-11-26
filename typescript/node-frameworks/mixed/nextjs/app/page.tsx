@@ -9,7 +9,7 @@ export default async function Home() {
         redirect('/identity');
     }
     return <>
-        <h1>Welcome</h1>
+        <h1 className="text-3xl font-bold underline">Welcome</h1>
         <p>{cookies().get('identity')?.value}</p>
     </>
 }
