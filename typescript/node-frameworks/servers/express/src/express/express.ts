@@ -1,6 +1,6 @@
 // https://dev.to/cristain/how-to-set-up-typescript-with-nodejs-and-express-2023-gf
-import {ExpressBackend} from "./expressBackend.js";
+import {showcaseBackend} from "./express-backend.js";
 
 
-const backend = new ExpressBackend({port: 3000});
+const backend = showcaseBackend({port: 3000});
 backend.start()

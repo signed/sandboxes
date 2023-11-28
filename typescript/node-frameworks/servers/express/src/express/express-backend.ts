@@ -105,3 +105,7 @@ export class ExpressBackend {
     console.log('stopped')
   }
 }
+
+export const showcaseBackend = (configuration: ExpressBackendConfiguration) => {
+  return new ExpressBackend(configuration);
+};
