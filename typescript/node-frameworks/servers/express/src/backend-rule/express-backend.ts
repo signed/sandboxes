@@ -1,11 +1,12 @@
 import type {Server} from "node:net";
 import type {Application} from "express";
+import type {Backend} from "./backend-rule.js";
 
 export type ExpressBackendConfiguration = {
     port: number;
 }
 
-export class ExpressBackend {
+export class ExpressBackend implements Backend{
     private readonly configuration: ExpressBackendConfiguration;
     private delegate: Server | 'not started' = 'not started'
     private readonly app: Application;

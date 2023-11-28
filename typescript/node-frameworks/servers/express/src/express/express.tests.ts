@@ -1,7 +1,8 @@
 import {describe, expect, test} from "vitest";
 import axios, {AxiosHeaders} from 'axios'
-import {setupBackendControl} from "../backend-control-rule.js";
+
 import {showcaseBackend} from "./showcase-backend.js";
+import {setupBackendControl} from "../backend-rule/backend-rule.js";
 
 const {start} = setupBackendControl()
 

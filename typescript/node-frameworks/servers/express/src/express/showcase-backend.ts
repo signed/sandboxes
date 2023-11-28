@@ -2,8 +2,8 @@ import type {NextFunction, Request, Response} from "express";
 import express from "express";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
-import type { ExpressBackendConfiguration} from "./express-backend.js";
-import {ExpressBackend} from "./express-backend.js";
+import type { ExpressBackendConfiguration} from "../backend-rule/express-backend.js";
+import {ExpressBackend} from "../backend-rule/express-backend.js";
 
 type PostChallengeRequest = {
   challenge: string

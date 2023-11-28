@@ -1,12 +1,12 @@
 import {afterEach, beforeEach} from "vitest";
 
-interface Backend {
+export interface Backend {
   start(): void
 
   stop(): void
 }
 
-interface BackendControl {
+export interface BackendControl {
   start<T extends Backend>(this: void, backend: T): T
 }
 
