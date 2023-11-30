@@ -9,9 +9,11 @@
     "test:watch": "vitest",
     "typecheck": "pnpm --recursive typecheck",
     "lint": "pnpm --recursive lint",
-    "nitpick": "pnpm --recursive nitpick"
+    "nitpick": "pnpm --recursive nitpick",
+    "format": "prettier --write ."
   },
   "devDependencies": {
+    "@signed/prettier-config": "0.1.0",
     "@tsconfig/strictest": "2.0.2",
     "@types/express": "4.17.21",
     "@types/node": "20.10.1",

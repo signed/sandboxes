@@ -15,6 +15,9 @@ importers:
         specifier: 3.1.2
         version: 3.1.2
     devDependencies:
+      '@signed/prettier-config':
+        specifier: 0.1.0
+        version: 0.1.0
       '@tsconfig/strictest':
         specifier: 2.0.2
         version: 2.0.2
@@ -1821,6 +1824,10 @@ packages:
 
   /@rushstack/eslint-patch@1.6.0:
     resolution: {integrity: sha512-2/U3GXA6YiPYQDLGwtGlnNgKYBSwCFIHf8Y9LUY5VATHdtbLlU0Y1R3QoBnT0aB4qv/BEiVVsj7LJXoQCgJ2vA==}
+    dev: true
+
+  /@signed/prettier-config@0.1.0:
+    resolution: {integrity: sha512-gMob/Xh26ksh7Z3l/65WGHip9iuC5Jp6jUPxhLJcHEvfPntnRSjxfS2dzBQa/xW2q8zpCEHFNpf5T4IGqUB6LQ==}
     dev: true
 
   /@sinclair/typebox@0.27.8:
