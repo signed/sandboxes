@@ -2,6 +2,9 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import * as url from "node:url";
 
+// want to convert to typescript?
+// https://github.com/xHomu/remix-v2-server
+
 import { createRequestHandler } from "@remix-run/express";
 import { broadcastDevReady, installGlobals } from "@remix-run/node";
 import compression from "compression";
