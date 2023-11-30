@@ -1,9 +1,9 @@
-import type {Framework} from "./compare.js";
-import {compare, github} from "./compare.js";
+import type { Framework } from './compare.js'
+import { compare, github } from './compare.js'
 
 // https://github.com/sindresorhus/got#comparison
 // https://www.memberstack.com/blog/node-http-request
-const frameworks: Framework [] = [
+const frameworks: Framework[] = [
   github('axios', 'https://github.com/axios/axios'),
   github('zodios', 'https://github.com/ecyrbe/zodios'),
   github('superagent', 'https://github.com/ladjs/superagent'),

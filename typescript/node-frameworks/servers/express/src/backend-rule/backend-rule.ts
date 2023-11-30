@@ -1,4 +1,4 @@
-import {afterEach, beforeEach} from "vitest";
+import { afterEach, beforeEach } from 'vitest'
 
 export interface Backend {
   start(): void
@@ -18,7 +18,7 @@ export const setupBackendControl = () => {
   })
 
   afterEach(() => {
-    backends.forEach(backend => backend.stop())
+    backends.forEach((backend) => backend.stop())
   })
 
   return new (class implements BackendControl {

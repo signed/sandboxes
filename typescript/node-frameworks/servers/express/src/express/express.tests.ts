@@ -1,72 +1,72 @@
-import {describe, expect, test} from "vitest";
-import axios, {AxiosHeaders} from 'axios'
+import { describe, expect, test } from 'vitest'
+import axios, { AxiosHeaders } from 'axios'
 
-import {showcaseBackend} from "./showcase-backend.js";
-import {setupBackendControl} from "../backend-rule/backend-rule.js";
+import { showcaseBackend } from './showcase-backend.js'
+import { setupBackendControl } from '../backend-rule/backend-rule.js'
 
-const {start} = setupBackendControl()
+const { start } = setupBackendControl()
 
 test('hello express', async () => {
-  const backend = start(showcaseBackend({port: 0}))
-  const response = await axios.get(`http://localhost:${backend.port()}`);
+  const backend = start(showcaseBackend({ port: 0 }))
+  const response = await axios.get(`http://localhost:${backend.port()}`)
   expect(response.status).toEqual(200)
   expect(response.data).toEqual('Welcome to Express & TypeScript Server')
-  const headers = response.headers;
+  const headers = response.headers
   if (!(headers instanceof AxiosHeaders)) {
     throw new Error('no axios header')
   }
   expect(headers.getContentType()).toEqual('text/html; charset=utf-8')
-});
+})
 
 test('server static content', async () => {
-  const backend = start(showcaseBackend({port: 0}));
+  const backend = start(showcaseBackend({ port: 0 }))
   const response = await axios.get(`http://localhost:${backend.port()}/cdn/guard.txt`, {
-    validateStatus
-  });
+    validateStatus,
+  })
   expect(response.status).toEqual(200)
   expect(response.data).toEqual('Stop! Who there?\n')
-  const headers = response.headers;
+  const headers = response.headers
   if (!(headers instanceof AxiosHeaders)) {
     throw new Error('no axios header')
   }
   expect(headers.getContentType()).toEqual('text/plain; charset=UTF-8')
-});
+})
 
 describe('make fingerprinting express as server harder', () => {
   test('do not expose details about the server', async () => {
-    const backend = start(showcaseBackend({port: 0}));
-    const response = await axios.get(`http://localhost:${backend.port()}`);
+    const backend = start(showcaseBackend({ port: 0 }))
+    const response = await axios.get(`http://localhost:${backend.port()}`)
 
-    const headers = response.headers;
+    const headers = response.headers
     if (!(headers instanceof AxiosHeaders)) {
       throw new Error('no axios header')
     }
-    expect(headers.has('x-powered-by')).toEqual(false);
-  });
+    expect(headers.has('x-powered-by')).toEqual(false)
+  })
 
   test('use a custom 404 message', async () => {
-    const backend = start(showcaseBackend({port: 0}));
+    const backend = start(showcaseBackend({ port: 0 }))
     const response = await axios.get(`http://localhost:${backend.port()}/not-mapped-in-the-router`, {
-      validateStatus
-    });
+      validateStatus,
+    })
     expect(response.status).toEqual(404)
     expect(response.data).toEqual('')
 
-    const headers = response.headers;
+    const headers = response.headers
     if (!(headers instanceof AxiosHeaders)) {
       throw new Error('no axios header')
     }
     expect(headers.getContentType()).toBeUndefined()
-  });
+  })
 
   test('use custom 500 response', async () => {
-    const backend = start(showcaseBackend({port: 0}));
+    const backend = start(showcaseBackend({ port: 0 }))
     const response = await axios.get(`http://localhost:${backend.port()}/throw-error`, {
-      validateStatus
-    });
+      validateStatus,
+    })
     expect(response.status).toEqual(500)
     expect(response.data).toEqual('')
-    const headers = response.headers;
+    const headers = response.headers
     if (!(headers instanceof AxiosHeaders)) {
       throw new Error('no axios header')
     }
@@ -74,20 +74,20 @@ describe('make fingerprinting express as server harder', () => {
   })
 
   test('handle errors in promises', async () => {
-    const backend = start(showcaseBackend({port: 0}));
+    const backend = start(showcaseBackend({ port: 0 }))
     const response = await axios.get(`http://localhost:${backend.port()}/handle-rejected-promises`, {
-      validateStatus
-    });
+      validateStatus,
+    })
     expect(response.status).toEqual(500)
     expect(response.data).toEqual('')
-    const headers = response.headers;
+    const headers = response.headers
     if (!(headers instanceof AxiosHeaders)) {
       throw new Error('no axios header')
     }
     expect(headers.getContentType()).toBeUndefined()
   })
-});
+})
 
 const validateStatus = function (_status: number) {
-  return true;
+  return true
 }
