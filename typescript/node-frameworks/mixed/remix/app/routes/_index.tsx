@@ -1,12 +1,12 @@
 import type { LoaderFunctionArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node' // or cloudflare/deno
 
-import { sessionCookie } from '../cookies.server'
+import { manualSessionCookie } from '../cookies.server'
 import { useLoaderData } from '@remix-run/react'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie')
-  const maybeSessionCookie = await sessionCookie.parse(cookieHeader)
+  const maybeSessionCookie = await manualSessionCookie.parse(cookieHeader)
   // check that the session is valid
   if (maybeSessionCookie === null) {
     return redirect('/identity')

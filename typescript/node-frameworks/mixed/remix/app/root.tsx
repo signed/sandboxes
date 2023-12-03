@@ -13,6 +13,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
+      <p>root.tsx</p>
       <body>
         <Outlet />
         <ScrollRestoration />
