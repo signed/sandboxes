@@ -2,7 +2,7 @@ import { useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect } from 'react'
 import { ActionFunctionArgs, json, LoaderFunctionArgs, redirect } from '@remix-run/node'
 import { manualSessionCookie } from '../cookies.server'
-import { getSession, commitSession } from '../sessions.server'
+import { commitSession, getSession } from '../sessions.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get('Cookie'))
@@ -37,14 +37,10 @@ export const action = async (args: ActionFunctionArgs) => {
       },
     })
   }
-
-  console.log('catch me')
   session.set('uuid', uuid)
 
   const headers = new Headers()
-  const value = await commitSession(session)
-  console.log(value)
-  headers.append('Set-Cookie', value)
+  headers.append('Set-Cookie', await commitSession(session))
   headers.append('Set-Cookie', await manualSessionCookie.serialize(uuid))
 
   return redirect('/', {

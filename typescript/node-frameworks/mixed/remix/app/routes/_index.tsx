@@ -3,8 +3,10 @@ import { redirect } from '@remix-run/node' // or cloudflare/deno
 
 import { manualSessionCookie } from '../cookies.server'
 import { useLoaderData } from '@remix-run/react'
+import { ensureSessionDataOrRedirect } from '../sessions.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  await ensureSessionDataOrRedirect(request)
   const cookieHeader = request.headers.get('Cookie')
   const maybeSessionCookie = await manualSessionCookie.parse(cookieHeader)
   // check that the session is valid

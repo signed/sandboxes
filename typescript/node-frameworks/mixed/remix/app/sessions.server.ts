@@ -1,32 +1,31 @@
-import { createCookieSessionStorage } from '@remix-run/node' // or cloudflare/deno
+import { createCookie, createFileSessionStorage, redirect } from '@remix-run/node' // or cloudflare/deno
 
-type SessionData = {
-  userId: string
+export type SessionData = {
   uuid: string
 }
 
-type SessionFlashData = {
+export type SessionFlashData = {
   error: string
 }
 
-const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData>({
-  // a Cookie from `createCookie` or the CookieOptions to create one
-  cookie: {
-    name: '__session',
+export const ensureSessionDataOrRedirect = async (request: Request): Promise<SessionData> => {
+  const session = await getSession(request.headers.get('Cookie'))
+  const uuid = session.get('uuid')
+  if (uuid === undefined) {
+    throw redirect('/identity')
+  }
 
-    // all of these are optional
-    // domain: 'remix.run',
-    // Expires can also be set (although maxAge overrides it when used in combination).
-    // Note that this method is NOT recommended as `new Date` creates only one date on each server deployment, not a dynamic date in the future!
-    //
-    // expires: new Date(Date.now() + 60_000),
-    //httpOnly: true,
-    maxAge: 60,
-    path: '/',
-    sameSite: 'lax',
-    //secrets: ['s3cret1'],
-    //secure: true,
-  },
+  return { uuid }
+}
+
+// In this example the Cookie is created separately.
+const sessionCookie = createCookie('__session', {
+  secrets: ['r3m1xr0ck5'],
+  sameSite: true,
 })
 
+const { getSession, commitSession, destroySession } = createFileSessionStorage<SessionData, SessionFlashData>({
+  dir: './var',
+  cookie: sessionCookie,
+})
 export { getSession, commitSession, destroySession }

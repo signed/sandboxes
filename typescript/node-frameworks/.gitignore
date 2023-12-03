@@ -5,3 +5,4 @@ coverage/
 .cache/
 build
 *.tsbuildinfo
+mixed/remix/var

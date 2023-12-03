@@ -1,14 +1,11 @@
 import { Outlet, useLoaderData } from '@remix-run/react'
-import { json, LoaderFunctionArgs, redirect } from '@remix-run/node'
-import { getSession } from '../../sessions.server'
+import { json, LoaderFunctionArgs } from '@remix-run/node'
+import { ensureSessionDataOrRedirect } from '../../sessions.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await getSession(request.headers.get('Cookie'))
-  const uuid = session.get('uuid')
-  if (uuid === undefined) {
-    return redirect('/identity')
-  }
-  const data = { uuid: uuid }
+  const sessionData = await ensureSessionDataOrRedirect(request)
+
+  const data = { uuid: sessionData.uuid }
 
   return json(data)
 }
