@@ -198,6 +198,9 @@ importers:
       eslint:
         specifier: 8.52.0
         version: 8.52.0
+      tsx:
+        specifier: 4.6.1
+        version: 4.6.1
 
   servers/fastify:
     dependencies:
