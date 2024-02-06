@@ -7,6 +7,7 @@
   "private": true,
   "packageManager": "pnpm@8.9.2",
   "scripts": {
+    "run": "tsx src/index.ts",
     "debug": "tsx --inspect src/index.ts",
     "debug-wait": "tsx --inspect-brk src/index.ts",
     "test": "vitest run",
