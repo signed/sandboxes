@@ -8,14 +8,26 @@ going with [tsx](https://github.com/esbuild-kit/tsx).
 [Tsx forwards](https://github.com/esbuild-kit/tsx#usage) almost all command line arguments to node.
 The official [debugging-guide](https://nodejs.org/en/docs/guides/debugging-getting-started) gives more details.
 
+# Tsx run script in package json
+
+```
+"run:ts": "tsx src/index.ts",
+```
+
+Create a run npm run configuration for `run:ts` and start a debug run.
+
+⚠️ It looks like [node 21.6.x introduced](https://github.com/privatenumber/tsx/pull/465) a change and Intellij does not stop at breakpoints.
+node 21.5.0 is working fine.
+
+
 # Execute node with open debug port
 
 ```
 tsx watch --inspect src/index.ts
 ```
 
-If you run a demon process like an express application and you do not immediately want to connect a debugger.
-The debug port is open and you can connect later on in case you want to debug a certain api call.
+If you run a demon process like an express application, and you do not immediately want to connect a debugger.
+The debug port is open, and you can connect later on in case you want to debug a certain api call.
 
 # Pause execution until a debugger connects
 
