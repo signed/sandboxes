@@ -1,2 +1,2 @@
-console.log(`Hello debugger`)
+console.log(`Hello TypeScript debugger`)
 console.log(`node: ${process.version}`)
