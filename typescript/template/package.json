@@ -9,7 +9,7 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "nit-pick": "pnpm test && pnpm typecheck",
+    "nitpick": "pnpm test && pnpm typecheck",
     "format": "prettier --write ."
   },
   "devDependencies": {
