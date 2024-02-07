@@ -5,18 +5,19 @@
   "description": "template for TypeScript sandboxes",
   "main": "index.js",
   "private": true,
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@8.15.1",
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "nit-pick": "pnpm test && pnpm typecheck"
+    "nit-pick": "pnpm test && pnpm typecheck",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
-    "prettier": "3.0.3",
-    "typescript": "5.2.2",
-    "vitest": "0.34.6"
+    "prettier": "3.2.5",
+    "typescript": "5.3.3",
+    "vitest": "1.2.2"
   },
   "prettier": "@signed/prettier-config"
 }
