@@ -1,4 +1,4 @@
-import shared from '@signed/prettier-config' assert { type: 'json'}
+import shared from '@signed/prettier-config' assert { type: 'json' }
 
 export default {
   ...shared,
