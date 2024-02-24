@@ -2,7 +2,6 @@
   "name": "template",
   "version": "2.0.0",
   "type": "module",
-  "description": "template for TypeScript sandboxes",
   "main": "index.js",
   "private": true,
   "packageManager": "pnpm@8.15.3",
