@@ -1,7 +1,5 @@
 import './environment.js'
 
-process.env.BackendUrl
-
 export function hello(world: string = '🗺️'): string {
   return `Hello ${world}!`
 }
@@ -32,6 +30,3 @@ export function basicInterfaces() {
   console.log(tasteOf(new DuckTyping()))
   console.log(tasteOf({ taste: Taste.Sweet }))
 }
-
-
-process.env.
