@@ -47,7 +47,7 @@ function scan() {
   }
 }
 
-const FotoBoth = () => {
+const FotoBooth = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const photoRef = useRef<HTMLImageElement>(null)
@@ -200,7 +200,7 @@ const FotoBoth = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <FotoBoth />
+    <FotoBooth />
     <div className="text-lg">Hello Vite!</div>
     <button onClick={scan}> scan</button>
     <img alt="static ean code" id="code" src="/ean-13.png" />
