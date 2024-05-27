@@ -24,6 +24,29 @@ const initialDimensions = () => {
   }
 }
 
+function scan() {
+  if (!('BarcodeDetector' in globalThis)) {
+    console.log('Barcode Detector is not supported by this browser.')
+  } else {
+    console.log('Barcode Detector supported!')
+
+    const image = document.getElementById('photo') as HTMLImageElement
+
+    console.log(image)
+    // create new detector
+    const barcodeDetector = new BarcodeDetector({
+      formats: ['ean_13'],
+    })
+    barcodeDetector
+      .detect(image)
+      .then((data) => {
+        const values = data.map((detected) => detected.rawValue)
+        console.log(values)
+      })
+      .catch((e) => console.log(e))
+  }
+}
+
 const FotoBoth = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -150,13 +173,18 @@ const FotoBoth = () => {
       })
   }
 
+  function scanFromCamera() {
+    takepicture()
+    setTimeout(() => {
+      scan()
+    }, 500)
+  }
+
   return (
     <>
       <div className="camera">
-        <button onClick={startCamera}> start camera</button>
-        <button id="startbutton" onClick={takepicture}>
-          Take photo
-        </button>
+        <button onClick={startCamera}>start camera</button>
+        <button onClick={scanFromCamera}>Scan for code</button>
         <video id="video" ref={videoRef}>
           Video stream not available.
         </video>
@@ -168,29 +196,6 @@ const FotoBoth = () => {
       </div>
     </>
   )
-}
-
-function scan() {
-  if (!('BarcodeDetector' in globalThis)) {
-    console.log('Barcode Detector is not supported by this browser.')
-  } else {
-    console.log('Barcode Detector supported!')
-
-    const image = document.getElementById('photo') as HTMLImageElement
-
-    console.log(image)
-    // create new detector
-    const barcodeDetector = new BarcodeDetector({
-      formats: ['ean_13'],
-    })
-    barcodeDetector
-      .detect(image)
-      .then((data) => {
-        const values = data.map((detected) => detected.rawValue)
-        console.log(values)
-      })
-      .catch((e) => console.log(e))
-  }
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
