@@ -1,4 +1,16 @@
 import { useStore } from './store.ts'
+import { detectIsbnIn } from './detectIsbnIn.ts'
+
+async function readFrame(reader: ReadableStreamDefaultReader<VideoFrame>) {
+  const { value: frame } = await reader.read()
+  // value = frame
+  if (frame) {
+    const bitmap = await createImageBitmap(frame)
+    frame.close()
+    return bitmap
+  }
+  return 'no-frame'
+}
 
 export async function runLogic() {
   const deviceInfos = await navigator.mediaDevices.enumerateDevices()
@@ -26,7 +38,54 @@ export async function runLogic() {
     },
   )
 
+  useStore.subscribe(
+    (state) => state.mediaStream,
+    async (cur) => {
+      const state = useStore.getState()
+      if (state.capture.reader !== 'no-reader') {
+        await state.capture.reader.cancel()
+      }
+
+      if (cur === 'no-stream') {
+        state.switchReader('no-reader')
+        return
+      }
+
+      const [track] = cur.getVideoTracks()
+      const processor = new MediaStreamTrackProcessor({ track })
+      const reader = processor.readable.getReader()
+
+      state.switchReader(reader)
+    },
+  )
+
+  useStore.subscribe(
+    (state) => state.capture.reader,
+    async (cur) => {
+      const state = useStore.getState()
+      if (state.capture.intervalIdentifier !== null) {
+        globalThis.clearInterval(state.capture.intervalIdentifier)
+      }
+      if (cur === 'no-reader') {
+        return
+      }
+
+      const intervalIdentifier = globalThis.setInterval(async () => {
+        console.log('start scan')
+        const image = await readFrame(cur)
+        if (image === 'no-frame') {
+          return
+        }
+        const isbn = await detectIsbnIn(image)
+        if (isbn.length > 0) {
+          console.log(isbn)
+        }
+      }, 1000)
+      state.newIntervalIdentifier(intervalIdentifier)
+    },
+  )
+
   const state = useStore.getState()
   state.availableCameras(cameras)
-  state.selectCamera(cameras[0])
+  //state.selectCamera(cameras[0])
 }

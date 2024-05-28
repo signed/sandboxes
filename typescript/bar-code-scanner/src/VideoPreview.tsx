@@ -10,7 +10,6 @@ export const VideoPreview = () => {
     if (video === null) {
       return
     }
-    console.log('hello')
     if (mediaStream === 'no-stream') {
       video.srcObject = null
     } else {
