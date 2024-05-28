@@ -1,32 +1,43 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { subscribeWithSelector } from 'zustand/middleware'
 
 interface State {
   camera: {
     available: MediaDeviceInfo[]
     current: MediaDeviceInfo | 'no-selection'
   }
+  mediaStream: MediaStream | 'no-stream'
 }
 
 type Actions = {
   availableCameras: (cameras: State['camera']['available']) => void
   selectCamera: (camera: State['camera']['current']) => void
+  switchMediaStream: (mediaStream: State['mediaStream']) => void
 }
 
 export const useStore = create<State & Actions>()(
-  immer((set) => ({
-    camera: {
-      available: [],
-      current: 'no-selection',
-    },
-    availableCameras: (cameras) =>
-      set((state) => {
-        state.camera.available = cameras
-      }),
-    selectCamera: (camera) => {
-      set((state) => {
-        state.camera.current = camera
-      })
-    },
-  })),
+  subscribeWithSelector(
+    immer((set) => ({
+      camera: {
+        available: [],
+        current: 'no-selection',
+      },
+      mediaStream: 'no-stream',
+      availableCameras: (cameras) =>
+        set((state) => {
+          state.camera.available = cameras
+        }),
+      selectCamera: (camera) => {
+        set((state) => {
+          state.camera.current = camera
+        })
+      },
+      switchMediaStream: (mediaStream) => {
+        set((state) => {
+          state.mediaStream = mediaStream
+        })
+      },
+    })),
+  ),
 )
