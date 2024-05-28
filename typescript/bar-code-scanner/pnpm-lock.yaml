@@ -27,6 +27,9 @@ importers:
       '@testing-library/user-event':
         specifier: 14.5.2
         version: 14.5.2(@testing-library/dom@10.1.0)
+      '@types/dom-mediacapture-transform':
+        specifier: 0.1.9
+        version: 0.1.9
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -595,6 +598,12 @@ packages:
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
+  '@types/dom-mediacapture-transform@0.1.9':
+    resolution: {integrity: sha512-/K96dASG23bqF+VAftybbI5SUj9qSsdsSKZglm7Bq/sIaEve5z8I+GdClARcSQMAAVkH7bc83UI1jiH/qc5LMw==}
+
+  '@types/dom-webcodecs@0.1.11':
+    resolution: {integrity: sha512-yPEZ3z7EohrmOxbk/QTAa0yonMFkNkjnVXqbGb7D4rMr+F1dGQ8ZUFxXkyLLJuiICPejZ0AZE9Rrk9wUCczx4A==}
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -2556,6 +2565,12 @@ snapshots:
       '@babel/types': 7.24.6
 
   '@types/cookie@0.6.0': {}
+
+  '@types/dom-mediacapture-transform@0.1.9':
+    dependencies:
+      '@types/dom-webcodecs': 0.1.11
+
+  '@types/dom-webcodecs@0.1.11': {}
 
   '@types/estree@1.0.5': {}
 

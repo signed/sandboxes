@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PureJS Video Element Capture</title>
+</head>
+<body>
+<span class="error"></span>
+<br>
+<label for="interval">Time between images in seconds: </label>
+<input id="interval" type="text" value="1" min="1" pattern="\d+">
+<br>
+<button id="start">Start</button>
+<br>
+<label for="hideVid">Hide video element: </label>
+<input id="hideVid" type="checkbox">
+<video autoplay muted playsinline></video>
+<p>
+    Images captured: <span id="image_count">0</span>
+</p>
+<br>
+<button id="stop" disabled>Stop & Show Images</button>
+<div id="images"></div>
+<script src="./src/script.ts"></script>
+</body>
+</html>
