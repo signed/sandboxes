@@ -1,5 +1,6 @@
 import { useStore } from './store.ts'
 import { detectIsbnIn } from './detectIsbnIn.ts'
+import { addIsbnNumber } from './useIsbnStorage.ts'
 
 async function readFrame(reader: ReadableStreamDefaultReader<VideoFrame>) {
   const { value: frame } = await reader.read()
@@ -76,10 +77,8 @@ export async function runLogic() {
         if (image === 'no-frame') {
           return
         }
-        const isbn = await detectIsbnIn(image)
-        if (isbn.length > 0) {
-          console.log(isbn)
-        }
+        const isbnNumbers = await detectIsbnIn(image)
+        isbnNumbers.forEach((isbn) => addIsbnNumber(isbn))
       }, 1000)
       state.newIntervalIdentifier(intervalIdentifier)
     },
