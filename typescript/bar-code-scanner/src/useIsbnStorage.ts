@@ -8,7 +8,7 @@ type State = {
 
 export const useIsbnStorage = create<State>()(
   persist(
-    immer((set) => ({
+    immer((_set) => ({
       isbnNumbers: [],
     })),
     {
