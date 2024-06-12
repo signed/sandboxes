@@ -1,0 +1,15 @@
+GET localhost:8080
+Accept: application/json
+
+###
+
+POST localhost:8080/logic/verbose
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": "cheese",
+  "quantity": 2
+}
+
+

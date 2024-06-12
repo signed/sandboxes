@@ -1,0 +1,3 @@
+ - call to stock keeping
+ - [structured logging](https://www.baeldung.com/java-structured-logging)
+ - validation
