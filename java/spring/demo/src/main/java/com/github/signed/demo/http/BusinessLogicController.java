@@ -11,24 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-
 @RestController()
 @RequestMapping("/logic")
 public class BusinessLogicController {
-
-    public static class BusinessLogicRequestDTO {
-        public String product;
-        public int quantity;
-    }
-
-    public static class BusinessLogicResponseDTO {
-        public final BigDecimal price;
-
-        public BusinessLogicResponseDTO(BigDecimal price) {
-            this.price = price;
-        }
-    }
 
     private final BusinessLogic businessLogic;
 

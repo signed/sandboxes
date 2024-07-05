@@ -23,7 +23,7 @@ class BusinessLogicControllerJSONTests {
                   "product": "sample product",
                   "quantity": 2
                 }""";
-        final BusinessLogicController.BusinessLogicRequestDTO dto = objectMapper.readValue(requestWithAllProperties, BusinessLogicController.BusinessLogicRequestDTO.class);
+        final BusinessLogicRequestDTO dto = objectMapper.readValue(requestWithAllProperties, BusinessLogicRequestDTO.class);
 
         assertThat(dto.product).isEqualTo("sample product");
         assertThat(dto.quantity).isEqualTo(2);
@@ -31,7 +31,7 @@ class BusinessLogicControllerJSONTests {
 
     @Test
     void responseDto() throws JsonProcessingException {
-        final BusinessLogicController.BusinessLogicResponseDTO dto = new BusinessLogicController.BusinessLogicResponseDTO(BigDecimal.valueOf(34));
+        final BusinessLogicResponseDTO dto = new BusinessLogicResponseDTO(BigDecimal.valueOf(34));
         final String s = objectMapper.writeValueAsString(dto);
         assertThat(s).isEqualTo("{\"price\":34}");
     }
