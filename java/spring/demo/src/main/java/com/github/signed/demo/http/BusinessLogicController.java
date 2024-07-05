@@ -4,8 +4,10 @@ import com.github.signed.demo.core.BusinessLogic;
 import com.github.signed.demo.core.BusinessLogicResult;
 import com.github.signed.demo.core.Product;
 import com.github.signed.demo.core.Quantity;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,10 @@ public class BusinessLogicController {
     }
 
     @PostMapping(path = "/verbose", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> executeVerboseLogic(@RequestBody BusinessLogicRequestDTO request) {
-        // validate inputs
+    public ResponseEntity<?> executeVerboseLogic(@Valid @RequestBody BusinessLogicRequestDTO request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
         final Product product = new Product(request.product);
         final Quantity quantity = new Quantity(request.quantity);
         return httpResponseFor(businessLogic.callLogic(product, quantity));
