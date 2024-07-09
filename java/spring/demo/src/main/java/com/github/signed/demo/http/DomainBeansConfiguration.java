@@ -4,10 +4,11 @@ import com.github.signed.demo.core.BusinessLogic;
 import com.github.signed.demo.core.Warehouse;
 import com.github.signed.demo.infrastructure.Cornucopia;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.RequestScope;
 
-@org.springframework.context.annotation.Configuration
-public class Configuration {
+@Configuration
+public class DomainBeansConfiguration {
 
     @Bean
     public Warehouse warehouse() {
