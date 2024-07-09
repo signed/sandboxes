@@ -30,7 +30,7 @@ public class HttpSecurityConfiguration {
                 User.withDefaultPasswordEncoder()
                         .username("annabelle")
                         .password("annabelle")
-                        .roles("ADMIN")
+                        .roles("ADMIN", "USER")
                         .build();
         UserDetails ulfUser =
                 User.withDefaultPasswordEncoder()
