@@ -25,10 +25,10 @@ class BusinessLogicControllerStatusCodesSpringBootTest {
     // https://www.baeldung.com/spring-beans-integration-test-override
     // https://reflectoring.io/spring-boot-testconfiguration/
     @TestConfiguration
-    @Primary //ensures all beans declared inside here override production beans implementing the same interface
     public static class Specific {
 
         @Bean
+        @Primary //ensures all beans declared inside here override production beans implementing the same interface
         public BusinessLogikFake businessLogicFake() { // the bean name has to be different compared to the production bean
             return new BusinessLogikFake();
         }
@@ -39,7 +39,7 @@ class BusinessLogicControllerStatusCodesSpringBootTest {
 
     @Test
     void replaceBusinessLogicWithMock(@Autowired BusinessLogikFake businessLogik) throws Exception {
-        businessLogik.respondWith(BusinessLogicResult.success(new BusinessLogicResult.BusinessLogicOk(new Price(BigDecimal.TWO))));
+        businessLogik.respondWith(BusinessLogicResult.ups());
         this.mvc.perform(post("/logic/verbose")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -48,6 +48,6 @@ class BusinessLogicControllerStatusCodesSpringBootTest {
                                   "product": "cheese",
                                   "quantity": 2
                                 }"""))
-                .andExpect(status().isOk());
+                .andExpect(status().isInternalServerError());
     }
 }
