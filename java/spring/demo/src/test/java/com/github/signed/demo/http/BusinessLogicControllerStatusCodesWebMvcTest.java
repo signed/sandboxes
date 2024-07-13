@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = {BusinessLogicController.class, DomainBeansConfiguration.class})
-class BusinessLogicControllerStatusCodesTest {
+class BusinessLogicControllerStatusCodesWebMvcTest {
 
     @MockBean
     BusinessLogic businessLogic;
