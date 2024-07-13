@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpringSecurityController {
 
     @GetMapping(path = "/security/admin")
-    @Secured("ROLE_ADMIN") //TODO move this into the security configuration? If the paths are not listed in the securitz configuration it appears that the user lookup is not triggered
+    @Secured("ROLE_ADMIN") //TODO move this into the security configuration? If the paths are not listed in the security configuration it appears that the user lookup is not triggered
     public String admin() {
         return "Congratulations! You are an Admin";
     }
