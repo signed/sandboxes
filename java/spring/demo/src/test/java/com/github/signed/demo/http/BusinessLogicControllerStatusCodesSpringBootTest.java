@@ -24,12 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class BusinessLogicControllerStatusCodesSpringBootTest {
 
+    // https://www.baeldung.com/spring-beans-integration-test-override
     @TestConfiguration
+    @Primary //ensures all beans declared inside here override production beans implementing the same interface
     public static class Specific {
 
         @Bean
-        @Primary
-        public BusinessLogikFake businessLogicFake() {
+        public BusinessLogikFake businessLogicFake() { // the bean name has to be different compared to the production bean
             return new BusinessLogikFake();
         }
     }
