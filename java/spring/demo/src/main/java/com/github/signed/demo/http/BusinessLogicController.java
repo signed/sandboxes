@@ -1,9 +1,6 @@
 package com.github.signed.demo.http;
 
-import com.github.signed.demo.core.BusinessLogic;
-import com.github.signed.demo.core.BusinessLogicResult;
-import com.github.signed.demo.core.Product;
-import com.github.signed.demo.core.Quantity;
+import com.github.signed.demo.core.*;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

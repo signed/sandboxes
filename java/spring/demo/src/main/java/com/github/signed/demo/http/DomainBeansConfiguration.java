@@ -1,6 +1,7 @@
 package com.github.signed.demo.http;
 
 import com.github.signed.demo.core.BusinessLogic;
+import com.github.signed.demo.core.ProductionBusinessLogic;
 import com.github.signed.demo.core.Warehouse;
 import com.github.signed.demo.infrastructure.Cornucopia;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,6 @@ public class DomainBeansConfiguration {
     @Bean
     @RequestScope
     public BusinessLogic businessLogic(Warehouse warehouse) {
-        return new BusinessLogic(warehouse);
+        return new ProductionBusinessLogic(warehouse);
     }
 }
