@@ -18,13 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-        , classes = BusinessLogicControllerStatusCodesSpringBootTest.Specific.class
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 class BusinessLogicControllerStatusCodesSpringBootTest {
 
     // https://www.baeldung.com/spring-beans-integration-test-override
+    // https://reflectoring.io/spring-boot-testconfiguration/
     @TestConfiguration
     @Primary //ensures all beans declared inside here override production beans implementing the same interface
     public static class Specific {
