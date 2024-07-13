@@ -28,8 +28,7 @@ public class HttpSecurityConfiguration {
                         .requestMatchers("/security/admin").authenticated()
                         .anyRequest().permitAll() //TODO permit all by default is just to get it working for now, should be deny by default and allow list the apis that should be public
                 ).httpBasic(Customizer.withDefaults())
-
-                .csrf(AbstractHttpConfigurer::disable) // WARNING: Only turn this of if you do NOT use cookies
+                //.csrf(AbstractHttpConfigurer::disable) // WARNING: Only turn this of if you do NOT use cookies
                 .build();
     }
 
