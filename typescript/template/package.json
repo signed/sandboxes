@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.js",
   "private": true,
-  "packageManager": "pnpm@9.1.2",
+  "packageManager": "pnpm@9.8.0",
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
