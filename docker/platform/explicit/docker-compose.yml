@@ -1,0 +1,10 @@
+# https://docs.docker.com/reference/compose-file/services/#platform
+services:
+  hello-world-arm:
+    image: hello-world
+    platform: linux/arm64
+  hello-world-amd:
+    image: hello-world
+    platform: linux/amd64
+  hello-world-default:
+    image: hello-world
