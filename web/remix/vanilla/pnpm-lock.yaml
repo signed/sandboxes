@@ -30,6 +30,9 @@ importers:
       '@remix-run/dev':
         specifier: ^2.13.1
         version: 2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.13.1(typescript@5.6.3))(@types/node@22.8.4)(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4))
+      '@signed/prettier-config':
+        specifier: 0.2.0
+        version: 0.2.0
       '@types/react':
         specifier: ^18.2.20
         version: 18.3.12
@@ -66,6 +69,9 @@ importers:
       postcss:
         specifier: ^8.4.38
         version: 8.4.47
+      prettier:
+        specifier: 3.3.3
+        version: 3.3.3
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.14
@@ -772,6 +778,9 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@signed/prettier-config@0.2.0':
+    resolution: {integrity: sha512-QTdGmp6k6bjCTw9mBW2qOjdesLsm3idbNXDLwbqDTt3DaMdNj+3Ae1mfcPcZbX5mgIcwo+u6B7mggMD4hjlylQ==}
 
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -2692,6 +2701,11 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-ms@7.0.1:
     resolution: {integrity: sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==}
     engines: {node: '>=10'}
@@ -4107,6 +4121,8 @@ snapshots:
     optional: true
 
   '@rtsao/scc@1.1.0': {}
+
+  '@signed/prettier-config@0.2.0': {}
 
   '@types/acorn@4.0.6':
     dependencies:
@@ -6464,6 +6480,8 @@ snapshots:
   prelude-ls@1.2.1: {}
 
   prettier@2.8.8: {}
+
+  prettier@3.3.3: {}
 
   pretty-ms@7.0.1:
     dependencies:
