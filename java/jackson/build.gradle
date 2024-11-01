@@ -1,21 +1,30 @@
-apply plugin: 'java'
-
-repositories {
-    jcenter()
+plugins {
+	id 'java'
 }
 
+repositories {
+	mavenCentral()
+}
+
+
 dependencies {
-    compile(
+    implementation(
             'com.fasterxml.jackson.core:jackson-core:2.5.3'
             , 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
             , 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
             , 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.5'
     )
-    testCompile(
-            'junit:junit:4.12'
-    )
+    testImplementation(platform('org.junit:junit-bom:5.11.3'))
+	testImplementation('org.junit.jupiter:junit-jupiter')
+    implementation('org.hamcrest:hamcrest:3.0')
+	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.2.1'
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
+
