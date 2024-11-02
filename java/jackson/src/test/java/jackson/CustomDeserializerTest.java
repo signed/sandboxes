@@ -20,7 +20,7 @@ public class CustomDeserializerTest {
         False
     }
 
-    public static class CustomDeserializer extends StdDeserializer<Data>{
+    public static class CustomDeserializer extends StdDeserializer<Migrated> {
 
         public CustomDeserializer() {
             this(null);
@@ -31,20 +31,17 @@ public class CustomDeserializerTest {
         }
 
         @Override
-        public Data deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
-            final var data = new Data();
-            final var tree = jsonParser.getCodec().readTree(jsonParser);
-            final var node = tree.get("value");
-            final var token = node.asToken();
-            if(token.isBoolean()){
-                data.value = JsonToken.VALUE_TRUE.equals(token)?Migrated.True : Migrated.False;
+        public Migrated deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+            final var token = jsonParser.currentToken();
+            if (token.isBoolean()) {
+                return JsonToken.VALUE_TRUE.equals(token) ? Migrated.True : Migrated.False;
             }
-            return data;
+            return deserializationContext.readValue(jsonParser, Migrated.class);
         }
     }
 
-    @JsonDeserialize(using = CustomDeserializer.class)
     public static class Data {
+        @JsonDeserialize(using = CustomDeserializer.class)
         public Migrated value;
     }
 
@@ -55,8 +52,7 @@ public class CustomDeserializerTest {
                   "value": true
                 }
                 """;
-        final var data = new ObjectMapper().readValue(oldRepresentation, Data.class);
-        assertThat(data.value, is(Migrated.True));
+        assertThat(readDataFrom(oldRepresentation).value, is(Migrated.True));
     }
 
     @Test
@@ -66,7 +62,25 @@ public class CustomDeserializerTest {
                   "value": false
                 }
                 """;
-        final var data = new ObjectMapper().readValue(oldRepresentation, Data.class);
-        assertThat(data.value, is(Migrated.False));
+        assertThat(readDataFrom(oldRepresentation).value, is(Migrated.False));
+    }
+
+    @Test
+    void newEnumValues() throws JsonProcessingException {
+        assertThat(roundTrip(Migrated.True).value, is(Migrated.True));
+        assertThat(roundTrip(Migrated.NewValue).value, is(Migrated.NewValue));
+        assertThat(roundTrip(Migrated.False).value, is(Migrated.False));
+    }
+
+    private Data roundTrip(Migrated value) throws JsonProcessingException {
+        final var data = new Data();
+        data.value = value;
+
+        final var json = new ObjectMapper().writeValueAsString(data);
+        return readDataFrom(json);
+    }
+
+    private Data readDataFrom(String json) throws JsonProcessingException {
+        return new ObjectMapper().readValue(json, Data.class);
     }
 }
