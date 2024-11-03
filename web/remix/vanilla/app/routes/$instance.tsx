@@ -25,7 +25,7 @@ const OrganisationSelect = () => {
 }
 
 export const handle = {
-  navigation: <OrganisationSelect />,
+  navigation: <OrganisationSelect key="OrganisationSelect" />,
 }
 
 export default function InstanceIdentifier() {
