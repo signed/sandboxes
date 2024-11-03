@@ -1,20 +1,21 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
-import type { LinksFunction } from '@remix-run/node'
+import { Form, Links, Meta, NavLink, Outlet, Scripts, ScrollRestoration, useMatches } from '@remix-run/react'
+import { type ActionFunctionArgs, redirect } from '@remix-run/node'
+import { z } from 'zod'
+import { FaHouse } from 'react-icons/fa6'
 
 import './tailwind.css'
 
-export const links: LinksFunction = () => [
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
-  },
-]
+const InstanceFormData = z.object({ instance: z.string() })
+
+export const action = async (args: ActionFunctionArgs) => {
+  const formData = await args.request.formData()
+  const validationResult = InstanceFormData.safeParse(Object.fromEntries(formData))
+
+  if (!validationResult.success) {
+    return redirect('/')
+  }
+  return redirect(`/${validationResult.data.instance}/`)
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -35,5 +36,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />
+  const matches = useMatches()
+  const navigation = matches.filter((match) => match.handle?.navigation)
+  return (
+    <div>
+      <div className={'flex gap-2 p-3'}>
+        <NavLink to={'/'}>
+          <FaHouse />
+        </NavLink>
+        <Form role="search" method={'POST'}>
+          <input placeholder="Instance" type="text" name="instance" />
+        </Form>
+        <div>{navigation.map((m) => m.handle.navigation)}</div>
+      </div>
+      <Outlet />
+    </div>
+  )
 }
