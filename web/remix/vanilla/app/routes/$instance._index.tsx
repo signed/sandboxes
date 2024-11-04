@@ -13,6 +13,7 @@ export default function InstanceIndex() {
   const data = useLoaderData<typeof loader>()
   return (
     <ul>
+      <li>Flup Bob</li>
       {data.organisations.map((o) => (
         <li key={o}> {o}</li>
       ))}
