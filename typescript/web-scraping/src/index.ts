@@ -1,30 +1,13 @@
-export function hello(world: string = '🗺️'): string {
-  return `Hello ${world}!`
-}
+import {fromHtml} from 'hast-util-from-html'
+import * as cherio from 'cheerio'
 
-enum Taste {
-  Sweet = 'sweet',
-  Sour = 'sour',
-}
+const response = await fetch("https://www.arbeitsagentur.de/unternehmen/betriebsnummern-service/taetigkeitsschluessel");
+const html = await response.text();
+const hast = fromHtml(html);
 
-interface Fruit {
-  taste: Taste
-}
 
-class Apple implements Fruit {
-  public taste: Taste = Taste.Sour
-}
+const $ = cherio.load(html);
+//console.log($('h3:contains("Download aktuelle Version")').html());
+//console.log($('h3:contains("Download aktuelle Version")').parent().children('p + p').text());
+console.log($('h3:contains("Download aktuelle Version")').parent().children('p + p'));
 
-class DuckTyping {
-  public taste: Taste = Taste.Sweet
-}
-
-export function tasteOf(fruit: Fruit): Taste {
-  return fruit.taste
-}
-
-export function basicInterfaces() {
-  console.log(tasteOf(new Apple()))
-  console.log(tasteOf(new DuckTyping()))
-  console.log(tasteOf({ taste: Taste.Sweet }))
-}
