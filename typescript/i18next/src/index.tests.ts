@@ -8,12 +8,24 @@ test('basic lookup', async () => {
   translation = {
     "key": "hello world"
   }
-  expect(await translate('key')).toEqual('hello world')
+  expect((await translate())('key')).toEqual('hello world')
 });
 
-async function translate(key: string) {
+test('nested interpolation', async () => {
+  translation = {
+    "girlsAndBoys": "They have $t(girls, {\"count\": {{girls}} }) and $t(boys, {\"count\": {{boys}} })",
+    "boys": "{{count}} boy",
+    "boys_other": "{{count}} boys",
+    "girls": "{{count}} girl",
+    "girls_other": "{{count}} girls",
+  }
+
+  expect((await translate())('girlsAndBoys', {girls: 3, boys: 2})).toEqual('They have 3 girls and 2 boys')
+});
+
+const translate = async () => {
   const i18n = createInstance({debug: false});
-  const t = await i18n.init({
+  return await i18n.init({
     lng: 'en',
     debug: false,
     resources: {
@@ -22,8 +34,7 @@ async function translate(key: string) {
       }
     }
   });
-  return t(key);
-}
+};
 
 
 
