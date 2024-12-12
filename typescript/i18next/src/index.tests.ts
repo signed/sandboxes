@@ -1,21 +1,29 @@
 import {expect, test} from 'vitest'
+import {createInstance, type ResourceKey} from 'i18next';
 
-import {createInstance} from 'i18next';
 
-test('basic lookup', () => {
-  const i18n = createInstance({
-    lng: 'en', // if you're using a language detector, do not define the lng option
-    debug: true,
+let translation: ResourceKey = {};
+
+test('basic lookup', async () => {
+  translation = {
+    "key": "hello world"
+  }
+  expect(await translate('key')).toEqual('hello world')
+});
+
+async function translate(key: string) {
+  const i18n = createInstance({debug: false});
+  const t = await i18n.init({
+    lng: 'en',
+    debug: false,
     resources: {
       en: {
-        translation: {
-          "key": "hello world"
-        }
+        translation: translation
       }
     }
   });
-  i18n.init()
-  expect(i18n.t('key')).toEqual('hello world')
-});
+  return t(key);
+}
+
 
 
