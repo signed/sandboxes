@@ -24,6 +24,8 @@
   "prettier": "@signed/prettier-config",
   "dependencies": {
     "json-diff": "1.0.6",
-    "json-diff-ts": "4.1.0"
+    "json-diff-kit": "1.0.30",
+    "json-diff-ts": "4.1.0",
+    "react": "19.0.0"
   }
 }
