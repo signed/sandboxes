@@ -1,4 +1,4 @@
-type DiffInput = {original:object, candidate: object;}
+export type DiffInput = {original:object, candidate: object;}
 
 
 export const starWars = ():DiffInput=> {
