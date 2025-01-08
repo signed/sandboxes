@@ -1,5 +1,5 @@
 import { describe, test } from 'vitest'
-import { DiffOptions, diffString } from 'json-diff'
+import { DiffStringOptions, diffString } from 'json-diff'
 import { deepNestedChange, DiffInput, starWars } from './json.mother.js'
 
 // https://github.com/andreyvit/json-diff
@@ -20,11 +20,14 @@ describe('json-diff', () => {
   })
 })
 
-const options = (options: DiffOptions = {}): DiffOptions => {
-  return options
+const options = (options: DiffStringOptions = {}): DiffStringOptions => {
+  return {
+    color: false,
+    ...options,
+  }
 }
 
-const diffFor = (diffInputProvider: () => DiffInput, options?: DiffOptions) => {
+const diffFor = (diffInputProvider: () => DiffInput, options?: DiffStringOptions) => {
   const { original, candidate } = diffInputProvider()
   console.log(diffString(original, candidate, options))
 }
