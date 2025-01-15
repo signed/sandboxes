@@ -27,22 +27,25 @@ class OptionalTest {
     }
 
     @Test
-     void property_is_null_in_json() throws Exception {
-        json = "{\n" +
-                "  \"name\": null\n" +
-                "}";
+    void property_is_null_in_json() throws Exception {
+        json = """
+                {
+                  "name": null
+                }""";
 
         assertThat("should not be present", !dto().name.isPresent());
     }
 
     @Test
-     void property_is_set_in_json() throws Exception {
-        json = "{\n" +
-                "  \"name\": \"Tom\"\n" +
-                "}";
+    void property_is_set_in_json() throws Exception {
+        json = """
+                {
+                  "name": "Tom"
+                }""";
 
         assertThat(dto().name.get(), equalTo("Tom"));
     }
+
 
     private Dto dto() throws java.io.IOException {
         return mapper.readValue(json, Dto.class);
