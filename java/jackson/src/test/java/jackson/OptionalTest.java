@@ -1,6 +1,7 @@
 package jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionalTest {
 
@@ -35,7 +37,17 @@ class OptionalTest {
                   "name": null
                 }""";
 
-        assertThat("should not be present", !dto().name.isPresent());
+        assertThat("should not be present", dto().name.isEmpty());
+    }
+
+    @Test
+    void undefined_is_not_a_valid_json_property_value() throws Exception {
+        json = """
+                {
+                  "name": undefined
+                }""";
+
+        assertThrows(JsonParseException.class, this::dto);
     }
 
     @Test
@@ -45,9 +57,8 @@ class OptionalTest {
                   "name": "Tom"
                 }""";
 
-        assertThat(dto().name.get(), equalTo("Tom"));
+        assertThat(dto().name.orElseThrow(), equalTo("Tom"));
     }
-
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
     public static class DtoWithOptionals {
