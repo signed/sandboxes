@@ -34,4 +34,13 @@ public class ComparatorTest {
 
         assertThat(sorted).containsExactly(ToCompare.create(1, "a"), ToCompare.create(2, "b"),ToCompare.create(2, "c"), ToCompare.create(2, "d"), ToCompare.create(3, "c"));
     }
+
+    @Test
+    void reversePerComparator() {
+
+        final var toSort = Arrays.asList(ToCompare.create(2, "d"), ToCompare.create(3, "c"), ToCompare.create(2, "c"), ToCompare.create(1, "a"), ToCompare.create(2, "b"));
+        final var sorted = toSort.stream().sorted(Comparator.comparing(ToCompare::age).thenComparing(Comparator.comparing(ToCompare::name).reversed())).toList();
+
+        assertThat(sorted).containsExactly(ToCompare.create(1, "a"), ToCompare.create(2, "d"), ToCompare.create(2, "c"), ToCompare.create(2, "b") , ToCompare.create(3, "c"));
+    }
 }
