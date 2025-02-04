@@ -4,16 +4,26 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.Events;
 
-public class ManualScriptTest extends AbstractJupiterTestEngineTests {
+import static manual.JupiterTestEngineRemote.executeTestsIn;
+
+public class ManualScriptTest{
 
     @Test
     void doNotRun() {
-        Events tests = executeTestsForClass(DoNotRunTests.class).testEvents();
+        Events tests = executeTestsIn(DoExecuteScripts.class).testEvents();
 
         tests.assertStatistics(stats -> stats.started(0).succeeded(0).skipped(2));
     }
 
-    static class DoNotRunTests {
+    @Test
+    void doRun() {
+        Events tests = executeTestsIn(ExecuteScripts.class).testEvents();
+
+        tests.assertStatistics(stats -> stats.started(1).succeeded(1).skipped(0));
+    }
+
+    static class DoExecuteScripts {
+
 
         @ManualScript
         void inactiveByDefault() {
@@ -26,15 +36,7 @@ public class ManualScriptTest extends AbstractJupiterTestEngineTests {
         }
     }
 
-    @Test
-    void doRun() {
-        Events tests = executeTestsForClass(ExecuteTests.class).testEvents();
-
-        tests.assertStatistics(stats -> stats.started(1).succeeded(1).skipped(0));
-    }
-
-
-    static class ExecuteTests {
+    static class ExecuteScripts {
         @ManualScript(ScriptStatus.Primed)
         void executePrimedManualScripts() {
         }
