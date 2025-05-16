@@ -6,7 +6,6 @@ import org.junit.platform.engine.reporting.OutputDirectoryProvider;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.testkit.engine.EngineExecutionResults;
 import org.junit.platform.testkit.engine.EngineTestKit;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.nio.file.Path;
 
@@ -26,12 +25,12 @@ public abstract class JupiterTestEngineRemote {
 	private static class StandInOutputDirectoryProvider implements OutputDirectoryProvider {
 		@Override
 		public Path getRootDirectory() {
-			throw new NotImplementedException();
+			throw new RuntimeException("Not implemented");
 		}
 
 		@Override
 		public Path createOutputDirectory(TestDescriptor testDescriptor) {
-			throw new NotImplementedException();
+			throw new RuntimeException("Not implemented");
 		}
 	}
 }
