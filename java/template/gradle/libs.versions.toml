@@ -2,8 +2,16 @@
 [versions]
 versions = "0.52.0"
 versions-latest = "0.2.18"
+junit = "5.12.2"
+assertj = "3.27.3"
+assertj-vavr = "0.4.3"
+vavr = "0.10.6"
 
 [libraries]
+junit = { module = "org.junit:junit-bom", version.ref = "junit" }
+assertj = { module = "org.assertj:assertj-bom", version.ref = "assertj" }
+assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
+vavr = { module = "io.vavr:vavr", version.ref = "vavr" }
 
 [plugins]
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }

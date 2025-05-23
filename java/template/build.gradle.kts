@@ -9,14 +9,14 @@ repositories {
 }
 
 dependencies {
-    implementation("io.vavr:vavr:0.10.6")
-    testImplementation(platform("org.junit:junit-bom:5.12.2"))
+    implementation(libs.vavr)
+    testImplementation(platform(libs.junit))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(platform("org.assertj:assertj-bom:3.27.3"))
+    testImplementation(platform(libs.assertj))
     testImplementation("org.assertj:assertj-core")
-    testImplementation("org.assertj:assertj-vavr:0.4.3")
     testImplementation("org.assertj:assertj-guava")
+    testImplementation(libs.assertj.vavr)
 }
 
 tasks.test {
