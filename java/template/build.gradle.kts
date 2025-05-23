@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.vavr:vavr:0.10.5")
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    implementation("io.vavr:vavr:0.10.6")
+    testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(platform("org.assertj:assertj-bom:3.27.3"))
