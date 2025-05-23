@@ -1,7 +1,7 @@
+import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
 plugins {
     `java-library`
-    alias(libs.plugins.versions)
-    alias(libs.plugins.versions.latest)
+    alias(libs.plugins.version.catalog.update)
 }
 
 repositories {
@@ -25,3 +25,8 @@ tasks.test {
         events("passed", "skipped", "failed")
     }
 }
+
+versionCatalogUpdate{
+    versionSelector(VersionSelectors.STABLE)
+}
+
