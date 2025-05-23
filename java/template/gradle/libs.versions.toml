@@ -1,0 +1,10 @@
+# https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
+[versions]
+versions = "0.52.0"
+versions-latest = "0.2.18"
+
+[libraries]
+
+[plugins]
+versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
+versions-latest = { id = "se.patrikerdes.use-latest-versions", version.ref = "versions-latest" }

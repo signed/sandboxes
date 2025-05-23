@@ -1,6 +1,7 @@
 plugins {
     `java-library`
-    id("com.github.ben-manes.versions").version("0.52.0")
+    alias(libs.plugins.versions)
+    alias(libs.plugins.versions.latest)
 }
 
 repositories {
