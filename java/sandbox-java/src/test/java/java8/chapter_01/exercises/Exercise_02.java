@@ -1,24 +1,28 @@
 package java8.chapter_01.exercises;
 
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import static java.nio.file.Files.createDirectory;
+import static java.nio.file.Files.createFile;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Exercise_02 {
+class Exercise_02 {
 
-    @Rule
-    public final TemporaryFolder directory = new TemporaryFolder();
+    @TempDir
+    private Path directory;
 
     @Test
-    public void listAllSubdirectories() throws Exception {
-        directory.newFile("please ignore");
-        directory.newFolder("hello");
-        File[] files = directory.getRoot().listFiles(File::isDirectory);
+    void listAllSubdirectories() throws Exception {
+        createFile(directory.resolve("please ignore"));
+        createDirectory(directory.resolve("hello"));
+
+        File[] files = Files.list(directory).filter(Files::isDirectory).map(Path::toFile).toArray(File[]::new);
         assertThat(files, Matchers.arrayContaining(FileTypeSafeMatcher.fileNamed("hello")));
     }
 

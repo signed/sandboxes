@@ -1,11 +1,11 @@
 package java8.chapter_02;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SandboxTwo {
+class SandboxTwo {
 
     @Test
-    public void testName() throws Exception {
+    void testName() throws Exception {
 
     }
 }

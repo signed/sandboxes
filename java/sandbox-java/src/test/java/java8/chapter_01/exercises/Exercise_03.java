@@ -1,25 +1,34 @@
 package java8.chapter_01.exercises;
 
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Exercise_03 {
+class Exercise_03 {
 
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    private Path directory;
+
 
     @Test
-    public void findFileWithExtension() throws Exception {
-        folder.newFile("ignore.txt");
-        folder.newFile("file.xml");
+    void findFileWithExtension() throws Exception {
+
+        Files.createFile(
+                directory.resolve("ignore.txt")
+        );
+        Files.createFile(
+                directory.resolve("file.xml")
+        );
+
         String suffix = ".xml";
-        File directory = folder.getRoot();
+        File directory = this.directory.toFile();
         String[] matchingFiles = listFilesIn(directory, suffix);
 
         assertThat(matchingFiles, Matchers.arrayContaining(Matchers.equalTo("file.xml")));

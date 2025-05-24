@@ -1,6 +1,6 @@
 package java8.chapter_01.lamdas;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,10 +10,10 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Primer_Test {
+class Primer_Test {
 
     @Test
-    public void useStaticMethodAsComparator() throws Exception {
+    void useStaticMethodAsComparator() throws Exception {
         List<String> someStrings = new ArrayList<>();
         someStrings.add("b");
         someStrings.add("a");
@@ -25,7 +25,7 @@ public class Primer_Test {
     }
 
     @Test
-    public void useAMethodOfOneOfTheInstances() throws Exception {
+    void useAMethodOfOneOfTheInstances() throws Exception {
         List<Primer> somePrimers = new ArrayList<>();
         somePrimers.add(Primer.CreateWith("a"));
         somePrimers.add(Primer.CreateWith("d"));

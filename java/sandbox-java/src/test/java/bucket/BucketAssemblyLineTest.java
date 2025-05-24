@@ -1,6 +1,6 @@
 package bucket;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 
-public class BucketAssemblyLineTest {
+class BucketAssemblyLineTest {
 
     private final Instant earliest = ofEpochSecond(24);
     private final Duration inspectionRange = ofSeconds(3);
@@ -21,7 +21,7 @@ public class BucketAssemblyLineTest {
     private final BucketTest.BucketAssemblyLine bucketAssemblyLine = new BucketTest.BucketAssemblyLine(samplingRate, inspectionRange, earliest);
 
     @Test
-    public void initiallyThereIsASingleBucket() throws Exception {
+    void initiallyThereIsASingleBucket() throws Exception {
         assertThat(allBuckets(), hasSize(1));
 
         assertThat(firstBucket("[24 27[").earliest(), equalTo(ofEpochSecond(24)));
@@ -29,7 +29,7 @@ public class BucketAssemblyLineTest {
     }
 
     @Test
-    public void secondBucketInterval() throws Exception {
+    void secondBucketInterval() throws Exception {
         putEventIntoBuckets(25);
 
         assertThat(secondBucket("[25 28[").earliest(), equalTo(ofEpochSecond(25)));
@@ -37,7 +37,7 @@ public class BucketAssemblyLineTest {
     }
 
     @Test
-    public void thirdBucketInterval() throws Exception {
+    void thirdBucketInterval() throws Exception {
         putEventIntoBuckets(26);
 
         assertThat(thirdBucket("[26 29[").earliest(), equalTo(ofEpochSecond(26)));
@@ -45,14 +45,14 @@ public class BucketAssemblyLineTest {
     }
 
     @Test
-    public void distributeToInitialBuckets() throws Exception {
+    void distributeToInitialBuckets() throws Exception {
         BucketTest.Event event = putEventIntoBuckets(24);
 
         assertThat(firstBucket("[24 27[").items().get(0), equalTo(event));
     }
 
     @Test
-    public void startDroppingBuckets() throws Exception {
+    void startDroppingBuckets() throws Exception {
         BucketTest.Event event = putEventIntoBuckets(27);
 
         assertThat(allBuckets(), hasSize(4));

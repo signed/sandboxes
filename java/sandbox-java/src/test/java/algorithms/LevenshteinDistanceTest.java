@@ -1,6 +1,6 @@
 package algorithms;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,26 +9,26 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class LevenshteinDistanceTest {
+class LevenshteinDistanceTest {
 
     @Test
-    public void distanceOfTwoEqualStrings() throws Exception {
+    void distanceOfTwoEqualStrings() throws Exception {
         assertThat(levenshteinDistance("", ""), equalTo(0));
     }
 
     @Test
-    public void name() throws Exception {
+    void name() throws Exception {
         assertThat(levenshteinDistance("", "abc"), equalTo(3));
         assertThat(levenshteinDistance("abc", ""), equalTo(3));
     }
 
     @Test
-    public void replaceCostsOne() throws Exception {
+    void replaceCostsOne() throws Exception {
         assertThat(levenshteinDistance("a", "b"), equalTo(1));
     }
 
     @Test
-    public void longerExample() throws Exception {
+    void longerExample() throws Exception {
         assertThat(levenshteinDistance("Tier", "Tor"), equalTo(2));
         assertThat(levenshteinDistance("sitting", "kitten"), equalTo(3));
         assertThat(levenshteinDistance("Sunday", "Saturday"), equalTo(3));

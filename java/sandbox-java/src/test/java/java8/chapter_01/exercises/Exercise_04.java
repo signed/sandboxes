@@ -1,11 +1,12 @@
 package java8.chapter_01.exercises;
 
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -14,17 +15,27 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Exercise_04 {
 
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    private Path directory;
+
 
     @Test
     public void chainComparators() throws Exception {
-        folder.newFile("a");
-        folder.newFile("z");
-        folder.newFolder("1");
-        folder.newFolder("2");
+        Files.createFile(
+                directory.resolve("a")
+        );
+        Files.createFile(
+                directory.resolve("z")
+        );
+        Files.createFile(
+                directory.resolve("1")
+        );
+        Files.createFile(
+                directory.resolve("2")
+        );
 
-        File[] files = folder.getRoot().listFiles();
+
+        File[] files = Files.list(directory).map(Path::toFile).toArray(File[]::new);
         Comparator<File> compareByType = (o1, o2) -> {
             boolean o1IsDirectory = o1.isDirectory();
             boolean o2IsDirectory = o2.isDirectory();

@@ -1,29 +1,35 @@
 package serialization;
 
 import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.hamcrest.Matchers.is;
 
-public class Person_SerializationTest {
+class Person_SerializationTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    private Path folder;
 
-    private ToFileSerializer serializer = new ToFileSerializer(folder);
+    private ToFileSerializer serializer;
 
+
+    @BeforeEach
+    void setUp() {
+        serializer = new ToFileSerializer(folder);
+    }
 
     @Test
-    public void serializeToDisk() throws IOException, ClassNotFoundException {
+    void serializeToDisk() throws IOException, ClassNotFoundException {
         Person ted = new Person("Ted", "Neward", 39);
-        Person charl = new Person("Charlotte", "Neward", 38);
+        Person charlotte = new Person("Charlotte", "Neward", 38);
 
-        ted.setSpouse(charl);
-        charl.setSpouse(ted);
+        ted.setSpouse(charlotte);
+        charlotte.setSpouse(ted);
 
         serializer.write(ted);
 

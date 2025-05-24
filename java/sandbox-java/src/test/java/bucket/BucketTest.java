@@ -1,6 +1,6 @@
 package bucket;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BucketTest {
+class BucketTest {
 
     @Test
-    public void sample() throws Exception {
+    void sample() {
         Instant now = Instant.now();
         Instant earlier = now.minus(20, ChronoUnit.MINUTES);
         List<Event> events = Arrays.asList(new Event(now, "now"), new Event(earlier, "earlier"));

@@ -19,7 +19,6 @@ dependencies {
     testImplementation(libs.assertj.vavr)
     testImplementation("org.hamcrest:hamcrest-core:1.3")
     testImplementation("org.hamcrest:hamcrest-library:1.3")
-    testImplementation("junit:junit:4.13.1")
 }
 
 tasks.test {

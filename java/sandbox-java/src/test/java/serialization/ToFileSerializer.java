@@ -1,6 +1,6 @@
 package serialization;
 
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,12 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class ToFileSerializer {
-    private final TemporaryFolder folder;
+    private final Path folder;
     private File file;
 
-    public ToFileSerializer(TemporaryFolder folder){
+    public ToFileSerializer(Path folder){
         this.folder = folder;
     }
 
@@ -34,6 +36,8 @@ public class ToFileSerializer {
     }
 
     private File getFile() throws IOException {
-        return folder.newFile("serialized");
+        return Files.createFile(
+                folder.resolve("serialized")
+        ).toFile();
     }
 }

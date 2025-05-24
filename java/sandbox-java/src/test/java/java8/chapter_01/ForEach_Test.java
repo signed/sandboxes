@@ -1,6 +1,6 @@
 package java8.chapter_01;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ForEach_Test {
+class ForEach_Test {
 
     @Test
-    public void forEachOnIterable() throws Exception {
+    void forEachOnIterable() throws Exception {
         List<String> list = Arrays.asList("one", "two", "three");
         StringBuilder concat = new StringBuilder();
 
