@@ -6,8 +6,22 @@ import java.util.function.Consumer;
 public class OptionalOptions {
 
     public record OperationOptions(boolean verbose, boolean dryRun) {
+
+        // why can't this be named verbose?
+        public static OperationOptionsBuilder verbose2(){
+            return defaultOptions().verbose();
+        }
+
+        public static void verbose(OperationOptionsBuilder builder){
+            builder.verbose();
+        }
+
         public static OperationOptionsBuilder defaultOptions() {
             return new OperationOptionsBuilder().verbose(false).dryRun(false);
+        }
+
+        public static void dryRun(OperationOptionsBuilder builder){
+            builder.dryRun();
         }
 
         public static class OperationOptionsBuilder {
@@ -43,18 +57,18 @@ public class OptionalOptions {
         }
     }
 
-    public static void someOperation() {
-        someOperation(OperationOptions.defaultOptions());
-
+    public static OperationOptions someOperation() {
+        return someOperation(OperationOptions.defaultOptions());
     }
 
-    public static void someOperation(Consumer<OperationOptions.OperationOptionsBuilder> optionsConsumer) {
+    public static OperationOptions someOperation(Consumer<OperationOptions.OperationOptionsBuilder> optionsConsumer) {
         final var builder = OperationOptions.defaultOptions();
         optionsConsumer.accept(builder);
+        return someOperation(builder);
     }
 
-    public static void someOperation(OperationOptions.OperationOptionsBuilder options) {
-        final var flup = options.build();
-
+    public static OperationOptions someOperation(OperationOptions.OperationOptionsBuilder options) {
+        return options.build();
     }
 }
+
