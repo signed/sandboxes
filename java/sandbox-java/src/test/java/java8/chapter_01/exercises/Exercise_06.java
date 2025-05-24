@@ -1,8 +1,8 @@
 package java8.chapter_01.exercises;
 
-import static java8.chapter_01.exercises.Exercise_06.RunnableEx.uncheck;
-
 import org.junit.Test;
+
+import static java8.chapter_01.exercises.Exercise_06.RunnableEx.uncheck;
 
 public class Exercise_06 {
 

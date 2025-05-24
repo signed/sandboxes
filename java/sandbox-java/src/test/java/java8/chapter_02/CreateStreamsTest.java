@@ -1,9 +1,9 @@
 package java8.chapter_02;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
-
-import org.junit.Test;
 
 public class CreateStreamsTest {
     @Test

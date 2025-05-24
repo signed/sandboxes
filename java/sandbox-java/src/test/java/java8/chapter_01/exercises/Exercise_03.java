@@ -1,13 +1,13 @@
 package java8.chapter_01.exercises;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.io.File;
-
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import java.io.File;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Exercise_03 {
 

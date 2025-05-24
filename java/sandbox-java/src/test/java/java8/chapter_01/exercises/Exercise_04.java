@@ -1,17 +1,16 @@
 package java8.chapter_01.exercises;
 
-import static java.util.Comparator.comparing;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static java.util.Comparator.comparing;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Exercise_04 {
 

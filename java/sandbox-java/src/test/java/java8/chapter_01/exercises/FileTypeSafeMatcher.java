@@ -1,11 +1,11 @@
 package java8.chapter_01.exercises;
 
-import java.io.File;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+
+import java.io.File;
 
 class FileTypeSafeMatcher extends TypeSafeMatcher<File> {
 
