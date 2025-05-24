@@ -1,6 +1,5 @@
 package java8.chapter_01.exercises;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -10,7 +9,7 @@ import java.nio.file.Path;
 
 import static java.nio.file.Files.createDirectory;
 import static java.nio.file.Files.createFile;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class Exercise_02 {
 
@@ -23,7 +22,7 @@ class Exercise_02 {
         createDirectory(directory.resolve("hello"));
 
         File[] files = Files.list(directory).filter(Files::isDirectory).map(Path::toFile).toArray(File[]::new);
-        assertThat(files, Matchers.arrayContaining(FileTypeSafeMatcher.fileNamed("hello")));
+        assertThat(files).satisfiesExactly(item1 -> assertThat(item1).hasFileName("hello"));
     }
 
 }

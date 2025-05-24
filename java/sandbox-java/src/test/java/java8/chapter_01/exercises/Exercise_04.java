@@ -1,6 +1,5 @@
 package java8.chapter_01.exercises;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -10,8 +9,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static java.util.Comparator.comparing;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static java.nio.file.Files.createFile;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class Exercise_04 {
 
@@ -21,18 +20,10 @@ public class Exercise_04 {
 
     @Test
     public void chainComparators() throws Exception {
-        Files.createFile(
-                directory.resolve("a")
-        );
-        Files.createFile(
-                directory.resolve("z")
-        );
-        Files.createFile(
-                directory.resolve("1")
-        );
-        Files.createFile(
-                directory.resolve("2")
-        );
+        createFile(directory.resolve("a"));
+        createFile(directory.resolve("z"));
+        createFile(directory.resolve("1"));
+        createFile(directory.resolve("2"));
 
 
         File[] files = Files.list(directory).map(Path::toFile).toArray(File[]::new);
@@ -49,9 +40,14 @@ public class Exercise_04 {
             }
             return 1;
         };
-        Arrays.sort(files, compareByType.thenComparing(comparing(File::getName)));
+        Arrays.sort(files, compareByType.thenComparing(File::getName));
 
-        assertThat(files, Matchers.arrayContaining(FileTypeSafeMatcher.fileNamed("1"), FileTypeSafeMatcher.fileNamed("2"), FileTypeSafeMatcher.fileNamed("a"), FileTypeSafeMatcher.fileNamed("z")));
+        assertThat(files).satisfiesExactly(
+                item1 -> assertThat(item1).hasFileName("1"),
+                item2 -> assertThat(item2).hasFileName("2"),
+                item3 -> assertThat(item3).hasFileName("a"),
+                item4 -> assertThat(item4).hasFileName("z")
+        );
     }
 
 }

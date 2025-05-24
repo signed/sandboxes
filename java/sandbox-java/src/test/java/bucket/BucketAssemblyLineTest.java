@@ -8,10 +8,7 @@ import java.util.List;
 
 import static java.time.Duration.ofSeconds;
 import static java.time.Instant.ofEpochSecond;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasSize;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BucketAssemblyLineTest {
 
@@ -21,45 +18,44 @@ class BucketAssemblyLineTest {
     private final BucketTest.BucketAssemblyLine bucketAssemblyLine = new BucketTest.BucketAssemblyLine(samplingRate, inspectionRange, earliest);
 
     @Test
-    void initiallyThereIsASingleBucket() throws Exception {
-        assertThat(allBuckets(), hasSize(1));
+    void initiallyThereIsASingleBucket() {
+        assertThat(allBuckets()).hasSize(1);
 
-        assertThat(firstBucket("[24 27[").earliest(), equalTo(ofEpochSecond(24)));
-        assertThat(firstBucket("[24 27[").latest(), equalTo(ofEpochSecond(27)));
+        assertThat(firstBucket("[24 27[").earliest()).isEqualTo(ofEpochSecond(24));
+        assertThat(firstBucket("[24 27[").latest()).isEqualTo(ofEpochSecond(27));
     }
 
     @Test
-    void secondBucketInterval() throws Exception {
+    void secondBucketInterval() {
         putEventIntoBuckets(25);
-
-        assertThat(secondBucket("[25 28[").earliest(), equalTo(ofEpochSecond(25)));
-        assertThat(secondBucket("[25 28[").latest(), equalTo(ofEpochSecond(28)));
+        assertThat((secondBucket("[25 28[").earliest())).isEqualTo(ofEpochSecond(25));
+        assertThat((secondBucket("[25 28[").latest())).isEqualTo(ofEpochSecond(28));
     }
 
     @Test
-    void thirdBucketInterval() throws Exception {
+    void thirdBucketInterval() {
         putEventIntoBuckets(26);
 
-        assertThat(thirdBucket("[26 29[").earliest(), equalTo(ofEpochSecond(26)));
-        assertThat(thirdBucket("[26 29[").latest(), equalTo(ofEpochSecond(29)));
+        assertThat(thirdBucket("[26 29[").earliest()).isEqualTo(ofEpochSecond(26));
+        assertThat(thirdBucket("[26 29[").latest()).isEqualTo(ofEpochSecond(29));
     }
 
     @Test
-    void distributeToInitialBuckets() throws Exception {
+    void distributeToInitialBuckets() {
         BucketTest.Event event = putEventIntoBuckets(24);
 
-        assertThat(firstBucket("[24 27[").items().get(0), equalTo(event));
+        assertThat(firstBucket("[24 27[").items().getFirst()).isEqualTo(event);
     }
 
     @Test
-    void startDroppingBuckets() throws Exception {
+    void startDroppingBuckets() {
         BucketTest.Event event = putEventIntoBuckets(27);
 
-        assertThat(allBuckets(), hasSize(4));
-        assertThat(firstBucket("[24 27[").items(), empty());
-        assertThat(secondBucket("[25 28[").items().get(0), equalTo(event));
-        assertThat(thirdBucket("[26 29[").items().get(0), equalTo(event));
-        assertThat(fourthBucket("[27 30[").items().get(0), equalTo(event));
+        assertThat(allBuckets()).hasSize(4);
+        assertThat(firstBucket("[24 27[").items()).isEmpty();
+        assertThat(secondBucket("[25 28[").items().getFirst()).isEqualTo(event);
+        assertThat(thirdBucket("[26 29[").items().getFirst()).isEqualTo(event);
+        assertThat(fourthBucket("[27 30[").items().getFirst()).isEqualTo(event);
     }
 
     private BucketTest.Event putEventIntoBuckets(int seconds) {

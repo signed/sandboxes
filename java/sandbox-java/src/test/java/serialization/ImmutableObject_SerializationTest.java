@@ -6,8 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Path;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ImmutableObject_SerializationTest {
 
@@ -26,6 +25,6 @@ class ImmutableObject_SerializationTest {
         ImmutableObject original = new ImmutableObject("dawn");
         serializer.write(original);
         ImmutableObject deserialized = serializer.readObject();
-        assertThat(deserialized.getStuff(), is("dawn"));
+        assertThat(deserialized.getStuff()).isEqualTo("dawn");
     }
 }

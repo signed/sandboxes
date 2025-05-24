@@ -6,32 +6,31 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LevenshteinDistanceTest {
 
     @Test
-    void distanceOfTwoEqualStrings() throws Exception {
-        assertThat(levenshteinDistance("", ""), equalTo(0));
+    void distanceOfTwoEqualStrings() {
+        assertThat(levenshteinDistance("", "")).isEqualTo(0);
     }
 
     @Test
-    void name() throws Exception {
-        assertThat(levenshteinDistance("", "abc"), equalTo(3));
-        assertThat(levenshteinDistance("abc", ""), equalTo(3));
+    void name() {
+        assertThat(levenshteinDistance("", "abc")).isEqualTo(3);
+        assertThat(levenshteinDistance("abc", "")).isEqualTo(3);
     }
 
     @Test
-    void replaceCostsOne() throws Exception {
-        assertThat(levenshteinDistance("a", "b"), equalTo(1));
+    void replaceCostsOne() {
+        assertThat(levenshteinDistance("a", "b")).isEqualTo(1);
     }
 
     @Test
-    void longerExample() throws Exception {
-        assertThat(levenshteinDistance("Tier", "Tor"), equalTo(2));
-        assertThat(levenshteinDistance("sitting", "kitten"), equalTo(3));
-        assertThat(levenshteinDistance("Sunday", "Saturday"), equalTo(3));
+    void longerExample() {
+        assertThat(levenshteinDistance("Tier", "Tor")).isEqualTo(2);
+        assertThat(levenshteinDistance("sitting", "kitten")).isEqualTo(3);
+        assertThat(levenshteinDistance("Sunday", "Saturday")).isEqualTo(3);
     }
 
     private final int PriceForKeepAsIs = 0;

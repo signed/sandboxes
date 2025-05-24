@@ -17,8 +17,6 @@ dependencies {
     testImplementation("org.assertj:assertj-core")
     testImplementation("org.assertj:assertj-guava")
     testImplementation(libs.assertj.vavr)
-    testImplementation("org.hamcrest:hamcrest-core:1.3")
-    testImplementation("org.hamcrest:hamcrest-library:1.3")
 }
 
 tasks.test {

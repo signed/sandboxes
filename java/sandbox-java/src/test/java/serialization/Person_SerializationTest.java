@@ -1,6 +1,5 @@
 package serialization;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -8,7 +7,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class Person_SerializationTest {
 
@@ -35,7 +34,7 @@ class Person_SerializationTest {
 
         Person deserializedTed = serializer.readObject();
 
-        MatcherAssert.assertThat(deserializedTed.getFirstName(), is("Ted"));
-        MatcherAssert.assertThat(deserializedTed.getSpouse().getFirstName(), is("Charlotte"));
+        assertThat(deserializedTed.getFirstName()).isEqualTo("Ted");
+        assertThat(deserializedTed.getSpouse().getFirstName()).isEqualTo("Charlotte");
     }
 }
