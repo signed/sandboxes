@@ -10,6 +10,7 @@ buildscript {
     configurations.all {
         resolutionStrategy {
             // https://github.com/assertj/assertj-generator/issues/194
+            // https://github.com/assertj/assertj-generator/issues/246
             force("org.assertj:assertj-assertions-generator:3.0.0-M5")
         }
     }
