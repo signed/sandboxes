@@ -1,6 +1,7 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 [versions]
 assertj = "3.27.3"
+assertj-gradle = "1.1.1"
 assertj-vavr = "0.4.3"
 junit = "5.12.2"
 vavr = "0.10.6"
@@ -13,5 +14,6 @@ junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 vavr = { module = "io.vavr:vavr", version.ref = "vavr" }
 
 [plugins]
+assertj = { id = "org.assertj.generator", version.ref = "assertj-gradle" }
 # https://github.com/littlerobots/version-catalog-update-plugin
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }

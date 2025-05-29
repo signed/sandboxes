@@ -2,6 +2,7 @@ import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
 plugins {
     `java-library`
     alias(libs.plugins.version.catalog.update)
+    alias(libs.plugins.assertj)
 }
 
 repositories {
