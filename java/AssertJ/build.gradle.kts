@@ -34,13 +34,6 @@ dependencies {
 sourceSets {
     main {
         assertJ {
-            entryPoints {
-                //classPackage = "org.example"
-            }
-            packages {
-                //include("org")
-                //exclude()
-            }
             classes {
                 include("org.DomainObject") // include *all* classes under `org.example` including sub-packages
                 //exclude("org.example.Foo") // exclude class `org.example.Foo` specifically
