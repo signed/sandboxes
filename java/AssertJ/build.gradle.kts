@@ -38,6 +38,10 @@ sourceSets {
                 include("org.DomainObject") // include *all* classes under `org.example` including sub-packages
                 //exclude("org.example.Foo") // exclude class `org.example.Foo` specifically
             }
+            entryPoints{
+                standard = true // No more standard generation
+                bdd = true       // Turn on BDD
+            }
         }
     }
 }
