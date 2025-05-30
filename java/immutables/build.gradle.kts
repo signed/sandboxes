@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compileOnly("org.immutables:value-annotations:2.10.1")
+    compileOnly("org.immutables:builder:2.10.1")
     annotationProcessor("org.immutables:value-processor:2.10.1")
     implementation(libs.vavr)
     testImplementation(platform(libs.junit))
