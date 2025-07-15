@@ -2,7 +2,7 @@
 [versions]
 assertj = "3.27.3"
 assertj-vavr = "0.4.3"
-junit = "5.12.2"
+junit = "5.13.3"
 vavr = "0.10.6"
 version-catalog-update = "1.0.0"
 
