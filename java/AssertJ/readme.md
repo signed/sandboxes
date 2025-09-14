@@ -1,6 +1,7 @@
 # Keep it Updated
 
 ```shell
+./gradlew wrapper --gradle-version latest
 ./gradlew versionCatalogUpdate
 ```
 # Links
