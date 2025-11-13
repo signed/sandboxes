@@ -11,12 +11,12 @@ repositories {
 
 dependencies {
     implementation(libs.vavr)
-    implementation(platform("com.fasterxml.jackson:jackson-bom:2.18.2"))
+    implementation(platform(libs.jackson))
     implementation("com.fasterxml.jackson.core:jackson-core")
     implementation("com.fasterxml.jackson.core:jackson-annotations")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation(platform(libs.jackson))
     testImplementation(platform(libs.junit))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
