@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CustomDeserializerTest {
 
@@ -56,8 +55,8 @@ public class CustomDeserializerTest {
                 }
                 """;
         final var data = readDataFrom(oldRepresentation);
-        assertThat(data.value, is(Migrated.True));
-        assertThat(data.stringValue, is("still working"));
+        assertThat(data.value).isEqualTo(Migrated.True);
+        assertThat(data.stringValue).isEqualTo("still working");
     }
 
     @Test
@@ -69,15 +68,15 @@ public class CustomDeserializerTest {
                 }
                 """;
         final var data = readDataFrom(oldRepresentation);
-        assertThat(data.value, is(Migrated.False));
-        assertThat(data.intValue, is(7));
+        assertThat(data.value).isEqualTo(Migrated.False);
+        assertThat(data.intValue).isEqualTo(7);
     }
 
     @Test
     void newEnumValues() throws JsonProcessingException {
-        assertThat(roundTrip(Migrated.True).value, is(Migrated.True));
-        assertThat(roundTrip(Migrated.NewValue).value, is(Migrated.NewValue));
-        assertThat(roundTrip(Migrated.False).value, is(Migrated.False));
+        assertThat(roundTrip(Migrated.True).value).isEqualTo(Migrated.True);
+        assertThat(roundTrip(Migrated.NewValue).value).isEqualTo(Migrated.NewValue);
+        assertThat(roundTrip(Migrated.False).value).isEqualTo(Migrated.False);
     }
 
     private Data roundTrip(Migrated value) throws JsonProcessingException {

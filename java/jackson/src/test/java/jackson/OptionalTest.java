@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionalTest {
@@ -27,7 +25,7 @@ class OptionalTest {
     void property_not_contained_in_json() throws Exception {
         json = "{}";
 
-        assertThat(dto().name, nullValue());
+        assertThat(dto().name).isNull();
     }
 
     @Test
@@ -37,11 +35,11 @@ class OptionalTest {
                   "name": null
                 }""";
 
-        assertThat("should not be present", dto().name.isEmpty());
+        assertThat(dto().name).isEmpty();
     }
 
     @Test
-    void undefined_is_not_a_valid_json_property_value() throws Exception {
+    void undefined_is_not_a_valid_json_property_value() {
         json = """
                 {
                   "name": undefined
@@ -57,7 +55,7 @@ class OptionalTest {
                   "name": "Tom"
                 }""";
 
-        assertThat(dto().name.orElseThrow(), equalTo("Tom"));
+        assertThat(dto().name.orElseThrow()).isEqualTo("Tom");
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -77,7 +75,7 @@ class OptionalTest {
         dto.name = Optional.empty();
         dto.nested = new DtoWithOptionals.DtoNestedWithOptionals();
 
-        assertThat(jsonFor(dto), equalTo("{\"nested\":{}}"));
+        assertThat(jsonFor(dto)).isEqualTo("{\"nested\":{}}");
     }
 
     private String jsonFor(DtoWithOptionals dto) throws JsonProcessingException {
