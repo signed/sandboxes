@@ -1,16 +1,14 @@
 package handcrafted;
 
-import org.DomainObject;
-import org.DomainObjectAssert;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.math.BigDecimal;
 
 class HandcraftedDomainObjectAssertTest {
 
     @Test
     void funky() {
-        var actual = new DomainObject();
+        var actual = new AnotherDomainObject();
         actual.name = "expected";
 
         HandcraftedDomainObjectAssert.assertThat(actual).flup("""
@@ -20,12 +18,15 @@ class HandcraftedDomainObjectAssertTest {
 
     @Test
     void OtherWayRoundFunky() {
-        var actual = new DomainObject();
+        var actual = new AnotherDomainObject();
         actual.name = "expected";
         actual.age = 42;
+        actual.salary = BigDecimal.valueOf(50);
 
         HandcraftedDomainObjectAssert.assertThat(actual).flap("""
                 name: expected
+                age: 42
+                salary: 50
                 """);
     }
 }

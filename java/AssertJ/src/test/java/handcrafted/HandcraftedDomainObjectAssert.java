@@ -9,14 +9,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HandcraftedDomainObjectAssert extends AbstractObjectAssert<HandcraftedDomainObjectAssert, DomainObject> {
+public class HandcraftedDomainObjectAssert extends AbstractObjectAssert<HandcraftedDomainObjectAssert, AnotherDomainObject> {
 
-    public HandcraftedDomainObjectAssert(DomainObject actual) {
+    public HandcraftedDomainObjectAssert(AnotherDomainObject actual) {
         super(actual, HandcraftedDomainObjectAssert.class);
     }
 
     @org.assertj.core.annotation.CheckReturnValue
-    public static HandcraftedDomainObjectAssert assertThat(DomainObject actual) {
+    public static HandcraftedDomainObjectAssert assertThat(AnotherDomainObject actual) {
         return new HandcraftedDomainObjectAssert(actual);
     }
 
@@ -55,6 +55,12 @@ public class HandcraftedDomainObjectAssert extends AbstractObjectAssert<Handcraf
             var field = it.fieldName;
             if ("name".equals(field)) {
                 return field + ": " + this.actual.name;
+            }
+            if("age".equals(field)) {
+                return field + ": " + this.actual.age;
+            }
+            if("salary".equals(field)) {
+                return field + ": " + this.actual.salary;
             }
             throw new RuntimeException("not implemented yet");
         }).collect(Collectors.joining("\n"));
