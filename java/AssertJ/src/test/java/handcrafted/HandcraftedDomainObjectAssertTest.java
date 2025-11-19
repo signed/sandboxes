@@ -1,5 +1,6 @@
 package handcrafted;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -27,6 +28,21 @@ class HandcraftedDomainObjectAssertTest {
                 name: expected
                 age: 42
                 salary: 50
+                """);
+    }
+
+    @Test
+    void compareMultiLineStrings() {
+        Assertions.assertThat("""
+                hello
+                to
+                you
+                too
+                """).isEqualTo("""
+                hello
+                to
+                you
+                too
                 """);
     }
 }
