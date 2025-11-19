@@ -56,22 +56,15 @@ public class HandcraftedDomainObjectAssert extends AbstractObjectAssert<Handcraf
             if ("name".equals(field)) {
                 return field + ": " + this.actual.name;
             }
-            if("age".equals(field)) {
+            if ("age".equals(field)) {
                 return field + ": " + this.actual.age;
             }
-            if("salary".equals(field)) {
+            if ("salary".equals(field)) {
                 return field + ": " + this.actual.salary;
             }
             throw new RuntimeException("not implemented yet");
         }).collect(Collectors.joining("\n"));
-
-        // overrides the default error message with a more explicit one
-        String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
-
-        // null safe check
-        if (!Objects.deepEquals(actual+"\n", expected)) {
-            failWithMessage(assertjErrorMessage, actual, expected, actual);
-        }
+        objects.assertEqual(info, actual, expected.trim());
 
         return this;
     }
