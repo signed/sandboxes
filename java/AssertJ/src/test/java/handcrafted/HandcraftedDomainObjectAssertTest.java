@@ -17,4 +17,15 @@ class HandcraftedDomainObjectAssertTest {
                 name: expected
                 """);
     }
+
+    @Test
+    void OtherWayRoundFunky() {
+        var actual = new DomainObject();
+        actual.name = "expected";
+        actual.age = 42;
+
+        HandcraftedDomainObjectAssert.assertThat(actual).flap("""
+                name: expected
+                """);
+    }
 }
