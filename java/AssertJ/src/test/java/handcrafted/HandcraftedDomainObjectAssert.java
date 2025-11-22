@@ -1,13 +1,10 @@
 package handcrafted;
 
-import org.DomainObject;
-import org.DomainObjectAssert;
 import org.assertj.core.api.AbstractObjectAssert;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class HandcraftedDomainObjectAssert extends AbstractObjectAssert<HandcraftedDomainObjectAssert, AnotherDomainObject> {
 
