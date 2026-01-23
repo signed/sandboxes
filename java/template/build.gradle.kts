@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     implementation(libs.vavr)
+    implementation(libs.jspecific)
     testImplementation(platform(libs.junit))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

@@ -22,7 +22,7 @@ public abstract class JupiterTestEngineRemote {
         return EngineTestKit.execute(new JupiterTestEngine(), builder.build());
     }
 
-    private static class StandInOutputDirectoryCreator implements OutputDirectoryCreator{
+    private static class StandInOutputDirectoryCreator implements OutputDirectoryCreator {
 
         @Override
         public Path getRootDirectory() {

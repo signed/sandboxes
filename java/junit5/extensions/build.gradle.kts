@@ -11,6 +11,7 @@ repositories {
 dependencies {
 	api(platform(platform(libs.junit)))
 	api("org.junit.jupiter:junit-jupiter-api")
+	implementation(libs.jspecific)
 	testImplementation("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.junit.platform:junit-platform-engine")
