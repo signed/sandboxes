@@ -10,10 +10,11 @@
 
 package com.example.cartesian;
 
-import java.util.List;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolver;
+
+import java.util.List;
 
 class CartesianProductResolver implements ParameterResolver {
 

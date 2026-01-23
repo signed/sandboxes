@@ -10,10 +10,11 @@
 
 package com.example.cartesian;
 
-import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
+
+import java.util.Collections;
+import java.util.List;
 
 class CartesianProductContext implements TestTemplateInvocationContext {
 
