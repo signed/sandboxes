@@ -1,5 +1,7 @@
 package org.example;
 
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.TestTag;
@@ -11,6 +13,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 public class NestedTests {
+
+    @Tag("tag-on-the-container")
+    public static class ContainerWithNestedTests {
+
+        @Nested
+        class One {
+            @Test
+            void one_method() {
+            }
+        }
+
+        @Nested
+        class Two {
+            @Test
+            void two_method() {
+            }
+        }
+    }
 
     @Test
     void tagsFromTheContainerPropagateToNestedTests() {
@@ -26,6 +46,6 @@ public class NestedTests {
         descriptor.accept(tests);
         assertThat(tests.matches)
                 .hasSize(2)
-                .allMatch(it-> it.getTags().contains(TestTag.create("tag-on-the-container")));
+                .allMatch(it -> it.getTags().contains(TestTag.create("tag-on-the-container")));
     }
 }
