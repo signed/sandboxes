@@ -10,17 +10,17 @@
 
 package com.example.random;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.reflect.Parameter;
-
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Parameter;
 
 /**
  * {@code RandomParametersExtension} showcases the {@link ParameterResolver}
@@ -56,7 +56,7 @@ public class RandomParametersExtension implements ParameterResolver {
 	private Object getRandomValue(Parameter parameter, ExtensionContext extensionContext) {
 		Class<?> type = parameter.getType();
 		java.util.Random random = extensionContext.getRoot().getStore(Namespace.GLOBAL)//
-				.getOrComputeIfAbsent(java.util.Random.class);
+				.computeIfAbsent(java.util.Random.class);
 		if (int.class.equals(type)) {
 			return random.nextInt();
 		}
