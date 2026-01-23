@@ -6,7 +6,7 @@ import org.junit.platform.testkit.engine.Events;
 
 import static manual.JupiterTestEngineRemote.executeTestsIn;
 
-public class ManualScriptTest{
+public class ManualScriptTest {
 
     @Test
     void doNotRun() {
@@ -23,7 +23,6 @@ public class ManualScriptTest{
     }
 
     static class DoExecuteScripts {
-
 
         @ManualScript
         void inactiveByDefault() {

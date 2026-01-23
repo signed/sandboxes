@@ -14,23 +14,22 @@ import static org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder.r
 
 public abstract class JupiterTestEngineRemote {
 
-
-	public static  EngineExecutionResults executeTestsIn(Class<?> testClass) {
-		final LauncherDiscoveryRequestBuilder builder = request()
-				.selectors(selectClass(testClass))
-				.outputDirectoryProvider(new StandInOutputDirectoryProvider());
+    public static EngineExecutionResults executeTestsIn(Class<?> testClass) {
+        final LauncherDiscoveryRequestBuilder builder = request()
+                .selectors(selectClass(testClass))
+                .outputDirectoryProvider(new StandInOutputDirectoryProvider());
         return EngineTestKit.execute(new JupiterTestEngine(), builder.build());
-	}
+    }
 
-	private static class StandInOutputDirectoryProvider implements OutputDirectoryProvider {
-		@Override
-		public Path getRootDirectory() {
-			throw new RuntimeException("Not implemented");
-		}
+    private static class StandInOutputDirectoryProvider implements OutputDirectoryProvider {
+        @Override
+        public Path getRootDirectory() {
+            throw new RuntimeException("Not implemented");
+        }
 
-		@Override
-		public Path createOutputDirectory(TestDescriptor testDescriptor) {
-			throw new RuntimeException("Not implemented");
-		}
-	}
+        @Override
+        public Path createOutputDirectory(TestDescriptor testDescriptor) {
+            throw new RuntimeException("Not implemented");
+        }
+    }
 }
