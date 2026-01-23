@@ -1,9 +1,9 @@
 import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
+
 plugins {
-	id "java-library"
+	`java-library`
 	alias(libs.plugins.version.catalog.update)
 }
-
 repositories {
 	mavenCentral()
 }
