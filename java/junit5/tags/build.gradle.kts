@@ -10,8 +10,10 @@ repositories {
 
 dependencies {
     implementation(libs.vavr)
+    implementation(libs.jspecific)
     testImplementation(platform(libs.junit))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.platform:junit-platform-testkit")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(platform(libs.assertj))
     testImplementation("org.assertj:assertj-core")

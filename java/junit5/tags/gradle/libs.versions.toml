@@ -2,6 +2,7 @@
 [versions]
 assertj = "3.27.6"
 assertj-vavr = "0.4.3"
+jspecific = "1.0.0"
 junit = "6.0.2"
 vavr = "0.11.0"
 version-catalog-update = "1.0.1"
@@ -9,6 +10,7 @@ version-catalog-update = "1.0.1"
 [libraries]
 assertj = { module = "org.assertj:assertj-bom", version.ref = "assertj" }
 assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
+jspecific = { module = "org.jspecify:jspecify", version.ref = "jspecific" }
 junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 vavr = { module = "io.vavr:vavr", version.ref = "vavr" }
 
