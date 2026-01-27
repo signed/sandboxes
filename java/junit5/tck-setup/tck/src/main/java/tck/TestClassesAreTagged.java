@@ -1,7 +1,6 @@
 package tck;
 
 import org.junit.jupiter.api.DynamicNode;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.platform.commons.support.AnnotationSupport;
 
@@ -18,10 +17,6 @@ public class TestClassesAreTagged implements Check {
         this.scanner = scanner;
     }
 
-    public Stream<DynamicNode> dynamicNodes() {
-        return scanner.classesWithTestMethods().stream().map(testClass -> dynamicTest(testClass.getSimpleName(), () -> assertIsTagged(testClass)));
-    }
-
     public void assertIsTagged(Class<?> classWithTests) {
         var tagAnnotations = AnnotationSupport.findRepeatableAnnotations(classWithTests, Tag.class);
         assertThat(tagAnnotations).withFailMessage("@Tag required in " + classWithTests.getSimpleName()).isNotEmpty();
@@ -34,6 +29,6 @@ public class TestClassesAreTagged implements Check {
 
     @Override
     public Stream<DynamicNode> stream() {
-        return dynamicNodes();
+        return scanner.classesWithTestMethods().stream().map(testClass -> dynamicTest(testClass.getSimpleName(), () -> assertIsTagged(testClass)));
     }
 }
