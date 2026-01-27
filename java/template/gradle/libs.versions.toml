@@ -1,6 +1,6 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 [versions]
-assertj = "3.27.6"
+assertj = "3.27.7"
 assertj-vavr = "0.4.3"
 jspecific = "1.0.0"
 junit = "6.0.2"
