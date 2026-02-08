@@ -1,4 +1,5 @@
 import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
+
 plugins {
     `java-library`
     alias(libs.plugins.version.catalog.update)
@@ -24,13 +25,21 @@ dependencies {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        val includeTags = providers.gradleProperty("includeTags")
+        if (includeTags.isPresent) {
+            includeTags(includeTags.get())
+        }
+        val excludeTags = providers.gradleProperty("excludeTags")
+        if (excludeTags.isPresent) {
+            excludeTags(excludeTags.get())
+        }
+    }
     testLogging {
         events("passed", "skipped", "failed")
     }
 }
 
-versionCatalogUpdate{
+versionCatalogUpdate {
     versionSelector(VersionSelectors.STABLE)
 }
-

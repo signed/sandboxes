@@ -8,5 +8,5 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectPackages({""})
 @IncludeTags({"one | three"})
-public class CalculatorTestSuite {
+public class TagSuite {
 }
