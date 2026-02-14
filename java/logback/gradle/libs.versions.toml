@@ -1,10 +1,10 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 [versions]
-assertj = "3.27.3"
+assertj = "3.27.7"
 assertj-vavr = "0.4.3"
-junit = "5.13.4"
-vavr = "0.10.7"
-version-catalog-update = "1.0.0"
+junit = "6.0.2"
+vavr = "1.0.0"
+version-catalog-update = "1.0.1"
 
 [libraries]
 assertj = { module = "org.assertj:assertj-bom", version.ref = "assertj" }
