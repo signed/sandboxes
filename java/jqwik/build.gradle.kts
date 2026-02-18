@@ -12,16 +12,13 @@ dependencies {
     implementation(libs.vavr)
     implementation(libs.jspecific)
     testImplementation(platform(libs.junit))
-    testImplementation(platform(libs.jqwik))
+    testImplementation(libs.jqwik)
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("net.jqwik:jqwik-api")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testRuntimeOnly("net.jqwik:jqwik-engine")
-    testImplementation("net.jqwik:jqwik-time")
     testImplementation(platform(libs.assertj))
     testImplementation("org.assertj:assertj-core")
     testImplementation("org.assertj:assertj-guava")
     testImplementation(libs.assertj.vavr)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
