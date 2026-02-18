@@ -3,7 +3,7 @@
 assertj = "3.27.7"
 assertj-vavr = "0.4.3"
 jspecific = "1.0.0"
-junit = "6.0.2"
+junit = "6.0.3"
 vavr = "1.0.0"
 version-catalog-update = "1.0.1"
 
