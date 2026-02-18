@@ -1,0 +1,21 @@
+# https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
+[versions]
+assertj = "3.27.7"
+assertj-vavr = "0.4.3"
+jqwik = "1.9.3"
+jspecific = "1.0.0"
+junit = "6.0.3"
+vavr = "1.0.0"
+version-catalog-update = "1.0.1"
+
+[libraries]
+assertj = { module = "org.assertj:assertj-bom", version.ref = "assertj" }
+assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
+jqwik = { module = "net.jqwik:jqwik", version.ref = "jqwik" }
+jspecific = { module = "org.jspecify:jspecify", version.ref = "jspecific" }
+junit = { module = "org.junit:junit-bom", version.ref = "junit" }
+vavr = { module = "io.vavr:vavr", version.ref = "vavr" }
+
+[plugins]
+# https://github.com/littlerobots/version-catalog-update-plugin
+version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
