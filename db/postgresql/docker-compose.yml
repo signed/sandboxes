@@ -1,0 +1,16 @@
+services:
+  db:
+    # https://hub.docker.com/_/postgres/
+    image: docker.io/postgres:15.17
+    shm_size: 128mb
+    env_file:
+      - path: ./credentials.env
+        required: true # default
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  adminer:
+    image: docker.io/adminer
+    restart: always
+    ports:
+      - "8080:8080"
