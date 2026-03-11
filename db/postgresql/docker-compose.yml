@@ -9,6 +9,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
   adminer:
     image: docker.io/adminer
     restart: always
