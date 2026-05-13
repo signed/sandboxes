@@ -2,21 +2,18 @@ export function hello(world: string = '🗺️'): string {
   return `Hello ${world}!`
 }
 
-enum Taste {
-  Sweet = 'sweet',
-  Sour = 'sour',
-}
+type Taste = 'Sweet' | 'Sour'
 
 interface Fruit {
   taste: Taste
 }
 
 class Apple implements Fruit {
-  public taste: Taste = Taste.Sour
+  public taste: Taste = 'Sour'
 }
 
 class DuckTyping {
-  public taste: Taste = Taste.Sweet
+  public taste: Taste = 'Sweet'
 }
 
 export function tasteOf(fruit: Fruit): Taste {
@@ -26,5 +23,5 @@ export function tasteOf(fruit: Fruit): Taste {
 export function basicInterfaces() {
   console.log(tasteOf(new Apple()))
   console.log(tasteOf(new DuckTyping()))
-  console.log(tasteOf({ taste: Taste.Sweet }))
+  console.log(tasteOf({ taste: 'Sweet' }))
 }

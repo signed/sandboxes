@@ -11,9 +11,9 @@ importers:
       '@signed/prettier-config':
         specifier: 0.2.0
         version: 0.2.0
-      '@tsconfig/node20':
-        specifier: 20.1.9
-        version: 20.1.9
+      '@tsconfig/node-ts':
+        specifier: 23.6.4
+        version: 23.6.4
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -157,8 +157,8 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@tsconfig/node20@20.1.9':
-    resolution: {integrity: sha512-IjlTv1RsvnPtUcjTqtVsZExKVq+KQx4g5pCP5tI7rAs6Xesl2qFwSz/tPDBC4JajkL/MlezBu3gPUwqRHl+RIg==}
+  '@tsconfig/node-ts@23.6.4':
+    resolution: {integrity: sha512-37BMJvNQZ+vTgd1xG2TGBkJ6ENeT4eO4Wh2CHrnn0IwH7ybLFCzh4Uc//kc7UIvqiRac4uGdIc1meKOjMSlKzw==}
 
   '@tsconfig/strictest@2.0.8':
     resolution: {integrity: sha512-XnQ7vNz5HRN0r88GYf1J9JJjqtZPiHt2woGJOo2dYqyHGGcd6OLGqSlBB6p1j9mpzja6Oe5BoPqWmeDx6X9rLw==}
@@ -567,7 +567,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@tsconfig/node20@20.1.9': {}
+  '@tsconfig/node-ts@23.6.4': {}
 
   '@tsconfig/strictest@2.0.8': {}
 
