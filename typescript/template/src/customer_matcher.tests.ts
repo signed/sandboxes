@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import './matchers/toEndWith'
+import './matchers/toEndWith.js'
 
 describe('ends with matcher', () => {
   test('actually ends with the suffix ', () => {
