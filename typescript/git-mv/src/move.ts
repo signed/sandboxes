@@ -2,7 +2,7 @@
 
 import { promises as fs } from 'node:fs'
 import * as path from 'node:path'
-//import { spawn } from 'node:child_process'
+import { spawn } from 'node:child_process'
 import { z } from 'zod'
 
 const OptionsSchema = z.object({
@@ -113,24 +113,22 @@ async function gitMove(source: string, destination: string): Promise<void> {
 }
 
 function runCommand(command: string, args: string[]): Promise<void> {
-  console.log(command, args)
-  return Promise.resolve()
-  // return new Promise((resolve, reject) => {
-  //   const child = spawn(command, args, {
-  //     stdio: 'inherit',
-  //     shell: process.platform === 'win32',
-  //   })
-  //
-  //   child.on('close', (code) => {
-  //     if (code === 0) {
-  //       resolve()
-  //     } else {
-  //       reject(new Error(`Command failed: ${command} ${args.join(' ')} (exit ${code})`))
-  //     }
-  //   })
-  //
-  //   child.on('error', reject)
-  // })
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, {
+      stdio: 'inherit',
+      shell: process.platform === 'win32',
+    })
+
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve()
+      } else {
+        reject(new Error(`Command failed: ${command} ${args.join(' ')} (exit ${code})`))
+      }
+    })
+
+    child.on('error', reject)
+  })
 }
 
 await main()
