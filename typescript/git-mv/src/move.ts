@@ -69,26 +69,17 @@ async function loadIgnorePatterns(ignoreFile: string): Promise<string[]> {
 async function collectEntries(dir: string): Promise<string[]> {
   const results: string[] = []
 
-  async function walk(current: string) {
-    const items = await fs.readdir(current, {
-      withFileTypes: true,
-    })
+  const items = await fs.readdir(dir, {
+    withFileTypes: true,
+  })
 
-    for (const item of items) {
-      const fullPath = path.join(current, item.name)
+  for (const item of items) {
+    const fullPath = path.join(dir, item.name)
 
-      results.push(fullPath)
-
-      if (item.isDirectory()) {
-        await walk(fullPath)
-      }
-    }
+    results.push(fullPath)
   }
 
-  await walk(dir)
-
-  // Move deepest paths first
-  return results.sort((a, b) => b.split(path.sep).length - a.split(path.sep).length)
+  return results
 }
 
 function shouldIgnore(relativePath: string, patterns: string[]): boolean {
@@ -108,11 +99,7 @@ function shouldIgnore(relativePath: string, patterns: string[]): boolean {
     }
 
     // Basename match
-    if (path.basename(normalized) === normalizedPattern) {
-      return true
-    }
-
-    return false
+    return path.basename(normalized) === normalizedPattern
   })
 }
 
