@@ -9,7 +9,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "nitpick": "pnpm test && pnpm typecheck",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "example": "./src/move.ts ./example ./example/destination ./example/.move-ignore"
   },
   "devDependencies": {
     "@signed/prettier-config": "0.2.0",

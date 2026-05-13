@@ -31,7 +31,6 @@ async function main() {
     await ensureParentDir(destination)
 
     console.log(`git mv "${entry}" "${destination}"`)
-
     await gitMove(entry, destination)
   }
 
