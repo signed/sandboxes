@@ -1,0 +1,3 @@
+# ./move.ts ../example ../example/destination ../example/.move-ignore
+destination
+.move-ignore
