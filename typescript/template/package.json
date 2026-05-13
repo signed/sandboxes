@@ -14,6 +14,7 @@
   "devDependencies": {
     "@signed/prettier-config": "0.2.0",
     "@tsconfig/node-ts": "23.6.4",
+    "@tsconfig/node24": "24.0.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "25.6.0",
     "prettier": "3.8.3",
