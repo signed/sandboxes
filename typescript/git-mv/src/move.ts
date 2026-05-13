@@ -15,7 +15,7 @@ type Options = z.infer<typeof OptionsSchema>
 async function main() {
   const options = parseArgs(process.argv.slice(2))
 
-  const ignorePatterns = await loadIgnorePatterns(options.ignoreFile)
+  const ignorePatterns = await loadIgnoredFiles(options.ignoreFile)
 
   const entries = await collectEntries(options.sourceDir)
 
@@ -56,13 +56,14 @@ Example:
   })
 }
 
-async function loadIgnorePatterns(ignoreFile: string): Promise<string[]> {
+async function loadIgnoredFiles(ignoreFile: string): Promise<string[]> {
   const content = await fs.readFile(ignoreFile, 'utf8')
 
   return content
-    .split(/\r?\n/)
+    .split(/\n/)
     .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith('#'))
+    .filter((line) => !line.startsWith('#'))
+    .filter((line) => line.length > 0)
 }
 
 async function collectEntries(dir: string): Promise<string[]> {
