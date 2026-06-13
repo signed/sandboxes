@@ -13,8 +13,10 @@ function parse(row, index, columns) {
     return row;
 }
 
-const data = d3.tsv(dataFile, parse)
-    .catch((error) => alert('error loading '+ dataFile + '\n' + JSON.stringify(error)));
+console.log(JSON.stringify(dataFile, null, 2))
+
+const data = d3.tsv(dataFile.default, parse)
+    .catch((error) => alert('error loading funky'+ dataFile + '\n' + JSON.stringify(error)));
 
 const svgTag = {
     "group": "g",

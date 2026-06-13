@@ -9,7 +9,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --open --mode development",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open --mode development",
     "dist": "webpack",
     "clean": "rimraf dist"
   },
