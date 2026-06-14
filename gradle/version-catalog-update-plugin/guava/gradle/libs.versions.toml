@@ -1,6 +1,5 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec::toml-dependencies-format
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
-
 [versions]
 commons-math3 = "3.6.1"
 guava = "33.5.0-jre"
