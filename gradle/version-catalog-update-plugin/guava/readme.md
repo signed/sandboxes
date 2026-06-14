@@ -2,3 +2,4 @@
 - ./gradlew versionCatalogApplyUpdates
 - ./gradlew versionCatalogFormat
 - ./gradlew versionCatalogUpdate
+- ./gradlew versionCatalogUpdate --interactive 
