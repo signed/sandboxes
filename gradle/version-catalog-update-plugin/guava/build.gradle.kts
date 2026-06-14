@@ -9,7 +9,7 @@ plugins {
 versionCatalogUpdate {
     sortByKey.set(false)
     keep {
-        keepUnusedVersions.set(true)
+        keepUnusedVersions.set(false)
     }
     versionSelector { it: ModuleVersionCandidate ->
         // just to showcase how to write a custom VersionSelector that handles a special case
