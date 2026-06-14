@@ -1,2 +1,4 @@
 - ./gradlew wrapper --gradle-version latest
+- ./gradlew versionCatalogApplyUpdates
+- ./gradlew versionCatalogFormat
 - ./gradlew versionCatalogUpdate
