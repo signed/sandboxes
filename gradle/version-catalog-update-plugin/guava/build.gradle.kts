@@ -11,6 +11,9 @@ versionCatalogUpdate {
     keep {
         keepUnusedVersions.set(false)
     }
+    pin {
+        libraries.add(libs.junit.jupiter)
+    }
     versionSelector { it: ModuleVersionCandidate ->
         // just to showcase how to write a custom VersionSelector that handles a special case
         // and for the rest delegates to an existing VersionSelector
