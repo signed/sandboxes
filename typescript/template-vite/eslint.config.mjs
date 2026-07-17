@@ -4,45 +4,41 @@ import tseslint from 'typescript-eslint'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
-export default [
+export default tseslint.config(
   {
-    ignores: ['dist', '.eslint.config.mjs'],
+    ignores: ['dist'],
   },
-
   js.configs.recommended,
-
-  ...tseslint.configs.recommended,
-
+  tseslint.configs.recommended,
   {
-    files: ['**/*.{js,mjs,ts,tsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
 
     languageOptions: {
-      parser: tseslint.parser,
-      ecmaVersion: 2020,
+      ecmaVersion: 'latest',
       sourceType: 'module',
       globals: globals.browser,
     },
 
     plugins: {
-      '@typescript-eslint': tseslint.plugin,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
 
     rules: {
-      // React Hooks recommended rules
       ...reactHooks.configs.recommended.rules,
-
-      // React Refresh
       'react-refresh/only-export-components': [
         'warn',
         {
           allowConstantExport: true,
         },
       ],
-
-      // TypeScript
       '@typescript-eslint/consistent-type-imports': 'error',
+    },
+  },
+  {
+    files: ['vite.config.*', 'vitest.config.*', 'eslint.config.*'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 
@@ -51,9 +47,7 @@ export default [
 
     rules: {
       '@typescript-eslint/no-empty-function': 'off',
-
       '@typescript-eslint/no-explicit-any': 'off',
-
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -66,7 +60,6 @@ export default [
           ignoreRestSiblings: true,
         },
       ],
-
       '@typescript-eslint/no-namespace': [
         'error',
         {
@@ -75,4 +68,4 @@ export default [
       ],
     },
   },
-]
+)
