@@ -1,0 +1,21 @@
+# https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
+[versions]
+assertj = "3.27.7"
+assertj-vavr = "0.5.1"
+jspecific = "1.0.0"
+junit = "6.1.2"
+vavr = "1.0.1"
+version-catalog-update = "1.1.0"
+stateless4j = "2.6.0"
+
+[libraries]
+assertj = { module = "org.assertj:assertj-bom", version.ref = "assertj" }
+assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
+jspecific = { module = "org.jspecify:jspecify", version.ref = "jspecific" }
+junit = { module = "org.junit:junit-bom", version.ref = "junit" }
+vavr = { module = "io.vavr:vavr", version.ref = "vavr" }
+stateless4j = { module = "com.github.stateless4j:stateless4j", version.ref = "stateless4j" }
+
+[plugins]
+# https://github.com/littlerobots/version-catalog-update-plugin
+version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
